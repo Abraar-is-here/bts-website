@@ -1,0 +1,35 @@
+/* ===========================================================================
+   tokens/spacing.css
+   ---------------------------------------------------------------------------
+   Spacing rhythm on a 4 / 8 / 16 / 32 / 64 scale. Density is deliberately
+   low — prefer the larger steps and let whitespace breathe.
+
+   Also holds radii and the elevation primitives that depend on shape
+   (the navy-tinted shadow *values* themselves live in colors.css).
+   ========================================================================== */
+
+:root {
+  /* --- Spacing scale ----------------------------------------------------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 32px;
+  --space-5: 64px;
+  --space-6: 96px;     /* 64 + 32 — section breathing room                   */
+  --space-7: 128px;    /* large vertical section padding                     */
+  --space-8: 192px;    /* hero-scale whitespace                              */
+
+  /* --- Radii ------------------------------------------------------------- */
+  --radius-pill: 999px;   /* nav & buttons                                   */
+  --radius-card: 28px;    /* cards / panels                                  */
+  --radius-sm: 12px;
+
+  /* --- Layout ------------------------------------------------------------ */
+  --container-max: 1200px;
+  --gutter: clamp(20px, 5vw, 64px);   /* page side padding, fluid            */
+
+  /* --- Motion ------------------------------------------------------------ */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);   /* exponential-ish ease-out   */
+  --dur-fast: 160ms;
+  --dur-med: 240ms;     /* kept under the ~300ms UI-feedback ceiling          */
+}

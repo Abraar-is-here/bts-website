@@ -1,0 +1,9 @@
+# Dev tooling, editor, and OS cruft — not part of the website
+.claude/
+install_*.py
+*.log
+
+# macOS / Windows / OneDrive
+.DS_Store
+Thumbs.db
+desktop.ini

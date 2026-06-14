@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Bristol Trading Society</title>
+  <meta name="description" content="Bristol Trading Society — a University of Bristol trading society. Division head applications open." />
+
+  <!-- Favicon: reuse the brand bull mark -->
+  <link rel="icon" type="image/svg+xml" href="assets/img/bull.svg" />
+
+  <!-- Preload the display + body faces actually used above the fold so the
+       oversized headline paints without a flash. -->
+  <link rel="preload" href="assets/fonts/syne-800.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/fonts/dm-sans-400.woff2" as="font" type="font/woff2" crossorigin />
+
+  <!-- Design tokens first (order matters: fonts -> colors -> spacing ->
+       typography), then the layout/component styles. Loaded as direct links
+       so they fetch in parallel (no @import waterfall).
+       The ?v= query is a cache-buster: bump it whenever you edit a CSS file so
+       returning visitors (and the dev server) pick up the change immediately. -->
+  <link rel="stylesheet" href="styles/tokens/fonts.css?v=7" />
+  <link rel="stylesheet" href="styles/tokens/colors.css?v=7" />
+  <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
+  <link rel="stylesheet" href="styles/tokens/typography.css?v=7" />
+  <link rel="stylesheet" href="styles/main.css?v=7" />
+</head>
+<body>
+
+  <!-- Skip-link: first focusable element, lets keyboard users jump past the
+       nav straight to the hero content. -->
+  <a class="skip-link" href="#top">Skip to content</a>
+
+  <!-- =====================================================================
+       Animated aurora background
+       ---------------------------------------------------------------------
+       Fixed, full-viewport, behind all content (z-index:-1).
+       Primary: a hand-written WebGL shader (js/aurora.js) renders a
+       domain-warped noise field that morphs continuously through the blue
+       palette like liquid. (The ruucm/shadergradient library is React/R3F
+       only and needs a bundler, so it can't drop into this no-build setup;
+       this canvas reproduces the same technique natively.)
+       Fallback: if WebGL is unavailable, the .aurora-fallback layer animates
+       a stack of oversized blurred radial gradients instead.
+       ===================================================================== -->
+  <div class="aurora" aria-hidden="true">
+    <canvas id="aurora-canvas"></canvas>
+    <div class="aurora-fallback">
+      <span class="b1"></span>
+      <span class="b2"></span>
+      <span class="b3"></span>
+      <span class="b4"></span>
+      <span class="b5"></span>
+      <span class="b6"></span>
+      <span class="sheen"></span>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       Floating glass navigation
+       ===================================================================== -->
+  <nav class="nav" aria-label="Primary">
+    <!-- Logo lockup: SVG bull mark + recreated two-tier wordmark as one unit -->
+    <a class="logo" href="#top" aria-label="Bristol Trading Society — home">
+      <svg class="logo__bull" viewBox="0 0 93 78" fill="currentColor" aria-hidden="true" focusable="false">
+        <path fill-rule="evenodd" d="M65.13 6.00 L66.50 5.88 L66.88 6.25 L66.88 10.50 L71.88 15.25 L71.88 16.50 L72.88 17.25 L72.88 24.50 L70.88 26.25 L70.88 27.50 L66.88 31.25 L66.88 32.50 L67.88 33.25 L67.88 34.50 L69.88 36.25 L69.88 37.50 L70.88 38.25 L70.88 39.50 L71.88 40.25 L71.88 41.50 L72.88 42.25 L72.88 43.50 L73.88 44.25 L73.88 45.50 L75.88 47.25 L75.88 48.50 L76.88 49.25 L76.88 50.50 L77.88 51.25 L77.88 52.50 L78.88 53.25 L78.88 54.50 L80.88 56.25 L80.88 57.50 L81.88 58.25 L81.88 59.50 L82.88 60.25 L82.88 61.50 L83.88 62.25 L83.88 63.50 L84.88 64.25 L84.88 65.50 L86.88 67.25 L86.88 68.50 L87.88 69.25 L87.88 71.50 L87.50 71.88 L81.25 71.88 L80.88 71.50 L80.88 68.25 L79.88 67.50 L79.88 64.25 L78.88 63.50 L78.88 62.25 L78.50 61.88 L77.25 61.88 L76.50 60.88 L72.25 60.88 L71.25 59.88 L70.88 60.25 L70.88 62.50 L69.50 63.88 L68.25 63.88 L65.88 61.50 L65.88 60.25 L63.50 57.88 L62.00 57.88 L61.88 60.50 L62.88 61.25 L62.88 63.50 L63.88 64.25 L63.88 65.50 L64.88 66.25 L64.88 68.50 L65.88 69.25 L65.88 72.50 L65.50 72.88 L58.25 72.88 L56.88 71.25 L57.88 70.50 L57.88 68.25 L58.88 67.50 L58.88 65.25 L57.88 64.50 L57.88 63.25 L56.50 61.88 L55.25 61.88 L53.88 60.50 L53.88 58.25 L52.88 57.50 L52.88 54.25 L51.88 53.50 L51.88 52.25 L50.88 51.50 L50.88 50.25 L48.50 47.88 L47.88 48.25 L47.88 52.50 L48.88 53.25 L48.88 55.50 L49.88 56.25 L49.88 57.50 L50.88 58.25 L50.88 60.50 L51.88 61.25 L51.88 63.50 L51.50 63.88 L50.25 63.88 L49.50 64.88 L44.25 64.88 L43.50 63.88 L42.25 63.88 L36.50 57.88 L34.25 57.88 L32.50 59.88 L31.25 59.88 L29.50 61.88 L28.25 61.88 L27.50 62.88 L26.25 62.88 L24.50 64.88 L23.25 64.88 L22.50 65.88 L20.25 65.88 L19.50 66.88 L16.25 66.88 L15.88 67.25 L15.88 69.50 L14.88 70.25 L14.88 71.50 L13.50 72.88 L10.25 72.88 L8.88 71.50 L10.88 69.50 L10.88 68.25 L12.88 66.50 L12.88 65.25 L14.25 63.88 L15.50 63.88 L16.25 62.88 L18.50 62.88 L20.88 60.50 L20.88 59.25 L21.88 58.25 L21.50 57.88 L20.25 57.88 L19.50 58.88 L17.25 58.88 L16.50 59.88 L10.25 59.88 L9.50 58.88 L8.25 58.88 L5.88 56.50 L5.88 53.25 L7.88 51.50 L7.88 50.25 L14.88 43.50 L14.88 42.25 L15.88 41.50 L15.50 40.88 L13.25 40.88 L12.50 41.88 L8.25 41.88 L7.50 40.88 L6.25 40.88 L5.88 40.50 L5.88 39.25 L7.25 37.88 L8.50 37.88 L9.25 36.88 L10.50 36.88 L11.25 35.88 L14.50 35.88 L15.25 36.88 L16.50 36.88 L16.88 37.25 L16.88 38.50 L17.88 39.25 L17.88 41.50 L16.88 42.25 L16.88 44.50 L13.88 47.25 L13.88 48.50 L9.88 52.25 L9.88 55.50 L11.25 56.88 L13.50 56.88 L14.25 55.88 L16.50 55.88 L18.25 53.88 L19.50 53.88 L19.88 53.50 L19.88 52.25 L22.25 49.88 L23.50 49.88 L25.25 47.88 L26.50 47.88 L27.25 46.88 L30.50 46.88 L31.50 47.88 L31.88 47.50 L31.88 44.25 L32.88 43.50 L32.88 41.25 L33.88 40.50 L33.88 39.25 L38.25 34.88 L39.50 34.88 L40.25 33.88 L41.50 33.88 L42.25 32.88 L44.50 32.88 L44.88 32.50 L44.50 31.88 L43.25 31.88 L42.50 30.88 L41.25 30.88 L36.88 26.50 L36.88 20.25 L40.50 16.88 L40.88 17.50 L39.88 18.00 L39.88 22.50 L42.25 24.88 L43.50 24.88 L44.25 25.88 L48.50 25.88 L50.25 23.88 L54.50 23.88 L55.50 24.88 L56.25 23.88 L57.50 23.88 L58.25 22.88 L60.50 22.88 L61.25 23.88 L63.50 23.88 L65.88 21.50 L65.88 20.25 L66.88 19.50 L66.88 16.25 L65.88 15.50 L65.88 14.25 L63.88 12.50 L63.88 8.25 L64.88 7.50 L65.00 6.13 Z M58.13 31.00 L60.50 30.88 L60.88 31.25 L60.50 31.88 L59.25 31.88 L58.88 32.25 L59.88 33.50 L59.50 33.88 L58.25 33.88 L57.50 35.88 L56.88 35.50 L56.88 33.25 L57.88 32.50 L58.00 31.13 Z M51.13 39.00 L56.50 38.88 L56.88 39.25 L56.88 42.50 L56.50 42.88 L55.88 42.50 L55.88 40.25 L55.50 39.88 L51.00 39.88 L51.00 39.13 Z M50.13 40.00 L50.75 39.88 L50.88 40.50 L51.88 41.25 L51.88 42.50 L51.25 42.88 L49.88 41.50 L50.00 40.13 Z M71.13 53.00 L71.88 53.25 L71.88 56.50 L71.50 56.88 L70.88 56.50 L71.00 53.13 Z M61.13 57.00 L61.50 56.88 L61.88 57.75 L61.25 57.88 L61.00 57.13 Z M34.13 63.00 L36.50 62.88 L39.88 66.25 L39.88 67.50 L39.50 67.88 L38.25 67.88 L37.50 68.88 L34.25 68.88 L33.88 69.25 L33.88 70.50 L31.50 72.88 L29.25 72.88 L27.88 71.50 L27.88 70.25 L30.88 67.50 L30.88 64.25 L31.25 63.88 L33.50 63.88 L34.00 63.13 Z"></path>
+      </svg>
+      <span class="logo__word">
+        <span class="logo__bts">BTS</span>
+        <span class="logo__full">Bristol Trading Society</span>
+      </span>
+    </a>
+
+    <!-- Two links only -->
+    <ul class="nav__links">
+      <li><a class="nav__link" href="#top">Home</a></li>
+      <!-- Placeholder anchor for now -->
+      <li><a class="nav__link nav__link--cta" href="contact.html">Contact us</a></li>
+    </ul>
+  </nav>
+
+  <!-- =====================================================================
+       Section 1 — Hero (over the aurora)
+       ===================================================================== -->
+  <header id="top" class="section hero" tabindex="-1">
+    <div class="container hero__inner">
+      <h1 class="display hero__title">Division head applications are open</h1>
+      <div class="hero__actions">
+        <a class="btn btn--primary" href="apply.html">
+          Apply now
+          <span class="btn__arrow" aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- =====================================================================
+       Section 2 — Closing panel (solid deep-navy)
+       ===================================================================== -->
+  <section id="closing" class="section panel">
+    <div class="container panel__inner">
+      <h2 class="h1 panel__title">Big things are coming &mdash; see you in September 2026.</h2>
+
+      <!-- Rotating dot-matrix globe (js/globe.js, 2D canvas, no dependencies) -->
+      <div class="globe-wrap">
+        <canvas id="globe-canvas" role="img" aria-label="Rotating globe of the world"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scripts: deferred so they run after the DOM is parsed. -->
+  <script src="js/aurora.js?v=7" defer></script>
+  <script src="js/globe.js?v=7" defer></script>
+</body>
+</html>

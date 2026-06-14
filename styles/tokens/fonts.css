@@ -1,0 +1,83 @@
+/* ===========================================================================
+   tokens/fonts.css
+   ---------------------------------------------------------------------------
+   Self-hosted @font-face declarations. All three families are shipped as real
+   woff2 files (pulled from Fontsource) and live in /assets/fonts.
+
+   These are the PERMANENT intended faces, but they are kept deliberately
+   swappable: to change a face, replace the file in /assets/fonts and update
+   only the `src:` line below — nothing else in the codebase references the
+   font files directly. Everything downstream uses the --font-* custom
+   properties defined at the bottom of this file.
+   ========================================================================== */
+
+/* --- Syne : display / wordmark (chunky geometric wedge) ------------------ */
+@font-face {
+  font-family: 'Syne';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../../assets/fonts/syne-700.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Syne';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('../../assets/fonts/syne-800.woff2') format('woff2');
+}
+
+/* --- DM Sans : body ------------------------------------------------------- */
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../../assets/fonts/dm-sans-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../../assets/fonts/dm-sans-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../../assets/fonts/dm-sans-600.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../../assets/fonts/dm-sans-700.woff2') format('woff2');
+}
+
+/* --- Space Mono : eyebrows, tags, labels, terminal microcopy -------------- */
+@font-face {
+  font-family: 'Space Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../../assets/fonts/space-mono-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Space Mono';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../../assets/fonts/space-mono-700.woff2') format('woff2');
+}
+
+/* --- Font family tokens --------------------------------------------------- */
+/* Reference these everywhere instead of naming a face directly, so the whole
+   site can be re-typed by editing this block alone. */
+:root {
+  --font-display: 'Syne', 'Arial Black', system-ui, sans-serif;
+  --font-body: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'Space Mono', ui-monospace, 'SFMono-Regular', 'Menlo', monospace;
+}

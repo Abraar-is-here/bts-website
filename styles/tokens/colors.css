@@ -1,0 +1,79 @@
+/* ===========================================================================
+   tokens/colors.css
+   ---------------------------------------------------------------------------
+   Deep-blue, institutional trading palette. Unmistakably blue, but the value
+   range is pushed hard — very dark navy deeps through to bright sky highlights
+   — so the design never reads as flat or monotone.
+
+   Shadows are always cool and navy-tinted (rgba of the navy ground), never
+   grey or warm.
+   ========================================================================== */
+
+:root {
+  /* --- Raw brand palette ------------------------------------------------- */
+  --c-navy: #0a1a3f;        /* primary dark navy ground (dominant background) */
+  --c-royal-deep: #0d2b6b;  /* deep royal blue — mid-tones, dark sections     */
+  --c-royal: #2563eb;       /* electric royal blue — primary accent           */
+  --c-sky: #38bdf8;         /* sky / cyan — sharp, sparing technical accent    */
+  --c-surface: #f4f7fb;     /* cool off-white surface                         */
+  --c-slate: #8da2c4;       /* muted slate-blue secondary text                */
+
+  /* Darker-than-ground navy, used for the deepest section fills and seams. */
+  --c-navy-abyss: #06112b;
+
+  /* --- Semantic roles ---------------------------------------------------- */
+  --bg-base: var(--c-navy);
+  --bg-panel: var(--c-navy);
+  --bg-abyss: var(--c-navy-abyss);
+
+  --text-primary: var(--c-surface);
+  --text-secondary: var(--c-slate);
+  --text-on-light: var(--c-navy);
+
+  --accent: var(--c-royal);
+  --accent-hover: #1d4ed8;          /* a touch deeper for button hover        */
+  --accent-bright: var(--c-sky);    /* sparing highlight                      */
+
+  /* Feedback — used by form validation. Tuned to read on the dark form card. */
+  --danger: #fb7185;                /* error text / borders (rose, AA on navy) */
+  --success: #34d399;               /* success accent                          */
+
+  /* Form field surfaces (legible solid-ish fills over the busy aurora). */
+  --field-bg: rgba(6, 17, 43, 0.72);
+  --field-border: rgba(141, 162, 196, 0.32);
+
+  /* --- Glass / borders (navy-tinted, semi-transparent) ------------------- */
+  /* Darker frosted navy so the white nav text stays legible over BOTH the
+     dark aurora hero and the light closing panel. */
+  --glass-fill: rgba(10, 26, 63, 0.62);
+  --glass-fill-strong: rgba(10, 26, 63, 0.72);
+  --glass-border: rgba(141, 162, 196, 0.28); /* slate hairline               */
+  --hairline: rgba(141, 162, 196, 0.16);
+
+  /* --- Gradient stops (the aurora + accents share these) ----------------- */
+  --grad-1: var(--c-navy);
+  --grad-2: var(--c-royal-deep);
+  --grad-3: var(--c-royal);
+  --grad-4: var(--c-sky);
+
+  /* --- Shadows : cool, navy-tinted, never grey --------------------------- */
+  --shadow-sm: 0 2px 8px rgba(10, 26, 63, 0.35);
+  --shadow-card: 0 18px 48px rgba(10, 26, 63, 0.45);
+  --shadow-pill: 0 10px 30px rgba(10, 26, 63, 0.55),
+                 0 2px 6px rgba(6, 17, 43, 0.45);
+  --shadow-glow: 0 0 32px rgba(37, 99, 235, 0.45); /* electric-blue lift      */
+  --shadow-panel: 0 -24px 60px rgba(10, 26, 63, 0.45); /* light panel lift     */
+
+  /* --- Overlays & focus -------------------------------------------------- */
+  --hover-tint: rgba(244, 247, 251, 0.08);  /* subtle light wash on nav hover */
+  --globe-halo: rgba(37, 99, 235, 0.12);    /* faint glow grounding the globe */
+  --focus-ring: var(--c-sky);               /* keyboard focus outline colour  */
+  /* Left-anchored ink scrim behind hero copy: guarantees white-on-aurora
+     contrast on the left while letting the gradient breathe on the right. */
+  --hero-scrim: linear-gradient(
+    100deg,
+    rgba(6, 17, 43, 0.62) 0%,
+    rgba(6, 17, 43, 0.34) 38%,
+    rgba(6, 17, 43, 0) 66%
+  );
+}
