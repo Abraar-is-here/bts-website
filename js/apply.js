@@ -14,7 +14,7 @@
   'use strict';
 
   var CONFIG = {
-    APPS_SCRIPT_URL: '',                 // <-- paste your /exec URL here
+    APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbyKzB--Uoft7iT1u0rAYlY6oQJvUk3VlapPlylCMfmkzODhofesbDQIs_4QGS8O-clgUA/exec',
     MAX_FILE_MB: 5,
     UNI_EMAIL_RE: /^[^@\s]+@bristol\.ac\.uk$/i,
     EMAIL_RE: /^[^@\s]+@[^@\s]+\.[^@\s]+$/,
