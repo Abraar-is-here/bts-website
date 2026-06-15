@@ -102,15 +102,16 @@
     <div class="container panel__inner">
       <h2 class="h1 panel__title">Big things are coming &mdash; see you in September 2026.</h2>
 
-      <!-- Rotating dot-matrix globe (js/globe.js, 2D canvas, no dependencies) -->
+      <!-- Interactive dot-matrix globe (js/globe.js, 2D canvas, no dependencies) -->
       <div class="globe-wrap">
-        <canvas id="globe-canvas" role="img" aria-label="Rotating globe of the world"></canvas>
+        <canvas id="globe-canvas" role="img" tabindex="0"
+                aria-label="Interactive globe of the world. Drag, or focus and use the arrow keys, to rotate it."></canvas>
       </div>
     </div>
   </section>
 
   <!-- Scripts: deferred so they run after the DOM is parsed. -->
   <script src="js/aurora.js?v=7" defer></script>
-  <script src="js/globe.js?v=7" defer></script>
+  <script src="js/globe.js?v=8" defer></script>
 </body>
 </html>

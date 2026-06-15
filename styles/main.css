@@ -395,7 +395,25 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   aspect-ratio: 1 / 1;
   min-width: 0;
 }
-#globe-canvas { width: 100%; height: 100%; display: block; }
+/* Draggable: grab affordance, and touch-action:none so a drag rotates the
+   globe instead of scrolling the page on touch devices. Position above the
+   halo so it receives the pointer. */
+#globe-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: relative;
+  z-index: 1;
+  cursor: grab;
+  touch-action: none;
+  border-radius: 50%;          /* keeps the focus ring circular, on-brand */
+  outline: none;
+}
+#globe-canvas.is-grabbing { cursor: grabbing; }
+#globe-canvas:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 4px;
+}
 /* Faint cool halo grounding the globe on the light surface. */
 .globe-wrap::before {
   content: '';

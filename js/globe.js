@@ -1,19 +1,29 @@
 /* ===========================================================================
    js/globe.js
    ---------------------------------------------------------------------------
-   Slowly rotating dot-matrix globe drawn on a plain 2D canvas (no libraries).
+   Interactive dot-matrix globe drawn on a plain 2D canvas (no libraries).
 
    How it works:
      1. Evenly scatter points over a unit sphere (Fibonacci spiral).
      2. Keep only the points that fall on land, tested against a small set of
         continent polygons in lon/lat space -> continents are "picked out by
         dot density", oceans are empty.
-     3. Each frame: apply a fixed axial tilt, spin around the vertical axis
-        (~30s per turn), orthographically project, and draw a small plus/cross
-        glyph at every point. Front-facing dots are bright (sky -> royal);
-        back-facing dots are dim slate, so the sphere reads with depth.
+     3. Each frame: rotate around the vertical (Y) axis by `spin`, apply an
+        axial tilt around the X axis by `tilt`, orthographically project, and
+        draw a small plus/cross glyph at every point. Front-facing dots are
+        bright (navy -> royal); back-facing dots are dim slate, so the sphere
+        reads with depth.
 
-   Respects prefers-reduced-motion (renders a single static frame).
+   Interaction (added):
+     - Drag to rotate (horizontal = spin, vertical = tilt) via Pointer Events,
+       with pointer capture so the drag survives leaving the canvas.
+     - Release imparts momentum that decays with friction (flick-to-spin).
+     - Vertical tilt is clamped, then eases back to the designed axial rest.
+     - Auto-spin resumes after a short idle once the user lets go.
+     - Keyboard: focus the globe and use the arrow keys to rotate it.
+
+   Respects prefers-reduced-motion (no auto-spin / no momentum loop; the user
+   can still drag, and the globe gently settles afterwards).
    ========================================================================== */
 (function () {
   'use strict';
@@ -118,26 +128,27 @@
     return pts;
   })();
 
-  /* --- Fixed axial tilt (applied before the spin) ------------------------ */
-  var TILT = -20 * DEG;
-  var cosT = Math.cos(TILT), sinT = Math.sin(TILT);
+  /* --- Axial tilt: -20deg is the designed resting presentation ----------- */
+  var BASE_TILT = -20 * DEG;
+  var MAX_TILT = 78 * DEG;              // clamp so the poles never fully flip
 
   /* --- Sizing ------------------------------------------------------------ */
-  var cx = 0, cy = 0, R = 0, dpr = 1;
+  var cx = 0, cy = 0, R = 0, dpr = 1, cssSize = 1;
   function resize() {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
-    var size = canvas.clientWidth;          // square element (CSS aspect-ratio)
-    canvas.width = Math.floor(size * dpr);
-    canvas.height = Math.floor(size * dpr);
+    cssSize = canvas.clientWidth || 1;       // square element (CSS aspect-ratio)
+    canvas.width = Math.floor(cssSize * dpr);
+    canvas.height = Math.floor(cssSize * dpr);
     cx = canvas.width / 2;
     cy = canvas.height / 2;
-    R = canvas.width * 0.40;                 // sphere radius in device px
+    R = canvas.width * 0.40;                  // sphere radius in device px
   }
 
-  /* --- Draw one frame at rotation angle `a` ------------------------------ */
-  function render(a) {
+  /* --- Draw one frame at rotation `spin` (Y) and `tilt` (X) -------------- */
+  function render(spin, tilt) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    var cosA = Math.cos(a), sinA = Math.sin(a);
+    var cosA = Math.cos(spin), sinA = Math.sin(spin);
+    var cosT = Math.cos(tilt), sinT = Math.sin(tilt);
     var glyph = Math.max(1.1, R * 0.018);    // half-length of each plus stroke
     var lw = Math.max(1, dpr);
     ctx.lineWidth = lw;
@@ -205,30 +216,165 @@
     }
   }
 
-  /* --- Animation control ------------------------------------------------- */
+  /* --- Motion state ------------------------------------------------------ */
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  var PERIOD = 30000;                          // ms per full turn (~30s)
-  var rafId = null;
-  var startT = performance.now();
+  var PERIOD = 30000;                          // ms per full auto turn (~30s)
+  var AUTO_SPEED = (Math.PI * 2) / PERIOD;     // rad/ms, the idle spin rate
+  var IDLE_RESUME = 2600;                       // ms after release before auto-spin
+  var FRICTION = 0.94;                          // per-60fps-frame momentum decay
 
-  function loop(now) {
-    var a = ((now - startT) % PERIOD) / PERIOD * Math.PI * 2;
-    render(a);
-    rafId = requestAnimationFrame(loop);
+  // 'auto'  : idle spin (eased toward AUTO_SPEED), tilt eases back to BASE_TILT
+  // 'drag'  : the pointer/keys drive spin & tilt directly
+  // 'coast' : released with momentum, decaying under friction
+  var mode = 'auto';
+  var spin = -0.4;                             // pleasant starting longitude
+  var tilt = BASE_TILT;
+  var spinVel = AUTO_SPEED;                     // rad/ms
+  var tiltVel = 0;
+  var idleUntilAuto = 0;
+
+  var dragging = false;
+  var activePointer = null;
+  var lastX = 0, lastY = 0, lastMoveT = 0;
+
+  var rafId = null;
+  var lastFrameT = 0;
+
+  function clampTilt(v) {
+    var lo = BASE_TILT - MAX_TILT, hi = BASE_TILT + MAX_TILT;
+    return v < lo ? lo : (v > hi ? hi : v);
   }
-  function stop() { if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; } }
+
+  function frame(now) {
+    var dt = Math.min(now - lastFrameT, 50);   // clamp long gaps (tab switch)
+    lastFrameT = now;
+    var decay = Math.pow(FRICTION, dt / 16.67);
+
+    if (mode === 'coast') {
+      spinVel *= decay;
+      tiltVel *= decay;
+      spin += spinVel * dt;
+      tilt = clampTilt(tilt + tiltVel * dt);
+      // Once the flick has bled off and the idle delay has passed, hand back
+      // to the idle spin. ease-out feel: it never hard-stops.
+      if (now >= idleUntilAuto && Math.abs(spinVel) <= AUTO_SPEED) {
+        mode = 'auto';
+      }
+    } else if (mode === 'auto') {
+      var target = reduceMotion.matches ? 0 : AUTO_SPEED;
+      spinVel += (target - spinVel) * 0.03;    // ease toward the idle rate
+      spin += spinVel * dt;
+      tilt += (BASE_TILT - tilt) * 0.05;       // settle back to the axial rest
+    }
+    // 'drag' updates spin/tilt in the move handler; here we just paint.
+
+    render(spin, tilt);
+    rafId = requestAnimationFrame(frame);
+  }
+
+  function startLoop() {
+    if (rafId !== null) return;
+    lastFrameT = performance.now();
+    rafId = requestAnimationFrame(frame);
+  }
+  function stopLoop() {
+    if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
+  }
+
+  /* --- Pointer drag ------------------------------------------------------ */
+  function onPointerDown(e) {
+    if (dragging) return;                       // ignore extra fingers
+    dragging = true;
+    activePointer = e.pointerId;
+    if (canvas.setPointerCapture) {
+      try { canvas.setPointerCapture(activePointer); } catch (err) {}
+    }
+    canvas.classList.add('is-grabbing');
+    mode = 'drag';
+    spinVel = 0; tiltVel = 0;
+    lastX = e.clientX; lastY = e.clientY;
+    lastMoveT = performance.now();
+    startLoop();                                // ensure painting even if paused
+    e.preventDefault();
+  }
+
+  function onPointerMove(e) {
+    if (!dragging || e.pointerId !== activePointer) return;
+    var now = performance.now();
+    var dx = e.clientX - lastX;
+    var dy = e.clientY - lastY;
+    var k = (Math.PI * 2) / cssSize;            // drag the full width ~= one turn
+    var dSpin = dx * k;
+    var dTilt = dy * k;
+    spin += dSpin;
+    tilt = clampTilt(tilt + dTilt);
+    var dtm = Math.max(now - lastMoveT, 1);     // velocity for the release flick
+    spinVel = dSpin / dtm;
+    tiltVel = dTilt / dtm;
+    lastX = e.clientX; lastY = e.clientY; lastMoveT = now;
+    render(spin, tilt);
+    e.preventDefault();
+  }
+
+  function endDrag(e) {
+    if (!dragging) return;
+    dragging = false;
+    if (activePointer !== null && canvas.releasePointerCapture &&
+        canvas.hasPointerCapture && canvas.hasPointerCapture(activePointer)) {
+      try { canvas.releasePointerCapture(activePointer); } catch (err) {}
+    }
+    activePointer = null;
+    canvas.classList.remove('is-grabbing');
+    // If the pointer went stale (no recent move), drop stored velocity so the
+    // globe doesn't lurch from an old reading.
+    if (performance.now() - lastMoveT > 90) { spinVel = 0; tiltVel = 0; }
+    mode = 'coast';
+    idleUntilAuto = performance.now() + IDLE_RESUME;
+  }
+
+  canvas.addEventListener('pointerdown', onPointerDown);
+  canvas.addEventListener('pointermove', onPointerMove);
+  canvas.addEventListener('pointerup', endDrag);
+  canvas.addEventListener('pointercancel', endDrag);
+
+  /* --- Keyboard (accessible rotation when the globe is focused) ---------- */
+  var KEY_STEP = 12 * DEG;
+  canvas.addEventListener('keydown', function (e) {
+    var handled = true;
+    switch (e.key) {
+      case 'ArrowLeft':  spin -= KEY_STEP; break;
+      case 'ArrowRight': spin += KEY_STEP; break;
+      case 'ArrowUp':    tilt = clampTilt(tilt - KEY_STEP); break;
+      case 'ArrowDown':  tilt = clampTilt(tilt + KEY_STEP); break;
+      default: handled = false;
+    }
+    if (!handled) return;
+    e.preventDefault();
+    spinVel = 0; tiltVel = 0;
+    mode = 'coast';
+    idleUntilAuto = performance.now() + IDLE_RESUME;
+    startLoop();
+    render(spin, tilt);
+  });
+
+  /* --- Lifecycle: pause off-screen and when the tab is hidden ------------ */
   function play() {
     resize();
-    if (DEBUG_FLAT) { renderFlat(); return; }              // verify the mask
-    if (reduceMotion.matches) { render(-0.4); return; }   // static, pleasant angle
-    if (rafId === null) { startT = performance.now(); rafId = requestAnimationFrame(loop); }
+    if (DEBUG_FLAT) { renderFlat(); return; }
+    render(spin, tilt);
+    // Even under reduced motion we keep a light loop so drag/keys animate;
+    // it settles to a stop because AUTO_SPEED targets 0 in that mode.
+    startLoop();
+  }
+  function pause() {
+    if (dragging) return;                       // never pause mid-drag
+    stopLoop();
   }
 
-  // Pause while off-screen (saves work when the hero is in view) and when hidden.
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (entries) {
       if (entries[0].isIntersecting) play();
-      else stop();
+      else pause();
     }, { threshold: 0.05 });
     io.observe(canvas);
   } else {
@@ -236,15 +382,16 @@
   }
 
   document.addEventListener('visibilitychange', function () {
-    if (document.hidden) stop(); else play();
+    if (document.hidden) pause(); else play();
   });
   window.addEventListener('resize', function () {
     resize();
-    if (reduceMotion.matches) render(-0.4);
+    render(spin, tilt);
   });
   (reduceMotion.addEventListener
     ? reduceMotion.addEventListener.bind(reduceMotion, 'change')
     : reduceMotion.addListener.bind(reduceMotion))(function () {
-      stop(); play();
+      // Re-evaluate the idle target on the next frame; just make sure we paint.
+      startLoop();
     });
 })();
