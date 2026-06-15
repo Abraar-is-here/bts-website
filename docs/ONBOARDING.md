@@ -34,26 +34,56 @@ every file in the project, edit them, run commands (git, etc.), and even spin up
 a local preview of the site. Think "Claude with hands, sitting inside the
 project folder." Same conversation skills you're used to; it just *does* things.
 
-### One-time setup
-1. **Install Claude Code** — follow https://claude.com/code (there's a one-line
-   installer for Windows/Mac). Sign in with your Anthropic account — your **Pro**
-   plan works.
-2. **Git** — Claude Code uses `git` to sync with GitHub. On Windows, install
-   "Git for Windows" if you don't have it (it bundles the login helper, so you
-   won't fight with tokens — your first `git push` just pops a browser login).
-3. **Clone the repo to your computer:**
-   ```bash
-   git clone https://github.com/Abraar-is-here/bts-website.git
-   ```
-   ⚠️ **Clone it somewhere normal like `Documents`, NOT inside OneDrive.** Git +
-   OneDrive sync fight each other and corrupt things. (Abraar's working copy is
-   in OneDrive for historical reasons — yours doesn't need to be.)
-4. **Open Claude Code in the folder:**
-   ```bash
-   cd bts-website
-   claude
-   ```
-   Now just talk to it.
+### One-time setup — exact steps
+You're already a repo collaborator, so once these are done you can push. Do them
+once. (Windows → use **PowerShell**; Mac → use **Terminal**.)
+
+**Step 0 — Accept the collaborator invite.** Check your email for the GitHub
+invite to `Abraar-is-here/bts-website`, or just open
+https://github.com/Abraar-is-here/bts-website and click **Accept invitation**.
+
+**Step 1 — Install Git.**
+- **Windows:** in PowerShell run `winget install --id Git.Git -e`
+  *(or download from https://git-scm.com/download/win and install with defaults).*
+- **Mac:** run `git --version`; if it's missing it'll offer to install the
+  developer tools — accept. *(Or `brew install git` if you use Homebrew.)*
+
+**Step 2 — Install Claude Code.** Go to **https://claude.com/code** and run the
+one-line installer shown for your OS. *(Alternative, if you have Node.js
+installed: `npm install -g @anthropic-ai/claude-code`.)*
+
+**Step 3 — Sign in.** Run `claude` once — it opens a browser to log in. Use your
+**Claude Pro** account.
+
+**Step 4 — Tell Git who you are** (labels your commits):
+```bash
+git config --global user.name "Hristyan"
+git config --global user.email "your-github-email@example.com"
+```
+Use the email on your GitHub account.
+
+**Step 5 — Clone the repo** into a normal folder — ⚠️ **NOT inside OneDrive**
+(git + OneDrive corrupt each other). Documents is fine:
+```bash
+cd Documents            # Windows: cd $HOME\Documents   |   Mac: cd ~/Documents
+git clone https://github.com/Abraar-is-here/bts-website.git
+```
+
+**Step 6 — Open Claude Code in the project:**
+```bash
+cd bts-website
+claude
+```
+You're in — talk to it like Claude chat.
+
+**Step 7 — Your first push.** Make a tiny change (e.g. tell Claude Code *"pull
+the latest, then commit and push a no-op tweak"*). The **first `git push` opens
+a browser to log into GitHub** — sign in as yourself (you're a collaborator, so
+it's accepted). After that, pushes are silent and the live site updates in ~1
+minute.
+
+That's the entire setup. From now on your routine is just: **pull → edit →
+commit → push** (the next section).
 
 ### The daily edit loop
 ```
