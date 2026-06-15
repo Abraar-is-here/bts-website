@@ -11,7 +11,9 @@
 
 var CONFIG = {
   CV_FOLDER_ID: 'PASTE_DRIVE_FOLDER_ID',     // Drive folder that will hold CVs
-  COMMITTEE_EMAIL: 'committee@example.com',   // where notifications are sent
+  COMMITTEE_EMAIL: 'committee@example.com',   // primary recipient of notifications
+  CC_EMAILS: '',                              // optional cc list (comma-separated),
+                                              // e.g. 'a@bristol.ac.uk, b@bristol.ac.uk'
   SHEET_NAME: 'Applications'
 };
 
@@ -85,7 +87,9 @@ function notify(d, cvUrl) {
     '2nd choice: ' + d.choice2,
     'CV:         ' + (cvUrl || '—')
   ].join('\n');
-  MailApp.sendEmail(CONFIG.COMMITTEE_EMAIL, subject, body);
+  var options = {};
+  if (CONFIG.CC_EMAILS) options.cc = CONFIG.CC_EMAILS;
+  MailApp.sendEmail(CONFIG.COMMITTEE_EMAIL, subject, body, options);
 }
 
 function json(obj) {
