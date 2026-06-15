@@ -40,7 +40,7 @@ function doPost(e) {
       var bytes = Utilities.base64Decode(data.cvBase64);
       var safeName = (data.lastName + '_' + data.firstName).replace(/[^\w-]+/g, '_');
       var blob = Utilities.newBlob(bytes, data.cvType || 'application/pdf', safeName + '_CV.pdf');
-      var file = DriveApp.getFolderById(CONFIG.CV_FOLDER_ID).createFile(blob);
+      var file = DriveApp.getFolderById(folderId(CONFIG.CV_FOLDER_ID)).createFile(blob);
       cvUrl = file.getUrl();
     }
 
@@ -56,8 +56,15 @@ function doPost(e) {
 
     return json({ ok: true });
   } catch (err) {
+    console.error(err);   // surfaces the real reason in the Executions log
     return json({ ok: false, error: String(err) });
   }
+}
+
+/** Accepts either a bare Drive folder ID or a full folder URL. */
+function folderId(s) {
+  var m = String(s).match(/[-\w]{25,}/);
+  return m ? m[0] : String(s);
 }
 
 /** Health check when the URL is opened in a browser. */
