@@ -35,3 +35,4 @@ application to a Google Sheet, stores the CV in Drive, and emails the committee.
 It is **not connected until you complete the steps in
 [`apps-script/SETUP.md`](apps-script/SETUP.md)** (paste the deployed URL into
 `js/apply.js`).
+
