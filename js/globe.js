@@ -96,9 +96,17 @@
     return pts;
   })();
 
-  /* --- Axial tilt: -20deg is the designed resting presentation ----------- */
-  var BASE_TILT = -20 * DEG;
-  var MAX_TILT = 78 * DEG;              // clamp so the poles never fully flip
+  /* --- Per-visit randomised motion --------------------------------------- *
+   * Each load picks a random start longitude, a random spin direction, and a
+   * slowly NODDING tilt axis (random centre / amplitude / phase / period) so
+   * the auto-spin sweeps through different latitudes and reveals different
+   * points every time -- it never repeats the same fixed band.              */
+  function rand(a, b) { return a + Math.random() * (b - a); }
+  var MAX_TILT = 80 * DEG;                       // hard clamp for manual drag
+  var TILT_CENTER = rand(-12, 12) * DEG;         // this visit's mean viewing tilt
+  var TILT_AMP = rand(16, 30) * DEG;             // how far the axis slowly nods
+  var TILT_W = (Math.PI * 2) / rand(55000, 90000); // nod angular speed (slow)
+  var TILT_PHASE = rand(0, Math.PI * 2);         // where in the nod we begin
 
   /* --- Sizing ------------------------------------------------------------ */
   var cx = 0, cy = 0, R = 0, dpr = 1, cssSize = 1;
@@ -186,18 +194,19 @@
 
   /* --- Motion state ------------------------------------------------------ */
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  var PERIOD = 30000;                          // ms per full auto turn (~30s)
-  var AUTO_SPEED = (Math.PI * 2) / PERIOD;     // rad/ms, the idle spin rate
+  var PERIOD = rand(26000, 34000);             // ms per full turn (slightly varied)
+  var AUTO_SPEED = (Math.PI * 2) / PERIOD;     // rad/ms magnitude of the idle spin
+  var AUTO_VEL = (Math.random() < 0.5 ? 1 : -1) * AUTO_SPEED; // random direction
   var IDLE_RESUME = 2600;                       // ms after release before auto-spin
   var FRICTION = 0.94;                          // per-60fps-frame momentum decay
 
-  // 'auto'  : idle spin (eased toward AUTO_SPEED), tilt eases back to BASE_TILT
+  // 'auto'  : idle spin (eased toward AUTO_VEL), tilt nods around TILT_CENTER
   // 'drag'  : the pointer/keys drive spin & tilt directly
   // 'coast' : released with momentum, decaying under friction
   var mode = 'auto';
-  var spin = -0.4;                             // pleasant starting longitude
-  var tilt = BASE_TILT;
-  var spinVel = AUTO_SPEED;                     // rad/ms
+  var spin = rand(0, Math.PI * 2);             // random starting longitude
+  var tilt = TILT_CENTER;
+  var spinVel = AUTO_VEL;                       // rad/ms (signed)
   var tiltVel = 0;
   var idleUntilAuto = 0;
 
@@ -209,8 +218,7 @@
   var lastFrameT = 0;
 
   function clampTilt(v) {
-    var lo = BASE_TILT - MAX_TILT, hi = BASE_TILT + MAX_TILT;
-    return v < lo ? lo : (v > hi ? hi : v);
+    return v < -MAX_TILT ? -MAX_TILT : (v > MAX_TILT ? MAX_TILT : v);
   }
 
   function frame(now) {
@@ -229,10 +237,15 @@
         mode = 'auto';
       }
     } else if (mode === 'auto') {
-      var target = reduceMotion.matches ? 0 : AUTO_SPEED;
+      var target = reduceMotion.matches ? 0 : AUTO_VEL;
       spinVel += (target - spinVel) * 0.03;    // ease toward the idle rate
       spin += spinVel * dt;
-      tilt += (BASE_TILT - tilt) * 0.05;       // settle back to the axial rest
+      // Slowly nod the viewing axis so different latitudes drift past; under
+      // reduced motion just hold this visit's (randomised) resting tilt.
+      var tiltTarget = reduceMotion.matches
+        ? TILT_CENTER
+        : TILT_CENTER + TILT_AMP * Math.sin(now * TILT_W + TILT_PHASE);
+      tilt += (tiltTarget - tilt) * 0.04;
     }
     // 'drag' updates spin/tilt in the move handler; here we just paint.
 
