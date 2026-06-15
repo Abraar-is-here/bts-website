@@ -358,7 +358,6 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   max-width: 1100px;
   position: relative;
   z-index: 1;                        /* lift copy above the scrim              */
-  margin-inline-start: clamp(0px, 4vw, 3rem);  /* nudge copy toward left edge */
 }
 
 .hero__title {
