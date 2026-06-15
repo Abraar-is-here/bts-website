@@ -302,6 +302,23 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
 /* Press feedback. Declared after :hover so the scale wins while held down. */
 .btn--primary:active { transform: scale(0.97); }
 
+/* Secondary — graphite pill (the "Learn more" CTA beside Apply). Neutral
+   dark grey so it sits a clear step below the blue primary in the hierarchy. */
+.btn--secondary {
+  background: var(--c-graphite);
+  color: #fff;
+  box-shadow: var(--shadow-pill);
+}
+@media (hover: hover) and (pointer: fine) {
+  .btn--secondary:hover {
+    background: var(--c-graphite-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 34px rgba(17, 19, 24, 0.55), var(--shadow-pill);
+  }
+  .btn--secondary:hover .btn__arrow { transform: translateX(4px); }
+}
+.btn--secondary:active { transform: scale(0.97); }
+
 /* ---------------------------------------------------------------------------
    5. Section scaffolding
    --------------------------------------------------------------------------- */
@@ -341,6 +358,7 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   max-width: 1100px;
   position: relative;
   z-index: 1;                        /* lift copy above the scrim              */
+  margin-inline-start: clamp(0px, 4vw, 3rem);  /* nudge copy toward left edge */
 }
 
 .hero__title {
@@ -710,6 +728,135 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
 [hidden] { display: none !important; }
 
 /* ---------------------------------------------------------------------------
+   7c. Divisions page — graphite aurora, tabbed division explorer
+   ---------------------------------------------------------------------------
+   Top-aligned scrolling content (not the full-height centred .section), so
+   the four panels can breathe. A soft ink scrim keeps the glass cards legible
+   over the moving graphite background.
+   --------------------------------------------------------------------------- */
+.divisions {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding-block: clamp(var(--space-7), 16vh, var(--space-8)) var(--space-7);
+}
+.divisions::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  /* Navy ink scrim (matches the contact page) so white copy stays legible over
+     the moving blue aurora without hiding it. */
+  background: radial-gradient(ellipse 95% 75% at 50% 28%,
+              rgba(6, 17, 43, 0.62) 0%, rgba(6, 17, 43, 0.30) 48%, transparent 78%);
+  pointer-events: none;
+}
+.divisions__inner { position: relative; z-index: 1; }
+
+.divisions__head { max-width: 60ch; margin-bottom: var(--space-5); }
+.divisions__head .eyebrow { display: block; margin-bottom: var(--space-3); }
+
+/* Cleaner labels than the default mono eyebrow: the long division name reads
+   poorly in tracked all-caps monospace, so on this page use the brand body
+   face (DM Sans), sentence case, with a sky accent (impeccable: avoid long
+   uppercase eyebrows; emil: legibility + craft). */
+.divisions .eyebrow {
+  font-family: var(--font-body);
+  text-transform: none;
+  letter-spacing: 0.01em;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--accent-bright);
+}
+.divisions__title { margin-bottom: var(--space-3); }
+.divisions__lead { color: var(--text-secondary); max-width: 56ch; }
+
+/* --- Tablist: graphite glass pills, active one filled ------------------- */
+.div-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+.div-tab {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  letter-spacing: 0.005em;
+  color: var(--text-primary);
+  padding: 12px 24px;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-pill);
+  background: var(--glass-fill);
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out),
+              transform var(--dur-fast) var(--ease-out),
+              border-color var(--dur-fast) var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .div-tab:hover { background: var(--glass-fill-strong); }
+}
+.div-tab:active { transform: scale(0.97); }
+.div-tab[aria-selected="true"] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* --- Panels: dark graphite glass card ----------------------------------- */
+.div-panels { position: relative; }
+.div-panel {
+  background: rgba(8, 19, 46, 0.92);          /* matches the form-card navy */
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: clamp(var(--space-3), 4vw, var(--space-5));
+}
+.div-panel:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 4px; }
+/* Gentle reveal on switch (occasional, well under 300ms; rise + fade, never
+   from scale(0)). Disabled under reduced motion. */
+.div-panel.is-active { animation: divReveal var(--dur-med) var(--ease-out); }
+@keyframes divReveal {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.div-panel__kicker { display: block; margin-bottom: var(--space-2); }
+.div-panel__name { margin-bottom: var(--space-3); }
+.div-panel__what { color: var(--text-secondary); max-width: 70ch; }
+
+.div-panel__cols {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+}
+.div-block__title {
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--hairline);
+  text-wrap: balance;        /* tidy, balanced two-word section labels */
+}
+.div-list { list-style: none; margin: 0; padding: 0; }
+.div-list li {
+  position: relative;
+  padding-left: 1.6em;
+  margin-bottom: var(--space-2);
+  color: var(--text-primary);
+}
+/* Custom marker — a steel chevron so bullets stay on the graphite theme. */
+.div-list li::before {
+  content: '\203A';                  /* › */
+  position: absolute;
+  left: 0.2em;
+  top: -0.02em;
+  color: var(--c-slate);
+  font-weight: 700;
+}
+
+.divisions__cta { margin-top: var(--space-5); }
+
+/* ---------------------------------------------------------------------------
    8. Responsive
    --------------------------------------------------------------------------- */
 @media (max-width: 820px) {
@@ -718,9 +865,10 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   .panel { border-radius: 32px 32px 0 0; }
 }
 
-/* Application form: single column once the card gets narrow. */
+/* Application form + division panels: single column once cards get narrow. */
 @media (max-width: 600px) {
   .field-grid { grid-template-columns: 1fr; }
+  .div-panel__cols { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 560px) {

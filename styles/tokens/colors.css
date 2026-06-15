@@ -68,6 +68,11 @@
   --hover-tint: rgba(244, 247, 251, 0.08);  /* subtle light wash on nav hover */
   --globe-halo: rgba(37, 99, 235, 0.12);    /* faint glow grounding the globe */
   --focus-ring: var(--c-sky);               /* keyboard focus outline colour  */
+
+  /* --- Neutral graphite (the "Learn more" secondary button) -------------- */
+  --c-graphite: #2a2d37;                    /* dark neutral button ground      */
+  --c-graphite-hover: #353846;              /* a touch lighter for hover       */
+
   /* Left-anchored ink scrim behind hero copy: guarantees white-on-aurora
      contrast on the left while letting the gradient breathe on the right. */
   --hero-scrim: linear-gradient(
@@ -77,3 +82,4 @@
     rgba(6, 17, 43, 0) 66%
   );
 }
+
