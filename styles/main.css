@@ -342,7 +342,7 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
 /* ---------------------------------------------------------------------------
    6. Hero (Section 1) — sits over the aurora
    --------------------------------------------------------------------------- */
-.hero { text-align: left; }
+.hero { text-align: left; position: relative; z-index: 1; }
 
 /* Ink scrim behind the copy so white text keeps ≥4.5:1 even when a bright
    sky-blue crest of the aurora drifts under it. Sits above the fixed aurora
@@ -1042,7 +1042,7 @@ body.is-leaving {
   opacity: 0.6;
 }
 
-/* Edge-fade mask: logos visible only in the middle 2/4 of the screen. */
+/* Edge-fade mask: logos appear/disappear at exactly the quarter marks. */
 .partners__stage {
   display: flex;
   flex-direction: column;
@@ -1051,15 +1051,19 @@ body.is-leaving {
   -webkit-mask-image: linear-gradient(
     to right,
     transparent 0%,
-    black 25%,
-    black 75%,
+    transparent 23%,
+    black 27%,
+    black 73%,
+    transparent 77%,
     transparent 100%
   );
   mask-image: linear-gradient(
     to right,
     transparent 0%,
-    black 25%,
-    black 75%,
+    transparent 23%,
+    black 27%,
+    black 73%,
+    transparent 77%,
     transparent 100%
   );
 }
@@ -1075,7 +1079,7 @@ body.is-leaving {
 .partners__inner {
   display: flex;
   align-items: center;
-  gap: clamp(2.5rem, 4vw, 4rem);
+  gap: 5rem;
   width: max-content;
   will-change: transform;
 }
@@ -1095,7 +1099,7 @@ body.is-leaving {
 /* Base logo slot — height drives the reference size, row overflow clips
    any transform that exceeds the row height. */
 .partners__logo {
-  height: 40px;
+  height: 52px;
   width: auto;
   max-width: 200px;
   object-fit: contain;
