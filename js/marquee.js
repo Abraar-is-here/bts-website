@@ -1,27 +1,19 @@
 (function () {
   'use strict';
 
-  var HOVER_RATE = 0.2; // 5× slower on hover, still visibly moving
+  var HOVER_RATE = 0.2;
 
-  var stage = document.querySelector('.partners__stage');
-  if (!stage) return;
+  var inner = document.querySelector('.partners__inner');
+  if (!inner) return;
 
-  var fwd = stage.querySelector('.partners__row--fwd .partners__inner');
-  var rev = stage.querySelector('.partners__row--rev .partners__inner');
-
-  function setRate(el, rate) {
-    if (!el) return;
-    var anims = el.getAnimations();
+  function setRate(rate) {
+    var anims = inner.getAnimations();
     if (anims.length) anims[0].playbackRate = rate;
   }
 
-  stage.addEventListener('mouseenter', function () {
-    setRate(fwd, HOVER_RATE);
-    setRate(rev, HOVER_RATE);
-  });
-
-  stage.addEventListener('mouseleave', function () {
-    setRate(fwd, 1);
-    setRate(rev, 1);
-  });
+  var stage = inner.closest('.partners__stage');
+  if (stage) {
+    stage.addEventListener('mouseenter', function () { setRate(HOVER_RATE); });
+    stage.addEventListener('mouseleave', function () { setRate(1); });
+  }
 })();

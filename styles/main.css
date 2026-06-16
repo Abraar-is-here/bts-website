@@ -1018,8 +1018,7 @@ body.is-leaving {
    gives a clean dissolve rather than a hard clip.
    --------------------------------------------------------------------------- */
 .partners {
-  /* Extended gradient so the aurora shows through further down toward the label */
-  background: linear-gradient(to bottom, transparent 0%, var(--c-navy-abyss) 60%);
+  background: var(--c-navy-abyss);
   margin-top: -120px;
   padding: 140px 0 calc(var(--space-6) + 64px);
   overflow: hidden;
@@ -1042,30 +1041,10 @@ body.is-leaving {
   opacity: 0.6;
 }
 
-/* Edge-fade mask: logos appear/disappear at exactly the quarter marks. */
+/* Single-row marquee stage — full-width, no mask. */
 .partners__stage {
   display: flex;
   flex-direction: column;
-  gap: var(--space-6);
-  padding-block: var(--space-3);
-  -webkit-mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    transparent 23%,
-    black 27%,
-    black 73%,
-    transparent 77%,
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    transparent 23%,
-    black 27%,
-    black 73%,
-    transparent 77%,
-    transparent 100%
-  );
 }
 
 .partners__row {
@@ -1088,13 +1067,8 @@ body.is-leaving {
   from { transform: translateX(0);    }
   to   { transform: translateX(-50%); }
 }
-@keyframes marquee-rev {
-  from { transform: translateX(-50%); }
-  to   { transform: translateX(0);    }
-}
 
-.partners__row--fwd .partners__inner { animation: marquee-fwd 48s linear infinite; }
-.partners__row--rev .partners__inner { animation: marquee-rev 38s linear infinite; }
+.partners__inner { animation: marquee-fwd 48s linear infinite; }
 
 /* Base logo slot — height drives the reference size, row overflow clips
    any transform that exceeds the row height. */
