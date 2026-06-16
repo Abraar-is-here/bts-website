@@ -1,9 +1,10 @@
 (function () {
   'use strict';
 
+  var DURATION = 650;
   var INTERVAL = 6000;
 
-  var slider = document.querySelector('.hero-slider');
+  var slider  = document.querySelector('.hero-slider');
   if (!slider) return;
 
   var slides  = Array.from(slider.querySelectorAll('.hero-slide'));
@@ -12,24 +13,65 @@
   var nextBtn = slider.querySelector('.hero-ctrl--next');
   var current = 0;
   var timer   = null;
+  var busy    = false;
 
-  function goTo(index) {
-    var prev = current;
-    current = ((index % slides.length) + slides.length) % slides.length;
-    if (current === prev) return;
+  /* direction: 'left'  → exit left,  enter from right  (left arrow / auto)
+                'right' → exit right, enter from left   (right arrow)       */
+  function goTo(index, direction) {
+    if (busy) return;
 
-    slides[prev].classList.remove('hero-slide--active');
-    slides[prev].setAttribute('aria-hidden', 'true');
+    var next = ((index % slides.length) + slides.length) % slides.length;
+    if (next === current) return;
+
+    busy = true;
+
+    var prev     = current;
+    current      = next;
+    var entering = slides[next];
+    var exiting  = slides[prev];
+
+    var enterFrom = direction === 'right' ? '-100%' : '100%';
+    var exitTo    = direction === 'right' ? '100%'  : '-100%';
+
+    // Update dots & ARIA immediately
     dots[prev].classList.remove('hero-dot--active');
     dots[prev].setAttribute('aria-selected', 'false');
+    slides[prev].setAttribute('aria-hidden', 'true');
+    dots[next].classList.add('hero-dot--active');
+    dots[next].setAttribute('aria-selected', 'true');
+    slides[next].setAttribute('aria-hidden', 'false');
 
-    slides[current].classList.add('hero-slide--active');
-    slides[current].setAttribute('aria-hidden', 'false');
-    dots[current].classList.add('hero-dot--active');
-    dots[current].setAttribute('aria-selected', 'true');
+    // Place entering slide off-screen with no transition yet
+    entering.style.transform = 'translateX(' + enterFrom + ')';
+    entering.style.opacity   = '1';
+
+    // Force layout so the initial position is committed before we add transition
+    entering.getBoundingClientRect();
+
+    // Arm transitions on both slides
+    entering.classList.add('hero-slide--in-transit');
+    exiting.classList.add('hero-slide--in-transit');
+
+    // Trigger the slide
+    entering.style.transform = 'translateX(0)';
+    exiting.style.transform  = 'translateX(' + exitTo + ')';
+
+    setTimeout(function () {
+      // Settle entering
+      entering.classList.add('hero-slide--active');
+      entering.classList.remove('hero-slide--in-transit');
+      entering.style.transform = '';
+      entering.style.opacity   = '';
+
+      // Reset exiting (now off-screen & invisible)
+      exiting.classList.remove('hero-slide--active', 'hero-slide--in-transit');
+      exiting.style.transform = '';
+
+      busy = false;
+    }, DURATION);
   }
 
-  function advance() { goTo(current + 1); }
+  function advance() { goTo(current + 1, 'left'); }
 
   function startTimer() {
     clearInterval(timer);
@@ -41,18 +83,31 @@
     startTimer();
   }
 
-  if (nextBtn) nextBtn.addEventListener('click', function () { goTo(current + 1); resetTimer(); });
-  if (prevBtn) prevBtn.addEventListener('click', function () { goTo(current - 1); resetTimer(); });
-
-  dots.forEach(function (dot, i) {
-    dot.addEventListener('click', function () { goTo(i); resetTimer(); });
+  // Left arrow  → exit left,  enter from right
+  if (prevBtn) prevBtn.addEventListener('click', function () {
+    goTo(current - 1, 'left');
+    resetTimer();
   });
 
-  // Pause auto-advance while the user hovers
+  // Right arrow → exit right, enter from left
+  if (nextBtn) nextBtn.addEventListener('click', function () {
+    goTo(current + 1, 'right');
+    resetTimer();
+  });
+
+  // Dots
+  dots.forEach(function (dot, i) {
+    dot.addEventListener('click', function () {
+      goTo(i, i > current ? 'left' : 'right');
+      resetTimer();
+    });
+  });
+
+  // Pause on hover
   slider.addEventListener('mouseenter', function () { clearInterval(timer); });
   slider.addEventListener('mouseleave', startTimer);
 
-  // Touch swipe (50 px threshold)
+  // Touch swipe — swipe left → advance left, swipe right → go right
   var touchX = 0;
   slider.addEventListener('touchstart', function (e) {
     touchX = e.changedTouches[0].clientX;
@@ -60,18 +115,18 @@
   slider.addEventListener('touchend', function (e) {
     var dx = e.changedTouches[0].clientX - touchX;
     if (Math.abs(dx) > 50) {
-      dx < 0 ? goTo(current + 1) : goTo(current - 1);
+      dx < 0 ? goTo(current + 1, 'left') : goTo(current - 1, 'right');
       resetTimer();
     }
   }, { passive: true });
 
-  // Keyboard navigation when the slider is focused
+  // Keyboard
   slider.addEventListener('keydown', function (e) {
-    if (e.key === 'ArrowRight') { goTo(current + 1); resetTimer(); }
-    if (e.key === 'ArrowLeft')  { goTo(current - 1); resetTimer(); }
+    if (e.key === 'ArrowLeft')  { goTo(current - 1, 'left');  resetTimer(); }
+    if (e.key === 'ArrowRight') { goTo(current + 1, 'right'); resetTimer(); }
   });
 
-  // Only auto-advance if the user hasn't opted out of motion
+  // Auto-advance (respects prefers-reduced-motion)
   if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     startTimer();
   }

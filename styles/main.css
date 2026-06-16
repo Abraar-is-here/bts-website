@@ -358,6 +358,7 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   width: 100%;
   min-height: 100vh;
   min-height: 100svh;
+  overflow: hidden; /* clip slides during horizontal transition */
 }
 
 .hero-slide {
@@ -366,12 +367,18 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   display: flex;
   align-items: center;
   opacity: 0;
-  transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: none;
+  will-change: transform;
 }
+
 .hero-slide--active {
   opacity: 1;
   pointer-events: auto;
+}
+
+/* Applied to both slides during a directional transition */
+.hero-slide--in-transit {
+  transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Launch slide: centred */
@@ -382,6 +389,7 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   max-width: 680px;
   margin-inline: auto;
 }
+
 
 .hero-launch {
   display: flex;
