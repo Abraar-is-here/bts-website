@@ -384,32 +384,16 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
 }
 
 .hero-launch {
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 420px;
-}
-
-/* Large ghost bull sits behind the title as a watermark */
-.hero-launch__bull--bg {
-  position: absolute;
-  width: clamp(220px, 32vw, 340px);
-  height: auto;
-  color: #fff;
-  opacity: 0.07;
-  pointer-events: none;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }
 
 .hero-launch__title {
-  position: relative;
-  z-index: 1;
   max-width: 14ch;
   text-wrap: balance;
   margin: 0;
+  text-align: center;
 }
 
 /* ---- Navigation arrows ---- */
@@ -1045,8 +1029,7 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
     align-items: flex-start;
     gap: var(--space-3);
   }
-  /* Launch slide: smaller ghost bull on tiny screens */
-  .hero-launch__bull--bg { width: 160px; }
+
 }
 
 /* Team page: tighter photos on small screens */
@@ -1122,7 +1105,8 @@ body.is-leaving {
   to   { opacity: 1; transform: translateY(0);    }
 }
 
-.hero__title {
+.hero__title,
+.hero-launch__title {
   animation: rise-fade 0.72s cubic-bezier(0.22, 1, 0.36, 1) 0.08s both;
 }
 
