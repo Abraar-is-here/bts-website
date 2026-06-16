@@ -184,6 +184,31 @@
 
     .team-card__li-icon { width: 40px; height: 40px; color: #fff; }
 
+    /* -------------------------------------------------------------------------
+       Staggered entrance — header first, presidents next, committee last.
+       ------------------------------------------------------------------------- */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0);    }
+    }
+
+    .team__head,
+    .team__tier {
+      opacity: 0;
+      animation: fadeUp 0.72s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .team__head             { animation-delay: 0.05s; }
+    .team__tier--presidents { animation-delay: 0.35s; }
+    .team__tier--committee  { animation-delay: 0.65s; }
+    /* Future tiers auto-stagger */
+    .team__tier:nth-child(3) { animation-delay: 0.95s; }
+    .team__tier:nth-child(4) { animation-delay: 1.25s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .team__head, .team__tier { opacity: 1; animation: none; }
+    }
+
     /* ---- Text ---- */
     .team-card__name {
       font-family: var(--font-display);
