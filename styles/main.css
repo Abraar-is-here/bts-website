@@ -1018,9 +1018,11 @@ body.is-leaving {
    gives a clean dissolve rather than a hard clip.
    --------------------------------------------------------------------------- */
 .partners {
-  background: var(--c-navy-abyss);
+  /* Transparent at the top so the aurora bleeds through naturally,
+     fading to solid navy by mid-section. */
+  background: linear-gradient(to bottom, transparent 0%, var(--c-navy-abyss) 70%);
   margin-top: -120px;
-  padding: 140px 0 calc(var(--space-6) + 64px);
+  padding: 148px 0 calc(var(--space-6) + 64px);
   overflow: hidden;
   position: relative;
   isolation: isolate;
