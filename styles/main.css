@@ -405,7 +405,6 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   color: var(--text-on-light);
   border-radius: 64px 64px 0 0;
   overflow: hidden;
-  margin-top: -8px;
   position: relative;
   z-index: 2;
   box-shadow: 0 -40px 120px rgba(0, 0, 0, 0.75);
@@ -1018,9 +1017,16 @@ body.is-leaving {
    --------------------------------------------------------------------------- */
 .partners {
   background: var(--c-navy-abyss);
-  padding: var(--space-6) 0;
+  /* Pull strip up into the hero gradient zone so the transition feels tight */
+  margin-top: -80px;
+  /* Extra bottom padding ensures the solid dark bg extends into the zone
+     where the panel's border-radius corner cutouts sit — blocks aurora bleed */
+  padding: var(--space-5) 0 100px;
   overflow: hidden;
   position: relative;
+  /* Own stacking context prevents the fixed aurora (z-index:-1) from showing
+     through the panel's rounded corner cutout areas */
+  isolation: isolate;
 }
 
 .partners__label {
@@ -1085,38 +1091,46 @@ body.is-leaving {
   .partners__stage:hover .partners__inner { animation-play-state: paused; }
 }
 
-/* Every logo gets an identical fixed slot: 160×52px, object-fit:contain
-   centres the actual mark within it. This normalises visual size regardless
-   of canvas dimensions or aspect ratio. */
+/* Base logo slot — height drives the reference size, row overflow clips
+   any transform that exceeds the row height. */
 .partners__logo {
-  width: 160px;
-  height: 52px;
+  height: 40px;
+  width: auto;
+  max-width: 200px;
   object-fit: contain;
   transition: filter 0.3s ease;
   flex-shrink: 0;
   user-select: none;
   pointer-events: none;
+  transform-origin: center;
 }
 
-/* PNG logos often have white backgrounds — invert flips white→black, then
-   mix-blend-mode:screen makes black fully transparent on the dark strip.
-   Logo marks (originally dark) become white and read cleanly. */
+/* PNG logos with white backgrounds: invert→screen makes bg transparent,
+   logo marks appear as white on the dark strip. */
 .partners__logo[src$=".png"] {
-  filter: invert(1) grayscale(1) brightness(1.8);
+  filter: invert(1) grayscale(1) brightness(2);
   mix-blend-mode: screen;
 }
 
-/* SVG logos have transparent backgrounds — simple brighten to near-white. */
+/* SVG logos have transparent backgrounds. */
 .partners__logo[src$=".svg"] {
-  filter: grayscale(1) brightness(3) opacity(0.65);
+  filter: grayscale(1) brightness(3) opacity(0.7);
 }
 
-/* WorldQuant has a coloured (orange) background + white text — inverting it
-   makes the text black and screen hides it. Skip invert for this one. */
+/* WorldQuant has a coloured (non-white) background — no invert. */
 .partners__logo[alt="WorldQuant"] {
   filter: grayscale(1) brightness(3) opacity(0.65);
   mix-blend-mode: normal;
 }
+
+/* Per-logo scale to equalise visual weight. Logos with heavy canvas padding
+   need a boost so their mark reads at the same size as DRW (tight crop).
+   Row overflow:hidden clips any bleed. */
+.partners__logo[alt="Headstart"]      { transform: scale(2.6); }
+.partners__logo[alt="Berenberg"]      { transform: scale(2.2); }
+.partners__logo[alt="WorldQuant"]     { transform: scale(1.6); }
+.partners__logo[alt="Outlook Energy"] { transform: scale(1.3); }
+.partners__logo[alt="HireHuub"]       { transform: scale(1.15); }
 
 @media (hover: hover) and (pointer: fine) {
   .partners__stage:hover .partners__logo[src$=".png"] {
@@ -1125,7 +1139,6 @@ body.is-leaving {
   }
   .partners__stage:hover .partners__logo[alt="WorldQuant"] {
     filter: none;
-    mix-blend-mode: normal;
   }
   .partners__stage:hover .partners__logo[src$=".svg"] {
     filter: none;
