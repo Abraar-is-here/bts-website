@@ -348,7 +348,112 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
 /* ---------------------------------------------------------------------------
    6. Hero (Section 1) — sits over the aurora
    --------------------------------------------------------------------------- */
-.hero { text-align: left; position: relative; z-index: 1; }
+.hero { text-align: left; position: relative; z-index: 1; display: block; padding: 0; }
+
+/* ---------------------------------------------------------------------------
+   Hero Slider
+   --------------------------------------------------------------------------- */
+.hero-slider {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+.hero-slide--active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Launch slide: centred */
+.hero__inner--launch {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  max-width: 680px;
+  margin-inline: auto;
+}
+
+.hero-launch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+.hero-launch__bull {
+  width: 96px;
+  height: auto;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.hero-launch__title {
+  max-width: 16ch;
+  text-wrap: balance;
+  margin: 0;
+}
+
+/* ---- Navigation arrows ---- */
+.hero-ctrl {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.22);
+  padding: var(--space-3);
+  z-index: 10;
+  transition: color 0.25s ease;
+  line-height: 0;
+}
+@media (hover: hover) and (pointer: fine) {
+  .hero-ctrl:hover { color: rgba(255, 255, 255, 0.65); }
+}
+.hero-ctrl--prev { left:  clamp(var(--space-2), 3vw, var(--space-5)); }
+.hero-ctrl--next { right: clamp(var(--space-2), 3vw, var(--space-5)); }
+.hero-ctrl svg   { display: block; width: 36px; height: 36px; stroke-width: 1.5; }
+
+/* Hide arrows on touch — dots + swipe are sufficient */
+@media (hover: none) {
+  .hero-ctrl { display: none; }
+}
+
+/* ---- Dot indicators ---- */
+.hero-dots {
+  position: absolute;
+  bottom: clamp(var(--space-4), 4vh, var(--space-6));
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 10;
+}
+
+.hero-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+.hero-dot--active {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(255, 255, 255, 0.85);
+  transform: scale(1.25);
+}
 
 /* Ink scrim behind the copy so white text keeps ≥4.5:1 even when a bright
    sky-blue crest of the aurora drifts under it. Sits above the fixed aurora
@@ -917,6 +1022,32 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   }
   .hero__actions { gap: var(--space-3); }
   .btn { padding: 14px 26px; }
+
+  /* Partners logos: a touch smaller on phones */
+  .partners__logo { height: 38px; }
+  .partners__inner { gap: 2.5rem; }
+}
+
+/* Stack hero CTA buttons on very small phones */
+@media (max-width: 420px) {
+  .hero__actions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+  /* Launch slide: smaller bull on tiny screens */
+  .hero-launch__bull { width: 64px; }
+}
+
+/* Team page: tighter photos on small screens */
+@media (max-width: 560px) {
+  .team__tier--presidents .team-card__photo { width: 150px; height: 150px; }
+}
+@media (max-width: 420px) {
+  .team__tier--presidents .team-card__photo { width: 130px; height: 130px; }
+  .team__tier--committee  .team-card__photo { width: 110px; height: 110px; }
+  .team-card__name  { font-size: 0.85rem; }
+  .team-card__role  { font-size: 0.75rem; }
 }
 
 /* Touch devices: guarantee a 44px minimum tap target on the nav links
