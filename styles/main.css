@@ -358,6 +358,7 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   width: 100%;
   min-height: 100vh;
   min-height: 100svh;
+  overflow: hidden; /* clip slides during horizontal transition */
 }
 
 .hero-slide {
@@ -366,12 +367,18 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   display: flex;
   align-items: center;
   opacity: 0;
-  transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: none;
+  will-change: transform;
 }
+
 .hero-slide--active {
   opacity: 1;
   pointer-events: auto;
+}
+
+/* Applied to both slides during a directional transition */
+.hero-slide--in-transit {
+  transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Launch slide: centred */
@@ -383,33 +390,39 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   margin-inline: auto;
 }
 
+
 .hero-launch {
-  position: relative;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  min-height: 420px;
+  gap: var(--space-4);
 }
 
-/* Large ghost bull sits behind the title as a watermark */
-.hero-launch__bull--bg {
-  position: absolute;
-  width: clamp(220px, 32vw, 340px);
-  height: auto;
-  color: #fff;
-  opacity: 0.07;
-  pointer-events: none;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.hero-launch__eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
 }
 
 .hero-launch__title {
-  position: relative;
-  z-index: 1;
   max-width: 14ch;
   text-wrap: balance;
   margin: 0;
+  text-align: center;
+}
+
+.hero-launch__sub {
+  font-family: var(--font-body);
+  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+  color: rgba(255, 255, 255, 0.55);
+  margin: 0;
+  text-align: center;
+  max-width: 36ch;
+  line-height: 1.5;
 }
 
 /* ---- Navigation arrows ---- */
@@ -1050,8 +1063,7 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
     align-items: flex-start;
     gap: var(--space-3);
   }
-  /* Launch slide: smaller ghost bull on tiny screens */
-  .hero-launch__bull--bg { width: 160px; }
+
 }
 
 /* Team page: tighter photos on small screens */
@@ -1127,7 +1139,8 @@ body.is-leaving {
   to   { opacity: 1; transform: translateY(0);    }
 }
 
-.hero__title {
+.hero__title,
+.hero-launch__title {
   animation: rise-fade 0.72s cubic-bezier(0.22, 1, 0.36, 1) 0.08s both;
 }
 
