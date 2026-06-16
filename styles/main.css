@@ -403,23 +403,12 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
 .panel {
   background: var(--c-surface);
   color: var(--text-on-light);
-  border-radius: 0;
+  border-radius: 64px 64px 0 0;
   overflow: hidden;
   position: relative;
   z-index: 2;
-}
-
-/* Gradient bridge: panel top fades from the strip colour to transparent so
-   the dark→light transition is a smooth colour wash, not a curve or hard line */
-.panel::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  top: 0; left: 0; right: 0;
-  height: 100px;
-  background: linear-gradient(to bottom, var(--c-navy-abyss) 0%, transparent 100%);
-  pointer-events: none;
-  z-index: 0;
+  margin-top: -64px;
+  box-shadow: 0 -12px 48px rgba(6, 17, 43, 0.2);
 }
 
 /* Centred vertical stack: heading on top, globe beneath. */
@@ -901,7 +890,7 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
 @media (max-width: 820px) {
   .panel__inner { gap: var(--space-5); }
   .globe-wrap { width: min(74vw, 400px); }
-  .panel { border-radius: 0; }
+  .panel { border-radius: 40px 40px 0 0; margin-top: -40px; }
 }
 
 /* Application form + division panels: single column once cards get narrow. */
@@ -949,6 +938,7 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
+  .partners { opacity: 1 !important; }
   /* The aurora CSS blobs settle into a static composed field. */
   .aurora-fallback span { animation: none !important; }
 }
@@ -1028,14 +1018,17 @@ body.is-leaving {
    gives a clean dissolve rather than a hard clip.
    --------------------------------------------------------------------------- */
 .partners {
-  /* Fades from transparent at the top (merges with hero gradient) to solid navy */
-  background: linear-gradient(to bottom, transparent 0%, var(--c-navy-abyss) 30%);
+  /* Extended gradient so the aurora shows through further down toward the label */
+  background: linear-gradient(to bottom, transparent 0%, var(--c-navy-abyss) 60%);
   margin-top: -120px;
-  padding: 140px 0 var(--space-6);
+  padding: 140px 0 calc(var(--space-6) + 64px);
   overflow: hidden;
   position: relative;
   isolation: isolate;
+  opacity: 0;
+  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1);
 }
+.partners.visible { opacity: 1; }
 
 .partners__label {
   font-family: var(--font-body);
@@ -1049,31 +1042,36 @@ body.is-leaving {
   opacity: 0.6;
 }
 
-/* Edge-fade mask so logos dissolve off the sides rather than clipping hard. */
+/* Edge-fade mask: logos visible only in the middle 2/4 of the screen. */
 .partners__stage {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: var(--space-6);
+  padding-block: var(--space-3);
   -webkit-mask-image: linear-gradient(
     to right,
     transparent 0%,
-    black 33%,
-    black 67%,
+    black 25%,
+    black 75%,
     transparent 100%
   );
   mask-image: linear-gradient(
     to right,
     transparent 0%,
-    black 33%,
-    black 67%,
+    black 25%,
+    black 75%,
     transparent 100%
   );
 }
 
-.partners__row { overflow: visible; }
+.partners__row {
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  min-height: 96px;
+}
 
-/* Inner strip holds logo set × 3 so animating to -33.33% loops invisibly at
-   any viewport width — the set is always wider than the screen. */
+/* Inner strip holds logo set × N copies; animate to -50% for a seamless loop. */
 .partners__inner {
   display: flex;
   align-items: center;
@@ -1083,21 +1081,16 @@ body.is-leaving {
 }
 
 @keyframes marquee-fwd {
-  from { transform: translateX(0);        }
-  to   { transform: translateX(-33.333%); }
+  from { transform: translateX(0);    }
+  to   { transform: translateX(-50%); }
 }
 @keyframes marquee-rev {
-  from { transform: translateX(-33.333%); }
-  to   { transform: translateX(0);        }
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0);    }
 }
 
-.partners__row--fwd .partners__inner { animation: marquee-fwd 36s linear infinite; }
-.partners__row--rev .partners__inner { animation: marquee-rev 28s linear infinite; }
-
-/* Pause on hover */
-@media (hover: hover) and (pointer: fine) {
-  .partners__stage:hover .partners__inner { animation-play-state: paused; }
-}
+.partners__row--fwd .partners__inner { animation: marquee-fwd 48s linear infinite; }
+.partners__row--rev .partners__inner { animation: marquee-rev 38s linear infinite; }
 
 /* Base logo slot — height drives the reference size, row overflow clips
    any transform that exceeds the row height. */
