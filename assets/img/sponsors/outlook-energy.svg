@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 56" width="160" height="56">
+  <!-- Ring mark -->
+  <circle cx="28" cy="28" r="28" fill="#17b8ca"/>
+  <circle cx="28" cy="28" r="13" fill="#06112b"/>
+  <!-- Wordmark -->
+  <text x="66" y="24"
+        font-family="'Arial', sans-serif"
+        font-size="13"
+        font-weight="700"
+        fill="#17b8ca"
+        letter-spacing="0.5">OUTLOOK</text>
+  <text x="66" y="42"
+        font-family="'Arial', sans-serif"
+        font-size="13"
+        font-weight="700"
+        fill="#17b8ca"
+        letter-spacing="0.5">ENERGY</text>
+</svg>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 64" width="160" height="64">
+  <!-- Bull horns (simplified arcs) -->
+  <path d="M 36 28 Q 20 6  8 14 Q 2 18  7 26 Q 16 14 34 30" fill="#76c800"/>
+  <path d="M 68 28 Q 84 6  96 14 Q 102 18  97 26 Q 88 14 70 30" fill="#76c800"/>
+  <!-- eToro wordmark -->
+  <text x="4" y="60"
+        font-family="'Trebuchet MS', 'Arial Rounded MT Bold', Arial, sans-serif"
+        font-size="36"
+        font-weight="700"
+        fill="#76c800">etoro</text>
+</svg>
