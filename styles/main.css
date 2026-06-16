@@ -384,9 +384,12 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
 .panel {
   background: var(--c-surface);
   color: var(--text-on-light);
-  border-radius: 48px 48px 0 0;      /* rounded top reveals the aurora behind  */
+  border-radius: 48px 48px 0 0;
   overflow: hidden;
-  box-shadow: var(--shadow-panel);   /* lift the light panel off the aurora    */
+  box-shadow: var(--shadow-panel);
+  /* Outline in the surface colour seals the 1-2px subpixel gap that appears
+     at the curved corners where the panel meets the dark strip beneath it. */
+  outline: 3px solid var(--c-surface);
 }
 
 /* Centred vertical stack: heading on top, globe beneath. */
@@ -986,3 +989,101 @@ body.is-leaving {
 /* Team cards fan in one after the other */
 .team-card:nth-child(1) { animation: rise-fade 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.28s both; }
 .team-card:nth-child(2) { animation: rise-fade 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.42s both; }
+
+/* ---------------------------------------------------------------------------
+   11. Partners & Sponsors marquee
+   ---------------------------------------------------------------------------
+   Two infinite conveyor rows: row 1 drifts left, row 2 drifts right at a
+   slightly different speed so the two lines feel independent. Edge-fade mask
+   gives a clean dissolve rather than a hard clip.
+   --------------------------------------------------------------------------- */
+.partners {
+  background: var(--c-navy-abyss);
+  padding: var(--space-5) 0;
+  border-top: 1px solid var(--hairline);
+  overflow: hidden;
+}
+
+.partners__label {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  text-align: center;
+  margin-bottom: var(--space-4);
+  opacity: 0.6;
+}
+
+/* Edge-fade mask so logos dissolve off the sides rather than clipping hard. */
+.partners__stage {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+}
+
+.partners__row { overflow: hidden; }
+
+/* The inner strip is twice the natural width (logo set × 2) so the animation
+   can loop to -50% and snap back to 0 invisibly. */
+.partners__inner {
+  display: flex;
+  align-items: center;
+  gap: clamp(2.5rem, 5vw, 4rem);
+  width: max-content;
+  will-change: transform;
+}
+
+@keyframes marquee-fwd {
+  from { transform: translateX(0);    }
+  to   { transform: translateX(-50%); }
+}
+@keyframes marquee-rev {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0);    }
+}
+
+.partners__row--fwd .partners__inner { animation: marquee-fwd 32s linear infinite; }
+.partners__row--rev .partners__inner { animation: marquee-rev 24s linear infinite; }
+
+/* Pause on hover — gives users time to read a logo without it running away. */
+@media (hover: hover) and (pointer: fine) {
+  .partners__stage:hover .partners__inner { animation-play-state: paused; }
+}
+
+.partners__logo {
+  height: 34px;
+  width: auto;
+  max-width: 140px;
+  object-fit: contain;
+  /* Desaturate slightly so no single logo's brand colour dominates.
+     Full colour + opacity on hover. */
+  filter: grayscale(30%) brightness(1.1);
+  opacity: 0.72;
+  transition: opacity 0.2s ease, filter 0.2s ease;
+  flex-shrink: 0;
+  user-select: none;
+  pointer-events: none; /* let the marquee row handle hover, not individual logos */
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .partners__stage:hover .partners__logo {
+    opacity: 1;
+    filter: none;
+  }
+}
