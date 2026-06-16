@@ -100,14 +100,13 @@ body {
   line-height: 1.5;
 }
 
-/* Mono eyebrow / tag / label treatment: UPPERCASE + 0.14em tracking. */
 .eyebrow,
 .label {
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: var(--fs-label);
-  font-weight: 400;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: var(--tracking-label);
+  letter-spacing: 0.1em;
   line-height: var(--lh-label);
   color: var(--text-secondary);
 }
