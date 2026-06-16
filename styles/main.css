@@ -393,8 +393,19 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
 
 .hero-launch {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  gap: var(--space-4);
+}
+
+.hero-launch__eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
 }
 
 .hero-launch__title {
@@ -402,6 +413,16 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   text-wrap: balance;
   margin: 0;
   text-align: center;
+}
+
+.hero-launch__sub {
+  font-family: var(--font-body);
+  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+  color: rgba(255, 255, 255, 0.55);
+  margin: 0;
+  text-align: center;
+  max-width: 36ch;
+  line-height: 1.5;
 }
 
 /* ---- Navigation arrows ---- */
