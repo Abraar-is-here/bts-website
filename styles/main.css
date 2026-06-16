@@ -458,28 +458,42 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 10px;
+  gap: 0;
   z-index: 10;
 }
 
 .hero-dot {
+  /* Tap target — narrow width pulls visual dots closer while keeping 44px height for touch */
+  width: 20px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: none;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  transition: opacity 0.3s ease;
+}
+/* Visual dot — 2px pinprick on desktop */
+.hero-dot::before {
+  content: '';
+  position: absolute;
+  inset: 50%;
+  transform: translate(-50%, -50%);
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  border: 1.5px solid rgba(255, 255, 255, 0.45);
-  background: transparent;
-  cursor: pointer;
-  /* Invisible padding expands the touch/click target to ≥44px without
-     changing the visual dot size. */
-  padding: 10px;
-  margin: -10px;
-  box-sizing: content-box;
-  transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+  background: rgba(255, 255, 255, 0.4);
+  transition: background 0.3s ease, width 0.3s ease, height 0.3s ease;
 }
-.hero-dot--active {
-  background: rgba(255, 255, 255, 0.85);
-  border-color: rgba(255, 255, 255, 0.85);
-  transform: scale(1.25);
+.hero-dot--active::before {
+  background: rgba(255, 255, 255, 1);
+}
+
+@media (max-width: 768px) {
+  .hero-dots { gap: 4px; }
+  .hero-dot::before { width: 7px; height: 7px; background: rgba(255,255,255,0.4); }
+  .hero-dot--active::before { background: rgba(255,255,255,0.95); }
 }
 
 /* Ink scrim behind the copy so white text keeps ≥4.5:1 even when a bright
