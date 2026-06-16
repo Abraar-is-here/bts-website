@@ -881,6 +881,9 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   min-height: 100vh;
   min-height: 100svh;
   padding-block: clamp(var(--space-7), 16vh, var(--space-8)) var(--space-7);
+  /* This page is a single tall section; the global y-snap otherwise keeps
+     pulling the top back as you scroll. Opt out of snapping here. */
+  scroll-snap-align: none;
 }
 .divisions::before {
   content: '';
@@ -965,18 +968,20 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   to   { opacity: 0; transform: translateY(-6px); }
 }
 
-.div-panel.is-active  { animation: divReveal 0.32s cubic-bezier(0.22, 1, 0.36, 1) both; }
-.div-panel.is-leaving { animation: divLeave  0.16s ease-in both; pointer-events: none; }
+.div-panel.is-active  { animation: divReveal 0.26s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.div-panel.is-leaving { animation: divLeave  0.16s cubic-bezier(0.22, 1, 0.36, 1) both; pointer-events: none; }
 
-.div-panel__kicker { display: block; margin-bottom: var(--space-2); }
 .div-panel__name { margin-bottom: var(--space-3); }
 .div-panel__what { color: var(--text-secondary); max-width: 70ch; }
 
 .div-panel__cols {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-4);
   margin-top: var(--space-5);
+  /* Single column now, so cap the measure — full-width list items would
+     otherwise run well past a comfortable 65–75ch line length. */
+  max-width: 64ch;
 }
 .div-block__title {
   margin-bottom: var(--space-3);
