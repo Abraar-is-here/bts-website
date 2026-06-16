@@ -23,6 +23,6 @@
 
     setTimeout(function () {
       window.location.href = href;
-    }, 230);
+    }, 160);
   });
 })();

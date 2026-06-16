@@ -814,13 +814,18 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   padding: clamp(var(--space-3), 4vw, var(--space-5));
 }
 .div-panel:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 4px; }
-/* Gentle reveal on switch (occasional, well under 300ms; rise + fade, never
-   from scale(0)). Disabled under reduced motion. */
-.div-panel.is-active { animation: divReveal var(--dur-med) var(--ease-out); }
+
 @keyframes divReveal {
   from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: none; }
 }
+@keyframes divLeave {
+  from { opacity: 1; transform: translateY(0);   }
+  to   { opacity: 0; transform: translateY(-6px); }
+}
+
+.div-panel.is-active  { animation: divReveal 0.32s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.div-panel.is-leaving { animation: divLeave  0.16s ease-in both; pointer-events: none; }
 
 .div-panel__kicker { display: block; margin-bottom: var(--space-2); }
 .div-panel__name { margin-bottom: var(--space-3); }
@@ -938,7 +943,7 @@ body {
 
 body.is-leaving {
   opacity: 0;
-  transition: opacity 0.22s ease-in;
+  transition: opacity 0.15s ease-in;
   pointer-events: none;
 }
 
