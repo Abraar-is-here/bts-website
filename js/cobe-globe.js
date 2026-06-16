@@ -135,10 +135,16 @@ import createGlobe from 'https://esm.sh/cobe@0.6.3'
 
   function updateLabel () {
     const size = canvas.offsetWidth
-    if (size > 0) {
-      const p = project(BRISTOL_LAT, BRISTOL_LON, livePhi, liveTheta, size)
-      label.style.left    = p.x + 'px'
-      label.style.top     = p.y + 'px'
+    if (size > 0 && wrap) {
+      const p          = project(BRISTOL_LAT, BRISTOL_LON, livePhi, liveTheta, size)
+      // canvas may be centered inside wrap (e.g. via flexbox/margin:auto)
+      // offset its rect so the label lands over the actual rendered pixel
+      const canvasRect = canvas.getBoundingClientRect()
+      const wrapRect   = wrap.getBoundingClientRect()
+      const offsetX    = canvasRect.left - wrapRect.left
+      const offsetY    = canvasRect.top  - wrapRect.top
+      label.style.left    = (offsetX + p.x) + 'px'
+      label.style.top     = (offsetY + p.y) + 'px'
       label.style.opacity = p.visible ? '1' : '0'
     }
     requestAnimationFrame(updateLabel)
