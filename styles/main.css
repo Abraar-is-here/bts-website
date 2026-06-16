@@ -914,3 +914,70 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   /* The aurora CSS blobs settle into a static composed field. */
   .aurora-fallback span { animation: none !important; }
 }
+
+/* ---------------------------------------------------------------------------
+   10. Motion — entrance animations + page transitions
+   ---------------------------------------------------------------------------
+   All durations/curves follow Emil Kowalski's principle: ease-out (things
+   arrive quickly and settle), never ease-in (things leaving should be fast).
+   Every animation is overridden to ~0ms by section 9 when the user has
+   prefers-reduced-motion set.
+   --------------------------------------------------------------------------- */
+
+/* --- Page enter / exit ---------------------------------------------------- */
+/* Body fades in on every page load. js/transitions.js adds .is-leaving before
+   navigating away, which triggers the quick fade-out transition. */
+@keyframes page-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+body {
+  animation: page-fade-in 0.4s ease-out both;
+}
+
+body.is-leaving {
+  opacity: 0;
+  transition: opacity 0.22s ease-in;
+  pointer-events: none;
+}
+
+/* --- Hero stagger --------------------------------------------------------- */
+/* Heading rises and fades first; the action buttons follow 0.28s later.
+   animation-fill-mode: both keeps elements invisible before their delay fires. */
+@keyframes rise-fade {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+.hero__title {
+  animation: rise-fade 0.72s cubic-bezier(0.22, 1, 0.36, 1) 0.08s both;
+}
+
+.hero__actions {
+  animation: rise-fade 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.32s both;
+}
+
+/* --- Inner-page header stagger (divisions, team, 404, apply, contact) ----- */
+.divisions__head,
+.apply__head,
+.contact__head,
+.not-found__eyebrow,
+.not-found__code,
+.not-found__rule,
+.not-found__title,
+.not-found__body,
+.not-found > .btn--primary {
+  animation: rise-fade 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Cascade each element 0.1s after the previous */
+.not-found__code         { animation-delay: 0.06s; }
+.not-found__rule         { animation-delay: 0.14s; }
+.not-found__title        { animation-delay: 0.22s; }
+.not-found__body         { animation-delay: 0.30s; }
+.not-found > .btn--primary { animation-delay: 0.38s; }
+
+/* Team cards fan in one after the other */
+.team-card:nth-child(1) { animation: rise-fade 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.28s both; }
+.team-card:nth-child(2) { animation: rise-fade 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.42s both; }
