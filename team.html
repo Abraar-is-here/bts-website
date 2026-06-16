@@ -227,12 +227,6 @@
       letter-spacing: 0.01em;
     }
 
-    /* Suppress lift + overlay for cards that shouldn't have hover effects */
-    @media (hover: hover) and (pointer: fine) {
-      .team-card--no-hover:hover { transform: none; }
-      .team-card--no-hover:hover .team-card__overlay { opacity: 0; }
-      .team-card--no-hover:hover .team-card__photo { box-shadow: 0 0 0 2px var(--hairline), var(--shadow-card); }
-    }
 
     /* -------------------------------------------------------------------------
        Division Heads — sub-grouped hiring placeholders
@@ -410,7 +404,7 @@
             <p class="team-card__role">Treasurer</p>
           </a>
 
-          <a class="team-card team-card--no-hover" href="https://www.linkedin.com/in/emily-chiaia-miller-006469313/" target="_blank" rel="noopener noreferrer" aria-label="Emily Chiaia-Miller, DEI Officer — LinkedIn profile">
+          <a class="team-card" href="https://www.linkedin.com/in/emily-chiaia-miller-006469313/" target="_blank" rel="noopener noreferrer" aria-label="Emily Chiaia-Miller, DEI Officer — LinkedIn profile">
             <div class="team-card__photo">
               <img class="team-card__img" src="assets/img/team/emily-chiaia-miller.jpg" alt="Emily Chiaia-Miller" onerror="this.style.display='none'" />
               <svg class="team-card__img" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="180" height="180" fill="#0d2b6b"/><text x="90" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="62" font-weight="700" fill="#38bdf8" letter-spacing="-2">EC</text></svg>
