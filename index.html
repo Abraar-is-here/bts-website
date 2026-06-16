@@ -24,7 +24,7 @@
   <link rel="stylesheet" href="styles/tokens/colors.css?v=13" />
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
-  <link rel="stylesheet" href="styles/main.css?v=26" />
+  <link rel="stylesheet" href="styles/main.css?v=28" />
 </head>
 <body>
 
@@ -171,24 +171,6 @@
       </div>
     </div>
   </section>
-
-  <!-- Partners section fade-in on scroll -->
-  <script>
-    (function () {
-      var section = document.querySelector('.partners');
-      var trigger = document.querySelector('.partners__label');
-      if (!section || !trigger) return;
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        section.classList.add('visible'); return;
-      }
-      /* rootMargin shrinks the bottom of the viewport by 25% so the label
-         must be scrolled a quarter-screen into view before the fade fires. */
-      var io = new IntersectionObserver(function (entries) {
-        if (entries[0].isIntersecting) { section.classList.add('visible'); io.disconnect(); }
-      }, { rootMargin: '0px 0px -25% 0px', threshold: 0 });
-      io.observe(trigger);
-    })();
-  </script>
 
   <!-- Scripts: deferred so they run after the DOM is parsed. -->
   <script src="js/aurora.js?v=9" defer></script>

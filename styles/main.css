@@ -156,7 +156,7 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
 @keyframes drift6 { 0%,100% { transform: translate(-45%, -60%) scale(1.2); } 50% { transform: translate(-55%, -35%) scale(1); } }
 @keyframes breathe { 0%,100% { transform: translate(-50%, -50%); background-position: 0% 50%; } 50% { transform: translate(-50%, -50%); background-position: 100% 50%; } }
 
-/* A subtle vignette tying the aurora to the dark ground at the edges. */
+/* Edge vignette tying the aurora to the dark ground. */
 .aurora::after {
   content: '';
   position: absolute;
@@ -332,6 +332,12 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   align-items: center;
   scroll-snap-align: start;
 }
+
+/* Non-hero dark sections get the same dim overlay as the hero scrim average
+   so the aurora reads at consistent brightness across every page. */
+.section:not(.hero):not(.panel) {
+  background: rgba(6, 17, 43, 0.50);
+}
 .container {
   width: 100%;
   max-width: var(--container-max);
@@ -356,21 +362,19 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   pointer-events: none;
 }
 
-/* Depth fade at the bottom of the hero. Multi-stop easing avoids a visible
-   start line — the fade begins very gently from 30% of the way up. */
+/* Subtle depth scrim at the bottom of the hero — darkens gently but never
+   goes solid, so the aurora flows continuously into the partners strip below. */
 .hero::after {
   content: '';
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  height: 280px;
+  height: 240px;
   z-index: 0;
   background: linear-gradient(
     to bottom,
-    transparent                  0%,
-    rgba(6, 17, 43, 0.0)        20%,
-    rgba(6, 17, 43, 0.25)       50%,
-    rgba(6, 17, 43, 0.75)       80%,
-    var(--c-navy-abyss)         100%
+    transparent          0%,
+    rgba(6, 17, 43, 0.1) 40%,
+    rgba(6, 17, 43, 0.35) 100%
   );
   pointer-events: none;
 }
@@ -938,7 +942,6 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
-  .partners { opacity: 1 !important; }
   /* The aurora CSS blobs settle into a static composed field. */
   .aurora-fallback span { animation: none !important; }
 }
@@ -1017,19 +1020,15 @@ body.is-leaving {
    slightly different speed so the two lines feel independent. Edge-fade mask
    gives a clean dissolve rather than a hard clip.
    --------------------------------------------------------------------------- */
+/* Dim overlay matches the hero scrim's average brightness so the aurora
+   looks identical in the partners strip and in the hero section. */
 .partners {
-  /* Transparent at the top so the aurora bleeds through naturally,
-     fading to solid navy by mid-section. */
-  background: linear-gradient(to bottom, transparent 0%, var(--c-navy-abyss) 70%);
-  margin-top: -120px;
-  padding: 148px 0 calc(var(--space-6) + 64px);
+  background: rgba(6, 17, 43, 0.50);
+  padding: var(--space-4) 0 calc(var(--space-6) + 64px);
   overflow: hidden;
   position: relative;
   isolation: isolate;
-  opacity: 0;
-  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.partners.visible { opacity: 1; }
 
 .partners__label {
   font-family: var(--font-body);
