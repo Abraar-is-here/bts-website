@@ -356,6 +356,18 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   pointer-events: none;
 }
 
+/* Depth fade at the bottom of the hero — signals the next section without
+   a harsh cut. Gradient matches the partners strip colour exactly. */
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 160px;
+  z-index: 0;
+  background: linear-gradient(to bottom, transparent 0%, var(--c-navy-abyss) 100%);
+  pointer-events: none;
+}
+
 .hero__inner {
   max-width: 1100px;
   position: relative;
@@ -386,10 +398,10 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   color: var(--text-on-light);
   border-radius: 48px 48px 0 0;
   overflow: hidden;
-  box-shadow: var(--shadow-panel);
-  /* Outline in the surface colour seals the 1-2px subpixel gap that appears
-     at the curved corners where the panel meets the dark strip beneath it. */
-  outline: 3px solid var(--c-surface);
+  /* Strong upward shadow makes the panel visually lift off the dark strip,
+     clearly signalling a new section. Outline seals the subpixel corner gap. */
+  box-shadow: 0 -24px 80px rgba(0, 0, 0, 0.55), var(--shadow-panel);
+  outline: 3px solid var(--c-navy-abyss);
 }
 
 /* Centred vertical stack: heading on top, globe beneath. */
@@ -999,9 +1011,9 @@ body.is-leaving {
    --------------------------------------------------------------------------- */
 .partners {
   background: var(--c-navy-abyss);
-  padding: var(--space-5) 0;
-  border-top: 1px solid var(--hairline);
+  padding: var(--space-6) 0;
   overflow: hidden;
+  position: relative;
 }
 
 .partners__label {
@@ -1024,15 +1036,15 @@ body.is-leaving {
   -webkit-mask-image: linear-gradient(
     to right,
     transparent 0%,
-    black 10%,
-    black 90%,
+    black 33%,
+    black 67%,
     transparent 100%
   );
   mask-image: linear-gradient(
     to right,
     transparent 0%,
-    black 10%,
-    black 90%,
+    black 33%,
+    black 67%,
     transparent 100%
   );
 }
@@ -1067,23 +1079,22 @@ body.is-leaving {
 }
 
 .partners__logo {
-  height: 34px;
+  height: 48px;
   width: auto;
-  max-width: 140px;
+  max-width: 180px;
   object-fit: contain;
-  /* Desaturate slightly so no single logo's brand colour dominates.
-     Full colour + opacity on hover. */
-  filter: grayscale(30%) brightness(1.1);
-  opacity: 0.72;
-  transition: opacity 0.2s ease, filter 0.2s ease;
+  /* Full greyscale + strong brightness lift makes every logo — regardless of
+     its brand colour — read as a consistent near-white mark on the dark strip.
+     True colours restore on hover. */
+  filter: grayscale(1) brightness(3) opacity(0.65);
+  transition: opacity 0.25s ease, filter 0.25s ease;
   flex-shrink: 0;
   user-select: none;
-  pointer-events: none; /* let the marquee row handle hover, not individual logos */
+  pointer-events: none;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .partners__stage:hover .partners__logo {
-    opacity: 1;
-    filter: none;
+    filter: grayscale(0) brightness(1) opacity(1);
   }
 }
