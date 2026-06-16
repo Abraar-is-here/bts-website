@@ -405,12 +405,10 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   color: var(--text-on-light);
   border-radius: 64px 64px 0 0;
   overflow: hidden;
-  /* Negative margin so the panel slightly overlaps the strip, closing the
-     subpixel anti-alias gap at the curved corners — no outline needed. */
-  margin-top: -4px;
+  margin-top: -8px;
   position: relative;
   z-index: 2;
-  box-shadow: 0 -32px 100px rgba(0, 0, 0, 0.7), 0 -2px 0 rgba(255, 255, 255, 0.06);
+  box-shadow: 0 -40px 120px rgba(0, 0, 0, 0.75);
 }
 
 /* Centred vertical stack: heading on top, globe beneath. */
@@ -1065,7 +1063,7 @@ body.is-leaving {
 .partners__inner {
   display: flex;
   align-items: center;
-  gap: clamp(4rem, 8vw, 7rem);
+  gap: clamp(2.5rem, 4vw, 4rem);
   width: max-content;
   will-change: transform;
 }
@@ -1087,12 +1085,14 @@ body.is-leaving {
   .partners__stage:hover .partners__inner { animation-play-state: paused; }
 }
 
+/* Every logo gets an identical fixed slot: 160×52px, object-fit:contain
+   centres the actual mark within it. This normalises visual size regardless
+   of canvas dimensions or aspect ratio. */
 .partners__logo {
-  height: 64px;
-  width: auto;
-  max-width: 280px;
+  width: 160px;
+  height: 52px;
   object-fit: contain;
-  transition: filter 0.3s ease, mix-blend-mode 0.3s ease;
+  transition: filter 0.3s ease;
   flex-shrink: 0;
   user-select: none;
   pointer-events: none;
