@@ -356,15 +356,22 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   pointer-events: none;
 }
 
-/* Depth fade at the bottom of the hero — signals the next section without
-   a harsh cut. Gradient matches the partners strip colour exactly. */
+/* Depth fade at the bottom of the hero. Multi-stop easing avoids a visible
+   start line — the fade begins very gently from 30% of the way up. */
 .hero::after {
   content: '';
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  height: 160px;
+  height: 280px;
   z-index: 0;
-  background: linear-gradient(to bottom, transparent 0%, var(--c-navy-abyss) 100%);
+  background: linear-gradient(
+    to bottom,
+    transparent                  0%,
+    rgba(6, 17, 43, 0.0)        20%,
+    rgba(6, 17, 43, 0.25)       50%,
+    rgba(6, 17, 43, 0.75)       80%,
+    var(--c-navy-abyss)         100%
+  );
   pointer-events: none;
 }
 
@@ -398,8 +405,12 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   color: var(--text-on-light);
   border-radius: 64px 64px 0 0;
   overflow: hidden;
-  box-shadow: 0 -32px 100px rgba(0, 0, 0, 0.7), 0 -2px 0 rgba(255,255,255,0.06);
-  outline: 4px solid var(--c-navy-abyss);
+  /* Negative margin so the panel slightly overlaps the strip, closing the
+     subpixel anti-alias gap at the curved corners — no outline needed. */
+  margin-top: -4px;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 -32px 100px rgba(0, 0, 0, 0.7), 0 -2px 0 rgba(255, 255, 255, 0.06);
 }
 
 /* Centred vertical stack: heading on top, globe beneath. */
@@ -1077,19 +1088,46 @@ body.is-leaving {
 }
 
 .partners__logo {
-  height: 52px;
+  height: 64px;
   width: auto;
-  max-width: 220px;
+  max-width: 280px;
   object-fit: contain;
-  filter: grayscale(1) brightness(3) opacity(0.6);
-  transition: filter 0.3s ease;
+  transition: filter 0.3s ease, mix-blend-mode 0.3s ease;
   flex-shrink: 0;
   user-select: none;
   pointer-events: none;
 }
 
+/* PNG logos often have white backgrounds — invert flips white→black, then
+   mix-blend-mode:screen makes black fully transparent on the dark strip.
+   Logo marks (originally dark) become white and read cleanly. */
+.partners__logo[src$=".png"] {
+  filter: invert(1) grayscale(1) brightness(1.8);
+  mix-blend-mode: screen;
+}
+
+/* SVG logos have transparent backgrounds — simple brighten to near-white. */
+.partners__logo[src$=".svg"] {
+  filter: grayscale(1) brightness(3) opacity(0.65);
+}
+
+/* WorldQuant has a coloured (orange) background + white text — inverting it
+   makes the text black and screen hides it. Skip invert for this one. */
+.partners__logo[alt="WorldQuant"] {
+  filter: grayscale(1) brightness(3) opacity(0.65);
+  mix-blend-mode: normal;
+}
+
 @media (hover: hover) and (pointer: fine) {
-  .partners__stage:hover .partners__logo {
-    filter: grayscale(0) brightness(1) opacity(1);
+  .partners__stage:hover .partners__logo[src$=".png"] {
+    filter: none;
+    mix-blend-mode: normal;
+  }
+  .partners__stage:hover .partners__logo[alt="WorldQuant"] {
+    filter: none;
+    mix-blend-mode: normal;
+  }
+  .partners__stage:hover .partners__logo[src$=".svg"] {
+    filter: none;
   }
 }
