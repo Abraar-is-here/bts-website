@@ -469,7 +469,11 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   border: 1.5px solid rgba(255, 255, 255, 0.45);
   background: transparent;
   cursor: pointer;
-  padding: 0;
+  /* Invisible padding expands the touch/click target to ≥44px without
+     changing the visual dot size. */
+  padding: 10px;
+  margin: -10px;
+  box-sizing: content-box;
   transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
 }
 .hero-dot--active {
@@ -514,7 +518,7 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
 }
 
 .hero__title {
-  margin-bottom: var(--space-5);
+  margin-bottom: clamp(var(--space-4), 6vh, var(--space-5));
   max-width: 18ch;                   /* fits the longest word ("applications") */
 }
 
@@ -568,9 +572,8 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   aspect-ratio: 1 / 1;
   min-width: 0;
 }
-/* Draggable: grab affordance, and touch-action:none so a drag rotates the
-   globe instead of scrolling the page on touch devices. Position above the
-   halo so it receives the pointer. */
+/* Draggable: grab affordance. pan-y lets the user still scroll the page
+   vertically on touch; only horizontal drags are captured for globe rotation. */
 #globe-canvas {
   width: 100%;
   height: 100%;
@@ -578,7 +581,7 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   position: relative;
   z-index: 1;
   cursor: grab;
-  touch-action: none;
+  touch-action: pan-y;
   border-radius: 50%;          /* keeps the focus ring circular, on-brand */
   outline: none;
 }
@@ -1038,11 +1041,14 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
 
 @media (max-width: 560px) {
   .logo__full { display: none; }      /* keep lockup crisp & compact on phones */
-  .nav { padding: 8px 8px 8px 14px; }
+  .nav {
+    padding: 8px 8px 8px 14px;
+    gap: var(--space-2);              /* tighten logo→links gap: 32→8px         */
+  }
   /* Phone-width links also get the 44px tap target (width is a reliable proxy
      for touch; the @media(hover:none) rule below covers wider touch devices). */
   .nav__link {
-    padding: 8px 13px;
+    padding: 8px 10px;
     font-size: 0.75rem;
     min-height: 44px;
     display: inline-flex;
@@ -1054,6 +1060,12 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   /* Partners logos: a touch smaller on phones */
   .partners__logo { height: 38px; }
   .partners__inner { gap: 2.5rem; }
+}
+
+/* Extra squeeze for very small phones (≤400px) so the 3-item nav never wraps */
+@media (max-width: 400px) {
+  .nav { gap: var(--space-1); padding: 6px 6px 6px 12px; }
+  .nav__link { padding: 6px 8px; font-size: 0.6875rem; }
 }
 
 /* Stack hero CTA buttons on very small phones */
