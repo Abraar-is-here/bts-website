@@ -64,7 +64,7 @@
   function validateOne(input) {
     var name = input.name, v = (input.value || '').trim();
     var required = ['firstName', 'lastName', 'uniEmail', 'phone', 'year', 'course',
-                    'choice1', 'choice2'].indexOf(name) !== -1;
+                    'choice1'].indexOf(name) !== -1;
     clearError(input);
     if (required && !v) { setError(input, 'This field is required.'); return; }
     if (!v) return; // optional + empty
@@ -85,7 +85,7 @@
     var firstInvalid = null;
     function fail(input, msg) { setError(input, msg); if (!firstInvalid) firstInvalid = input; }
 
-    var req = ['firstName', 'lastName', 'uniEmail', 'phone', 'year', 'course', 'choice1', 'choice2'];
+    var req = ['firstName', 'lastName', 'uniEmail', 'phone', 'year', 'course', 'choice1'];
     req.forEach(function (name) {
       var input = form[name];
       clearError(input);

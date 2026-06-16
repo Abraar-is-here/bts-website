@@ -91,7 +91,7 @@ function notify(d, cvUrl) {
     'LinkedIn:         ' + (d.linkedin || '—'),
     '',
     '1st choice: ' + d.choice1,
-    '2nd choice: ' + d.choice2,
+    '2nd choice: ' + (d.choice2 || '—'),
     'CV:         ' + (cvUrl || '—')
   ].join('\n');
   var options = {};
