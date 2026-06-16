@@ -302,18 +302,20 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
 /* Press feedback. Declared after :hover so the scale wins while held down. */
 .btn--primary:active { transform: scale(0.97); }
 
-/* Secondary — graphite pill (the "Learn more" CTA beside Apply). Neutral
-   dark grey so it sits a clear step below the blue primary in the hierarchy. */
+/* Secondary — ghost outline pill. Transparent so the aurora breathes through;
+   a white border at ~40% opacity gives shape without competing with the blue
+   primary. Clear hierarchy: primary shouts, secondary whispers. */
 .btn--secondary {
-  background: var(--c-graphite);
+  background: transparent;
   color: #fff;
-  box-shadow: var(--shadow-pill);
+  border: 1.5px solid rgba(255, 255, 255, 0.40);
+  box-shadow: none;
 }
 @media (hover: hover) and (pointer: fine) {
   .btn--secondary:hover {
-    background: var(--c-graphite-hover);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.65);
     transform: translateY(-2px);
-    box-shadow: 0 12px 34px rgba(17, 19, 24, 0.55), var(--shadow-pill);
   }
   .btn--secondary:hover .btn__arrow { transform: translateX(4px); }
 }
