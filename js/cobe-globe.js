@@ -93,7 +93,6 @@ import createGlobe from 'https://esm.sh/cobe@0.6.3'
     whiteSpace:    'nowrap',
     transition:    'opacity 0.3s ease',
     opacity:       '0',
-    transform:     'translate(-50%, calc(-100% - 10px))',
   })
 
   const wrap = canvas.parentElement
@@ -103,49 +102,61 @@ import createGlobe from 'https://esm.sh/cobe@0.6.3'
   wrap?.appendChild(label)
 
   /* ── 3D → 2D projection ─────────────────────────────────────────────────── */
-  // cobe convention: viewer looks along +Z.
-  // A geographic point (lat, lon) maps to:
-  //   x = cos(lat) * sin(lon - phi)   ← screen horizontal
-  //   y = sin(lat)                     ← screen vertical (up)
-  //   z = cos(lat) * cos(lon - phi)   ← depth (+ = toward viewer)
-  // Then theta tilts around the X axis.
+  // cobe's internal 3D coordinate system (matches its GLSL source):
+  //   x3 = cos(lat) * cos(lon)   ← toward viewer at lon=0, phi=0
+  //   y3 = sin(lat)               ← up
+  //   z3 = cos(lat) * sin(lon)   ← east (lon=90° E)
+  //
+  // Phi rotation around Y axis (right-hand, increasing phi → moves prime
+  // meridian leftward on screen → we see more of the eastern hemisphere):
+  //   xr = cos(phi)*x3 - sin(phi)*z3   ← screen-x
+  //   zr = sin(phi)*x3 + cos(phi)*z3   ← depth (positive = toward viewer)
+  //
+  // Theta rotation around X axis (theta > 0 tilts north pole toward viewer):
+  //   yr = cos(theta)*y3 - sin(theta)*zr
+  //   zf = sin(theta)*y3 + cos(theta)*zr
+  //
+  // Screen: screenX = r + xr*r,  screenY = r - yr*r,  visible: zf > 0
   function project (latDeg, lonDeg, curPhi, curTheta, size) {
     const lat    = latDeg * Math.PI / 180
     const lon    = lonDeg * Math.PI / 180
-    const dLon   = lon - curPhi
     const cosLat = Math.cos(lat)
 
-    const x  = cosLat * Math.sin(dLon)   // screen-x
-    const y0 = Math.sin(lat)             // screen-y (pre-tilt)
-    const z0 = cosLat * Math.cos(dLon)   // depth (pre-tilt)
+    const x3 = cosLat * Math.cos(lon)
+    const y3 = Math.sin(lat)
+    const z3 = cosLat * Math.sin(lon)
 
-    // Rotate around X axis by curTheta
+    // Rotate by phi around Y axis
+    const cosPhi = Math.cos(curPhi)
+    const sinPhi = Math.sin(curPhi)
+    const xr = cosPhi * x3 - sinPhi * z3
+    const zr = sinPhi * x3 + cosPhi * z3
+
+    // Rotate by theta around X axis
     const cosT = Math.cos(curTheta)
     const sinT = Math.sin(curTheta)
-    const y    = y0 * cosT - z0 * sinT
-    const z    = y0 * sinT + z0 * cosT
+    const yr = cosT * y3 - sinT * zr
+    const zf = sinT * y3 + cosT * zr
 
     const r = size / 2
     return {
-      x:       r + x * r,
-      y:       r - y * r,
-      visible: z > 0.05,
+      x:       r + xr * r,
+      y:       r - yr * r,
+      visible: zf > 0,
     }
   }
 
+  // Label is pinned at (left:0, top:0) and moved purely by transform so that
+  // no containing-block offset can throw off the coordinates.
+  label.style.left = '0'
+  label.style.top  = '0'
+
   function updateLabel () {
     const size = canvas.offsetWidth
-    if (size > 0 && wrap) {
-      const p          = project(BRISTOL_LAT, BRISTOL_LON, livePhi, liveTheta, size)
-      // canvas may be centered inside wrap (e.g. via flexbox/margin:auto)
-      // offset its rect so the label lands over the actual rendered pixel
-      const canvasRect = canvas.getBoundingClientRect()
-      const wrapRect   = wrap.getBoundingClientRect()
-      const offsetX    = canvasRect.left - wrapRect.left
-      const offsetY    = canvasRect.top  - wrapRect.top
-      label.style.left    = (offsetX + p.x) + 'px'
-      label.style.top     = (offsetY + p.y) + 'px'
-      label.style.opacity = p.visible ? '1' : '0'
+    if (size > 0) {
+      const p = project(BRISTOL_LAT, BRISTOL_LON, livePhi, liveTheta, size)
+      label.style.transform = 'translate(calc(' + p.x + 'px - 50%), calc(' + p.y + 'px - 100% - 10px))'
+      label.style.opacity   = p.visible ? '1' : '0'
     }
     requestAnimationFrame(updateLabel)
   }
