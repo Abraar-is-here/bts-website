@@ -1054,32 +1054,36 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
 }
 
 @media (max-width: 560px) {
-  .logo__full { display: none; }      /* keep lockup crisp & compact on phones */
+  .logo__full { display: none; }
+  .logo__bull { width: 22px; }
+  .logo__bts  { font-size: 1rem; }
+  .logo       { gap: 6px; padding: 2px 4px; }
   .nav {
-    padding: 8px 8px 8px 14px;
-    gap: var(--space-2);              /* tighten logo→links gap: 32→8px         */
+    padding: 6px 8px 6px 10px;
+    gap: var(--space-1);
   }
-  /* Phone-width links also get the 44px tap target (width is a reliable proxy
-     for touch; the @media(hover:none) rule below covers wider touch devices). */
+  .nav__links { gap: 3px; }
   .nav__link {
-    padding: 8px 10px;
+    padding: 7px 10px;
     font-size: 0.75rem;
     min-height: 44px;
     display: inline-flex;
     align-items: center;
+    white-space: nowrap;
   }
   .hero__actions { gap: var(--space-3); }
   .btn { padding: 14px 26px; }
-
-  /* Partners logos: a touch smaller on phones */
   .partners__logo { height: 38px; }
   .partners__inner { gap: 2.5rem; }
 }
 
-/* Extra squeeze for very small phones (≤400px) so the 3-item nav never wraps */
 @media (max-width: 400px) {
-  .nav { gap: var(--space-1); padding: 6px 6px 6px 12px; }
-  .nav__link { padding: 6px 8px; font-size: 0.6875rem; }
+  .nav { gap: 2px; padding: 6px 4px 6px 10px; }
+  .nav__links { gap: 1px; }
+  .nav__link { padding: 6px 7px; font-size: 0.65rem; }
+  .logo__bull { width: 18px; }
+  .logo__bts  { font-size: 0.875rem; }
+  .logo       { gap: 4px; padding: 2px 2px; }
 }
 
 /* Stack hero CTA buttons on very small phones */
