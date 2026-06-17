@@ -75,8 +75,8 @@
     <!-- Two links only -->
     <ul class="nav__links">
       <li><a class="nav__link" href="#top">Home</a></li>
-      <li><a class="nav__link" href="team.html">Team</a></li>
-      <li><a class="nav__link nav__link--cta" href="contact.html">Contact us</a></li>
+      <li><a class="nav__link" href="/team">Team</a></li>
+      <li><a class="nav__link nav__link--cta" href="/contact">Contact us</a></li>
     </ul>
   </nav>
 
@@ -102,11 +102,11 @@
         <div class="container hero__inner">
           <h2 class="display hero__title">Division head applications are open</h2>
           <div class="hero__actions">
-            <a class="btn btn--primary" href="apply.html">
+            <a class="btn btn--primary" href="/apply">
               Apply now
               <span class="btn__arrow" aria-hidden="true">&rarr;</span>
             </a>
-            <a class="btn btn--secondary" href="divisions.html">
+            <a class="btn btn--secondary" href="/divisions">
               Learn more
               <span class="btn__arrow" aria-hidden="true">&rarr;</span>
             </a>
@@ -210,6 +210,7 @@
 
   <!-- Scripts: deferred so they run after the DOM is parsed. -->
   <script src="js/slider.js?v=1" defer></script>
+  <script>if (location.pathname === '/' || location.pathname === '/index.html') history.replaceState(null, '', '/home')</script>
   <script src="js/aurora.js?v=9" defer></script>
   <script src="js/land.js?v=1" defer></script>
   <script type="module" src="js/cobe-globe.js?v=1"></script>
