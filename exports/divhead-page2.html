@@ -9,7 +9,7 @@
   @font-face { font-family:'DM Sans'; font-weight:600; font-display:block; src:url('../assets/fonts/dm-sans-600.woff2') format('woff2'); }
   @font-face { font-family:'Space Mono'; font-weight:400; font-display:block; src:url('../assets/fonts/space-mono-400.woff2') format('woff2'); }
 
-  * { margin:0; padding:0; box-sizing:border-box; }
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
   html, body { background:#050505; }
 
   .frame {
@@ -18,14 +18,14 @@
     padding:80px 84px; display:flex; flex-direction:column;
   }
 
-  .logo { display:flex; align-items:center; gap:15px; }
-  .logo__bull { width:52px; height:44px; color:#ffffff; }
-  .logo__bull svg { width:100%; height:100%; display:block; }
-  .logo__bts { font-family:'Syne'; font-weight:800; font-size:36px; letter-spacing:-0.01em; }
+  .logo { display:flex; align-items:flex-end; gap:13px; }
+  .logo__bull { width:50px; height:auto; color:#ffffff; margin-bottom:-3px; }
+  .logo__bull svg { width:100%; height:auto; display:block; }
+  .logo__bts { font-family:'Syne'; font-weight:800; font-size:34px; line-height:0.74; letter-spacing:-0.01em; }
 
   .eyebrow {
-    font-family:'DM Sans'; font-weight:600; text-transform:uppercase;
-    font-size:46px; line-height:1.12; letter-spacing:0.02em;
+    font-family:'Syne'; font-weight:700; text-transform:uppercase;
+    font-size:48px; line-height:1.1; letter-spacing:0.005em;
     margin-top:46px; color:#ffffff;
   }
 
