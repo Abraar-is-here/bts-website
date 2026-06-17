@@ -458,24 +458,42 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 10px;
+  gap: 0;
   z-index: 10;
 }
 
 .hero-dot {
+  /* Tap target — narrow width pulls visual dots closer while keeping 44px height for touch */
+  width: 20px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: none;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  transition: opacity 0.3s ease;
+}
+/* Visual dot — 2px pinprick on desktop */
+.hero-dot::before {
+  content: '';
+  position: absolute;
+  inset: 50%;
+  transform: translate(-50%, -50%);
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  border: 1.5px solid rgba(255, 255, 255, 0.45);
-  background: transparent;
-  cursor: pointer;
-  padding: 0;
-  transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+  background: rgba(255, 255, 255, 0.4);
+  transition: background 0.3s ease, width 0.3s ease, height 0.3s ease;
 }
-.hero-dot--active {
-  background: rgba(255, 255, 255, 0.85);
-  border-color: rgba(255, 255, 255, 0.85);
-  transform: scale(1.25);
+.hero-dot--active::before {
+  background: rgba(255, 255, 255, 1);
+}
+
+@media (max-width: 768px) {
+  .hero-dots { gap: 4px; }
+  .hero-dot::before { width: 7px; height: 7px; background: rgba(255,255,255,0.4); }
+  .hero-dot--active::before { background: rgba(255,255,255,0.95); }
 }
 
 /* Ink scrim behind the copy so white text keeps ≥4.5:1 even when a bright
@@ -514,7 +532,7 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
 }
 
 .hero__title {
-  margin-bottom: var(--space-5);
+  margin-bottom: clamp(var(--space-4), 6vh, var(--space-5));
   max-width: 18ch;                   /* fits the longest word ("applications") */
 }
 
@@ -568,9 +586,8 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   aspect-ratio: 1 / 1;
   min-width: 0;
 }
-/* Draggable: grab affordance, and touch-action:none so a drag rotates the
-   globe instead of scrolling the page on touch devices. Position above the
-   halo so it receives the pointer. */
+/* Draggable: grab affordance. pan-y lets the user still scroll the page
+   vertically on touch; only horizontal drags are captured for globe rotation. */
 #globe-canvas {
   width: 100%;
   height: 100%;
@@ -578,7 +595,7 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   position: relative;
   z-index: 1;
   cursor: grab;
-  touch-action: none;
+  touch-action: pan-y;
   border-radius: 50%;          /* keeps the focus ring circular, on-brand */
   outline: none;
 }
@@ -1038,11 +1055,14 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
 
 @media (max-width: 560px) {
   .logo__full { display: none; }      /* keep lockup crisp & compact on phones */
-  .nav { padding: 8px 8px 8px 14px; }
+  .nav {
+    padding: 8px 8px 8px 14px;
+    gap: var(--space-2);              /* tighten logo→links gap: 32→8px         */
+  }
   /* Phone-width links also get the 44px tap target (width is a reliable proxy
      for touch; the @media(hover:none) rule below covers wider touch devices). */
   .nav__link {
-    padding: 8px 13px;
+    padding: 8px 10px;
     font-size: 0.75rem;
     min-height: 44px;
     display: inline-flex;
@@ -1054,6 +1074,12 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   /* Partners logos: a touch smaller on phones */
   .partners__logo { height: 38px; }
   .partners__inner { gap: 2.5rem; }
+}
+
+/* Extra squeeze for very small phones (≤400px) so the 3-item nav never wraps */
+@media (max-width: 400px) {
+  .nav { gap: var(--space-1); padding: 6px 6px 6px 12px; }
+  .nav__link { padding: 6px 8px; font-size: 0.6875rem; }
 }
 
 /* Stack hero CTA buttons on very small phones */
