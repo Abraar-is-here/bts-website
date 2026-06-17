@@ -66,11 +66,26 @@ img, svg { display: block; max-width: 100%; }
 /* Skip-link: off-screen until focused, then drops in at top-left so keyboard
    users can jump straight past the nav to the hero content. */
 .skip-link {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+.skip-link:focus {
   position: fixed;
   top: var(--space-3);
   left: var(--space-3);
-  z-index: 200;
+  width: auto;
+  height: auto;
   padding: 12px 20px;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+  z-index: 200;
   border-radius: var(--radius-pill);
   background: var(--c-surface);
   color: var(--text-on-light);
@@ -78,10 +93,7 @@ img, svg { display: block; max-width: 100%; }
   font-weight: 500;
   font-size: 0.875rem;
   box-shadow: var(--shadow-pill);
-  transform: translateY(-150%);          /* tucked above the viewport         */
-  transition: transform var(--dur-fast) var(--ease-out);
 }
-.skip-link:focus { transform: translateY(0); }
 
 /* ---------------------------------------------------------------------------
    2. Aurora background
@@ -795,7 +807,7 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
 /* ---------------------------------------------------------------------------
    7c. Apply page — multi-section application form
    --------------------------------------------------------------------------- */
-.apply { align-items: flex-start; padding-block: calc(var(--space-5) + 64px) var(--space-6); }
+.apply { align-items: flex-start; padding-block: calc(var(--space-5) + 64px) var(--space-6); padding-inline: var(--space-4); }
 .apply::before {                     /* ink scrim for contrast over the aurora */
   content: '';
   position: absolute;
