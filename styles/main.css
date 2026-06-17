@@ -264,6 +264,80 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   .nav__link--cta:hover { background: var(--accent-hover); }
 }
 
+/* --- Mobile "Menu" dropdown ---------------------------------------------- */
+/* Desktop: flat links visible, mobile toggle hidden */
+.nav__desktop { display: list-item; }
+.nav__mobile  { display: none; position: relative; }
+
+.nav__menu-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.9375rem;
+  letter-spacing: 0.005em;
+  padding: 9px 18px;
+  border-radius: var(--radius-pill);
+  color: var(--text-primary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background var(--dur-fast) var(--ease-out),
+              transform  var(--dur-fast) var(--ease-out);
+}
+.nav__menu-btn:active { transform: scale(0.96); }
+
+.nav__chevron {
+  transition: transform var(--dur-fast) var(--ease-out);
+  flex-shrink: 0;
+}
+.nav__menu-btn[aria-expanded="true"] .nav__chevron {
+  transform: rotate(180deg);
+}
+
+.nav__dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 140px;
+  background: rgba(8, 18, 46, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 6px;
+  list-style: none;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+  z-index: 200;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.nav__dropdown--open { display: block; }
+
+.nav__dropdown-link {
+  display: block;
+  padding: 10px 14px;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.005em;
+  color: var(--text-primary);
+  border-radius: 7px;
+  white-space: nowrap;
+  transition: background var(--dur-fast) var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .nav__menu-btn:hover { background: var(--hover-tint); }
+  .nav__dropdown-link:hover { background: var(--hover-tint); }
+}
+
+/* Mobile: show toggle, hide flat desktop links */
+@media (max-width: 768px) {
+  .nav__desktop { display: none; }
+  .nav__mobile  { display: list-item; }
+}
+
 /* ---------------------------------------------------------------------------
    4. Buttons
    --------------------------------------------------------------------------- */

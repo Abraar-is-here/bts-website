@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="styles/tokens/colors.css?v=13" />
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
-  <link rel="stylesheet" href="styles/main.css?v=33" />
+  <link rel="stylesheet" href="styles/main.css?v=34" />
 </head>
 <body>
 
@@ -43,7 +43,18 @@
       </span>
     </a>
     <ul class="nav__links">
-      <li><a class="nav__link" href="/">Home</a></li>
+      <li class="nav__desktop"><a class="nav__link" href="/">Home</a></li>
+      <li class="nav__mobile">
+        <button class="nav__menu-btn" aria-expanded="false" aria-haspopup="true">
+          Menu
+          <svg class="nav__chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+            <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <ul class="nav__dropdown" role="menu">
+          <li><a class="nav__dropdown-link" href="/" role="menuitem">Home</a></li>
+        </ul>
+      </li>
       <li><a class="nav__link nav__link--cta" href="/contact">Contact us</a></li>
     </ul>
   </nav>
@@ -218,5 +229,6 @@
   <script src="js/aurora.js?v=9" defer></script>
   <script src="js/apply.js?v=8" defer></script>
   <script src="js/transitions.js?v=2" defer></script>
+  <script src="js/nav.js?v=1" defer></script>
 </body>
 </html>
