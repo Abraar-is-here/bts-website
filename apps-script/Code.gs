@@ -14,6 +14,7 @@ var CONFIG = {
   COMMITTEE_EMAIL: 'committee@example.com',   // primary recipient of notifications
   CC_EMAILS: '',                              // optional cc list (comma-separated),
                                               // e.g. 'a@bristol.ac.uk, b@bristol.ac.uk'
+  REPLY_TO: 'xt24741@bristol.ac.uk',         // replies from applicants land here
   SHEET_NAME: 'Applications'
 };
 
@@ -51,8 +52,11 @@ function doPost(e) {
       data.choice1, data.choice2, cvUrl
     ]);
 
-    // 3) Email the committee (real-time notification + a second copy).
+    // 3) Email the committee (real-time notification).
     notify(data, cvUrl);
+
+    // 4) Confirmation email to the applicant.
+    confirmApplicant(data);
 
     return json({ ok: true });
   } catch (err) {
@@ -97,6 +101,71 @@ function notify(d, cvUrl) {
   var options = {};
   if (CONFIG.CC_EMAILS) options.cc = CONFIG.CC_EMAILS;
   MailApp.sendEmail(CONFIG.COMMITTEE_EMAIL, subject, body, options);
+}
+
+function confirmApplicant(d) {
+  var to = d.uniEmail;
+  if (!to) return;
+
+  var subject = 'Application received — Bristol Trading Society Division Head';
+
+  var plainBody = [
+    'Dear ' + d.firstName + ',',
+    '',
+    'Thank you for submitting an application for the role of Division Head at the Bristol Trading Society.',
+    '',
+    'We look forward to reviewing your application and, if successful, will be in touch in due course to discuss next steps for the final round interview stage.',
+    '',
+    'In the meantime, if you have any questions please do not hesitate to get in touch.',
+    '',
+    'Best regards,',
+    'The Bristol Trading Society Committee',
+    'bristoltradingsoc.co.uk'
+  ].join('\n');
+
+  var htmlBody = [
+    '<!DOCTYPE html>',
+    '<html lang="en"><head><meta charset="UTF-8">',
+    '<style>',
+    '  body{font-family:\'Helvetica Neue\',Arial,sans-serif;background:#f4f7fb;margin:0;padding:32px 16px;}',
+    '  .card{background:#ffffff;max-width:560px;margin:0 auto;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(10,26,63,0.10);}',
+    '  .header{background:#0a1a3f;padding:32px 40px;text-align:center;}',
+    '  .header img{height:36px;}',
+    '  .header-title{color:#f4f7fb;font-size:22px;font-weight:700;margin:12px 0 0;letter-spacing:-0.02em;}',
+    '  .body{padding:36px 40px;color:#0a1a3f;}',
+    '  .body p{font-size:15px;line-height:1.65;margin:0 0 16px;}',
+    '  .body p:last-child{margin-bottom:0;}',
+    '  .highlight{background:#f0f4ff;border-left:3px solid #2563eb;border-radius:0 8px 8px 0;padding:14px 18px;margin:20px 0;}',
+    '  .footer{background:#f4f7fb;padding:20px 40px;text-align:center;font-size:12px;color:#8da2c4;border-top:1px solid #e5eaf2;}',
+    '  .footer a{color:#2563eb;text-decoration:none;}',
+    '</style>',
+    '</head><body>',
+    '<div class="card">',
+    '  <div class="header">',
+    '    <div class="header-title">Bristol Trading Society</div>',
+    '  </div>',
+    '  <div class="body">',
+    '    <p>Dear ' + d.firstName + ',</p>',
+    '    <div class="highlight">',
+    '      <p style="margin:0;font-weight:600;">Thank you for submitting an application for the role of Division Head at the Bristol Trading Society.</p>',
+    '    </div>',
+    '    <p>We look forward to reviewing your application and, if successful, will be in touch in due course to discuss next steps for the final round interview stage.</p>',
+    '    <p>In the meantime, if you have any questions please do not hesitate to get in touch.</p>',
+    '    <p>Best regards,<br><strong>The Bristol Trading Society Committee</strong></p>',
+    '  </div>',
+    '  <div class="footer">',
+    '    <a href="https://bristoltradingsoc.co.uk">bristoltradingsoc.co.uk</a>',
+    '  </div>',
+    '</div>',
+    '</body></html>'
+  ].join('\n');
+
+  var options = {
+    htmlBody: htmlBody,
+    replyTo: CONFIG.REPLY_TO
+  };
+
+  MailApp.sendEmail(to, subject, plainBody, options);
 }
 
 function json(obj) {
