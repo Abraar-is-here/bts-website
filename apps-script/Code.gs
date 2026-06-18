@@ -14,7 +14,7 @@ var CONFIG = {
   COMMITTEE_EMAIL: 'committee@example.com',   // primary recipient of notifications
   CC_EMAILS: '',                              // optional cc list (comma-separated),
                                               // e.g. 'a@bristol.ac.uk, b@bristol.ac.uk'
-  REPLY_TO: 'xt24741@bristol.ac.uk',         // replies from applicants land here
+  SENDER_NAME: 'Bristol Trading Society',    // display name on confirmation emails
   SHEET_NAME: 'Applications'
 };
 
@@ -160,12 +160,10 @@ function confirmApplicant(d) {
     '</body></html>'
   ].join('\n');
 
-  var options = {
+  MailApp.sendEmail(to, subject, plainBody, {
     htmlBody: htmlBody,
-    replyTo: CONFIG.REPLY_TO
-  };
-
-  MailApp.sendEmail(to, subject, plainBody, options);
+    name: CONFIG.SENDER_NAME
+  });
 }
 
 function json(obj) {
