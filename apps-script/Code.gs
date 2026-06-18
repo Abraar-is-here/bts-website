@@ -10,10 +10,9 @@
  */
 
 var CONFIG = {
-  CV_FOLDER_ID: 'PASTE_DRIVE_FOLDER_ID',     // Drive folder that will hold CVs
-  COMMITTEE_EMAIL: 'committee@example.com',   // primary recipient of notifications
-  CC_EMAILS: '',                              // optional cc list (comma-separated),
-                                              // e.g. 'a@bristol.ac.uk, b@bristol.ac.uk'
+  CV_FOLDER_ID: '1CXQc5hOw07KTtl-_e5osNPEsABC43YkJ',
+  COMMITTEE_EMAIL: 'xt24741@bristol.ac.uk',
+  CC_EMAILS: 'pt24647@bristol.ac.uk',
   SENDER_NAME: 'Bristol Trading Society',    // display name on confirmation emails
   SHEET_NAME: 'Applications'
 };
