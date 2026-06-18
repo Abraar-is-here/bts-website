@@ -407,6 +407,31 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
 }
 .btn--secondary:active { transform: scale(0.97); }
 
+/* WhatsApp — green-branded pill with icon. */
+.btn--whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #25d366;
+  color: #fff;
+  border: none;
+  box-shadow: 0 0 28px rgba(37, 211, 102, 0.35);
+  margin-top: var(--space-4);
+}
+.btn--whatsapp .btn__icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+@media (hover: hover) and (pointer: fine) {
+  .btn--whatsapp:hover {
+    background: #1ebe5d;
+    transform: translateY(-2px);
+    box-shadow: 0 0 36px rgba(37, 211, 102, 0.5);
+  }
+}
+.btn--whatsapp:active { transform: scale(0.97); }
+
 /* ---------------------------------------------------------------------------
    5. Section scaffolding
    --------------------------------------------------------------------------- */
