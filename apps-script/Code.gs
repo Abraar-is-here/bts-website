@@ -11,8 +11,8 @@
 
 var CONFIG = {
   CV_FOLDER_ID: '1CXQc5hOw07KTtl-_e5osNPEsABC43YkJ',
-  COMMITTEE_EMAIL: 'xt24741@bristol.ac.uk',
-  CC_EMAILS: 'pt24647@bristol.ac.uk',
+  COMMITTEE_EMAIL: 'bristol-trading-society@bristol.ac.uk',
+  CC_EMAILS: 'xt24741@bristol.ac.uk,pt24647@bristol.ac.uk',
   SENDER_NAME: 'Bristol Trading Society',    // display name on confirmation emails
   SHEET_NAME: 'Applications'
 };
@@ -119,48 +119,81 @@ function confirmApplicant(d) {
     '',
     'Best regards,',
     'The Bristol Trading Society Committee',
-    'bristoltradingsoc.co.uk'
+    'bristoltradingsoc.co.uk',
+    '',
+    'Note: if this email landed in spam, please mark it as "Not spam" to ensure future BTS emails reach your inbox.'
   ].join('\n');
 
-  var htmlBody = [
-    '<!DOCTYPE html>',
-    '<html lang="en"><head><meta charset="UTF-8">',
-    '<style>',
-    '  body{font-family:\'Helvetica Neue\',Arial,sans-serif;background:#f4f7fb;margin:0;padding:32px 16px;}',
-    '  .card{background:#ffffff;max-width:560px;margin:0 auto;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(10,26,63,0.10);}',
-    '  .header{background:#0a1a3f;padding:32px 40px;text-align:center;}',
-    '  .header img{height:36px;}',
-    '  .header-title{color:#f4f7fb;font-size:22px;font-weight:700;margin:12px 0 0;letter-spacing:-0.02em;}',
-    '  .body{padding:36px 40px;color:#0a1a3f;}',
-    '  .body p{font-size:15px;line-height:1.65;margin:0 0 16px;}',
-    '  .body p:last-child{margin-bottom:0;}',
-    '  .highlight{background:#f0f4ff;border-left:3px solid #2563eb;border-radius:0 8px 8px 0;padding:14px 18px;margin:20px 0;}',
-    '  .footer{background:#f4f7fb;padding:20px 40px;text-align:center;font-size:12px;color:#8da2c4;border-top:1px solid #e5eaf2;}',
-    '  .footer a{color:#2563eb;text-decoration:none;}',
-    '</style>',
-    '</head><body>',
-    '<div class="card">',
-    '  <div class="header">',
-    '    <div class="header-title">Bristol Trading Society</div>',
-    '  </div>',
-    '  <div class="body">',
-    '    <p>Dear ' + d.firstName + ',</p>',
-    '    <div class="highlight">',
-    '      <p style="margin:0;font-weight:600;">Thank you for submitting an application for the role of Division Head at the Bristol Trading Society.</p>',
-    '    </div>',
-    '    <p>We look forward to reviewing your application and, if successful, will be in touch in due course to discuss next steps for the final round interview stage.</p>',
-    '    <p>In the meantime, if you have any questions please do not hesitate to get in touch.</p>',
-    '    <p>Best regards,<br><strong>The Bristol Trading Society Committee</strong></p>',
-    '  </div>',
-    '  <div class="footer">',
-    '    <a href="https://bristoltradingsoc.co.uk">bristoltradingsoc.co.uk</a>',
-    '  </div>',
-    '</div>',
-    '</body></html>'
-  ].join('\n');
+  var html = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">'
+    + '<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>Application received</title></head>'
+    + '<body style="margin:0;padding:0;background-color:#f0f4fb;font-family:\'Helvetica Neue\',Helvetica,Arial,sans-serif;">'
+    + '<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color:#f0f4fb;padding:40px 16px;">'
+    + '<tr><td align="center">'
+    + '<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="560" style="max-width:560px;width:100%;">'
+
+    // ── Header ──
+    + '<tr><td style="background-color:#06112b;border-radius:16px 16px 0 0;padding:0;">'
+    + '<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">'
+    + '<tr>'
+    // Left: wordmark
+    + '<td style="padding:28px 32px;">'
+    + '<div style="font-size:22px;font-weight:800;letter-spacing:-0.03em;color:#f4f7fb;line-height:1;">BTS</div>'
+    + '<div style="font-size:7px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:#8da2c4;margin-top:3px;">Bristol Trading Society</div>'
+    + '</td>'
+    // Right: pill badge
+    + '<td align="right" style="padding:28px 32px;">'
+    + '<span style="display:inline-block;background-color:#2563eb;color:#ffffff;font-size:11px;font-weight:600;letter-spacing:0.04em;padding:6px 16px;border-radius:999px;">Division Head</span>'
+    + '</td>'
+    + '</tr>'
+    // Divider line
+    + '<tr><td colspan="2" style="padding:0 32px;"><div style="height:1px;background:rgba(141,162,196,0.15);"></div></td></tr>'
+    // Sub-header strip
+    + '<tr><td colspan="2" style="padding:20px 32px 28px;">'
+    + '<div style="font-size:13px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:#8da2c4;">Application Confirmation</div>'
+    + '</td></tr>'
+    + '</table>'
+    + '</td></tr>'
+
+    // ── Body ──
+    + '<tr><td style="background-color:#ffffff;padding:36px 32px;">'
+    + '<p style="margin:0 0 20px;font-size:15px;font-weight:600;color:#0a1a3f;line-height:1.5;">Dear ' + d.firstName + ',</p>'
+
+    // Highlight box
+    + '<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:24px;">'
+    + '<tr>'
+    + '<td width="3" style="background-color:#2563eb;border-radius:3px;">&nbsp;</td>'
+    + '<td style="padding:16px 18px;background-color:#f0f4ff;border-radius:0 10px 10px 0;">'
+    + '<p style="margin:0;font-size:15px;font-weight:600;color:#0a1a3f;line-height:1.6;">Thank you for submitting an application for the role of Division Head at the Bristol Trading Society.</p>'
+    + '</td>'
+    + '</tr>'
+    + '</table>'
+
+    + '<p style="margin:0 0 16px;font-size:15px;color:#1e2d50;line-height:1.7;">We look forward to reviewing your application and, if successful, will be in touch in due course to discuss next steps for the final round interview stage.</p>'
+    + '<p style="margin:0 0 32px;font-size:15px;color:#1e2d50;line-height:1.7;">In the meantime, if you have any questions please do not hesitate to get in touch.</p>'
+
+    // Divider
+    + '<div style="height:1px;background:#e8edf5;margin-bottom:24px;"></div>'
+
+    + '<p style="margin:0;font-size:14px;color:#4a5568;line-height:1.6;">Best regards,<br><strong style="color:#0a1a3f;">The Bristol Trading Society Committee</strong></p>'
+    + '</td></tr>'
+
+    // ── CTA strip ──
+    + '<tr><td style="background-color:#0a1a3f;padding:24px 32px;text-align:center;">'
+    + '<a href="https://bristoltradingsoc.co.uk" style="display:inline-block;background-color:#2563eb;color:#ffffff;font-size:13px;font-weight:600;letter-spacing:0.03em;text-decoration:none;padding:12px 28px;border-radius:999px;">Visit bristoltradingsoc.co.uk</a>'
+    + '</td></tr>'
+
+    // ── Footer ──
+    + '<tr><td style="background-color:#f0f4fb;border-radius:0 0 16px 16px;padding:20px 32px;text-align:center;">'
+    + '<p style="margin:0 0 6px;font-size:11px;color:#8da2c4;line-height:1.5;">If this email landed in your spam folder, please mark it as <strong>Not spam</strong>.</p>'
+    + '<p style="margin:0;font-size:11px;color:#b0bfd4;">© 2026 Bristol Trading Society · University of Bristol</p>'
+    + '</td></tr>'
+
+    + '</table>'
+    + '</td></tr></table>'
+    + '</body></html>';
 
   MailApp.sendEmail(to, subject, plainBody, {
-    htmlBody: htmlBody,
+    htmlBody: html,
     name: CONFIG.SENDER_NAME
   });
 }

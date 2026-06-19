@@ -276,10 +276,10 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   .nav__link--cta:hover { background: var(--accent-hover); }
 }
 
-/* --- Mobile "Menu" dropdown ---------------------------------------------- */
-/* Desktop: flat links visible, mobile toggle hidden */
-.nav__desktop { display: list-item; }
-.nav__mobile  { display: none; position: relative; }
+/* --- Universal "Menu" dropdown (desktop + mobile) ------------------------ */
+/* Flat desktop links are retired — everything lives in the dropdown now */
+.nav__desktop { display: none; }
+.nav__mobile  { display: list-item; position: relative; }
 
 .nav__menu-btn {
   display: inline-flex;
@@ -344,10 +344,9 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   .nav__dropdown-link:hover { background: var(--hover-tint); }
 }
 
-/* Mobile: show toggle, hide flat desktop links */
-@media (max-width: 768px) {
-  .nav__desktop { display: none; }
-  .nav__mobile  { display: list-item; }
+/* Dropdown is wider on desktop for comfort */
+@media (min-width: 769px) {
+  .nav__dropdown { min-width: 180px; }
 }
 
 /* ---------------------------------------------------------------------------
@@ -1422,4 +1421,250 @@ body.is-leaving {
   .partners__stage:hover .partners__logo[src$=".svg"] {
     filter: none;
   }
+}
+
+/* ---------------------------------------------------------------------------
+   12. Alumni page
+   --------------------------------------------------------------------------- */
+.alumni {
+  display: flex;
+  align-items: flex-start;
+  padding-block: calc(var(--space-5) + 64px) var(--space-6);
+  padding-inline: var(--space-4);
+}
+.alumni::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: var(--hero-scrim);
+  pointer-events: none;
+  z-index: 0;
+}
+.alumni__inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+}
+
+/* Header */
+.alumni__eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--accent-bright);
+  margin: 0 0 var(--space-2);
+}
+.alumni__title { margin: 0 0 var(--space-2); }
+.alumni__sub {
+  margin: 0 0 var(--space-5);
+  max-width: 54ch;
+  color: var(--text-secondary);
+}
+
+/* Stats strip */
+.alumni__stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3) var(--space-5);
+  margin-bottom: var(--space-5);
+  padding: var(--space-3) var(--space-4);
+  background: rgba(10, 26, 63, 0.55);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.alumni__stat { display: flex; flex-direction: column; gap: 2px; }
+.alumni__stat-value {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  line-height: 1;
+}
+.alumni__stat-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+/* Directory rows */
+.alumni__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  list-style: none;
+}
+
+.alumni-row {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: rgba(10, 26, 63, 0.52);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-card);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: background var(--dur-fast) var(--ease-out),
+              border-color var(--dur-fast) var(--ease-out),
+              transform var(--dur-fast) var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .alumni-row:hover {
+    background: rgba(10, 26, 63, 0.72);
+    border-color: rgba(141, 162, 196, 0.45);
+    transform: translateY(-2px);
+  }
+}
+
+/* Avatar */
+.alumni-row__avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.1rem;
+  letter-spacing: -0.02em;
+  color: #fff;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.alumni-row__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+/* Division-tinted avatar backgrounds */
+.alumni-row__avatar--equities { background: linear-gradient(135deg, #1d4ed8, #2563eb); }
+.alumni-row__avatar--ficc     { background: linear-gradient(135deg, #0d7377, #0d9488); }
+.alumni-row__avatar--quant    { background: linear-gradient(135deg, #5b21b6, #7c3aed); }
+.alumni-row__avatar--macro    { background: linear-gradient(135deg, #92400e, #b45309); }
+
+/* Info */
+.alumni-row__info { min-width: 0; }
+.alumni-row__name {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+.alumni-row__name-text {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+.alumni-row__year {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  background: rgba(141, 162, 196, 0.12);
+  border: 1px solid rgba(141, 162, 196, 0.2);
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+.alumni-row__role {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.alumni-row__company {
+  color: var(--accent-bright);
+  font-weight: 500;
+}
+
+/* Actions: division tag + LinkedIn */
+.alumni-row__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+.alumni-row__division {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid;
+}
+.alumni-row__division--equities { color: #60a5fa; border-color: rgba(96,165,250,0.35); background: rgba(96,165,250,0.08); }
+.alumni-row__division--ficc     { color: #2dd4bf; border-color: rgba(45,212,191,0.35); background: rgba(45,212,191,0.08); }
+.alumni-row__division--quant    { color: #c084fc; border-color: rgba(192,132,252,0.35); background: rgba(192,132,252,0.08); }
+.alumni-row__division--macro    { color: #fbbf24; border-color: rgba(251,191,36,0.35);  background: rgba(251,191,36,0.08);  }
+
+.alumni-row__linkedin {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(244, 247, 251, 0.08);
+  border: 1px solid rgba(244, 247, 251, 0.14);
+  transition: background var(--dur-fast) var(--ease-out),
+              border-color var(--dur-fast) var(--ease-out);
+  white-space: nowrap;
+}
+.alumni-row__linkedin svg { width: 13px; height: 13px; flex-shrink: 0; }
+@media (hover: hover) and (pointer: fine) {
+  .alumni-row__linkedin:hover {
+    background: rgba(37, 99, 235, 0.25);
+    border-color: rgba(37, 99, 235, 0.5);
+  }
+}
+
+/* Placeholder notice (shown before real alumni are added) */
+.alumni__placeholder {
+  padding: var(--space-5) var(--space-4);
+  text-align: center;
+  border: 1px dashed rgba(141, 162, 196, 0.25);
+  border-radius: var(--radius-card);
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+/* Mobile: stack info and actions */
+@media (max-width: 600px) {
+  .alumni-row {
+    grid-template-columns: 48px 1fr;
+    grid-template-rows: auto auto;
+  }
+  .alumni-row__actions {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+  .alumni-row__avatar { width: 48px; height: 48px; font-size: 0.95rem; }
 }
