@@ -11,8 +11,8 @@
 
 var CONFIG = {
   CV_FOLDER_ID: '1CXQc5hOw07KTtl-_e5osNPEsABC43YkJ',
-  COMMITTEE_EMAIL: 'xt24741@bristol.ac.uk',
-  CC_EMAILS: 'pt24647@bristol.ac.uk',
+  COMMITTEE_EMAIL: 'bristol-trading-society@bristol.ac.uk',
+  CC_EMAILS: 'xt24741@bristol.ac.uk,pt24647@bristol.ac.uk',
   SENDER_NAME: 'Bristol Trading Society',    // display name on confirmation emails
   SHEET_NAME: 'Applications'
 };
