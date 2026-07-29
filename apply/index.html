@@ -26,7 +26,7 @@
   <link rel="stylesheet" href="styles/tokens/colors.css?v=13" />
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
-  <link rel="stylesheet" href="styles/main.css?v=37" />
+  <link rel="stylesheet" href="styles/main.css?v=39" />
 </head>
 <body>
 
@@ -83,7 +83,8 @@
         </p>
         <p class="apply__privacy">
           By submitting, you agree the Bristol Trading Society may store and process your details
-          and CV solely to review your application. Data will not be shared outside the organisation.
+          and CV to review your application. We won&rsquo;t share them outside the society unless you
+          opt in below.
         </p>
       </header>
 
@@ -207,6 +208,18 @@
               </label>
               <span class="field__error" data-error></span>
             </div>
+
+            <!-- Optional and unticked by default. Not `required`: applying must
+                 not be conditional on agreeing to third-party sharing. -->
+            <label class="consent" for="sponsorConsent">
+              <input id="sponsorConsent" name="sponsorConsent" type="checkbox" value="yes" />
+              <span class="consent__text">
+                <strong>Share my details with BTS sponsors and partners (optional)</strong>
+                I agree that BTS may share my details and CV with its sponsors and partner firms
+                for recruitment and career opportunities. Leaving this unticked will not affect
+                my application.
+              </span>
+            </label>
           </div>
         </fieldset>
 
@@ -240,7 +253,7 @@
   </main>
 
   <script src="js/aurora.js?v=9" defer></script>
-  <script src="js/apply.js?v=8" defer></script>
+  <script src="js/apply.js?v=9" defer></script>
   <script src="js/transitions.js?v=2" defer></script>
   <script src="js/nav.js?v=1" defer></script>
 </body>

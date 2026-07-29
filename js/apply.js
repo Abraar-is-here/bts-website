@@ -237,6 +237,9 @@
         cvName: file.name,
         cvType: file.type || 'application/pdf',
         cvBase64: b64,
+        // Recorded per-applicant so the answer travels with the CV — a consent
+        // you can't evidence later is the same as no consent.
+        sponsorConsent: (form.sponsorConsent && form.sponsorConsent.checked) ? 'Yes' : 'No',
         company: form.company ? form.company.value : '',
         submittedAt: new Date().toISOString()
       };

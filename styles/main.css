@@ -971,6 +971,43 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   .file-field:hover { border-color: var(--accent); background: rgba(37, 99, 235, 0.08); }
 }
 
+/* Optional consent checkbox.
+   Deliberately unticked by default and never `required` — consent to share
+   data with third parties has to be a separate, freely given choice, not a
+   condition of submitting the form. */
+.consent {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: var(--space-3);
+  border: 1px solid var(--field-border);
+  border-radius: var(--radius-sm);
+  background: var(--field-bg);
+  cursor: pointer;
+}
+.consent input[type="checkbox"] {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+.consent__text {
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+.consent__text strong {
+  display: block;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+.consent:hover { border-color: rgba(141, 162, 196, 0.5); }
+.consent:focus-within { border-color: var(--accent); }
+
 /* Submit row + status. */
 .form-actions {
   display: flex;
