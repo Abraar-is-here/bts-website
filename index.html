@@ -33,7 +33,7 @@
   <link rel="stylesheet" href="styles/tokens/colors.css?v=13" />
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
-  <link rel="stylesheet" href="styles/main.css?v=37" />
+  <link rel="stylesheet" href="styles/main.css?v=38" />
 </head>
 <body>
 
@@ -130,6 +130,18 @@
               <span class="btn__arrow" aria-hidden="true">&rarr;</span>
             </a>
           </div>
+          <div class="hero-countdown" role="timer" aria-live="off">
+            <p class="hero-countdown__label">DEADLINE <span>Wednesday 5 August 2026 · Midnight BST</span></p>
+            <div class="hero-countdown__timer" id="cd-timer">
+              <div class="cd-unit"><span class="cd-num" id="cd-days">00</span><span class="cd-label">Days</span></div>
+              <span class="cd-sep" aria-hidden="true">:</span>
+              <div class="cd-unit"><span class="cd-num" id="cd-hours">00</span><span class="cd-label">Hours</span></div>
+              <span class="cd-sep" aria-hidden="true">:</span>
+              <div class="cd-unit"><span class="cd-num" id="cd-mins">00</span><span class="cd-label">Mins</span></div>
+              <span class="cd-sep" aria-hidden="true">:</span>
+              <div class="cd-unit"><span class="cd-num" id="cd-secs">00</span><span class="cd-label">Secs</span></div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -153,6 +165,39 @@
 
     </div>
   </header>
+
+  <script>
+    (function() {
+      var deadline = new Date('2026-08-05T00:00:00+01:00').getTime();
+      var elDays  = document.getElementById('cd-days');
+      var elHours = document.getElementById('cd-hours');
+      var elMins  = document.getElementById('cd-mins');
+      var elSecs  = document.getElementById('cd-secs');
+      var elMs    = document.getElementById('cd-ms');
+      var elTimer = document.getElementById('cd-timer');
+      function pad2(n) { return String(Math.floor(n)).padStart(2,'0'); }
+      function pad3(n) { return String(Math.floor(n)).padStart(3,'0'); }
+      function tick() {
+        var diff = deadline - Date.now();
+        if (diff <= 0) { if(elTimer) elTimer.style.display = 'none'; return; }
+        var ms    = diff % 1000;
+        var s     = Math.floor(diff / 1000);
+        var secs  = s % 60;
+        var m     = Math.floor(s / 60);
+        var mins  = m % 60;
+        var h     = Math.floor(m / 60);
+        var hours = h % 24;
+        var days  = Math.floor(h / 24);
+        if(elDays)  elDays.textContent  = pad2(days);
+        if(elHours) elHours.textContent = pad2(hours);
+        if(elMins)  elMins.textContent  = pad2(mins);
+        if(elSecs)  elSecs.textContent  = pad2(secs);
+        if(elMs)    elMs.textContent    = pad3(ms);
+      }
+      tick();
+      setInterval(tick, 30);
+    })();
+  </script>
 
   <!-- =====================================================================
        Partners & Sponsors marquee — dark strip between hero and globe panel

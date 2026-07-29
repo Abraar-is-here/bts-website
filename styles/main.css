@@ -1319,6 +1319,95 @@ body.is-leaving {
    slightly different speed so the two lines feel independent. Edge-fade mask
    gives a clean dissolve rather than a hard clip.
    --------------------------------------------------------------------------- */
+/* ===========================================================================
+   Hero inline countdown
+   =========================================================================== */
+.hero-countdown {
+  margin-top: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.hero-countdown__label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.9);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hero-countdown__label span {
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  color: rgba(255,255,255,0.45);
+  font-size: 0.75rem;
+}
+
+.hero-countdown__timer {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.cd-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.cd-num {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 3.8rem;
+  line-height: 1;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  background: rgba(10, 26, 63, 0.5);
+  border: 1px solid rgba(100, 140, 220, 0.2);
+  border-radius: 10px;
+  padding: 10px 14px;
+  min-width: 2.4ch;
+  text-align: center;
+}
+
+.cd-unit--ms .cd-num {
+  font-size: 1.8rem;
+  padding: 10px 10px;
+}
+
+.cd-label {
+  font-size: 0.5625rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+}
+
+.cd-sep {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 2.8rem;
+  color: rgba(107,141,247,0.4);
+  line-height: 1;
+  padding-bottom: 22px;
+  user-select: none;
+}
+
+@media (max-width: 540px) {
+  .hero-countdown { align-items: center; }
+  .cd-num { font-size: 1.8rem; padding: 8px 10px; }
+  .cd-sep { font-size: 1.4rem; }
+  .cd-unit--ms .cd-num { font-size: 1.3rem; }
+}
+
 /* Dim overlay matches the hero scrim's average brightness so the aurora
    looks identical in the partners strip and in the hero section. */
 .partners {
