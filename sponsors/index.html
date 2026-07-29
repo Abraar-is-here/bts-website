@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <base href="/" />
+
+  <title>Sponsors &amp; Partners — Bristol Trading Society</title>
+  <meta name="description" content="The firms that partner with the Bristol Trading Society, and what a partnership gives you — access to a selective analyst programme and an 800-strong membership." />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ENSZNRQNLG"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-ENSZNRQNLG');
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="assets/img/bull.svg" />
+
+  <link rel="preload" href="assets/fonts/syne-800.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/fonts/dm-sans-400.woff2" as="font" type="font/woff2" crossorigin />
+
+  <link rel="stylesheet" href="styles/tokens/fonts.css?v=7" />
+  <link rel="stylesheet" href="styles/tokens/colors.css?v=13" />
+  <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
+  <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
+  <link rel="stylesheet" href="styles/main.css?v=37" />
+
+  <style>
+    /* -------------------------------------------------------------------------
+       Sponsors page — partner roster + what a partnership provides.
+       Shares the events-page shell (ink scrim over the aurora, glass cards).
+       ------------------------------------------------------------------------- */
+    .spon { position: relative; min-height: 100vh; padding: 120px var(--space-4) var(--space-7); }
+    .spon::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: radial-gradient(ellipse 95% 70% at 50% 20%,
+                  rgba(6, 17, 43, 0.62) 0%, rgba(6, 17, 43, 0.32) 48%, transparent 78%);
+      pointer-events: none;
+    }
+    .spon__inner {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: var(--container-max);
+      margin: 0 auto;
+    }
+
+    .spon__head { max-width: 62ch; margin-bottom: var(--space-6); }
+    .spon__eyebrow {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-bright);
+      margin-bottom: var(--space-3);
+    }
+    .spon__title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.25rem);
+      font-weight: 800;
+      line-height: 1.06;
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-3);
+      text-wrap: balance;
+    }
+    .spon__lead { color: var(--text-secondary); max-width: 60ch; }
+
+    .spon__section { margin-top: var(--space-7); }
+    .spon__section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      padding-bottom: var(--space-3);
+      border-bottom: 1px solid var(--hairline);
+      margin-bottom: var(--space-5);
+    }
+
+    /* --- Stat band --- */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+      gap: var(--space-4);
+      margin-top: var(--space-5);
+    }
+    .stat {
+      padding: var(--space-4);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-card);
+      background: rgba(8, 19, 46, 0.72);
+    }
+    .stat__num {
+      display: block;
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4.5vw, 2.75rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+    }
+    .stat__label { font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.5; }
+
+    /* --- Partner roster --- */
+    .partners-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 1fr));
+      gap: var(--space-4);
+    }
+    .partner {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      padding: var(--space-4);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-card);
+      background: rgba(8, 19, 46, 0.72);
+      box-shadow: var(--shadow-card);
+    }
+    /* Light plate behind every mark. Source logos come in mixed colourways and
+       several are square, so recolouring or knocking them out either breaks
+       brand guidelines or flattens the ones with filled backgrounds. A neutral
+       plate lets each logo render exactly as supplied, at a consistent size. */
+    .partner__mark {
+      height: 88px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 18px;
+      background: #ffffff;
+      border-radius: 12px;
+    }
+    .partner__mark img {
+      max-height: 100%;
+      max-width: 100%;
+      width: auto;
+      object-fit: contain;
+    }
+    /* WorldQuant and Outlook Energy ship white-on-transparent marks, which
+       vanish on the light plate — they get the inverse treatment instead. */
+    .partner__mark--dark {
+      background: var(--c-navy-abyss);
+      border: 1px solid var(--glass-border);
+    }
+    /* Wordmark stand-in where we don't hold an official logo file yet. */
+    .partner__wordmark {
+      font-family: var(--font-display);
+      font-size: clamp(1.1rem, 2.2vw, 1.45rem);
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      color: var(--text-on-light);
+      text-align: center;
+      line-height: 1.15;
+    }
+    .partner__text { font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.55; }
+
+    /* --- Offer list --- */
+    .offer {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+      gap: var(--space-4);
+    }
+    .offer__item {
+      padding: var(--space-4);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-card);
+      background: rgba(8, 19, 46, 0.6);
+    }
+    .offer__item h3 {
+      font-family: var(--font-body);
+      font-size: 1.0625rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .offer__item p { font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.55; }
+
+    /* --- Closing CTA --- */
+    .spon__cta {
+      margin-top: var(--space-7);
+      padding: clamp(var(--space-4), 4vw, var(--space-6));
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-card);
+      background: rgba(8, 19, 46, 0.8);
+      text-align: center;
+    }
+    .spon__cta h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-3);
+      text-wrap: balance;
+    }
+    .spon__cta p {
+      color: var(--text-secondary);
+      max-width: 54ch;
+      margin: 0 auto var(--space-4);
+    }
+  </style>
+</head>
+<body>
+
+  <a class="skip-link" href="#sponsors">Skip to content</a>
+
+  <div class="aurora" aria-hidden="true">
+    <canvas id="aurora-canvas"></canvas>
+    <div class="aurora-fallback">
+      <span class="b1"></span><span class="b2"></span><span class="b3"></span>
+      <span class="b4"></span><span class="b5"></span><span class="b6"></span>
+      <span class="sheen"></span>
+    </div>
+  </div>
+
+  <nav class="nav" aria-label="Primary">
+    <a class="logo" href="/" aria-label="Bristol Trading Society — home">
+      <svg class="logo__bull" viewBox="0 0 93 78" fill="currentColor" aria-hidden="true" focusable="false">
+        <path fill-rule="evenodd" d="M65.13 6.00 L66.50 5.88 L66.88 6.25 L66.88 10.50 L71.88 15.25 L71.88 16.50 L72.88 17.25 L72.88 24.50 L70.88 26.25 L70.88 27.50 L66.88 31.25 L66.88 32.50 L67.88 33.25 L67.88 34.50 L69.88 36.25 L69.88 37.50 L70.88 38.25 L70.88 39.50 L71.88 40.25 L71.88 41.50 L72.88 42.25 L72.88 43.50 L73.88 44.25 L73.88 45.50 L75.88 47.25 L75.88 48.50 L76.88 49.25 L76.88 50.50 L77.88 51.25 L77.88 52.50 L78.88 53.25 L78.88 54.50 L80.88 56.25 L80.88 57.50 L81.88 58.25 L81.88 59.50 L82.88 60.25 L82.88 61.50 L83.88 62.25 L83.88 63.50 L84.88 64.25 L84.88 65.50 L86.88 67.25 L86.88 68.50 L87.88 69.25 L87.88 71.50 L87.50 71.88 L81.25 71.88 L80.88 71.50 L80.88 68.25 L79.88 67.50 L79.88 64.25 L78.88 63.50 L78.88 62.25 L78.50 61.88 L77.25 61.88 L76.50 60.88 L72.25 60.88 L71.25 59.88 L70.88 60.25 L70.88 62.50 L69.50 63.88 L68.25 63.88 L65.88 61.50 L65.88 60.25 L63.50 57.88 L62.00 57.88 L61.88 60.50 L62.88 61.25 L62.88 63.50 L63.88 64.25 L63.88 65.50 L64.88 66.25 L64.88 68.50 L65.88 69.25 L65.88 72.50 L65.50 72.88 L58.25 72.88 L56.88 71.25 L57.88 70.50 L57.88 68.25 L58.88 67.50 L58.88 65.25 L57.88 64.50 L57.88 63.25 L56.50 61.88 L55.25 61.88 L53.88 60.50 L53.88 58.25 L52.88 57.50 L52.88 54.25 L51.88 53.50 L51.88 52.25 L50.88 51.50 L50.88 50.25 L48.50 47.88 L47.88 48.25 L47.88 52.50 L48.88 53.25 L48.88 55.50 L49.88 56.25 L49.88 57.50 L50.88 58.25 L50.88 60.50 L51.88 61.25 L51.88 63.50 L51.50 63.88 L50.25 63.88 L49.50 64.88 L44.25 64.88 L43.50 63.88 L42.25 63.88 L36.50 57.88 L34.25 57.88 L32.50 59.88 L31.25 59.88 L29.50 61.88 L28.25 61.88 L27.50 62.88 L26.25 62.88 L24.50 64.88 L23.25 64.88 L22.50 65.88 L20.25 65.88 L19.50 66.88 L16.25 66.88 L15.88 67.25 L15.88 69.50 L14.88 70.25 L14.88 71.50 L13.50 72.88 L10.25 72.88 L8.88 71.50 L10.88 69.50 L10.88 68.25 L12.88 66.50 L12.88 65.25 L14.25 63.88 L15.50 63.88 L16.25 62.88 L18.50 62.88 L20.88 60.50 L20.88 59.25 L21.88 58.25 L21.50 57.88 L20.25 57.88 L19.50 58.88 L17.25 58.88 L16.50 59.88 L10.25 59.88 L9.50 58.88 L8.25 58.88 L5.88 56.50 L5.88 53.25 L7.88 51.50 L7.88 50.25 L14.88 43.50 L14.88 42.25 L15.88 41.50 L15.50 40.88 L13.25 40.88 L12.50 41.88 L8.25 41.88 L7.50 40.88 L6.25 40.88 L5.88 40.50 L5.88 39.25 L7.25 37.88 L8.50 37.88 L9.25 36.88 L10.50 36.88 L11.25 35.88 L14.50 35.88 L15.25 36.88 L16.50 36.88 L16.88 37.25 L16.88 38.50 L17.88 39.25 L17.88 41.50 L16.88 42.25 L16.88 44.50 L13.88 47.25 L13.88 48.50 L9.88 52.25 L9.88 55.50 L11.25 56.88 L13.50 56.88 L14.25 55.88 L16.50 55.88 L18.25 53.88 L19.50 53.88 L19.88 53.50 L19.88 52.25 L22.25 49.88 L23.50 49.88 L25.25 47.88 L26.50 47.88 L27.25 46.88 L30.50 46.88 L31.50 47.88 L31.88 47.50 L31.88 44.25 L32.88 43.50 L32.88 41.25 L33.88 40.50 L33.88 39.25 L38.25 34.88 L39.50 34.88 L40.25 33.88 L41.50 33.88 L42.25 32.88 L44.50 32.88 L44.88 32.50 L44.50 31.88 L43.25 31.88 L42.50 30.88 L41.25 30.88 L36.88 26.50 L36.88 20.25 L40.50 16.88 L40.88 17.50 L39.88 18.00 L39.88 22.50 L42.25 24.88 L43.50 24.88 L44.25 25.88 L48.50 25.88 L50.25 23.88 L54.50 23.88 L55.50 24.88 L56.25 23.88 L57.50 23.88 L58.25 22.88 L60.50 22.88 L61.25 23.88 L63.50 23.88 L65.88 21.50 L65.88 20.25 L66.88 19.50 L66.88 16.25 L65.88 15.50 L65.88 14.25 L63.88 12.50 L63.88 8.25 L64.88 7.50 L65.00 6.13 Z M58.13 31.00 L60.50 30.88 L60.88 31.25 L60.50 31.88 L59.25 31.88 L58.88 32.25 L59.88 33.50 L59.50 33.88 L58.25 33.88 L57.50 35.88 L56.88 35.50 L56.88 33.25 L57.88 32.50 L58.00 31.13 Z M51.13 39.00 L56.50 38.88 L56.88 39.25 L56.88 42.50 L56.50 42.88 L55.88 42.50 L55.88 40.25 L55.50 39.88 L51.00 39.88 L51.00 39.13 Z M50.13 40.00 L50.75 39.88 L50.88 40.50 L51.88 41.25 L51.88 42.50 L51.25 42.88 L49.88 41.50 L50.00 40.13 Z M71.13 53.00 L71.88 53.25 L71.88 56.50 L71.50 56.88 L70.88 56.50 L71.00 53.13 Z M61.13 57.00 L61.50 56.88 L61.88 57.75 L61.25 57.88 L61.00 57.13 Z M34.13 63.00 L36.50 62.88 L39.88 66.25 L39.88 67.50 L39.50 67.88 L38.25 67.88 L37.50 68.88 L34.25 68.88 L33.88 69.25 L33.88 70.50 L31.50 72.88 L29.25 72.88 L27.88 71.50 L27.88 70.25 L30.88 67.50 L30.88 64.25 L31.25 63.88 L33.50 63.88 L34.00 63.13 Z"></path>
+      </svg>
+      <span class="logo__word">
+        <span class="logo__bts">BTS</span>
+        <span class="logo__full">Bristol Trading Society</span>
+      </span>
+    </a>
+    <ul class="nav__links">
+      <li class="nav__mobile">
+        <button class="nav__menu-btn" aria-expanded="false" aria-haspopup="true">
+          Menu
+          <svg class="nav__chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+            <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <ul class="nav__dropdown" role="menu">
+          <li><a class="nav__dropdown-link" href="/" role="menuitem">Home</a></li>
+          <li><a class="nav__dropdown-link" href="/events" role="menuitem">Events and Speakers</a></li>
+          <li><a class="nav__dropdown-link" href="/sponsors" role="menuitem">Sponsors</a></li>
+          <li><a class="nav__dropdown-link" href="/team" role="menuitem">Team</a></li>
+          <li><a class="nav__dropdown-link" href="/divisions" role="menuitem">Divisions</a></li>
+          <li><a class="nav__dropdown-link" href="/alumni" role="menuitem">Alumni</a></li>
+          <li><a class="nav__dropdown-link" href="/contact" role="menuitem">Contact us</a></li>
+        </ul>
+      </li>
+      <li><a class="nav__link nav__link--cta" href="/contact">Contact us</a></li>
+    </ul>
+  </nav>
+
+  <main id="sponsors" class="spon" tabindex="-1">
+    <div class="spon__inner">
+
+      <header class="spon__head">
+        <span class="spon__eyebrow">Sponsors &amp; Partners</span>
+        <h1 class="spon__title">The firms we work with</h1>
+        <p class="body spon__lead">
+          We partner with trading firms, banks and platforms who want direct access to students
+          who are already doing the work. Below is who we work with, and what a partnership
+          with the Bristol Trading Society actually provides.
+        </p>
+      </header>
+
+      <!-- ===== Reach ===== -->
+      <section class="spon__section" aria-labelledby="reach-title">
+        <h2 class="spon__section-title" id="reach-title">Our reach</h2>
+        <div class="stats">
+          <div class="stat">
+            <span class="stat__num">800</span>
+            <span class="stat__label">members across the University of Bristol</span>
+          </div>
+          <div class="stat">
+            <span class="stat__num">40&ndash;50</span>
+            <span class="stat__label">analysts selected each year through a competitive application process</span>
+          </div>
+          <div class="stat">
+            <span class="stat__num">4</span>
+            <span class="stat__label">divisions &mdash; FICC, Equities, Macro and Quant &mdash; each running its own research agenda</span>
+          </div>
+        </div>
+        <p class="body" style="color: var(--text-secondary); margin-top: var(--space-4); max-width: 60ch;">
+          We send more members into industry than any other finance society at Bristol.
+        </p>
+      </section>
+
+      <!-- ===== What a partnership provides ===== -->
+      <section class="spon__section" aria-labelledby="offer-title">
+        <h2 class="spon__section-title" id="offer-title">What a partnership provides</h2>
+        <div class="offer">
+
+          <div class="offer__item">
+            <h3>Access to the analyst programme</h3>
+            <p>
+              Our analysts are selected through a competitive process and spend the year producing
+              research in a specific division. Partners can receive the analyst CV book directly.
+            </p>
+          </div>
+
+          <div class="offer__item">
+            <h3>Speaking slots and events</h3>
+            <p>
+              Host an evening with our members, run a workshop, or co-host a competition. Past
+              partners have run simulations, championships and career sessions with us.
+            </p>
+          </div>
+
+          <div class="offer__item">
+            <h3>Division-level collaboration</h3>
+            <p>
+              Work directly with the division closest to your desk &mdash; providing resources,
+              data or problem sets to the FICC, Equities, Macro or Quant teams.
+            </p>
+          </div>
+
+          <div class="offer__item">
+            <h3>Brand presence</h3>
+            <p>
+              Logo placement across our site and event materials, and visibility at the
+              Freshers' Fair and our annual welcome event.
+            </p>
+          </div>
+
+          <div class="offer__item">
+            <h3>Recruitment pipeline</h3>
+            <p>
+              Advertise internships, spring weeks and graduate roles to a membership that is
+              already actively applying into markets roles.
+            </p>
+          </div>
+
+          <div class="offer__item">
+            <h3>A long-term relationship</h3>
+            <p>
+              Several of our partnerships have run for multiple years, carrying over as each
+              committee hands to the next.
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ===== Partner roster ===== -->
+      <section class="spon__section" aria-labelledby="roster-title">
+        <h2 class="spon__section-title" id="roster-title">Our partners</h2>
+        <div class="partners-grid">
+
+          <article class="partner">
+            <div class="partner__mark"><img src="assets/img/sponsors/drw.png" alt="DRW" /></div>
+            <p class="partner__text">
+              Proprietary trading firm. Hosts an invite-only social for our analysts and division
+              heads, and takes our analyst CV book &mdash; members have gone on to spring-week
+              rounds off the back of it.
+            </p>
+          </article>
+
+          <article class="partner">
+            <div class="partner__mark partner__mark--dark"><img src="assets/img/sponsors/worldquant.png" alt="WorldQuant" /></div>
+            <p class="partner__text">
+              Runs the WorldQuant International Quant Championship. A long-term partner providing
+              resources and competition routes for our Quant division.
+            </p>
+          </article>
+
+          <article class="partner">
+            <div class="partner__mark"><img src="assets/img/sponsors/etoro.png" alt="eToro" /></div>
+            <p class="partner__text">
+              Multi-asset trading platform, working with us through Social Profit. Ran an event
+              with our members and funded accounts so students could trade the platform live.
+            </p>
+          </article>
+
+          <article class="partner">
+            <div class="partner__mark partner__mark--dark"><img src="assets/img/sponsors/outlook-energy.svg" alt="Outlook Energy" /></div>
+            <p class="partner__text">
+              Bristol-based energy trading firm, and one of our closest local partners.
+            </p>
+          </article>
+
+          <article class="partner">
+            <div class="partner__mark"><img src="assets/img/sponsors/berenberg.png" alt="Berenberg" /></div>
+            <p class="partner__text">
+              Private bank. Works with us to put internship and early-careers opportunities in
+              front of our membership.
+            </p>
+          </article>
+
+          <article class="partner">
+            <div class="partner__mark"><img src="assets/img/sponsors/hirehuub.png" alt="HireHuub" /></div>
+            <p class="partner__text">
+              Early-careers platform. Ran the House of London Internship event with us, one of our
+              best-attended external sessions.
+            </p>
+          </article>
+
+          <article class="partner">
+            <div class="partner__mark"><img src="assets/img/sponsors/headstart.png" alt="Headstart" /></div>
+            <p class="partner__text">
+              Micro-internship platform, giving members short, CV-building placements. A regular
+              fixture of our Freshers' Fair presence.
+            </p>
+          </article>
+
+          <article class="partner">
+            <div class="partner__mark"><span class="partner__wordmark">Commodities People</span></div>
+            <p class="partner__text">
+              Organisers of Energy Trading Week and Commodity Trading Week. A partner of several
+              years who host our members at their London industry events.
+            </p>
+          </article>
+
+          <article class="partner">
+            <div class="partner__mark"><span class="partner__wordmark">CFA</span></div>
+            <p class="partner__text">
+              Our newest partnership, providing careers resources and professional development
+              routes to our members.
+            </p>
+          </article>
+
+          <article class="partner">
+            <div class="partner__mark"><span class="partner__wordmark">Pluto Invest</span></div>
+            <p class="partner__text">
+              A platform connecting students to opportunities across finance firms, run in
+              partnership with the society.
+            </p>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ===== CTA ===== -->
+      <div class="spon__cta">
+        <h2>Interested in partnering with us?</h2>
+        <p>
+          We're always open to speaking with firms who want to reach students seriously
+          interested in markets. Tell us what you're looking for and we'll put a proposal together.
+        </p>
+        <a class="btn btn--primary" href="/contact">
+          Get in touch
+          <span class="btn__arrow" aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="js/aurora.js?v=9" defer></script>
+  <script src="js/transitions.js?v=2" defer></script>
+  <script src="js/nav.js?v=1" defer></script>
+</body>
+</html>
