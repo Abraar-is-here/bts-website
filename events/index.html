@@ -97,34 +97,50 @@
     /* --- Credibility band -------------------------------------------------
        Five numbers, hairline-separated. Cheap to build, does more persuading
        than any paragraph on the page. */
+    /* Grid, not flex: five items reflow to 3+2 or 2+2+1 with every cell the
+       same width. The old flex version left the last stat stretched across a
+       half-empty row on narrow screens. */
     .stats {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: var(--space-4) var(--space-3);
       margin-top: var(--space-5);
+      padding: var(--space-4) 0;
       border-top: 1px solid var(--hairline);
       border-bottom: 1px solid var(--hairline);
     }
-    .stat {
-      flex: 1 1 150px;
-      padding: var(--space-3) var(--space-4) var(--space-3) 0;
-      border-right: 1px solid var(--hairline);
-    }
-    .stat:last-child { border-right: 0; }
     .stat__n {
       display: block;
       font-family: var(--font-display);
-      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-size: clamp(1.75rem, 3vw, 2.3rem);
       font-weight: 800;
       line-height: 1;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.03em;
+      /* Digits share a width, so the row of numbers sits on a common rhythm
+         instead of drifting. */
+      font-variant-numeric: tabular-nums;
       color: var(--text-primary);
-      margin-bottom: 6px;
+      margin-bottom: 10px;
+    }
+    /* Units ride small and in accent, so "$20m" reads as one magnitude rather
+       than competing glyph sizes. */
+    .stat__n u {
+      font-size: 0.5em;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      color: var(--accent-bright);
+      vertical-align: 0.42em;
+      margin-left: 2px;
     }
     .stat__l {
+      display: block;
       font-size: 0.8125rem;
-      line-height: 1.4;
+      line-height: 1.45;
       color: var(--text-secondary);
+      /* Caps the measure so long labels wrap predictably instead of one cell
+         running much wider than its neighbours. */
+      max-width: 17ch;
     }
 
     /* --- "Next up" --------------------------------------------------------
@@ -133,10 +149,10 @@
     .next {
       margin-top: var(--space-5);
       display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: var(--space-3) var(--space-4);
-      padding: var(--space-3) var(--space-4);
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-3);
+      padding: var(--space-4);
       border: 1px solid rgba(56, 189, 248, 0.28);
       border-radius: var(--radius-sm);
       background: rgba(10, 26, 63, 0.55);
@@ -165,24 +181,41 @@
       70%  { box-shadow: 0 0 0 9px rgba(56, 189, 248, 0); }
       100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); }
     }
-    .next__body { flex: 1 1 260px; }
-    .next__title {
+    /* width, not flex-basis: the parent is a column flex container, where
+       flex-basis would size the height instead. */
+    .next__list { list-style: none; margin: 0; padding: 0; width: 100%; }
+    .next-item {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3);
+      padding: var(--space-3) 0;
+      border-top: 1px solid rgba(56, 189, 248, 0.16);
+    }
+    .next-item:first-child { border-top: 0; padding-top: 0; }
+    .next-item:last-child { padding-bottom: 0; }
+    .next-item__body { flex: 1 1 260px; }
+    .next-item__title {
       font-size: 1.0625rem;
       font-weight: 600;
       line-height: 1.3;
       margin-bottom: 2px;
     }
-    .next__when { font-size: 0.875rem; color: var(--text-secondary); }
-    .next__cd {
-      font-family: var(--font-display);
-      font-size: 1.05rem;
-      font-weight: 800;
-      letter-spacing: 0.01em;
-      font-variant-numeric: tabular-nums;
-      color: var(--text-primary);
-      white-space: nowrap;
+    .next-item__when { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.45; }
+    /* An honest placeholder: says "we don't have a date" without pretending
+       to be a button that goes somewhere. */
+    .next-item__chip {
+      flex: none;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      padding: 8px 16px;
+      border: 1px dashed rgba(141, 162, 196, 0.4);
+      border-radius: var(--radius-pill);
     }
-    .next__cd span { color: var(--text-secondary); font-weight: 500; font-size: 0.8em; }
 
     /* --- Section headers --------------------------------------------------
        No rules across the page. Size, colour and space carry the hierarchy. */
@@ -517,7 +550,6 @@
     @media (max-width: 520px) {
       .index li { grid-template-columns: 64px minmax(0, 1fr); }
       .index img { width: 64px; }
-      .next__cd { font-size: 0.9375rem; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -589,18 +621,28 @@
         <div class="stat"><span class="stat__n">11</span><span class="stat__l">Speakers hosted</span></div>
         <div class="stat"><span class="stat__n">7</span><span class="stat__l">Competing teams</span></div>
         <div class="stat"><span class="stat__n">4</span><span class="stat__l">Divisions competing</span></div>
-        <div class="stat"><span class="stat__n">$20m</span><span class="stat__l">Simulated capital run</span></div>
+        <div class="stat"><span class="stat__n">$20<u>m</u></span><span class="stat__l">Simulated capital run</span></div>
         <div class="stat"><span class="stat__n">2</span><span class="stat__l">Sold-out simulator events</span></div>
       </div>
 
       <div class="next">
         <span class="next__flag">Next up</span>
-        <div class="next__body">
-          <p class="next__title">Division head applications</p>
-          <p class="next__when">Closes midnight BST, Wednesday 5 August 2026</p>
-        </div>
-        <p class="next__cd" id="ev-cd" aria-live="off"></p>
-        <a class="btn btn--primary" href="/apply">Apply now <span class="btn__arrow">&rarr;</span></a>
+        <ul class="next__list">
+          <li class="next-item">
+            <div class="next-item__body">
+              <p class="next-item__title">Division head applications</p>
+              <p class="next-item__when">Closes midnight BST, Wednesday 5 August 2026</p>
+            </div>
+            <a class="btn btn--primary" href="/apply">Apply now <span class="btn__arrow">&rarr;</span></a>
+          </li>
+          <li class="next-item">
+            <div class="next-item__body">
+              <p class="next-item__title">Analyst applications</p>
+              <p class="next-item__when">Opening for the new academic year &mdash; members hear first</p>
+            </div>
+            <span class="next-item__chip">Dates TBC</span>
+          </li>
+        </ul>
       </div>
     </div>
 
@@ -1009,25 +1051,6 @@
         v.loop = false;
         v.pause();
       });
-    })();
-
-    /* "Next up" countdown. Ticks once a second — this is a status line, not a
-       stopwatch, so there's nothing to gain from a faster interval. */
-    (function () {
-      var el = document.getElementById('ev-cd');
-      if (!el) return;
-      var deadline = new Date('2026-08-05T00:00:00+01:00').getTime();
-      function tick() {
-        var diff = deadline - Date.now();
-        if (diff <= 0) { el.textContent = 'Closed'; return; }
-        var s = Math.floor(diff / 1000);
-        var d = Math.floor(s / 86400);
-        var h = Math.floor(s % 86400 / 3600);
-        var m = Math.floor(s % 3600 / 60);
-        el.innerHTML = d + '<span>d</span> ' + h + '<span>h</span> ' + m + '<span>m</span> left';
-      }
-      tick();
-      setInterval(tick, 1000);
     })();
 
     /* Speaker roster filter. Progressive enhancement: without JS every speaker
