@@ -477,9 +477,31 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   inset: 0;
   display: flex;
   align-items: center;
+  /* Reserve clearance for the fixed nav pill above. Centering alone isn't
+     enough: a 4-line heading taller than the available space overflows
+     equally in both directions regardless of padding, pushing the top back
+     up past the nav on short viewports. The height media query below is the
+     actual fix — this padding just keeps normal tall viewports comfortable. */
+  padding-top: clamp(90px, 12vh, 140px);
+  padding-bottom: clamp(24px, 4vh, 48px);
+  box-sizing: border-box;
   opacity: 0;
   pointer-events: none;
   will-change: transform;
+}
+
+/* Short viewport (small laptop screen, non-maximized window, 100% zoom on a
+   lower-res display): stop centering and anchor to the top instead. Any
+   overflow from a tall heading then pushes content down and scrolls, rather
+   than centering overflow upward into the fixed nav. */
+@media (max-height: 700px) {
+  .hero-slide {
+    align-items: flex-start;
+    overflow-y: auto;
+  }
+  /* The real fix: shrink the display type enough that a 4-line heading
+     actually fits the available height, instead of relying on scrolling. */
+  .hero .display { font-size: clamp(1.6rem, 6vw, 3.25rem); }
 }
 
 .hero-slide--active {
