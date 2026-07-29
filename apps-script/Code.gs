@@ -99,7 +99,9 @@ function notify(d, cvUrl) {
     '',
     '1st choice: ' + d.choice1,
     '2nd choice: ' + (d.choice2 || '—'),
-    'CV:         ' + (cvUrl || '—')
+    'CV:         ' + (cvUrl || '—'),
+    '',
+    'Sponsor sharing consent: ' + (d.sponsorConsent === 'Yes' ? 'YES' : 'NO')
   ].join('\n');
   var options = {};
   if (CONFIG.CC_EMAILS) options.cc = CONFIG.CC_EMAILS;
