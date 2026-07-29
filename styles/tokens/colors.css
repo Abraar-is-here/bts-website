@@ -48,6 +48,10 @@
   --glass-fill: rgba(10, 26, 63, 0.62);
   --glass-fill-strong: rgba(10, 26, 63, 0.72);
   --glass-border: rgba(141, 162, 196, 0.28); /* slate hairline               */
+
+  /* Standard content-card fill (headliner/CTA/stat/partner cards) — a
+     slightly darker, less saturated navy than the nav glass tokens above. */
+  --card-fill: rgba(8, 19, 46, 0.72);
   --hairline: rgba(141, 162, 196, 0.16);
 
   /* --- Gradient stops (the aurora + accents share these) ----------------- */

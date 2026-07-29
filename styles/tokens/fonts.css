@@ -57,7 +57,10 @@
   src: url('../../assets/fonts/dm-sans-700.woff2') format('woff2');
 }
 
-/* --- Space Mono : eyebrows, tags, labels, terminal microcopy -------------- */
+/* --- Space Mono : terminal-style microcopy (e.g. "Next up" status flags) --
+   Most section eyebrows/labels use DM Sans, not this — reserve --font-mono
+   for the sparing "live/status" moments where a monospace read earns its
+   keep, not as a default eyebrow font. */
 @font-face {
   font-family: 'Space Mono';
   font-style: normal;

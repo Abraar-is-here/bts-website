@@ -183,14 +183,12 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
 .nav {
   position: fixed;
   top: var(--space-3);
-  left: 50%;
-  transform: translateX(-50%);
+  left: var(--space-3);
   z-index: 100;
-  width: min(100% - 2 * var(--space-3), var(--container-max));
+  width: auto;
 
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: var(--space-4);
 
   padding: 10px 12px 10px 18px;
@@ -243,12 +241,6 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
 }
 
 /* --- Nav links ----------------------------------------------------------- */
-.nav__links {
-  display: flex;
-  align-items: center;
-  gap: var(--space-1);
-  list-style: none;
-}
 .nav__link {
   font-family: var(--font-body);
   font-weight: 500;
@@ -276,30 +268,39 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   .nav__link--cta:hover { background: var(--accent-hover); }
 }
 
-/* --- Universal "Menu" dropdown (desktop + mobile) ------------------------ */
-/* Flat desktop links are retired — everything lives in the dropdown now */
-.nav__desktop { display: none; }
-.nav__mobile  { display: list-item; position: relative; }
+/* --- Standalone "Menu" control ---------------------------------------------
+   Deliberately separated from the brand pill and pushed to the opposite
+   corner, oversized and brightly filled — it was getting lost as a quiet
+   link inside the glass bar, so it now reads as its own destination. */
+.menu-float {
+  position: fixed;
+  top: var(--space-3);
+  right: var(--space-3);
+  z-index: 100;
+}
 
 .nav__menu-btn {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 9px;
   font-family: var(--font-body);
-  font-weight: 500;
-  font-size: 0.9375rem;
+  font-weight: 700;
+  font-size: 1.0625rem;
   letter-spacing: 0.005em;
-  padding: 9px 18px;
+  padding: 15px 24px;
   border-radius: var(--radius-pill);
-  color: var(--text-primary);
-  background: none;
+  color: var(--text-on-light);
+  background: var(--accent-bright);
   border: none;
   cursor: pointer;
   white-space: nowrap;
+  box-shadow: var(--shadow-pill), 0 0 28px rgba(56, 189, 248, 0.5);
   transition: background var(--dur-fast) var(--ease-out),
               transform  var(--dur-fast) var(--ease-out);
 }
 .nav__menu-btn:active { transform: scale(0.96); }
+
+.nav__menu-icon { flex-shrink: 0; }
 
 .nav__chevron {
   transition: transform var(--dur-fast) var(--ease-out);
@@ -313,7 +314,7 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   display: none;
   position: absolute;
   top: calc(100% + 6px);
-  left: 0;
+  right: 0;
   min-width: 140px;
   background: rgba(8, 18, 46, 0.96);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -340,7 +341,7 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   transition: background var(--dur-fast) var(--ease-out);
 }
 @media (hover: hover) and (pointer: fine) {
-  .nav__menu-btn:hover { background: var(--hover-tint); }
+  .nav__menu-btn:hover { background: var(--accent-bright); filter: brightness(1.08); }
   .nav__dropdown-link:hover { background: var(--hover-tint); }
 }
 
@@ -1209,7 +1210,6 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
     padding: 6px 8px 6px 10px;
     gap: var(--space-1);
   }
-  .nav__links { gap: 3px; }
   .nav__link {
     padding: 7px 10px;
     font-size: 0.75rem;
@@ -1217,6 +1217,10 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
     display: inline-flex;
     align-items: center;
     white-space: nowrap;
+  }
+  .nav__menu-btn {
+    padding: 11px 16px;
+    font-size: 0.9375rem;
   }
   .hero__actions { gap: var(--space-3); }
   .btn { padding: 14px 26px; }
@@ -1226,8 +1230,9 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
 
 @media (max-width: 400px) {
   .nav { gap: 2px; padding: 6px 4px 6px 10px; }
-  .nav__links { gap: 1px; }
   .nav__link { padding: 6px 7px; font-size: 0.65rem; }
+  .nav__menu-btn { padding: 9px 13px; font-size: 0.8125rem; gap: 6px; }
+  .nav__menu-icon { width: 15px; height: 10px; }
   .logo__bull { width: 18px; }
   .logo__bts  { font-size: 0.875rem; }
   .logo       { gap: 4px; padding: 2px 2px; }

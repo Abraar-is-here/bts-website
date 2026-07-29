@@ -85,6 +85,19 @@
       margin-bottom: var(--space-5);
     }
 
+    /* --- Reach claim --- */
+    .spon__claim {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 3.4vw, 2.125rem);
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      color: var(--text-primary);
+      max-width: 40ch;
+      text-wrap: balance;
+      margin-bottom: var(--space-5);
+    }
+
     /* --- Stat band --- */
     .stats {
       display: grid;
@@ -96,7 +109,7 @@
       padding: var(--space-4);
       border: 1px solid var(--glass-border);
       border-radius: var(--radius-card);
-      background: rgba(8, 19, 46, 0.72);
+      background: var(--card-fill);
     }
     .stat__num {
       display: block;
@@ -123,7 +136,7 @@
       padding: var(--space-4);
       border: 1px solid var(--glass-border);
       border-radius: var(--radius-card);
-      background: rgba(8, 19, 46, 0.72);
+      background: var(--card-fill);
       box-shadow: var(--shadow-card);
     }
     /* Light plate behind every mark. Source logos come in mixed colourways and
@@ -131,7 +144,7 @@
        brand guidelines or flattens the ones with filled backgrounds. A neutral
        plate lets each logo render exactly as supplied, at a consistent size. */
     .partner__mark {
-      height: 88px;
+      height: 104px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -162,6 +175,26 @@
       line-height: 1.15;
     }
     .partner__text { font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.55; }
+
+    /* --- Supporting partners : lighter tier below the anchor grid -----------
+       Same partnerships, less real estate. Keeps DRW/WorldQuant/eToro reading
+       as the deeper relationships without implying the rest don't matter. */
+    .partners-strip__label {
+      margin-top: var(--space-5);
+      margin-bottom: var(--space-3);
+    }
+    .partners-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+      gap: var(--space-3);
+    }
+    .partners-strip .partner {
+      padding: var(--space-3);
+      gap: var(--space-2);
+      box-shadow: none;
+    }
+    .partners-strip .partner__mark { height: 56px; padding: 8px 12px; }
+    .partners-strip .partner__text { font-size: 0.8125rem; }
 
     /* --- Offer list --- */
     .offer {
@@ -230,9 +263,14 @@
         <span class="logo__full">Bristol Trading Society</span>
       </span>
     </a>
-    <ul class="nav__links">
-      <li class="nav__mobile">
-        <button class="nav__menu-btn" aria-expanded="false" aria-haspopup="true">
+    <a class="nav__link nav__link--cta" href="/contact">Contact us</a>
+  </nav>
+
+  <div class="menu-float">
+    <button class="nav__menu-btn" aria-expanded="false" aria-haspopup="true">
+          <svg class="nav__menu-icon" width="18" height="12" viewBox="0 0 18 12" fill="none" aria-hidden="true">
+            <path d="M1 1h16M1 6h16M1 11h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
           Menu
           <svg class="nav__chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
             <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -247,10 +285,7 @@
           <li><a class="nav__dropdown-link" href="/alumni" role="menuitem">Alumni</a></li>
           <li><a class="nav__dropdown-link" href="/contact" role="menuitem">Contact us</a></li>
         </ul>
-      </li>
-      <li><a class="nav__link nav__link--cta" href="/contact">Contact us</a></li>
-    </ul>
-  </nav>
+  </div>
 
   <main id="sponsors" class="spon" tabindex="-1">
     <div class="spon__inner">
@@ -268,6 +303,9 @@
       <!-- ===== Reach ===== -->
       <section class="spon__section" aria-labelledby="reach-title">
         <h2 class="spon__section-title" id="reach-title">Our reach</h2>
+        <p class="spon__claim">
+          We send more members into industry than any other finance society at Bristol.
+        </p>
         <div class="stats">
           <div class="stat">
             <span class="stat__num">800</span>
@@ -282,9 +320,6 @@
             <span class="stat__label">divisions &mdash; FICC, Equities, Macro and Quant &mdash; each running its own research agenda</span>
           </div>
         </div>
-        <p class="body" style="color: var(--text-secondary); margin-top: var(--space-4); max-width: 60ch;">
-          We send more members into industry than any other finance society at Bristol.
-        </p>
       </section>
 
       <!-- ===== What a partnership provides ===== -->
@@ -373,6 +408,11 @@
             </p>
           </article>
 
+        </div>
+
+        <p class="spon__eyebrow partners-strip__label">Also working with us</p>
+        <div class="partners-strip">
+
           <article class="partner">
             <div class="partner__mark partner__mark--dark"><img src="assets/img/sponsors/outlook-energy.svg" alt="Outlook Energy" /></div>
             <p class="partner__text">
@@ -404,36 +444,12 @@
             </p>
           </article>
 
-          <article class="partner">
-            <div class="partner__mark"><span class="partner__wordmark">Commodities People</span></div>
-            <p class="partner__text">
-              Organisers of Energy Trading Week and Commodity Trading Week. A partner of several
-              years who host our members at their London industry events.
-            </p>
-          </article>
-
-          <article class="partner">
-            <div class="partner__mark"><span class="partner__wordmark">CFA</span></div>
-            <p class="partner__text">
-              Our newest partnership, providing careers resources and professional development
-              routes to our members.
-            </p>
-          </article>
-
-          <article class="partner">
-            <div class="partner__mark"><span class="partner__wordmark">Pluto Invest</span></div>
-            <p class="partner__text">
-              A platform connecting students to opportunities across finance firms, run in
-              partnership with the society.
-            </p>
-          </article>
-
         </div>
       </section>
 
       <!-- ===== CTA ===== -->
-      <div class="spon__cta">
-        <h2>Interested in partnering with us?</h2>
+      <section class="spon__cta" aria-labelledby="spon-cta-title">
+        <h2 id="spon-cta-title">Interested in partnering with us?</h2>
         <p>
           We're always open to speaking with firms who want to reach students seriously
           interested in markets. Tell us what you're looking for and we'll put a proposal together.
@@ -442,7 +458,7 @@
           Get in touch
           <span class="btn__arrow" aria-hidden="true">&rarr;</span>
         </a>
-      </div>
+      </section>
 
     </div>
   </main>

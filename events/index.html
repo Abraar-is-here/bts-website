@@ -94,55 +94,6 @@
       line-height: 1.65;
     }
 
-    /* --- Credibility band -------------------------------------------------
-       Five numbers, hairline-separated. Cheap to build, does more persuading
-       than any paragraph on the page. */
-    /* Grid, not flex: five items reflow to 3+2 or 2+2+1 with every cell the
-       same width. The old flex version left the last stat stretched across a
-       half-empty row on narrow screens. */
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: var(--space-4) var(--space-3);
-      margin-top: var(--space-5);
-      padding: var(--space-4) 0;
-      border-top: 1px solid var(--hairline);
-      border-bottom: 1px solid var(--hairline);
-    }
-    .stat__n {
-      display: block;
-      font-family: var(--font-display);
-      font-size: clamp(1.75rem, 3vw, 2.3rem);
-      font-weight: 800;
-      line-height: 1;
-      letter-spacing: -0.03em;
-      /* Digits share a width, so the row of numbers sits on a common rhythm
-         instead of drifting. */
-      font-variant-numeric: tabular-nums;
-      color: var(--text-primary);
-      margin-bottom: 10px;
-    }
-    /* Units ride small and in accent, so "$20m" reads as one magnitude rather
-       than competing glyph sizes. */
-    .stat__n u {
-      font-size: 0.5em;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      text-decoration: none;
-      color: var(--accent-bright);
-      vertical-align: 0.42em;
-      margin-left: 2px;
-    }
-    .stat__l {
-      display: block;
-      font-size: 0.8125rem;
-      line-height: 1.45;
-      color: var(--text-secondary);
-      /* Caps the measure so long labels wrap predictably instead of one cell
-         running much wider than its neighbours. */
-      max-width: 17ch;
-    }
-
     /* --- "Next up" --------------------------------------------------------
        The one genuinely dated thing on the page. Keeps the programme feeling
        live without pretending we have a full calendar locked in. */
@@ -254,17 +205,19 @@
       grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
       gap: var(--space-4);
     }
-    .term { border-top: 2px solid var(--accent); padding-top: var(--space-3); }
+    /* Ramp builds toward the flagship term (Apr–Jun, the Annual Trading
+       Competition) rather than fading away from it. */
+    .term { border-top: 2px solid rgba(141, 162, 196, 0.4); padding-top: var(--space-3); }
     .term:nth-child(2) { border-top-color: rgba(37, 99, 235, 0.55); }
-    .term:nth-child(3) { border-top-color: rgba(141, 162, 196, 0.4); }
-    .term__name {
+    .term:nth-child(3) { border-top-color: var(--accent); }
+    .term__span {
       font-family: var(--font-display);
-      font-size: 1.15rem;
+      font-size: 1.375rem;
       font-weight: 800;
       letter-spacing: -0.01em;
-      margin-bottom: 2px;
+      color: var(--text-primary);
+      margin-bottom: var(--space-3);
     }
-    .term__span { font-size: 0.8125rem; color: var(--text-secondary); margin-bottom: var(--space-3); }
     .term__list { list-style: none; margin: 0; padding: 0; }
     .term__list li {
       padding: 12px 0;
@@ -324,6 +277,37 @@
       border-radius: var(--radius-pill);
     }
 
+    /* Rail nav — the scrollbar is hidden below, so mouse-only users (no
+       trackpad/touch) get no cue the strip scrolls at all without these. */
+    .rail-wrap { position: relative; }
+    .rail-nav {
+      display: none;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      width: 40px;
+      height: 40px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      border: 1px solid var(--glass-border);
+      background: rgba(8, 18, 46, 0.85);
+      color: var(--text-primary);
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: background var(--dur-fast) var(--ease-out),
+                  transform var(--dur-fast) var(--ease-out);
+    }
+    .rail-nav--prev { left: -8px; }
+    .rail-nav--next { right: -8px; }
+    .rail-nav:active { transform: translateY(-50%) scale(0.94); }
+    @media (hover: hover) and (pointer: fine) {
+      .rail-nav { display: flex; }
+      .rail-nav:hover { background: rgba(8, 18, 46, 0.98); }
+    }
+
     /* Snap rail — replaces the old static wall of five thumbnails. Scrolls,
        so it can hold every team without eating a screen of height. */
     .rail {
@@ -335,9 +319,10 @@
       overflow-x: auto;
       scroll-snap-type: x mandatory;
       padding-bottom: var(--space-3);
-      scrollbar-width: thin;
-      scrollbar-color: rgba(141, 162, 196, 0.35) transparent;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
     }
+    .rail::-webkit-scrollbar { display: none; }
     .rail figure { margin: 0; scroll-snap-align: start; }
     .rail img {
       width: 100%;
@@ -414,7 +399,7 @@
       flex-direction: column;
       border-radius: var(--radius-card);
       overflow: hidden;
-      background: rgba(8, 19, 46, 0.72);
+      background: var(--card-fill);
       border: 1px solid var(--glass-border);
     }
     .headliner img {
@@ -437,11 +422,16 @@
     .headliner__note { font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.55; }
 
     /* --- Speakers : filterable roster -------------------------------------- */
+    .filters__hint {
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+      margin-top: var(--space-5);
+    }
     .filters {
       display: flex;
       flex-wrap: wrap;
       gap: var(--space-2);
-      margin: var(--space-5) 0 var(--space-4);
+      margin: var(--space-3) 0 var(--space-4);
     }
     .filter {
       font-family: inherit;
@@ -455,9 +445,13 @@
       cursor: pointer;
       transition: color var(--dur-fast) var(--ease-out),
                   border-color var(--dur-fast) var(--ease-out),
-                  background var(--dur-fast) var(--ease-out);
+                  background var(--dur-fast) var(--ease-out),
+                  transform var(--dur-fast) var(--ease-out);
     }
-    .filter:hover { color: var(--text-primary); border-color: rgba(141, 162, 196, 0.5); }
+    .filter:active { transform: scale(0.96); }
+    @media (hover: hover) and (pointer: fine) {
+      .filter:hover { color: var(--text-primary); border-color: rgba(141, 162, 196, 0.5); }
+    }
     .filter[aria-pressed="true"] {
       color: var(--c-navy);
       background: var(--text-primary);
@@ -493,23 +487,23 @@
     .index { list-style: none; margin: 0; padding: 0; }
     .index li {
       display: grid;
-      grid-template-columns: 92px minmax(0, 1fr);
-      gap: var(--space-3);
+      grid-template-columns: 152px minmax(0, 1fr);
+      gap: var(--space-4);
       align-items: center;
-      padding: var(--space-3) 0;
+      padding: var(--space-4) 0;
       border-top: 1px solid var(--hairline);
     }
     .index li:last-child { border-bottom: 1px solid var(--hairline); }
     .index img {
-      width: 92px;
+      width: 152px;
       aspect-ratio: 3 / 2;
       object-fit: cover;
-      border-radius: 8px;
+      border-radius: 10px;
       display: block;
     }
-    .index__title { font-size: 1rem; font-weight: 600; line-height: 1.3; margin-bottom: 3px; }
+    .index__title { font-size: 1.25rem; font-weight: 700; line-height: 1.3; margin-bottom: 5px; }
     .index__title small {
-      font-size: 0.6875rem;
+      font-size: 0.75rem;
       font-weight: 600;
       letter-spacing: 0.1em;
       text-transform: uppercase;
@@ -517,7 +511,7 @@
       margin-left: 10px;
       vertical-align: 1px;
     }
-    .index__text { font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.5; max-width: 78ch; }
+    .index__text { font-size: 1.0625rem; color: var(--text-secondary); line-height: 1.55; max-width: 78ch; }
 
     /* --- Closing CTA ------------------------------------------------------- */
     .cta {
@@ -525,7 +519,7 @@
       padding: clamp(var(--space-4), 5vw, var(--space-6));
       border-radius: var(--radius-card);
       border: 1px solid var(--glass-border);
-      background: rgba(8, 19, 46, 0.72);
+      background: var(--card-fill);
       text-align: center;
     }
     .cta__title {
@@ -545,11 +539,10 @@
       .feature,
       .row { grid-template-columns: minmax(0, 1fr); }
       .row:nth-child(even) .row__media { order: 0; }
-      .stat { flex-basis: 45%; border-right: 0; }
     }
     @media (max-width: 520px) {
-      .index li { grid-template-columns: 64px minmax(0, 1fr); }
-      .index img { width: 64px; }
+      .index li { grid-template-columns: 96px minmax(0, 1fr); }
+      .index img { width: 96px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -582,9 +575,14 @@
         <span class="logo__full">Bristol Trading Society</span>
       </span>
     </a>
-    <ul class="nav__links">
-      <li class="nav__mobile">
-        <button class="nav__menu-btn" aria-expanded="false" aria-haspopup="true">
+    <a class="nav__link nav__link--cta" href="/apply">Apply now</a>
+  </nav>
+
+  <div class="menu-float">
+    <button class="nav__menu-btn" aria-expanded="false" aria-haspopup="true">
+          <svg class="nav__menu-icon" width="18" height="12" viewBox="0 0 18 12" fill="none" aria-hidden="true">
+            <path d="M1 1h16M1 6h16M1 11h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
           Menu
           <svg class="nav__chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
             <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -594,15 +592,12 @@
           <li><a class="nav__dropdown-link" href="/" role="menuitem">Home</a></li>
           <li><a class="nav__dropdown-link" href="/events" role="menuitem">Events and Speakers</a></li>
           <li><a class="nav__dropdown-link" href="/sponsors" role="menuitem">Sponsors</a></li>
-          <li><a class="nav__dropdown-link" href="/divisions" role="menuitem">Divisions</a></li>
           <li><a class="nav__dropdown-link" href="/team" role="menuitem">Team</a></li>
+          <li><a class="nav__dropdown-link" href="/divisions" role="menuitem">Divisions</a></li>
           <li><a class="nav__dropdown-link" href="/alumni" role="menuitem">Alumni</a></li>
           <li><a class="nav__dropdown-link" href="/contact" role="menuitem">Contact us</a></li>
         </ul>
-      </li>
-      <li><a class="nav__link nav__link--cta" href="/apply">Apply now</a></li>
-    </ul>
-  </nav>
+  </div>
 
   <main id="events" class="ev" tabindex="-1">
 
@@ -610,20 +605,12 @@
     <div class="wrap">
       <header class="ev__head">
         <span class="ev__kicker">Events and Speakers</span>
-        <h1 class="ev__title">A year of doing the work in public</h1>
+        <h1 class="ev__title">Where the year happens</h1>
         <p class="ev__lead">
-          Members research an instrument, pitch it, then defend it in front of the traders and
-          investors who do the same thing for a living. Here&rsquo;s what that looks like.
+          From the flagship trading competition to weekly speaker evenings &mdash; here&rsquo;s what&rsquo;s on,
+          and what&rsquo;s next.
         </p>
       </header>
-
-      <div class="stats">
-        <div class="stat"><span class="stat__n">11</span><span class="stat__l">Speakers hosted</span></div>
-        <div class="stat"><span class="stat__n">7</span><span class="stat__l">Competing teams</span></div>
-        <div class="stat"><span class="stat__n">4</span><span class="stat__l">Divisions competing</span></div>
-        <div class="stat"><span class="stat__n">$20<u>m</u></span><span class="stat__l">Simulated capital run</span></div>
-        <div class="stat"><span class="stat__n">2</span><span class="stat__l">Sold-out simulator events</span></div>
-      </div>
 
       <div class="next">
         <span class="next__flag">Next up</span>
@@ -650,17 +637,11 @@
     <section class="sec" aria-labelledby="season-title">
       <div class="wrap">
         <div class="sec__head">
-          <span class="sec__label">The shape of the year</span>
-          <h2 class="sec__title" id="season-title">What runs, and roughly when</h2>
-          <p class="sec__note">
-            Most of our programme repeats each academic year. Exact dates are confirmed term by
-            term and announced to members first.
-          </p>
+          <h2 class="sec__title" id="season-title">Calendar</h2>
         </div>
 
         <div class="season">
           <div class="term">
-            <p class="term__name">Michaelmas</p>
             <p class="term__span">September &ndash; December</p>
             <ul class="term__list">
               <li>Annual Welcome Event <span class="term__when">Late September</span></li>
@@ -670,7 +651,6 @@
             </ul>
           </div>
           <div class="term">
-            <p class="term__name">Lent</p>
             <p class="term__span">January &ndash; March</p>
             <ul class="term__list">
               <li>AmplifyME trading simulator <span class="term__when">Spring</span></li>
@@ -680,7 +660,6 @@
             </ul>
           </div>
           <div class="term">
-            <p class="term__name">Summer</p>
             <p class="term__span">April &ndash; June</p>
             <ul class="term__list">
               <li>Annual Trading Competition <span class="term__when">Flagship</span></li>
@@ -725,6 +704,10 @@
           </div>
         </div>
 
+        <div class="rail-wrap">
+        <button class="rail-nav rail-nav--prev" type="button" aria-label="Scroll photos left">
+          <svg width="8" height="14" viewBox="0 0 8 14" fill="none" aria-hidden="true"><path d="M7 1 1 7l6 6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
         <div class="rail" role="region" aria-label="Pitches from the 2025–26 trading competition" tabindex="0">
           <figure>
             <img src="assets/img/events/trading-comp-us10y.jpg" alt="Team pitching the US 10-year yield at the annual trading competition" />
@@ -750,6 +733,10 @@
             <img src="assets/img/events/trading-comp-eu-defence.jpg" alt="Team pitching European defence at the annual trading competition" />
             <figcaption>European defence</figcaption>
           </figure>
+        </div>
+        <button class="rail-nav rail-nav--next" type="button" aria-label="Scroll photos right">
+          <svg width="8" height="14" viewBox="0 0 8 14" fill="none" aria-hidden="true"><path d="M1 1l6 6-6 6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
         </div>
       </div>
     </section>
@@ -870,6 +857,7 @@
 
         </div>
 
+        <p class="filters__hint">Filter the full roster below &mdash; our three featured speakers above stay in view either way.</p>
         <div class="filters" role="group" aria-label="Filter speakers">
           <button class="filter" type="button" data-filter="all" aria-pressed="true">All speakers</button>
           <button class="filter" type="button" data-filter="sellside" aria-pressed="false">Sell-side</button>
@@ -966,7 +954,7 @@
       <div class="wrap">
         <div class="sec__head">
           <span class="sec__label">Also on</span>
-          <h2 class="sec__title" id="more-title">Industry access and the member programme</h2>
+          <h2 class="sec__title" id="more-title">Other events</h2>
         </div>
 
         <ul class="index">
@@ -1051,6 +1039,22 @@
         v.loop = false;
         v.pause();
       });
+    })();
+
+    /* Rail nav buttons. Progressive enhancement: without JS the strip is
+       still fully scrollable by touch/trackpad/drag, buttons just no-op. */
+    (function () {
+      var rail = document.querySelector('.rail');
+      var prev = document.querySelector('.rail-nav--prev');
+      var next = document.querySelector('.rail-nav--next');
+      if (!rail || !prev || !next) return;
+      function scrollByCard(dir) {
+        var card = rail.querySelector('figure');
+        var amount = card ? card.getBoundingClientRect().width + 12 : 240;
+        rail.scrollBy({ left: dir * amount, behavior: 'smooth' });
+      }
+      prev.addEventListener('click', function () { scrollByCard(-1); });
+      next.addEventListener('click', function () { scrollByCard(1); });
     })();
 
     /* Speaker roster filter. Progressive enhancement: without JS every speaker
