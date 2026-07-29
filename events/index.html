@@ -190,6 +190,57 @@
       margin-bottom: 8px;
     }
 
+    /* --- Speaker grid: headshot-led, denser than the event cards --- */
+    .speakers {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
+      gap: var(--space-4);
+    }
+    .speaker {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: var(--space-4) var(--space-3);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-card);
+      background: rgba(8, 19, 46, 0.72);
+    }
+    .speaker__photo {
+      width: 116px;
+      height: 116px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: 50% 30%;
+      display: block;
+      margin-bottom: var(--space-3);
+      border: 1px solid var(--glass-border);
+    }
+    .speaker__name {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 600;
+      line-height: 1.25;
+      margin-bottom: 4px;
+    }
+    .speaker__role {
+      font-size: 0.875rem;
+      color: var(--accent-bright);
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+    .speaker__note { font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.5; }
+
+    .subhead {
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin: var(--space-6) 0 var(--space-4);
+    }
+
     /* Gallery strip under the featured competition. */
     .strip {
       display: grid;
@@ -367,6 +418,79 @@
       <!-- Speakers -->
       <section class="about__section" aria-labelledby="speakers-title">
         <h2 class="about__section-title" id="speakers-title">Speakers</h2>
+        <p class="body" style="color: var(--text-secondary); max-width: 62ch; margin-bottom: var(--space-5);">
+          We bring in people actually doing the work &mdash; traders, investors, founders and
+          Bristol alumni a few years ahead of our members.
+        </p>
+
+        <div class="speakers">
+
+          <article class="speaker">
+            <img class="speaker__photo" src="assets/img/speakers/pratik-popat.jpg" alt="Pratik Popat" />
+            <h3 class="speaker__name">Pratik Popat</h3>
+            <p class="speaker__role">Founder of BTS</p>
+            <p class="speaker__note">Venture and growth investor at Simplyhealth; previously an investment banking associate at Barclays.</p>
+          </article>
+
+          <article class="speaker">
+            <img class="speaker__photo" src="assets/img/speakers/nick-votier.jpg" alt="Nick Votier" />
+            <h3 class="speaker__name">Nick Votier, CFA</h3>
+            <p class="speaker__role">Vice President, Ares Wealth Management Solutions</p>
+            <p class="speaker__note">Bristol Economics graduate who spent nine years at HSBC in private banking. Spoke on the buy-side wealth management world.</p>
+          </article>
+
+          <article class="speaker">
+            <img class="speaker__photo" src="assets/img/speakers/eren-erman.jpg" alt="Eren Erman" />
+            <h3 class="speaker__name">Eren Erman</h3>
+            <p class="speaker__role">Global Head of Compliance Technology, TP ICAP</p>
+            <p class="speaker__note">Joined us through our partnership with TP ICAP to talk through his career and the data and liquidity side of the industry.</p>
+          </article>
+
+          <article class="speaker">
+            <img class="speaker__photo" src="assets/img/speakers/rich-mcdonald.jpg" alt="Rich McDonald" />
+            <h3 class="speaker__name">Rich McDonald</h3>
+            <p class="speaker__role">Hedge fund manager; ex-Director, Credit Suisse</p>
+            <p class="speaker__note">Ran an interactive trading and options masterclass with our members, built around live trading games.</p>
+          </article>
+
+          <article class="speaker">
+            <img class="speaker__photo" src="assets/img/speakers/sally-tam.jpg" alt="Sally Tam" />
+            <h3 class="speaker__name">Sally Tam</h3>
+            <p class="speaker__role">Investment Executive, LDC</p>
+            <p class="speaker__note">Bristol alumna, hosted with LDC on her route into private equity investment.</p>
+          </article>
+
+          <article class="speaker">
+            <img class="speaker__photo" src="assets/img/speakers/viktoria-leins.jpg" alt="Viktoria Leins" />
+            <h3 class="speaker__name">Viktoria Leins</h3>
+            <p class="speaker__role">Data Science IB Analyst, Citi</p>
+            <p class="speaker__note">Bristol alumna who talked our members through breaking into investment banking.</p>
+          </article>
+
+          <article class="speaker">
+            <img class="speaker__photo" src="assets/img/speakers/simon-warren.jpg" alt="Simon Warren" />
+            <h3 class="speaker__name">Simon Warren</h3>
+            <p class="speaker__role">Retired Head of Global Investments</p>
+            <p class="speaker__note">Former Director of the UK's Society of Technical Analysts, with 25 years in risk and corporate treasury. Ran a seminar on behavioural finance and wealth building.</p>
+          </article>
+
+          <article class="speaker">
+            <img class="speaker__photo" src="assets/img/speakers/matt-cheung.jpg" alt="Matt Cheung" />
+            <h3 class="speaker__name">Matt Cheung</h3>
+            <p class="speaker__role">CEO and Founder, Work in Fintech</p>
+            <p class="speaker__note">Spoke on routes into fintech alongside his team.</p>
+          </article>
+
+          <article class="speaker">
+            <img class="speaker__photo" src="assets/img/speakers/chloe-hollobon.jpg" alt="Chloe Hollobon" />
+            <h3 class="speaker__name">Chloe Hollobon</h3>
+            <p class="speaker__role">Analyst, Work in Fintech</p>
+            <p class="speaker__note">Bristol alumna, joined the fintech careers session with Matt.</p>
+          </article>
+
+        </div>
+
+        <p class="subhead">From our recent events</p>
         <div class="cards">
 
           <article class="card">
