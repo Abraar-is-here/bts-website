@@ -1531,6 +1531,7 @@ body.is-leaving {
 
 /* Photo */
 .alumni-card__photo {
+  position: relative;
   width: 120px;
   height: 120px;
   border-radius: 50%;
@@ -1547,11 +1548,27 @@ body.is-leaving {
   object-position: center top;
   display: block;
 }
-/* Division ring colour on photo border */
-.alumni-card__photo--equities { border-color: rgba(96, 165, 250, 0.55); }
-.alumni-card__photo--ficc     { border-color: rgba(45, 212, 191, 0.55); }
-.alumni-card__photo--quant    { border-color: rgba(192, 132, 252, 0.55); }
-.alumni-card__photo--macro    { border-color: rgba(251, 191, 36, 0.55);  }
+/* LinkedIn hover overlay on photo */
+.alumni-card__photo-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 26, 63, 0.72);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.22s ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .alumni-card:hover .alumni-card__photo-overlay { opacity: 1; }
+}
+
+/* Uniform photo border */
+.alumni-card__photo--equities,
+.alumni-card__photo--ficc,
+.alumni-card__photo--quant,
+.alumni-card__photo--macro { border-color: rgba(141, 162, 196, 0.35); }
 
 /* Body */
 .alumni-card__body {
