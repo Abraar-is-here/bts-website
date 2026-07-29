@@ -26,41 +26,49 @@
   <link rel="stylesheet" href="styles/tokens/colors.css?v=13" />
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
-  <link rel="stylesheet" href="styles/main.css?v=37" />
+  <link rel="stylesheet" href="styles/main.css?v=38" />
 
   <style>
-    /* -------------------------------------------------------------------------
-       About page — "Events and Speakers"
-       Page-scoped, mirroring the team page pattern: a dark ink scrim over the
-       shared aurora, then a card grid that normalises wildly different source
-       photos (portrait phone shots vs small landscape screenshots) into one
-       consistent rhythm via aspect-ratio + object-fit.
-       ------------------------------------------------------------------------- */
-    .about {
+    /* =========================================================================
+       Events and Speakers
+       -------------------------------------------------------------------------
+       Deliberately NOT one card grid repeated. The page runs a weight ladder:
+
+         tier 1  .feature   the annual competition — image-led, full-bleed
+         tier 2  .row       three recurring events — alternating wide rows
+         tier 3  .index     supporting events — a compact hairline list
+
+       Each tier gets a different *treatment*, not just a different size, so the
+       hierarchy survives even when you're skimming at speed.
+       ====================================================================== */
+
+    .ev {
       position: relative;
-      min-height: 100vh;
-      padding: 120px var(--space-4) var(--space-7);
+      padding: 120px 0 var(--space-7);
     }
-    .about::before {
+    .ev::before {
       content: '';
       position: absolute;
       inset: 0;
       z-index: 0;
-      background: radial-gradient(ellipse 95% 70% at 50% 20%,
-                  rgba(6, 17, 43, 0.62) 0%, rgba(6, 17, 43, 0.32) 48%, transparent 78%);
+      background: radial-gradient(ellipse 95% 70% at 50% 12%,
+                  rgba(6, 17, 43, 0.68) 0%, rgba(6, 17, 43, 0.34) 48%, transparent 78%);
       pointer-events: none;
     }
-    .about__inner {
+    .wrap {
       position: relative;
       z-index: 1;
       width: 100%;
       max-width: var(--container-max);
       margin: 0 auto;
+      padding: 0 var(--gutter);
     }
+    /* Wider track for the flagship, so it reads as breaking the grid. */
+    .wrap--wide { max-width: 1360px; }
 
-    /* --- Page head --- */
-    .about__head { max-width: 62ch; margin-bottom: var(--space-6); }
-    .about__eyebrow {
+    /* --- Page head -------------------------------------------------------- */
+    .ev__head { max-width: 66ch; }
+    .ev__kicker {
       display: block;
       font-family: var(--font-body);
       font-size: 0.8125rem;
@@ -70,73 +78,210 @@
       color: var(--accent-bright);
       margin-bottom: var(--space-3);
     }
-    .about__title {
+    .ev__title {
       font-family: var(--font-display);
-      font-size: clamp(2rem, 5vw, 3.25rem);
+      font-size: clamp(2.4rem, 6vw, 4.25rem);
       font-weight: 800;
-      line-height: 1.06;
-      letter-spacing: -0.02em;
+      line-height: 1.02;
+      letter-spacing: -0.03em;
       margin-bottom: var(--space-3);
       text-wrap: balance;
     }
-    .about__lead { color: var(--text-secondary); max-width: 60ch; }
-
-    /* --- Section rhythm --- */
-    .about__section { margin-top: var(--space-7); }
-    .about__section-title {
-      font-family: var(--font-display);
-      font-size: clamp(1.5rem, 3vw, 2rem);
-      font-weight: 700;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      padding-bottom: var(--space-3);
-      border-bottom: 1px solid var(--hairline);
-      margin-bottom: var(--space-5);
+    .ev__lead {
+      color: var(--text-secondary);
+      max-width: 58ch;
+      font-size: 1.0625rem;
+      line-height: 1.65;
     }
 
-    /* --- Featured event (the flagship competition) --- */
+    /* --- Credibility band -------------------------------------------------
+       Five numbers, hairline-separated. Cheap to build, does more persuading
+       than any paragraph on the page. */
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0;
+      margin-top: var(--space-5);
+      border-top: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+    }
+    .stat {
+      flex: 1 1 150px;
+      padding: var(--space-3) var(--space-4) var(--space-3) 0;
+      border-right: 1px solid var(--hairline);
+    }
+    .stat:last-child { border-right: 0; }
+    .stat__n {
+      display: block;
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+    .stat__l {
+      font-size: 0.8125rem;
+      line-height: 1.4;
+      color: var(--text-secondary);
+    }
+
+    /* --- "Next up" --------------------------------------------------------
+       The one genuinely dated thing on the page. Keeps the programme feeling
+       live without pretending we have a full calendar locked in. */
+    .next {
+      margin-top: var(--space-5);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-3) var(--space-4);
+      padding: var(--space-3) var(--space-4);
+      border: 1px solid rgba(56, 189, 248, 0.28);
+      border-radius: var(--radius-sm);
+      background: rgba(10, 26, 63, 0.55);
+    }
+    .next__flag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono, var(--font-body));
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-bright);
+    }
+    .next__flag::before {
+      content: '';
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--accent-bright);
+      box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.55);
+      animation: pulse 2.4s var(--ease-out) infinite;
+    }
+    @keyframes pulse {
+      0%   { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.5); }
+      70%  { box-shadow: 0 0 0 9px rgba(56, 189, 248, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); }
+    }
+    .next__body { flex: 1 1 260px; }
+    .next__title {
+      font-size: 1.0625rem;
+      font-weight: 600;
+      line-height: 1.3;
+      margin-bottom: 2px;
+    }
+    .next__when { font-size: 0.875rem; color: var(--text-secondary); }
+    .next__cd {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      font-variant-numeric: tabular-nums;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .next__cd span { color: var(--text-secondary); font-weight: 500; font-size: 0.8em; }
+
+    /* --- Section headers --------------------------------------------------
+       No rules across the page. Size, colour and space carry the hierarchy. */
+    .sec { margin-top: var(--space-7); }
+    .sec__head { margin-bottom: var(--space-5); max-width: 60ch; }
+    .sec__label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: var(--space-2);
+    }
+    .sec__title {
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 3.6vw, 2.6rem);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+      text-wrap: balance;
+    }
+    .sec__note {
+      color: var(--text-secondary);
+      margin-top: var(--space-3);
+      max-width: 58ch;
+      line-height: 1.65;
+    }
+
+    /* --- The season -------------------------------------------------------
+       A rhythm, not a calendar: the shape of the year, with typical timings.
+       Swap a timing for a real date and flip the chip when one is confirmed —
+       no structural change needed. */
+    .season {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+      gap: var(--space-4);
+    }
+    .term { border-top: 2px solid var(--accent); padding-top: var(--space-3); }
+    .term:nth-child(2) { border-top-color: rgba(37, 99, 235, 0.55); }
+    .term:nth-child(3) { border-top-color: rgba(141, 162, 196, 0.4); }
+    .term__name {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      margin-bottom: 2px;
+    }
+    .term__span { font-size: 0.8125rem; color: var(--text-secondary); margin-bottom: var(--space-3); }
+    .term__list { list-style: none; margin: 0; padding: 0; }
+    .term__list li {
+      padding: 12px 0;
+      border-top: 1px solid var(--hairline);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: var(--space-3);
+      font-size: 0.9375rem;
+      line-height: 1.4;
+    }
+    .term__when {
+      flex: none;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    /* --- TIER 1 : the flagship -------------------------------------------- */
     .feature {
       display: grid;
-      grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
       gap: clamp(var(--space-4), 4vw, var(--space-6));
       align-items: center;
-      margin-bottom: var(--space-6);
     }
     .feature__media {
       border-radius: var(--radius-card);
       overflow: hidden;
-      border: 1px solid var(--glass-border);
       box-shadow: var(--shadow-card);
-      background: rgba(8, 19, 46, 0.6);
     }
-    /* Portrait source, capped so it never dominates the fold. The crop is
-       biased low so the presenters stay in frame, not just the slide. */
     .feature__media img {
       width: 100%;
-      aspect-ratio: 4 / 3;
+      aspect-ratio: 16 / 10;
       object-fit: cover;
-      object-position: 50% 62%;
+      object-position: 50% 58%;
       display: block;
     }
-    .feature__body h3 {
+    .feature__title {
       font-family: var(--font-display);
-      font-size: clamp(1.4rem, 2.6vw, 1.9rem);
-      font-weight: 700;
-      letter-spacing: -0.015em;
-      line-height: 1.12;
+      font-size: clamp(1.75rem, 3.4vw, 2.5rem);
+      font-weight: 800;
+      line-height: 1.06;
+      letter-spacing: -0.025em;
       margin-bottom: var(--space-3);
+      text-wrap: balance;
     }
-    .feature__body p { color: var(--text-secondary); margin-bottom: var(--space-3); }
-    .feature__meta {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-2);
-    }
+    .feature__body p { color: var(--text-secondary); margin-bottom: var(--space-3); line-height: 1.65; }
+    .feature__meta { list-style: none; margin: var(--space-3) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2); }
     .feature__meta li {
-      font-family: var(--font-mono);
       font-size: 0.75rem;
       letter-spacing: 0.06em;
       text-transform: uppercase;
@@ -144,120 +289,241 @@
       padding: 7px 14px;
       border: 1px solid var(--glass-border);
       border-radius: var(--radius-pill);
-      background: var(--glass-fill);
     }
 
-    /* --- Card grid --- */
-    .cards {
+    /* Snap rail — replaces the old static wall of five thumbnails. Scrolls,
+       so it can hold every team without eating a screen of height. */
+    .rail {
+      margin-top: var(--space-5);
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
-      gap: var(--space-4);
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(230px, 1fr);
+      gap: var(--space-3);
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: var(--space-3);
+      scrollbar-width: thin;
+      scrollbar-color: rgba(141, 162, 196, 0.35) transparent;
     }
-    .card {
+    .rail figure { margin: 0; scroll-snap-align: start; }
+    .rail img {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      display: block;
+      border-radius: var(--radius-sm);
+    }
+    .rail figcaption {
+      margin-top: 10px;
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
       display: flex;
-      flex-direction: column;
-      border-radius: var(--radius-card);
-      overflow: hidden;
-      border: 1px solid var(--glass-border);
-      background: rgba(8, 19, 46, 0.72);
-      box-shadow: var(--shadow-card);
+      align-items: center;
+      gap: 8px;
     }
-    /* One ratio for every card kills the mixed-source raggedness. */
-    .card__media { position: relative; }
-    .card__media img,
-    .card__media .card__video {
+    .win {
+      font-size: 0.625rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--c-navy);
+      background: var(--accent-bright);
+      padding: 3px 7px;
+      border-radius: 4px;
+    }
+
+    /* --- TIER 2 : alternating wide rows ------------------------------------ */
+    .rows { display: flex; flex-direction: column; gap: var(--space-6); }
+    .row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: clamp(var(--space-4), 4vw, var(--space-5));
+      align-items: center;
+    }
+    .row:nth-child(even) .row__media { order: 2; }
+    .row__media { border-radius: var(--radius-card); overflow: hidden; box-shadow: var(--shadow-card); }
+    .row__media img,
+    .row__media video {
       width: 100%;
       aspect-ratio: 3 / 2;
       object-fit: cover;
       display: block;
     }
-    .card__body { padding: var(--space-3) var(--space-3) var(--space-4); }
-    .card__title {
-      font-family: var(--font-body);
-      font-size: 1.0625rem;
-      font-weight: 600;
-      line-height: 1.3;
-      margin-bottom: 6px;
-    }
-    .card__text { font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.55; }
-    .card__tag {
+    .row__tag {
       display: inline-block;
-      font-family: var(--font-mono);
       font-size: 0.6875rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--accent-bright);
-      margin-bottom: 8px;
-    }
-
-    /* --- Speaker grid: headshot-led, denser than the event cards --- */
-    .speakers {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
-      gap: var(--space-4);
-    }
-    .speaker {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      padding: var(--space-4) var(--space-3);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-card);
-      background: rgba(8, 19, 46, 0.72);
-    }
-    .speaker__photo {
-      width: 116px;
-      height: 116px;
-      border-radius: 50%;
-      object-fit: cover;
-      object-position: 50% 50%;
-      display: block;
-      margin-bottom: var(--space-3);
-      border: 1px solid var(--glass-border);
-    }
-    .speaker__name {
-      font-family: var(--font-body);
-      font-size: 1rem;
-      font-weight: 600;
-      line-height: 1.25;
-      margin-bottom: 4px;
-    }
-    .speaker__role {
-      font-size: 0.875rem;
-      color: var(--accent-bright);
-      line-height: 1.4;
-      margin-bottom: 8px;
-    }
-    .speaker__note { font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.5; }
-
-    .subhead {
-      font-family: var(--font-body);
-      font-size: 0.8125rem;
       font-weight: 600;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--text-secondary);
-      margin: var(--space-6) 0 var(--space-4);
+      color: var(--accent-bright);
+      margin-bottom: var(--space-2);
     }
+    .row__title {
+      font-family: var(--font-display);
+      font-size: clamp(1.35rem, 2.4vw, 1.85rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-3);
+    }
+    .row__text { color: var(--text-secondary); line-height: 1.65; }
 
-    /* Gallery strip under the featured competition. */
-    .strip {
+    /* --- Speakers : featured three ----------------------------------------
+       Portrait-led, so the most senior names read at a glance instead of
+       being flattened into an eleven-up circle grid. */
+    .headliners {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr));
-      gap: var(--space-3);
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+      gap: var(--space-4);
     }
-    .strip img {
-      width: 100%;
-      aspect-ratio: 3 / 4;
-      object-fit: cover;
-      display: block;
+    .headliner {
+      display: flex;
+      flex-direction: column;
       border-radius: var(--radius-card);
+      overflow: hidden;
+      background: rgba(8, 19, 46, 0.72);
       border: 1px solid var(--glass-border);
     }
+    .headliner img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      object-position: 50% 28%;
+      display: block;
+    }
+    .headliner__body { padding: var(--space-3) var(--space-3) var(--space-4); }
+    .headliner__name {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.015em;
+      line-height: 1.15;
+      margin-bottom: 4px;
+    }
+    .headliner__role { font-size: 0.875rem; color: var(--accent-bright); line-height: 1.4; margin-bottom: 10px; }
+    .headliner__note { font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.55; }
 
-    @media (max-width: 860px) {
-      .feature { grid-template-columns: minmax(0, 1fr); }
+    /* --- Speakers : filterable roster -------------------------------------- */
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin: var(--space-5) 0 var(--space-4);
+    }
+    .filter {
+      font-family: inherit;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      background: transparent;
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-pill);
+      padding: 8px 18px;
+      cursor: pointer;
+      transition: color var(--dur-fast) var(--ease-out),
+                  border-color var(--dur-fast) var(--ease-out),
+                  background var(--dur-fast) var(--ease-out);
+    }
+    .filter:hover { color: var(--text-primary); border-color: rgba(141, 162, 196, 0.5); }
+    .filter[aria-pressed="true"] {
+      color: var(--c-navy);
+      background: var(--text-primary);
+      border-color: var(--text-primary);
+    }
+
+    .roster {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+      gap: 0 var(--space-4);
+    }
+    .roster li {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3) 0;
+      border-top: 1px solid var(--hairline);
+    }
+    .roster li[hidden] { display: none; }
+    .roster img {
+      width: 52px; height: 52px;
+      flex: none;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .roster__name { font-size: 0.9375rem; font-weight: 600; line-height: 1.3; }
+    .roster__role { font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.4; }
+    .roster__empty { color: var(--text-secondary); padding: var(--space-4) 0; }
+
+    /* --- TIER 3 : supporting index ----------------------------------------
+       These are evidence, not headliners. A list, so they stop competing with
+       the flagship for attention. */
+    .index { list-style: none; margin: 0; padding: 0; }
+    .index li {
+      display: grid;
+      grid-template-columns: 92px minmax(0, 1fr);
+      gap: var(--space-3);
+      align-items: center;
+      padding: var(--space-3) 0;
+      border-top: 1px solid var(--hairline);
+    }
+    .index li:last-child { border-bottom: 1px solid var(--hairline); }
+    .index img {
+      width: 92px;
+      aspect-ratio: 3 / 2;
+      object-fit: cover;
+      border-radius: 8px;
+      display: block;
+    }
+    .index__title { font-size: 1rem; font-weight: 600; line-height: 1.3; margin-bottom: 3px; }
+    .index__title small {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-bright);
+      margin-left: 10px;
+      vertical-align: 1px;
+    }
+    .index__text { font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.5; max-width: 78ch; }
+
+    /* --- Closing CTA ------------------------------------------------------- */
+    .cta {
+      margin-top: var(--space-7);
+      padding: clamp(var(--space-4), 5vw, var(--space-6));
+      border-radius: var(--radius-card);
+      border: 1px solid var(--glass-border);
+      background: rgba(8, 19, 46, 0.72);
+      text-align: center;
+    }
+    .cta__title {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 3.4vw, 2.4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      margin-bottom: var(--space-3);
+      text-wrap: balance;
+    }
+    .cta__text { color: var(--text-secondary); max-width: 52ch; margin: 0 auto var(--space-4); line-height: 1.65; }
+    .cta__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); justify-content: center; }
+
+    /* --- Responsive -------------------------------------------------------- */
+    @media (max-width: 900px) {
+      .feature,
+      .row { grid-template-columns: minmax(0, 1fr); }
+      .row:nth-child(even) .row__media { order: 0; }
+      .stat { flex-basis: 45%; border-right: 0; }
+    }
+    @media (max-width: 520px) {
+      .index li { grid-template-columns: 64px minmax(0, 1fr); }
+      .index img { width: 64px; }
+      .next__cd { font-size: 0.9375rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .next__flag::before { animation: none; }
+      .rail { scroll-snap-type: none; }
+      .filter { transition: none; }
     }
   </style>
 </head>
@@ -306,39 +572,107 @@
     </ul>
   </nav>
 
-  <main id="events" class="about" tabindex="-1">
-    <div class="about__inner">
+  <main id="events" class="ev" tabindex="-1">
 
-      <header class="about__head">
-        <span class="about__eyebrow">Events and Speakers</span>
-        <h1 class="about__title">What we do across the year</h1>
-        <p class="body about__lead">
-          The Bristol Trading Society runs a year-round programme built around one idea: members
-          learn markets by doing the work, then presenting it to people who do it professionally.
-          Below are the events we run every year.
+    <!-- ===================== Head + credibility + next up ==================== -->
+    <div class="wrap">
+      <header class="ev__head">
+        <span class="ev__kicker">Events and Speakers</span>
+        <h1 class="ev__title">A year of doing the work in public</h1>
+        <p class="ev__lead">
+          Everything below runs every year. Members research an instrument, pitch it, then defend it
+          in front of the traders and investors who do the same thing for a living.
         </p>
       </header>
 
-      <!-- ===== Events and Speakers ===== -->
-      <section class="about__section" aria-labelledby="events-title">
-        <h2 class="about__section-title" id="events-title">Our flagship competition</h2>
+      <div class="stats">
+        <div class="stat"><span class="stat__n">11</span><span class="stat__l">Speakers hosted</span></div>
+        <div class="stat"><span class="stat__n">7</span><span class="stat__l">Competing teams</span></div>
+        <div class="stat"><span class="stat__n">4</span><span class="stat__l">Divisions competing</span></div>
+        <div class="stat"><span class="stat__n">$20m</span><span class="stat__l">Simulated capital run</span></div>
+        <div class="stat"><span class="stat__n">2</span><span class="stat__l">Sold-out simulator events</span></div>
+      </div>
 
-        <!-- Flagship: the annual trading competition -->
+      <div class="next">
+        <span class="next__flag">Next up</span>
+        <div class="next__body">
+          <p class="next__title">Division head applications</p>
+          <p class="next__when">Closes midnight BST, Wednesday 5 August 2026</p>
+        </div>
+        <p class="next__cd" id="ev-cd" aria-live="off"></p>
+        <a class="btn btn--primary" href="/apply">Apply now <span class="btn__arrow">&rarr;</span></a>
+      </div>
+    </div>
+
+    <!-- ============================== The season ============================ -->
+    <section class="sec" aria-labelledby="season-title">
+      <div class="wrap">
+        <div class="sec__head">
+          <span class="sec__label">The shape of the year</span>
+          <h2 class="sec__title" id="season-title">What runs, and roughly when</h2>
+          <p class="sec__note">
+            Our programme repeats each academic year. Exact dates are confirmed term by term
+            and announced to members first.
+          </p>
+        </div>
+
+        <div class="season">
+          <div class="term">
+            <p class="term__name">Michaelmas</p>
+            <p class="term__span">September &ndash; December</p>
+            <ul class="term__list">
+              <li>Annual Welcome Event <span class="term__when">Late September</span></li>
+              <li>Analyst programme opens <span class="term__when">October</span></li>
+              <li>Bloomberg Terminal sessions <span class="term__when">Throughout</span></li>
+              <li>Speaker evenings <span class="term__when">Fortnightly</span></li>
+            </ul>
+          </div>
+          <div class="term">
+            <p class="term__name">Lent</p>
+            <p class="term__span">January &ndash; March</p>
+            <ul class="term__list">
+              <li>AmplifyME trading simulator <span class="term__when">Spring</span></li>
+              <li>Macro Debate Competition <span class="term__when">Spring</span></li>
+              <li>Division workshops <span class="term__when">Termly</span></li>
+              <li>Industry socials <span class="term__when">By invitation</span></li>
+            </ul>
+          </div>
+          <div class="term">
+            <p class="term__name">Summer</p>
+            <p class="term__span">April &ndash; June</p>
+            <ul class="term__list">
+              <li>Annual Trading Competition <span class="term__when">Flagship</span></li>
+              <li>Energy Trading Week <span class="term__when">Partner event</span></li>
+              <li>Division head applications <span class="term__when">August</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== TIER 1 ================================ -->
+    <section class="sec" aria-labelledby="comp-title">
+      <div class="wrap wrap--wide">
+        <div class="sec__head">
+          <span class="sec__label">Flagship</span>
+          <h2 class="sec__title" id="comp-title">The Annual Trading Competition</h2>
+        </div>
+
         <div class="feature">
           <div class="feature__media">
             <img src="assets/img/events/trading-comp-diageo-1.jpg"
                  alt="A team presenting their Diageo equity pitch to judges in a University of Bristol lecture theatre" />
           </div>
           <div class="feature__body">
-            <h3>Annual Trading Competition</h3>
+            <h3 class="feature__title">Seven teams. One instrument each. External judges.</h3>
             <p>
-              Our flagship event. Seven teams each pitch an instrument from their own division —
-              equities, commodities, rates and macro — and defend it in front of external judges
+              Every division &mdash; equities, commodities, rates and macro &mdash; puts up a team.
+              Each pitches a single instrument and then defends it under questioning from judges
               drawn from industry.
             </p>
             <p>
-              The 2025&ndash;26 edition was won by the US 10-year yield and Diageo teams, with
-              pitches spanning Brent crude, copper, Eli Lilly, Novo Nordisk and European defence.
+              The 2025&ndash;26 edition was won by the US 10-year yield and Diageo teams, from a
+              field spanning Brent crude, copper, Eli Lilly, Novo Nordisk and European defence.
             </p>
             <ul class="feature__meta">
               <li>Annual</li>
@@ -349,280 +683,319 @@
           </div>
         </div>
 
-        <div class="strip">
-          <img src="assets/img/events/trading-comp-eu-defence.jpg" alt="Team pitching European defence at the annual trading competition" />
-          <img src="assets/img/events/trading-comp-brent.jpg" alt="Team pitching Brent crude at the annual trading competition" />
-          <img src="assets/img/events/trading-comp-eli-lilly.jpg" alt="Team pitching Eli Lilly at the annual trading competition" />
-          <img src="assets/img/events/trading-comp-copper.jpg" alt="Team pitching copper at the annual trading competition" />
-          <img src="assets/img/events/trading-comp-diageo-2.jpg" alt="Judges questioning the Diageo team after their pitch" />
+        <div class="rail" role="region" aria-label="Pitches from the 2025–26 trading competition" tabindex="0">
+          <figure>
+            <img src="assets/img/events/trading-comp-us10y.jpg" alt="Team pitching the US 10-year yield at the annual trading competition" />
+            <figcaption><span class="win">Winner</span> US 10-year yield</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/img/events/trading-comp-diageo-2.jpg" alt="Judges questioning the Diageo team after their pitch" />
+            <figcaption><span class="win">Winner</span> Diageo</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/img/events/trading-comp-brent.jpg" alt="Team pitching Brent crude at the annual trading competition" />
+            <figcaption>Brent crude</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/img/events/trading-comp-copper.jpg" alt="Team pitching copper at the annual trading competition" />
+            <figcaption>Copper</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/img/events/trading-comp-eli-lilly.jpg" alt="Team pitching Eli Lilly at the annual trading competition" />
+            <figcaption>Eli Lilly</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/img/events/trading-comp-eu-defence.jpg" alt="Team pitching European defence at the annual trading competition" />
+            <figcaption>European defence</figcaption>
+          </figure>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- Competitions & simulations -->
-      <section class="about__section" aria-labelledby="comps-title">
-        <h2 class="about__section-title" id="comps-title">Competitions &amp; simulations</h2>
-        <div class="cards">
+    <!-- ============================== TIER 2 ================================ -->
+    <section class="sec" aria-labelledby="run-title">
+      <div class="wrap">
+        <div class="sec__head">
+          <span class="sec__label">Recurring</span>
+          <h2 class="sec__title" id="run-title">Competitions and simulations</h2>
+        </div>
 
-          <article class="card">
-            <div class="card__media">
-              <img src="assets/img/events/macro-debate.jpg" alt="Members taking part in the annual BTS macro debate competition" />
-            </div>
-            <div class="card__body">
-              <span class="card__tag">Annual</span>
-              <h3 class="card__title">Macro Debate Competition</h3>
-              <p class="card__text">
-                A for-and-against debate on a live macro question. The 2025&ndash;26 motion asked
-                whether Argentina should adopt a free-floating exchange rate; the "for" side won.
-              </p>
-            </div>
-          </article>
+        <div class="rows">
 
-          <article class="card">
-            <div class="card__media">
-              <!-- Turnout clip: muted + inline so it can autoplay as a silent
-                   loop; the poster covers reduced-motion and slow connections. -->
-              <video class="card__video" autoplay muted loop playsinline preload="metadata"
+          <article class="row">
+            <div class="row__media">
+              <!-- Muted inline loop so the turnout reads instantly; the poster
+                   covers reduced-motion and slow connections. -->
+              <video autoplay muted loop playsinline preload="metadata"
                      poster="assets/img/events/amplifyme-simulator.jpg"
                      aria-label="A full lecture theatre of students at the AmplifyME trading simulator event">
                 <source src="assets/img/events/amplifyme-simulator.mp4" type="video/mp4" />
               </video>
             </div>
-            <div class="card__body">
-              <span class="card__tag">With AmplifyME</span>
-              <h3 class="card__title">AmplifyME Trading Simulator</h3>
-              <p class="card__text">
-                A live portfolio-management simulation run with AmplifyME — members manage $20m of
-                capital through a compressed year of market moves, news and research. Our first
-                event sold out, and a second followed by demand.
+            <div>
+              <span class="row__tag">With AmplifyME</span>
+              <h3 class="row__title">AmplifyME Trading Simulator</h3>
+              <p class="row__text">
+                A live portfolio-management simulation. Members manage $20m of capital through a
+                compressed year of market moves, news and research, and are ranked on what they do
+                with it. Our first event sold out; a second followed by demand.
               </p>
             </div>
           </article>
 
-          <article class="card">
-            <div class="card__media">
+          <article class="row">
+            <div class="row__media">
+              <img src="assets/img/events/macro-debate.jpg" alt="Members taking part in the annual BTS macro debate competition" />
+            </div>
+            <div>
+              <span class="row__tag">Annual</span>
+              <h3 class="row__title">Macro Debate Competition</h3>
+              <p class="row__text">
+                A for-and-against debate on a live macro question, argued in front of the room.
+                The 2025&ndash;26 motion asked whether Argentina should adopt a free-floating
+                exchange rate &mdash; the &ldquo;for&rdquo; side took it.
+              </p>
+            </div>
+          </article>
+
+          <article class="row">
+            <div class="row__media">
               <img src="assets/img/events/bloomberg-give-it-a-go.jpg" alt="Members using the Bloomberg Terminal at a give-it-a-go session" />
             </div>
-            <div class="card__body">
-              <span class="card__tag">Open to all</span>
-              <h3 class="card__title">Bloomberg Terminal Sessions</h3>
-              <p class="card__text">
-                Hands-on give-it-a-go sessions on the Bloomberg Terminal, open to members with no
-                prior experience.
+            <div>
+              <span class="row__tag">Open to all &middot; no experience needed</span>
+              <h3 class="row__title">Bloomberg Terminal Sessions</h3>
+              <p class="row__text">
+                Hands-on give-it-a-go sessions on the Terminal. The fastest way to go from never
+                having touched market data to pulling a curve yourself.
               </p>
             </div>
           </article>
 
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- Speakers -->
-      <section class="about__section" aria-labelledby="speakers-title">
-        <h2 class="about__section-title" id="speakers-title">Speakers</h2>
-        <p class="body" style="color: var(--text-secondary); max-width: 62ch; margin-bottom: var(--space-5);">
-          We bring in people actually doing the work &mdash; traders, investors, founders and
-          Bristol alumni a few years ahead of our members.
+    <!-- ============================== Speakers ============================== -->
+    <section class="sec" aria-labelledby="speakers-title">
+      <div class="wrap">
+        <div class="sec__head">
+          <span class="sec__label">Speakers</span>
+          <h2 class="sec__title" id="speakers-title">People actually doing the work</h2>
+          <p class="sec__note">
+            Traders, investors, founders and Bristol alumni a few years ahead of our members.
+            Filter by where they sit in the market.
+          </p>
+        </div>
+
+        <div class="headliners">
+
+          <article class="headliner">
+            <img src="assets/img/speakers/shahryar-naghshbandi.jpg" alt="Shahryar Naghshbandi" />
+            <div class="headliner__body">
+              <h3 class="headliner__name">Shahryar Naghshbandi</h3>
+              <p class="headliner__role">Head of Macro Trading, AME &mdash; Standard Chartered</p>
+              <p class="headliner__note">
+                An evening on how the trading industry actually works, and the advice he&rsquo;d give
+                anyone trying to enter it. The discussion ran well past the scheduled finish.
+              </p>
+            </div>
+          </article>
+
+          <article class="headliner">
+            <img src="assets/img/speakers/rich-mcdonald.jpg" alt="Rich McDonald" />
+            <div class="headliner__body">
+              <h3 class="headliner__name">Rich McDonald</h3>
+              <p class="headliner__role">Hedge fund manager; ex-Director, Credit Suisse</p>
+              <p class="headliner__note">
+                Ran an interactive trading and options masterclass with our members, built around
+                live trading games rather than slides.
+              </p>
+            </div>
+          </article>
+
+          <article class="headliner">
+            <img src="assets/img/speakers/andrew-simpson.jpg" alt="Andrew Simpson" />
+            <div class="headliner__body">
+              <h3 class="headliner__name">Andrew Simpson</h3>
+              <p class="headliner__role">Chief Executive, SIGMA Financial</p>
+              <p class="headliner__note">
+                Spoke to a full theatre on trading and on integrating sophisticated AI tooling into
+                the space, as part of an ongoing partnership with SIGMA.
+              </p>
+            </div>
+          </article>
+
+        </div>
+
+        <div class="filters" role="group" aria-label="Filter speakers">
+          <button class="filter" type="button" data-filter="all" aria-pressed="true">All speakers</button>
+          <button class="filter" type="button" data-filter="sellside" aria-pressed="false">Sell-side</button>
+          <button class="filter" type="button" data-filter="buyside" aria-pressed="false">Buy-side</button>
+          <button class="filter" type="button" data-filter="fintech" aria-pressed="false">Fintech</button>
+          <button class="filter" type="button" data-filter="alumni" aria-pressed="false">Bristol alumni</button>
+        </div>
+
+        <ul class="roster" id="roster">
+          <li data-tags="buyside alumni">
+            <img src="assets/img/speakers/pratik-popat.jpg" alt="" />
+            <div>
+              <p class="roster__name">Pratik Popat</p>
+              <p class="roster__role">Founder of BTS &middot; Venture and growth investor, Simplyhealth; previously Barclays</p>
+            </div>
+          </li>
+          <li data-tags="sellside">
+            <img src="assets/img/speakers/shahryar-naghshbandi.jpg" alt="" />
+            <div>
+              <p class="roster__name">Shahryar Naghshbandi</p>
+              <p class="roster__role">Head of Macro Trading, AME &mdash; Standard Chartered</p>
+            </div>
+          </li>
+          <li data-tags="fintech">
+            <img src="assets/img/speakers/andrew-simpson.jpg" alt="" />
+            <div>
+              <p class="roster__name">Andrew Simpson</p>
+              <p class="roster__role">Chief Executive, SIGMA Financial</p>
+            </div>
+          </li>
+          <li data-tags="buyside alumni">
+            <img src="assets/img/speakers/nick-votier.jpg" alt="" />
+            <div>
+              <p class="roster__name">Nick Votier, CFA</p>
+              <p class="roster__role">Vice President, Ares Wealth Management Solutions; nine years at HSBC</p>
+            </div>
+          </li>
+          <li data-tags="fintech sellside">
+            <img src="assets/img/speakers/eren-erman.jpg" alt="" />
+            <div>
+              <p class="roster__name">Eren Erman</p>
+              <p class="roster__role">Global Head of Compliance Technology, TP ICAP</p>
+            </div>
+          </li>
+          <li data-tags="buyside sellside">
+            <img src="assets/img/speakers/rich-mcdonald.jpg" alt="" />
+            <div>
+              <p class="roster__name">Rich McDonald</p>
+              <p class="roster__role">Hedge fund manager; ex-Director, Credit Suisse</p>
+            </div>
+          </li>
+          <li data-tags="buyside alumni">
+            <img src="assets/img/speakers/sally-tam.jpg" alt="" />
+            <div>
+              <p class="roster__name">Sally Tam</p>
+              <p class="roster__role">Investment Executive, LDC &middot; on her route into private equity</p>
+            </div>
+          </li>
+          <li data-tags="sellside alumni">
+            <img src="assets/img/speakers/viktoria-leins.jpg" alt="" />
+            <div>
+              <p class="roster__name">Viktoria Leins</p>
+              <p class="roster__role">Data Science IB Analyst, Citi &middot; on breaking into investment banking</p>
+            </div>
+          </li>
+          <li data-tags="buyside">
+            <img src="assets/img/speakers/simon-warren.jpg" alt="" />
+            <div>
+              <p class="roster__name">Simon Warren</p>
+              <p class="roster__role">Retired Head of Global Investments; former Director, Society of Technical Analysts</p>
+            </div>
+          </li>
+          <li data-tags="fintech">
+            <img src="assets/img/speakers/matt-cheung.jpg" alt="" />
+            <div>
+              <p class="roster__name">Matt Cheung</p>
+              <p class="roster__role">CEO and Founder, Work in Fintech</p>
+            </div>
+          </li>
+          <li data-tags="fintech alumni">
+            <img src="assets/img/speakers/chloe-hollobon.jpg" alt="" />
+            <div>
+              <p class="roster__name">Chloe Hollobon</p>
+              <p class="roster__role">Analyst, Work in Fintech</p>
+            </div>
+          </li>
+        </ul>
+        <p class="roster__empty" id="roster-empty" hidden>No speakers in that category yet.</p>
+      </div>
+    </section>
+
+    <!-- ============================== TIER 3 ================================ -->
+    <section class="sec" aria-labelledby="more-title">
+      <div class="wrap">
+        <div class="sec__head">
+          <span class="sec__label">Also on</span>
+          <h2 class="sec__title" id="more-title">Industry access and the member programme</h2>
+        </div>
+
+        <ul class="index">
+          <li>
+            <img src="assets/img/events/drw-social.jpg" alt="BTS analysts and division heads at the DRW social" />
+            <div>
+              <p class="index__title">DRW Social <small>DRW</small></p>
+              <p class="index__text">An invite-only evening with DRW for our analysts and division heads.</p>
+            </div>
+          </li>
+          <li>
+            <img src="assets/img/events/energy-trading-week.jpg" alt="BTS members attending Energy Trading Week" />
+            <div>
+              <p class="index__title">Energy Trading Week <small>Partner event</small></p>
+              <p class="index__text">Our commodities partner invites BTS members to their annual industry event, putting members in the room with practising energy traders.</p>
+            </div>
+          </li>
+          <li>
+            <img src="assets/img/events/lse-aic.jpg" alt="BTS members representing the society at the LSE AIC" />
+            <div>
+              <p class="index__title">LSE Alternative Investments Conference <small>External</small></p>
+              <p class="index__text">BTS representing Bristol among the UK&rsquo;s alternative investment societies.</p>
+            </div>
+          </li>
+          <li>
+            <img src="assets/img/events/speaker-standard-chartered.jpg" alt="BTS members at the Standard Chartered evening" />
+            <div>
+              <p class="index__title">An evening with Standard Chartered <small>Standard Chartered</small></p>
+              <p class="index__text">Our members after Shahryar&rsquo;s session on the trading industry.</p>
+            </div>
+          </li>
+          <li>
+            <img src="assets/img/events/speaker-sigma.jpg" alt="Andrew Simpson, CEO of SIGMA Financial, speaking to BTS members" />
+            <div>
+              <p class="index__title">A full theatre for SIGMA <small>SIGMA Financial</small></p>
+              <p class="index__text">Andrew Simpson on trading and AI tooling, part of an ongoing partnership.</p>
+            </div>
+          </li>
+          <li>
+            <img src="assets/img/events/welcome-event.jpg" alt="The annual BTS welcome event introducing the society to new members" />
+            <div>
+              <p class="index__title">Annual Welcome Event <small>Every September</small></p>
+              <p class="index__text">Where the year starts &mdash; introducing the society, the divisions and the analyst programme to new members.</p>
+            </div>
+          </li>
+          <li>
+            <img src="assets/img/events/member-workshop.jpg" alt="Members at a BTS-hosted workshop" />
+            <div>
+              <p class="index__title">Member Workshops <small>Termly</small></p>
+              <p class="index__text">Practical sessions run by BTS, building the groundwork the divisions then apply to live markets.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============================== Close ================================= -->
+    <div class="wrap">
+      <section class="cta" aria-labelledby="cta-title">
+        <h2 class="cta__title" id="cta-title">This is the year you&rsquo;d be joining</h2>
+        <p class="cta__text">
+          Every event above runs again. Members get first access to all of them &mdash; and the
+          analyst programme is where the pitching starts.
         </p>
-
-        <div class="speakers">
-
-          <article class="speaker">
-            <img class="speaker__photo" src="assets/img/speakers/pratik-popat.jpg" alt="Pratik Popat" />
-            <h3 class="speaker__name">Pratik Popat</h3>
-            <p class="speaker__role">Founder of BTS</p>
-            <p class="speaker__note">Venture and growth investor at Simplyhealth; previously an investment banking associate at Barclays.</p>
-          </article>
-
-          <article class="speaker">
-            <img class="speaker__photo" src="assets/img/speakers/shahryar-naghshbandi.jpg" alt="Shahryar Naghshbandi" />
-            <h3 class="speaker__name">Shahryar Naghshbandi</h3>
-            <p class="speaker__role">Head of Macro Trading, AME, Standard Chartered</p>
-            <p class="speaker__note">An evening on how the trading industry actually works, and the advice he'd give people trying to enter it.</p>
-          </article>
-
-          <article class="speaker">
-            <img class="speaker__photo" src="assets/img/speakers/andrew-simpson.jpg" alt="Andrew Simpson" />
-            <h3 class="speaker__name">Andrew Simpson</h3>
-            <p class="speaker__role">Chief Executive, SIGMA Financial</p>
-            <p class="speaker__note">Spoke on trading and on integrating sophisticated AI tooling into the space, as part of an ongoing partnership with SIGMA.</p>
-          </article>
-
-          <article class="speaker">
-            <img class="speaker__photo" src="assets/img/speakers/nick-votier.jpg" alt="Nick Votier" />
-            <h3 class="speaker__name">Nick Votier, CFA</h3>
-            <p class="speaker__role">Vice President, Ares Wealth Management Solutions</p>
-            <p class="speaker__note">Bristol Economics graduate who spent nine years at HSBC in private banking. Spoke on the buy-side wealth management world.</p>
-          </article>
-
-          <article class="speaker">
-            <img class="speaker__photo" src="assets/img/speakers/eren-erman.jpg" alt="Eren Erman" />
-            <h3 class="speaker__name">Eren Erman</h3>
-            <p class="speaker__role">Global Head of Compliance Technology, TP ICAP</p>
-            <p class="speaker__note">Joined us through our partnership with TP ICAP to talk through his career and the data and liquidity side of the industry.</p>
-          </article>
-
-          <article class="speaker">
-            <img class="speaker__photo" src="assets/img/speakers/rich-mcdonald.jpg" alt="Rich McDonald" />
-            <h3 class="speaker__name">Rich McDonald</h3>
-            <p class="speaker__role">Hedge fund manager; ex-Director, Credit Suisse</p>
-            <p class="speaker__note">Ran an interactive trading and options masterclass with our members, built around live trading games.</p>
-          </article>
-
-          <article class="speaker">
-            <img class="speaker__photo" src="assets/img/speakers/sally-tam.jpg" alt="Sally Tam" />
-            <h3 class="speaker__name">Sally Tam</h3>
-            <p class="speaker__role">Investment Executive, LDC</p>
-            <p class="speaker__note">Bristol alumna, hosted with LDC on her route into private equity investment.</p>
-          </article>
-
-          <article class="speaker">
-            <img class="speaker__photo" src="assets/img/speakers/viktoria-leins.jpg" alt="Viktoria Leins" />
-            <h3 class="speaker__name">Viktoria Leins</h3>
-            <p class="speaker__role">Data Science IB Analyst, Citi</p>
-            <p class="speaker__note">Bristol alumna who talked our members through breaking into investment banking.</p>
-          </article>
-
-          <article class="speaker">
-            <img class="speaker__photo" src="assets/img/speakers/simon-warren.jpg" alt="Simon Warren" />
-            <h3 class="speaker__name">Simon Warren</h3>
-            <p class="speaker__role">Retired Head of Global Investments</p>
-            <p class="speaker__note">Former Director of the UK's Society of Technical Analysts, with 25 years in risk and corporate treasury. Ran a seminar on behavioural finance and wealth building.</p>
-          </article>
-
-          <article class="speaker">
-            <img class="speaker__photo" src="assets/img/speakers/matt-cheung.jpg" alt="Matt Cheung" />
-            <h3 class="speaker__name">Matt Cheung</h3>
-            <p class="speaker__role">CEO and Founder, Work in Fintech</p>
-            <p class="speaker__note">Spoke on routes into fintech alongside his team.</p>
-          </article>
-
-          <article class="speaker">
-            <img class="speaker__photo" src="assets/img/speakers/chloe-hollobon.jpg" alt="Chloe Hollobon" />
-            <h3 class="speaker__name">Chloe Hollobon</h3>
-            <p class="speaker__role">Analyst, Work in Fintech</p>
-            <p class="speaker__note">Bristol alumna, joined the fintech careers session with Matt.</p>
-          </article>
-
-        </div>
-
-        <p class="subhead">From our recent events</p>
-        <div class="cards">
-
-          <article class="card">
-            <div class="card__media">
-              <img src="assets/img/events/speaker-standard-chartered.jpg" alt="Shahryar Naghshbandi speaking to BTS members at Standard Chartered Bank" />
-            </div>
-            <div class="card__body">
-              <span class="card__tag">Standard Chartered</span>
-              <h3 class="card__title">An evening with Standard Chartered</h3>
-              <p class="card__text">
-                Our members after Shahryar's session on the trading industry — the discussion
-                ran well past the scheduled finish.
-              </p>
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="card__media">
-              <img src="assets/img/events/speaker-sigma.jpg" alt="Andrew Simpson, CEO of SIGMA Financial, speaking to BTS members" />
-            </div>
-            <div class="card__body">
-              <span class="card__tag">SIGMA Financial</span>
-              <h3 class="card__title">A full theatre for SIGMA</h3>
-              <p class="card__text">
-                Andrew Simpson speaking to our members on trading and AI tooling, part of an
-                ongoing partnership with SIGMA.
-              </p>
-            </div>
-          </article>
-
+        <div class="cta__actions">
+          <a class="btn btn--primary" href="/apply">Apply now <span class="btn__arrow">&rarr;</span></a>
+          <a class="btn btn--secondary" href="/divisions">Explore the divisions <span class="btn__arrow">&rarr;</span></a>
         </div>
       </section>
-
-      <!-- Industry & partners -->
-      <section class="about__section" aria-labelledby="industry-title">
-        <h2 class="about__section-title" id="industry-title">Industry &amp; partners</h2>
-        <div class="cards">
-
-          <article class="card">
-            <div class="card__media">
-              <img src="assets/img/events/drw-social.jpg" alt="BTS analysts and division heads at the DRW social" />
-            </div>
-            <div class="card__body">
-              <span class="card__tag">DRW</span>
-              <h3 class="card__title">DRW Social</h3>
-              <p class="card__text">
-                An invite-only evening with DRW for our analysts and division heads.
-              </p>
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="card__media">
-              <img src="assets/img/events/energy-trading-week.jpg" alt="BTS members attending Energy Trading Week" />
-            </div>
-            <div class="card__body">
-              <span class="card__tag">Partner event</span>
-              <h3 class="card__title">Energy Trading Week</h3>
-              <p class="card__text">
-                Our commodities partner invites BTS members to their annual industry event,
-                putting members in the room with practising energy traders.
-              </p>
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="card__media">
-              <img src="assets/img/events/lse-aic.jpg" alt="BTS members representing the society at the LSE AIC" />
-            </div>
-            <div class="card__body">
-              <span class="card__tag">External</span>
-              <h3 class="card__title">LSE AIC</h3>
-              <p class="card__text">
-                BTS representing Bristol at the LSE Alternative Investments Conference.
-              </p>
-            </div>
-          </article>
-
-        </div>
-      </section>
-
-      <!-- Member programme -->
-      <section class="about__section" aria-labelledby="members-title">
-        <h2 class="about__section-title" id="members-title">For our members</h2>
-        <div class="cards">
-
-          <article class="card">
-            <div class="card__media">
-              <img src="assets/img/events/welcome-event.jpg" alt="The annual BTS welcome event introducing the society to new members" />
-            </div>
-            <div class="card__body">
-              <span class="card__tag">Every September</span>
-              <h3 class="card__title">Annual Welcome Event</h3>
-              <p class="card__text">
-                Where the year starts — introducing the society, the divisions and the analyst
-                programme to new members.
-              </p>
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="card__media">
-              <img src="assets/img/events/member-workshop.jpg" alt="Members at a BTS-hosted workshop" />
-            </div>
-            <div class="card__body">
-              <span class="card__tag">Termly</span>
-              <h3 class="card__title">Workshops</h3>
-              <p class="card__text">
-                Practical sessions run by BTS for members, building the groundwork the divisions
-                then apply to live markets.
-              </p>
-            </div>
-          </article>
-
-        </div>
-      </section>
-
     </div>
+
   </main>
 
   <script>
@@ -631,10 +1004,55 @@
     (function () {
       if (!window.matchMedia) return;
       if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      document.querySelectorAll('.card__video').forEach(function (v) {
+      document.querySelectorAll('.row__media video').forEach(function (v) {
         v.removeAttribute('autoplay');
         v.loop = false;
         v.pause();
+      });
+    })();
+
+    /* "Next up" countdown. Ticks once a second — this is a status line, not a
+       stopwatch, so there's nothing to gain from a faster interval. */
+    (function () {
+      var el = document.getElementById('ev-cd');
+      if (!el) return;
+      var deadline = new Date('2026-08-05T00:00:00+01:00').getTime();
+      function tick() {
+        var diff = deadline - Date.now();
+        if (diff <= 0) { el.textContent = 'Closed'; return; }
+        var s = Math.floor(diff / 1000);
+        var d = Math.floor(s / 86400);
+        var h = Math.floor(s % 86400 / 3600);
+        var m = Math.floor(s % 3600 / 60);
+        el.innerHTML = d + '<span>d</span> ' + h + '<span>h</span> ' + m + '<span>m</span> left';
+      }
+      tick();
+      setInterval(tick, 1000);
+    })();
+
+    /* Speaker roster filter. Progressive enhancement: without JS every speaker
+       is already in the DOM and visible, and the buttons simply do nothing. */
+    (function () {
+      var buttons = Array.prototype.slice.call(document.querySelectorAll('.filter'));
+      var items = Array.prototype.slice.call(document.querySelectorAll('#roster li'));
+      var empty = document.getElementById('roster-empty');
+      if (!buttons.length || !items.length) return;
+
+      buttons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var want = btn.dataset.filter;
+          buttons.forEach(function (b) {
+            b.setAttribute('aria-pressed', String(b === btn));
+          });
+          var shown = 0;
+          items.forEach(function (li) {
+            var match = want === 'all' ||
+                        (' ' + li.dataset.tags + ' ').indexOf(' ' + want + ' ') > -1;
+            li.hidden = !match;
+            if (match) shown++;
+          });
+          if (empty) empty.hidden = shown > 0;
+        });
       });
     })();
   </script>
