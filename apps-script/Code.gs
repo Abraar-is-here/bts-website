@@ -17,10 +17,9 @@ var CONFIG = {
   SHEET_NAME: 'Applications'
 };
 
-// Appended, never reordered — existing sheets keep their column positions.
 var HEADERS = ['Submitted', 'First name', 'Last name', 'University email',
   'Personal email', 'Phone', 'Year', 'Course', 'LinkedIn',
-  '1st choice', '2nd choice', 'CV', 'Sponsor consent'];
+  '1st choice', '2nd choice', 'CV'];
 
 function doPost(e) {
   try {
@@ -49,10 +48,7 @@ function doPost(e) {
     getSheet().appendRow([
       new Date(), data.firstName, data.lastName, data.uniEmail,
       data.personalEmail, data.phone, data.year, data.course, data.linkedin,
-      data.choice1, data.choice2, cvUrl,
-      // Default to 'No': a missing or malformed value must never be recorded
-      // as consent.
-      data.sponsorConsent === 'Yes' ? 'Yes' : 'No'
+      data.choice1, data.choice2, cvUrl
     ]);
 
     // 3) Email the committee (real-time notification).
@@ -99,9 +95,7 @@ function notify(d, cvUrl) {
     '',
     '1st choice: ' + d.choice1,
     '2nd choice: ' + (d.choice2 || '—'),
-    'CV:         ' + (cvUrl || '—'),
-    '',
-    'Sponsor sharing consent: ' + (d.sponsorConsent === 'Yes' ? 'YES' : 'NO')
+    'CV:         ' + (cvUrl || '—')
   ].join('\n');
   var options = {};
   if (CONFIG.CC_EMAILS) options.cc = CONFIG.CC_EMAILS;

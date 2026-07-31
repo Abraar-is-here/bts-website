@@ -999,42 +999,35 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   .file-field:hover { border-color: var(--accent); background: rgba(37, 99, 235, 0.08); }
 }
 
-/* Optional consent checkbox.
-   Deliberately unticked by default and never `required` — consent to share
-   data with third parties has to be a separate, freely given choice, not a
-   condition of submitting the form. */
-.consent {
+/* Pre-submission disclosure.
+   There is no opt-in checkbox: CVs go into the analyst CV book and may be
+   shared with sponsors, on a legitimate-interests basis. That only holds up if
+   the disclosure is genuinely prominent and the objection route is obvious, so
+   this is a callout above the form rather than fine print beneath a heading. */
+.notice {
   grid-column: 1 / -1;
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: var(--space-3);
-  border: 1px solid var(--field-border);
+  padding: var(--space-3) var(--space-4);
+  margin-top: var(--space-4);
+  border: 1px solid rgba(56, 189, 248, 0.3);
   border-radius: var(--radius-sm);
-  background: var(--field-bg);
-  cursor: pointer;
+  background: rgba(10, 26, 63, 0.55);
 }
-.consent input[type="checkbox"] {
-  flex: none;
-  width: 18px;
-  height: 18px;
-  margin-top: 2px;
-  accent-color: var(--accent);
-  cursor: pointer;
+.notice__title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  margin-bottom: 8px;
 }
-.consent__text {
+.notice p {
   font-size: 0.875rem;
-  line-height: 1.55;
+  line-height: 1.65;
   color: var(--text-secondary);
 }
-.consent__text strong {
-  display: block;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 2px;
-}
-.consent:hover { border-color: rgba(141, 162, 196, 0.5); }
-.consent:focus-within { border-color: var(--accent); }
+.notice p + p { margin-top: 10px; }
+.notice strong { color: var(--text-primary); font-weight: 600; }
+.notice a { color: var(--accent-bright); }
 
 /* Submit row + status. */
 .form-actions {
