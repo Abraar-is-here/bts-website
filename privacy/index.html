@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <base href="/" />
+
+  <title>Privacy Policy — Bristol Trading Society</title>
+  <meta name="description" content="How the Bristol Trading Society collects, uses, stores and shares your personal data — including applications, CVs and the analyst CV book." />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ENSZNRQNLG"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-ENSZNRQNLG');
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="assets/img/bull.svg" />
+
+  <link rel="preload" href="assets/fonts/syne-800.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/fonts/dm-sans-400.woff2" as="font" type="font/woff2" crossorigin />
+
+  <link rel="stylesheet" href="styles/tokens/fonts.css?v=7" />
+  <link rel="stylesheet" href="styles/tokens/colors.css?v=13" />
+  <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
+  <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
+  <link rel="stylesheet" href="styles/main.css?v=40" />
+
+  <style>
+    /* -------------------------------------------------------------------------
+       Privacy Policy — a reading page, not a marketing page.
+       Single narrow column, generous leading, no cards. The only job here is
+       that someone can actually find the clause that applies to them.
+       ------------------------------------------------------------------------- */
+    .legal {
+      position: relative;
+      padding: 120px 0 var(--space-6);
+    }
+    .legal::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: radial-gradient(ellipse 95% 60% at 50% 8%,
+                  rgba(6, 17, 43, 0.72) 0%, rgba(6, 17, 43, 0.38) 46%, transparent 76%);
+      pointer-events: none;
+    }
+    .legal__wrap {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 var(--gutter);
+    }
+
+    .legal__kicker {
+      display: block;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-bright);
+      margin-bottom: var(--space-3);
+    }
+    .legal__title {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 5.5vw, 3.4rem);
+      font-weight: 800;
+      line-height: 1.04;
+      letter-spacing: -0.03em;
+      margin-bottom: var(--space-3);
+    }
+    .legal__lead {
+      font-size: 1.0625rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      max-width: 64ch;
+    }
+    .legal__updated {
+      margin-top: var(--space-4);
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+      padding: 10px 16px;
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-pill);
+      display: inline-block;
+    }
+
+    /* Contents list — a legal page nobody can navigate is a legal page nobody
+       reads. */
+    .legal__toc {
+      margin-top: var(--space-5);
+      padding: var(--space-4);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-sm);
+      background: rgba(10, 26, 63, 0.4);
+    }
+    .legal__toc h2 {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: var(--space-3);
+    }
+    .legal__toc ol {
+      margin: 0;
+      padding-left: 1.25em;
+      columns: 2;
+      column-gap: var(--space-4);
+    }
+    .legal__toc li { margin-bottom: 8px; break-inside: avoid; }
+    .legal__toc a {
+      font-size: 0.9375rem;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+    .legal__toc a:hover { color: var(--accent-bright); text-decoration: underline; }
+
+    .legal__section { margin-top: var(--space-6); scroll-margin-top: 100px; }
+    .legal__section h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.35rem, 2.6vw, 1.75rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-3);
+    }
+    .legal__section h3 {
+      font-size: 1.0625rem;
+      font-weight: 600;
+      line-height: 1.35;
+      margin: var(--space-4) 0 var(--space-2);
+      color: var(--text-primary);
+    }
+    .legal__section p,
+    .legal__section li {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: var(--text-secondary);
+    }
+    .legal__section p { margin-bottom: var(--space-3); max-width: 68ch; }
+    .legal__section ul { margin: 0 0 var(--space-3); padding-left: 1.35em; max-width: 68ch; }
+    .legal__section li { margin-bottom: 8px; }
+    .legal__section strong { color: var(--text-primary); font-weight: 600; }
+    .legal__section a { color: var(--accent-bright); }
+
+    /* Callout for the clauses people most need to notice. */
+    .legal__note {
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: var(--radius-sm);
+      background: rgba(10, 26, 63, 0.5);
+      padding: var(--space-3) var(--space-4);
+      margin: var(--space-4) 0;
+    }
+    .legal__note p { margin-bottom: 0; }
+    .legal__note p + p { margin-top: var(--space-3); }
+
+    /* Data table: what we hold, why, and on what basis. */
+    .legal__table-wrap { overflow-x: auto; margin: var(--space-4) 0; }
+    .legal__table {
+      width: 100%;
+      min-width: 560px;
+      border-collapse: collapse;
+      font-size: 0.9375rem;
+    }
+    .legal__table th,
+    .legal__table td {
+      text-align: left;
+      vertical-align: top;
+      padding: 12px 16px 12px 0;
+      border-bottom: 1px solid var(--hairline);
+      line-height: 1.6;
+    }
+    .legal__table th {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+    .legal__table td { color: var(--text-secondary); }
+    .legal__table td:first-child { color: var(--text-primary); font-weight: 600; }
+
+    @media (max-width: 620px) {
+      .legal__toc ol { columns: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <a class="skip-link" href="#privacy">Skip to content</a>
+
+  <div class="aurora" aria-hidden="true">
+    <canvas id="aurora-canvas"></canvas>
+    <div class="aurora-fallback">
+      <span class="b1"></span><span class="b2"></span><span class="b3"></span>
+      <span class="b4"></span><span class="b5"></span><span class="b6"></span>
+      <span class="sheen"></span>
+    </div>
+  </div>
+
+  <nav class="nav" aria-label="Primary">
+    <a class="logo" href="/" aria-label="Bristol Trading Society — home">
+      <svg class="logo__bull" viewBox="0 0 93 78" fill="currentColor" aria-hidden="true" focusable="false">
+        <path fill-rule="evenodd" d="M65.13 6.00 L66.50 5.88 L66.88 6.25 L66.88 10.50 L71.88 15.25 L71.88 16.50 L72.88 17.25 L72.88 24.50 L70.88 26.25 L70.88 27.50 L66.88 31.25 L66.88 32.50 L67.88 33.25 L67.88 34.50 L69.88 36.25 L69.88 37.50 L70.88 38.25 L70.88 39.50 L71.88 40.25 L71.88 41.50 L72.88 42.25 L72.88 43.50 L73.88 44.25 L73.88 45.50 L75.88 47.25 L75.88 48.50 L76.88 49.25 L76.88 50.50 L77.88 51.25 L77.88 52.50 L78.88 53.25 L78.88 54.50 L80.88 56.25 L80.88 57.50 L81.88 58.25 L81.88 59.50 L82.88 60.25 L82.88 61.50 L83.88 62.25 L83.88 63.50 L84.88 64.25 L84.88 65.50 L86.88 67.25 L86.88 68.50 L87.88 69.25 L87.88 71.50 L87.50 71.88 L81.25 71.88 L80.88 71.50 L80.88 68.25 L79.88 67.50 L79.88 64.25 L78.88 63.50 L78.88 62.25 L78.50 61.88 L77.25 61.88 L76.50 60.88 L72.25 60.88 L71.25 59.88 L70.88 60.25 L70.88 62.50 L69.50 63.88 L68.25 63.88 L65.88 61.50 L65.88 60.25 L63.50 57.88 L62.00 57.88 L61.88 60.50 L62.88 61.25 L62.88 63.50 L63.88 64.25 L63.88 65.50 L64.88 66.25 L64.88 68.50 L65.88 69.25 L65.88 72.50 L65.50 72.88 L58.25 72.88 L56.88 71.25 L57.88 70.50 L57.88 68.25 L58.88 67.50 L58.88 65.25 L57.88 64.50 L57.88 63.25 L56.50 61.88 L55.25 61.88 L53.88 60.50 L53.88 58.25 L52.88 57.50 L52.88 54.25 L51.88 53.50 L51.88 52.25 L50.88 51.50 L50.88 50.25 L48.50 47.88 L47.88 48.25 L47.88 52.50 L48.88 53.25 L48.88 55.50 L49.88 56.25 L49.88 57.50 L50.88 58.25 L50.88 60.50 L51.88 61.25 L51.88 63.50 L51.50 63.88 L50.25 63.88 L49.50 64.88 L44.25 64.88 L43.50 63.88 L42.25 63.88 L36.50 57.88 L34.25 57.88 L32.50 59.88 L31.25 59.88 L29.50 61.88 L28.25 61.88 L27.50 62.88 L26.25 62.88 L24.50 64.88 L23.25 64.88 L22.50 65.88 L20.25 65.88 L19.50 66.88 L16.25 66.88 L15.88 67.25 L15.88 69.50 L14.88 70.25 L14.88 71.50 L13.50 72.88 L10.25 72.88 L8.88 71.50 L10.88 69.50 L10.88 68.25 L12.88 66.50 L12.88 65.25 L14.25 63.88 L15.50 63.88 L16.25 62.88 L18.50 62.88 L20.88 60.50 L20.88 59.25 L21.88 58.25 L21.50 57.88 L20.25 57.88 L19.50 58.88 L17.25 58.88 L16.50 59.88 L10.25 59.88 L9.50 58.88 L8.25 58.88 L5.88 56.50 L5.88 53.25 L7.88 51.50 L7.88 50.25 L14.88 43.50 L14.88 42.25 L15.88 41.50 L15.50 40.88 L13.25 40.88 L12.50 41.88 L8.25 41.88 L7.50 40.88 L6.25 40.88 L5.88 40.50 L5.88 39.25 L7.25 37.88 L8.50 37.88 L9.25 36.88 L10.50 36.88 L11.25 35.88 L14.50 35.88 L15.25 36.88 L16.50 36.88 L16.88 37.25 L16.88 38.50 L17.88 39.25 L17.88 41.50 L16.88 42.25 L16.88 44.50 L13.88 47.25 L13.88 48.50 L9.88 52.25 L9.88 55.50 L11.25 56.88 L13.50 56.88 L14.25 55.88 L16.50 55.88 L18.25 53.88 L19.50 53.88 L19.88 53.50 L19.88 52.25 L22.25 49.88 L23.50 49.88 L25.25 47.88 L26.50 47.88 L27.25 46.88 L30.50 46.88 L31.50 47.88 L31.88 47.50 L31.88 44.25 L32.88 43.50 L32.88 41.25 L33.88 40.50 L33.88 39.25 L38.25 34.88 L39.50 34.88 L40.25 33.88 L41.50 33.88 L42.25 32.88 L44.50 32.88 L44.88 32.50 L44.50 31.88 L43.25 31.88 L42.50 30.88 L41.25 30.88 L36.88 26.50 L36.88 20.25 L40.50 16.88 L40.88 17.50 L39.88 18.00 L39.88 22.50 L42.25 24.88 L43.50 24.88 L44.25 25.88 L48.50 25.88 L50.25 23.88 L54.50 23.88 L55.50 24.88 L56.25 23.88 L57.50 23.88 L58.25 22.88 L60.50 22.88 L61.25 23.88 L63.50 23.88 L65.88 21.50 L65.88 20.25 L66.88 19.50 L66.88 16.25 L65.88 15.50 L65.88 14.25 L63.88 12.50 L63.88 8.25 L64.88 7.50 L65.00 6.13 Z M58.13 31.00 L60.50 30.88 L60.88 31.25 L60.50 31.88 L59.25 31.88 L58.88 32.25 L59.88 33.50 L59.50 33.88 L58.25 33.88 L57.50 35.88 L56.88 35.50 L56.88 33.25 L57.88 32.50 L58.00 31.13 Z M51.13 39.00 L56.50 38.88 L56.88 39.25 L56.88 42.50 L56.50 42.88 L55.88 42.50 L55.88 40.25 L55.50 39.88 L51.00 39.88 L51.00 39.13 Z M50.13 40.00 L50.75 39.88 L50.88 40.50 L51.88 41.25 L51.88 42.50 L51.25 42.88 L49.88 41.50 L50.00 40.13 Z M71.13 53.00 L71.88 53.25 L71.88 56.50 L71.50 56.88 L70.88 56.50 L71.00 53.13 Z M61.13 57.00 L61.50 56.88 L61.88 57.75 L61.25 57.88 L61.00 57.13 Z M34.13 63.00 L36.50 62.88 L39.88 66.25 L39.88 67.50 L39.50 67.88 L38.25 67.88 L37.50 68.88 L34.25 68.88 L33.88 69.25 L33.88 70.50 L31.50 72.88 L29.25 72.88 L27.88 71.50 L27.88 70.25 L30.88 67.50 L30.88 64.25 L31.25 63.88 L33.50 63.88 L34.00 63.13 Z"></path>
+      </svg>
+      <span class="logo__word">
+        <span class="logo__bts">BTS</span>
+        <span class="logo__full">Bristol Trading Society</span>
+      </span>
+    </a>
+    <ul class="nav__links">
+      <li class="nav__mobile">
+        <button class="nav__menu-btn" aria-expanded="false" aria-haspopup="true">
+          Menu
+          <svg class="nav__chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+            <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <ul class="nav__dropdown" role="menu">
+          <li><a class="nav__dropdown-link" href="/" role="menuitem">Home</a></li>
+          <li><a class="nav__dropdown-link" href="/events" role="menuitem">Events and Speakers</a></li>
+          <li><a class="nav__dropdown-link" href="/sponsors" role="menuitem">Sponsors</a></li>
+          <li><a class="nav__dropdown-link" href="/divisions" role="menuitem">Divisions</a></li>
+          <li><a class="nav__dropdown-link" href="/team" role="menuitem">Team</a></li>
+          <li><a class="nav__dropdown-link" href="/alumni" role="menuitem">Alumni</a></li>
+          <li><a class="nav__dropdown-link" href="/contact" role="menuitem">Contact us</a></li>
+        </ul>
+      </li>
+      <li><a class="nav__link nav__link--cta" href="/apply">Apply now</a></li>
+    </ul>
+  </nav>
+
+  <main id="privacy" class="legal" tabindex="-1">
+    <div class="legal__wrap">
+
+      <header>
+        <span class="legal__kicker">Privacy</span>
+        <h1 class="legal__title">Privacy Policy</h1>
+        <p class="legal__lead">
+          This policy explains what personal data the Bristol Trading Society collects about you,
+          why we hold it, who we share it with, and what you can ask us to do about it. We are a
+          student society, not a financial institution &mdash; the data we hold is limited to
+          contact details, academic details and CVs.
+        </p>
+        <p class="legal__updated">Last updated: 31 July 2026</p>
+      </header>
+
+      <nav class="legal__toc" aria-label="Contents">
+        <h2>On this page</h2>
+        <ol>
+          <li><a href="#who-we-are">Who we are</a></li>
+          <li><a href="#what-we-collect">What we collect</a></li>
+          <li><a href="#how-we-collect">How we collect it</a></li>
+          <li><a href="#why">Why we use it, and our legal basis</a></li>
+          <li><a href="#cv-book">The analyst CV book</a></li>
+          <li><a href="#sharing">Who we share data with</a></li>
+          <li><a href="#storage">Where we keep it</a></li>
+          <li><a href="#retention">How long we keep it</a></li>
+          <li><a href="#cookies">Cookies and analytics</a></li>
+          <li><a href="#rights">Your rights</a></li>
+          <li><a href="#changes">Changes to this policy</a></li>
+          <li><a href="#contact">How to contact us</a></li>
+        </ol>
+      </nav>
+
+      <!-- 1 -->
+      <section class="legal__section" id="who-we-are">
+        <h2>1. Who we are</h2>
+        <p>
+          The Bristol Trading Society (&ldquo;BTS&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;) is a
+          student society at the University of Bristol, run by students for students. We are the
+          data controller for the personal data described in this policy &mdash; meaning we decide
+          what is collected and what it is used for.
+        </p>
+        <p>
+          We are affiliated with the University of Bristol Students&rsquo; Union. Where the
+          Students&rsquo; Union or the University holds your data under their own policies, those
+          policies apply, not this one.
+        </p>
+      </section>
+
+      <!-- 2 -->
+      <section class="legal__section" id="what-we-collect">
+        <h2>2. What we collect</h2>
+        <p>
+          We keep the collection deliberately narrow. We do <strong>not</strong> collect payment or
+          bank details, government identity documents, criminal records, or any special category
+          data such as health or ethnicity.
+        </p>
+
+        <h3>If you apply to a BTS programme</h3>
+        <ul>
+          <li>First and last name</li>
+          <li>University email address, and a personal email address if you give one</li>
+          <li>Phone number</li>
+          <li>Year of study and course</li>
+          <li>LinkedIn profile URL, if you give one</li>
+          <li>Your CV, and anything contained in it</li>
+          <li>Which divisions you applied to, and whether you opted in to sponsor sharing</li>
+        </ul>
+
+        <h3>If you contact us or attend an event</h3>
+        <ul>
+          <li>Your name and the email address you contact us from</li>
+          <li>Anything you choose to put in your message</li>
+          <li>Attendance or sign-up details for events you register for</li>
+        </ul>
+
+        <h3>If you simply visit the website</h3>
+        <ul>
+          <li>Standard analytics data &mdash; see <a href="#cookies">cookies and analytics</a> below</li>
+        </ul>
+
+        <div class="legal__note">
+          <p>
+            <strong>A note on your CV.</strong> A CV often contains more than we ask for &mdash; a
+            home address, a date of birth, a photograph, personal interests. We only ask for the
+            information listed above, but we will hold whatever your CV contains. If there is
+            something on it you would rather we did not hold, remove it before uploading.
+          </p>
+        </div>
+      </section>
+
+      <!-- 3 -->
+      <section class="legal__section" id="how-we-collect">
+        <h2>3. How we collect it</h2>
+        <p>We only collect personal data that you give us directly. Specifically:</p>
+        <ul>
+          <li>Through the application form on this website</li>
+          <li>When you email us, or message us on LinkedIn or Instagram</li>
+          <li>When you sign up for an event, workshop or competition</li>
+          <li>Through sign-up sheets at fairs and society events</li>
+        </ul>
+        <p>
+          We do not buy contact lists, and we do not scrape or compile data about you from other
+          sources.
+        </p>
+      </section>
+
+      <!-- 4 -->
+      <section class="legal__section" id="why">
+        <h2>4. Why we use it, and our legal basis</h2>
+        <p>
+          Under the UK GDPR we must have a lawful basis for using your data. The table below sets
+          out what we use your data for and which basis applies.
+        </p>
+
+        <div class="legal__table-wrap">
+          <table class="legal__table">
+            <thead>
+              <tr><th scope="col">What we do</th><th scope="col">Data used</th><th scope="col">Legal basis</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Review and shortlist your application</td>
+                <td>Name, contact details, course, CV, division choices</td>
+                <td>Legitimate interests &mdash; running a competitive selection process members have asked to enter</td>
+              </tr>
+              <tr>
+                <td>Contact you about your application or an event</td>
+                <td>Name, email, phone</td>
+                <td>Legitimate interests</td>
+              </tr>
+              <tr>
+                <td>Share your CV with a sponsor</td>
+                <td>Name, contact details, course, CV</td>
+                <td><strong>Consent only</strong> &mdash; see <a href="#cv-book">section 5</a></td>
+              </tr>
+              <tr>
+                <td>Send you society updates and event invitations</td>
+                <td>Name, email</td>
+                <td>Consent &mdash; you can unsubscribe at any time</td>
+              </tr>
+              <tr>
+                <td>Understand how the website is used</td>
+                <td>Analytics data</td>
+                <td>Consent &mdash; see <a href="#cookies">section 9</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          Where we rely on legitimate interests, we have considered whether our interest in running
+          the society is outweighed by your rights, and we think it is not &mdash; you approached us,
+          the data is limited, and you can object at any time.
+        </p>
+      </section>
+
+      <!-- 5 -->
+      <section class="legal__section" id="cv-book">
+        <h2>5. The analyst CV book</h2>
+        <p>
+          Our sponsors and partner firms recruit from our membership. Some of them ask for access to
+          a collection of member CVs &mdash; what we call the analyst CV book.
+        </p>
+
+        <div class="legal__note">
+          <p>
+            <strong>Your CV is never included unless you opt in.</strong> When you apply, there is a
+            separate, unticked checkbox asking whether we may share your details and CV with our
+            sponsors and partner firms. Leaving it unticked has no effect on your application, and
+            we do not tell sponsors who declined.
+          </p>
+        </div>
+
+        <h3>What a sponsor receives</h3>
+        <ul>
+          <li>Your name, course and year of study</li>
+          <li>Your CV as you uploaded it</li>
+          <li>The email address you applied with</li>
+          <li>Which division you were selected for, where relevant</li>
+        </ul>
+
+        <h3>How we control it</h3>
+        <ul>
+          <li>Access is given only to sponsors and partner firms we have a current agreement with</li>
+          <li>It is shared for recruitment and career opportunities only</li>
+          <li>Sponsors are asked not to pass it on to any other organisation</li>
+          <li>We keep a record of which sponsors received the CV book and when</li>
+        </ul>
+
+        <p>
+          You can withdraw your consent at any time by emailing us. We will remove you from the
+          current CV book immediately. We cannot retrieve copies a sponsor has already downloaded,
+          but we will tell them you have withdrawn and ask them to delete it.
+        </p>
+      </section>
+
+      <!-- 6 -->
+      <section class="legal__section" id="sharing">
+        <h2>6. Who we share data with</h2>
+        <p>We share your personal data with the following, and no one else:</p>
+        <ul>
+          <li>
+            <strong>The BTS committee.</strong> Committee members handling applications, events and
+            partnerships. Access is limited to those who need it for their role.
+          </li>
+          <li>
+            <strong>Sponsors and partner firms.</strong> Only where you have opted in &mdash; see
+            <a href="#cv-book">section 5</a>.
+          </li>
+          <li>
+            <strong>Google.</strong> We use Google Workspace, Drive, Sheets and Forms to receive and
+            store applications. Google processes this data on our behalf, under their terms.
+          </li>
+          <li>
+            <strong>The University of Bristol Students&rsquo; Union.</strong> Where required for
+            society administration, room bookings or membership records.
+          </li>
+        </ul>
+        <p>
+          We do not sell your data, and we do not share it for advertising. Where a sponsor is based
+          outside the UK, your data may be transferred outside the UK &mdash; we only do this where
+          you have opted in to sponsor sharing.
+        </p>
+      </section>
+
+      <!-- 7 -->
+      <section class="legal__section" id="storage">
+        <h2>7. Where we keep it</h2>
+        <p>
+          Applications and CVs are stored in a Google Drive folder and a Google Sheet belonging to
+          the society, accessible only to committee members who need it. Email correspondence sits in
+          the society&rsquo;s email account.
+        </p>
+        <p>
+          We take reasonable steps to protect your data &mdash; access is restricted, accounts are
+          protected by University or Google authentication, and access is removed when a committee
+          member leaves their role. No system is completely secure, and we cannot guarantee
+          absolute security.
+        </p>
+      </section>
+
+      <!-- 8 -->
+      <section class="legal__section" id="retention">
+        <h2>8. How long we keep it</h2>
+        <ul>
+          <li>
+            <strong>Unsuccessful applications:</strong> kept until the end of the academic year in
+            which you applied, then deleted.
+          </li>
+          <li>
+            <strong>Successful applications:</strong> kept for the duration of your involvement with
+            the society, and for 12 months afterwards.
+          </li>
+          <li>
+            <strong>CV book entries:</strong> removed at the end of each academic year, or
+            immediately on request.
+          </li>
+          <li>
+            <strong>General correspondence:</strong> kept for up to 12 months.
+          </li>
+        </ul>
+        <p>
+          If you ask us to delete your data sooner, we will &mdash; see <a href="#rights">your
+          rights</a>.
+        </p>
+      </section>
+
+      <!-- 9 -->
+      <section class="legal__section" id="cookies">
+        <h2>9. Cookies and analytics</h2>
+        <p>
+          This website uses Google Analytics to understand how visitors use the site &mdash; which
+          pages are read, how people arrive, and roughly where in the world they are. This sets
+          cookies in your browser.
+        </p>
+        <p>
+          We do not use advertising cookies, and we do not use analytics data to identify
+          individuals. You can block or delete cookies through your browser settings, or opt out of
+          Google Analytics using
+          <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer">Google&rsquo;s opt-out add-on</a>.
+        </p>
+      </section>
+
+      <!-- 10 -->
+      <section class="legal__section" id="rights">
+        <h2>10. Your rights</h2>
+        <p>Under UK data protection law you have the right to:</p>
+        <ul>
+          <li><strong>Access</strong> the personal data we hold about you</li>
+          <li><strong>Correct</strong> anything inaccurate or incomplete</li>
+          <li><strong>Erase</strong> your data, where we have no continuing reason to hold it</li>
+          <li><strong>Restrict</strong> or <strong>object to</strong> how we use it</li>
+          <li><strong>Withdraw consent</strong> at any time, including for the CV book and for society emails</li>
+          <li><strong>Receive a copy</strong> of the data you gave us, in a portable format</li>
+        </ul>
+        <p>
+          To exercise any of these, email us at
+          <a href="mailto:bristol-trading-society@bristol.ac.uk">bristol-trading-society@bristol.ac.uk</a>.
+          We will respond within one month. There is no charge.
+        </p>
+        <p>
+          If you are unhappy with how we have handled your data, you can complain to the Information
+          Commissioner&rsquo;s Office at
+          <a href="https://ico.org.uk" target="_blank" rel="noopener noreferrer">ico.org.uk</a>.
+          We would appreciate the chance to put it right first.
+        </p>
+      </section>
+
+      <!-- 11 -->
+      <section class="legal__section" id="changes">
+        <h2>11. Changes to this policy</h2>
+        <p>
+          We may update this policy as the society changes. The date at the top shows when it was
+          last revised. Where a change materially affects how we use data you have already given us
+          &mdash; for example a new category of sharing &mdash; we will contact you and, where
+          required, ask for your consent again rather than applying the change retrospectively.
+        </p>
+      </section>
+
+      <!-- 12 -->
+      <section class="legal__section" id="contact">
+        <h2>12. How to contact us</h2>
+        <p>
+          For anything relating to this policy or your personal data, email
+          <a href="mailto:bristol-trading-society@bristol.ac.uk">bristol-trading-society@bristol.ac.uk</a>,
+          or write to us at 12 Priory Road Complex, Clifton, Bristol BS8 1TU.
+        </p>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ===== Site footer ===== -->
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+
+      <div class="site-footer__top">
+        <div>
+          <a class="site-footer__brand-mark" href="/" aria-label="Bristol Trading Society — home">
+            <svg viewBox="0 0 93 78" fill="currentColor" aria-hidden="true" focusable="false">
+              <path fill-rule="evenodd" d="M65.13 6.00 L66.50 5.88 L66.88 6.25 L66.88 10.50 L71.88 15.25 L71.88 16.50 L72.88 17.25 L72.88 24.50 L70.88 26.25 L70.88 27.50 L66.88 31.25 L66.88 32.50 L67.88 33.25 L67.88 34.50 L69.88 36.25 L69.88 37.50 L70.88 38.25 L70.88 39.50 L71.88 40.25 L71.88 41.50 L72.88 42.25 L72.88 43.50 L73.88 44.25 L73.88 45.50 L75.88 47.25 L75.88 48.50 L76.88 49.25 L76.88 50.50 L77.88 51.25 L77.88 52.50 L78.88 53.25 L78.88 54.50 L80.88 56.25 L80.88 57.50 L81.88 58.25 L81.88 59.50 L82.88 60.25 L82.88 61.50 L83.88 62.25 L83.88 63.50 L84.88 64.25 L84.88 65.50 L86.88 67.25 L86.88 68.50 L87.88 69.25 L87.88 71.50 L87.50 71.88 L81.25 71.88 L80.88 71.50 L80.88 68.25 L79.88 67.50 L79.88 64.25 L78.88 63.50 L78.88 62.25 L78.50 61.88 L77.25 61.88 L76.50 60.88 L72.25 60.88 L71.25 59.88 L70.88 60.25 L70.88 62.50 L69.50 63.88 L68.25 63.88 L65.88 61.50 L65.88 60.25 L63.50 57.88 L62.00 57.88 L61.88 60.50 L62.88 61.25 L62.88 63.50 L63.88 64.25 L63.88 65.50 L64.88 66.25 L64.88 68.50 L65.88 69.25 L65.88 72.50 L65.50 72.88 L58.25 72.88 L56.88 71.25 L57.88 70.50 L57.88 68.25 L58.88 67.50 L58.88 65.25 L57.88 64.50 L57.88 63.25 L56.50 61.88 L55.25 61.88 L53.88 60.50 L53.88 58.25 L52.88 57.50 L52.88 54.25 L51.88 53.50 L51.88 52.25 L50.88 51.50 L50.88 50.25 L48.50 47.88 L47.88 48.25 L47.88 52.50 L48.88 53.25 L48.88 55.50 L49.88 56.25 L49.88 57.50 L50.88 58.25 L50.88 60.50 L51.88 61.25 L51.88 63.50 L51.50 63.88 L50.25 63.88 L49.50 64.88 L44.25 64.88 L43.50 63.88 L42.25 63.88 L36.50 57.88 L34.25 57.88 L32.50 59.88 L31.25 59.88 L29.50 61.88 L28.25 61.88 L27.50 62.88 L26.25 62.88 L24.50 64.88 L23.25 64.88 L22.50 65.88 L20.25 65.88 L19.50 66.88 L16.25 66.88 L15.88 67.25 L15.88 69.50 L14.88 70.25 L14.88 71.50 L13.50 72.88 L10.25 72.88 L8.88 71.50 L10.88 69.50 L10.88 68.25 L12.88 66.50 L12.88 65.25 L14.25 63.88 L15.50 63.88 L16.25 62.88 L18.50 62.88 L20.88 60.50 L20.88 59.25 L21.88 58.25 L21.50 57.88 L20.25 57.88 L19.50 58.88 L17.25 58.88 L16.50 59.88 L10.25 59.88 L9.50 58.88 L8.25 58.88 L5.88 56.50 L5.88 53.25 L7.88 51.50 L7.88 50.25 L14.88 43.50 L14.88 42.25 L15.88 41.50 L15.50 40.88 L13.25 40.88 L12.50 41.88 L8.25 41.88 L7.50 40.88 L6.25 40.88 L5.88 40.50 L5.88 39.25 L7.25 37.88 L8.50 37.88 L9.25 36.88 L10.50 36.88 L11.25 35.88 L14.50 35.88 L15.25 36.88 L16.50 36.88 L16.88 37.25 L16.88 38.50 L17.88 39.25 L17.88 41.50 L16.88 42.25 L16.88 44.50 L13.88 47.25 L13.88 48.50 L9.88 52.25 L9.88 55.50 L11.25 56.88 L13.50 56.88 L14.25 55.88 L16.50 55.88 L18.25 53.88 L19.50 53.88 L19.88 53.50 L19.88 52.25 L22.25 49.88 L23.50 49.88 L25.25 47.88 L26.50 47.88 L27.25 46.88 L30.50 46.88 L31.50 47.88 L31.88 47.50 L31.88 44.25 L32.88 43.50 L32.88 41.25 L33.88 40.50 L33.88 39.25 L38.25 34.88 L39.50 34.88 L40.25 33.88 L41.50 33.88 L42.25 32.88 L44.50 32.88 L44.88 32.50 L44.50 31.88 L43.25 31.88 L42.50 30.88 L41.25 30.88 L36.88 26.50 L36.88 20.25 L40.50 16.88 L40.88 17.50 L39.88 18.00 L39.88 22.50 L42.25 24.88 L43.50 24.88 L44.25 25.88 L48.50 25.88 L50.25 23.88 L54.50 23.88 L55.50 24.88 L56.25 23.88 L57.50 23.88 L58.25 22.88 L60.50 22.88 L61.25 23.88 L63.50 23.88 L65.88 21.50 L65.88 20.25 L66.88 19.50 L66.88 16.25 L65.88 15.50 L65.88 14.25 L63.88 12.50 L63.88 8.25 L64.88 7.50 L65.00 6.13 Z M58.13 31.00 L60.50 30.88 L60.88 31.25 L60.50 31.88 L59.25 31.88 L58.88 32.25 L59.88 33.50 L59.50 33.88 L58.25 33.88 L57.50 35.88 L56.88 35.50 L56.88 33.25 L57.88 32.50 L58.00 31.13 Z M51.13 39.00 L56.50 38.88 L56.88 39.25 L56.88 42.50 L56.50 42.88 L55.88 42.50 L55.88 40.25 L55.50 39.88 L51.00 39.88 L51.00 39.13 Z M50.13 40.00 L50.75 39.88 L50.88 40.50 L51.88 41.25 L51.88 42.50 L51.25 42.88 L49.88 41.50 L50.00 40.13 Z M71.13 53.00 L71.88 53.25 L71.88 56.50 L71.50 56.88 L70.88 56.50 L71.00 53.13 Z M61.13 57.00 L61.50 56.88 L61.88 57.75 L61.25 57.88 L61.00 57.13 Z M34.13 63.00 L36.50 62.88 L39.88 66.25 L39.88 67.50 L39.50 67.88 L38.25 67.88 L37.50 68.88 L34.25 68.88 L33.88 69.25 L33.88 70.50 L31.50 72.88 L29.25 72.88 L27.88 71.50 L27.88 70.25 L30.88 67.50 L30.88 64.25 L31.25 63.88 L33.50 63.88 L34.00 63.13 Z"></path>
+            </svg>
+            <span class="site-footer__wordmark">Bristol Trading Society</span>
+          </a>
+          <p class="site-footer__blurb">
+            A student-run trading and markets society at the University of Bristol. Members research
+            instruments, pitch them, and defend them in front of people who do it professionally.
+          </p>
+        </div>
+
+        <div>
+          <p class="site-footer__col-title">Society</p>
+          <ul class="site-footer__list">
+            <li><a href="/about">About us</a></li>
+            <li><a href="/divisions">Divisions</a></li>
+            <li><a href="/events">Events and Speakers</a></li>
+            <li><a href="/team">Team</a></li>
+            <li><a href="/alumni">Alumni</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="site-footer__col-title">Get involved</p>
+          <ul class="site-footer__list">
+            <li><a href="/apply">Apply now</a></li>
+            <li><a href="/sponsors">Sponsors and partners</a></li>
+            <li><a href="/contact">Contact us</a></li>
+            <li><a href="https://www.linkedin.com/company/bristol-trading-society/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+            <li><a href="https://www.instagram.com/bristoltradingsoc/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="site-footer__col-title">Find us</p>
+          <div class="site-footer__contact">
+            <address>
+              12 Priory Road Complex<br />
+              Clifton, Bristol<br />
+              BS8 1TU
+            </address>
+            <a href="mailto:bristol-trading-society@bristol.ac.uk">bristol-trading-society@bristol.ac.uk</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="site-footer__bottom">
+        <p>&copy; 2026 Bristol Trading Society &middot; University of Bristol</p>
+        <p class="site-footer__legal">
+          <a href="/privacy">Privacy Policy</a>
+        </p>
+      </div>
+
+    </div>
+  </footer>
+
+  <script src="js/aurora.js?v=9" defer></script>
+  <script src="js/transitions.js?v=2" defer></script>
+  <script src="js/nav.js?v=1" defer></script>
+</body>
+</html>

@@ -1834,3 +1834,107 @@ body.is-leaving {
   .alumni__list { grid-template-columns: 1fr; max-width: 360px; margin-inline: auto; }
   .alumni-card__photo { width: 100px; height: 100px; }
 }
+
+/* ===========================================================================
+   Site footer
+   ---------------------------------------------------------------------------
+   Shared across every page. Deliberately a dark solid band rather than more
+   glass: it closes the page instead of floating on the aurora, and it is the
+   one element that must stay legible over both the dark pages and the light
+   closing panels.
+   ========================================================================== */
+.site-footer {
+  position: relative;
+  z-index: 1;
+  background: var(--bg-abyss);
+  border-top: 1px solid var(--hairline);
+  padding: var(--space-6) 0 var(--space-4);
+  margin-top: var(--space-7);
+}
+.site-footer__inner {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* Brand block sits wider than the link columns so the strapline can breathe. */
+.site-footer__top {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(0, 1fr));
+  gap: var(--space-5) var(--space-4);
+  padding-bottom: var(--space-5);
+  border-bottom: 1px solid var(--hairline);
+}
+.site-footer__brand-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-primary);
+  text-decoration: none;
+  margin-bottom: var(--space-3);
+}
+.site-footer__brand-mark svg { width: 34px; height: auto; flex: none; }
+.site-footer__wordmark {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+.site-footer__blurb {
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  max-width: 38ch;
+}
+
+.site-footer__col-title {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-3);
+}
+.site-footer__list { list-style: none; margin: 0; padding: 0; }
+.site-footer__list li { margin-bottom: 10px; }
+.site-footer__list a,
+.site-footer__contact a {
+  font-size: 0.9375rem;
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.site-footer__list a:hover,
+.site-footer__contact a:hover { color: var(--accent-bright); }
+
+.site-footer__contact { font-size: 0.9375rem; line-height: 1.65; color: var(--text-secondary); }
+.site-footer__contact address { font-style: normal; margin-bottom: var(--space-3); }
+
+/* Closing bar: copyright left, policy links right. */
+.site-footer__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+.site-footer__legal { display: flex; flex-wrap: wrap; gap: var(--space-4); }
+.site-footer__legal a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.site-footer__legal a:hover { color: var(--text-primary); }
+
+@media (max-width: 860px) {
+  .site-footer__top { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 520px) {
+  .site-footer__top { grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
+  .site-footer__bottom { flex-direction: column; align-items: flex-start; }
+}
