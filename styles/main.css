@@ -272,12 +272,14 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
    Deliberately separated from the brand pill and pushed to the opposite
    corner, oversized and brightly filled — it was getting lost as a quiet
    link inside the glass bar, so it now reads as its own destination. */
-.menu-float {
-  position: fixed;
-  top: var(--space-3);
-  right: var(--space-3);
-  z-index: 100;
+.nav__links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  list-style: none;
 }
+.nav__mobile  { display: list-item; position: relative; }
+
 
 .nav__menu-btn {
   display: inline-flex;
@@ -1252,6 +1254,7 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
 
 @media (max-width: 400px) {
   .nav { gap: 2px; padding: 6px 4px 6px 10px; }
+  .nav__links { gap: 1px; }
   .nav__link { padding: 6px 7px; font-size: 0.65rem; }
   .nav__menu-btn { padding: 9px 13px; font-size: 0.8125rem; gap: 6px; }
   .nav__menu-icon { width: 15px; height: 10px; }
@@ -1849,7 +1852,10 @@ body.is-leaving {
   background: var(--bg-abyss);
   border-top: 1px solid var(--hairline);
   padding: var(--space-6) 0 var(--space-4);
-  margin-top: var(--space-7);
+  /* No top margin: the aurora is fixed behind everything, so any gap here
+     renders as a stray band of background between the page and the footer. */
+  margin-top: 0;
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
 }
 .site-footer__inner {
   width: 100%;
@@ -1887,6 +1893,16 @@ body.is-leaving {
   line-height: 1.65;
   color: var(--text-secondary);
   max-width: 38ch;
+}
+/* Slogan leads, descriptor follows in the muted body colour. */
+.site-footer__blurb strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  color: var(--text-primary);
+  margin-bottom: 8px;
 }
 
 .site-footer__col-title {
