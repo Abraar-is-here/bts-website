@@ -1851,7 +1851,11 @@ body.is-leaving {
    ========================================================================== */
 .site-footer {
   position: relative;
-  z-index: 1;
+  /* Above .panel (z-index 2). The panel casts 0 -12px 48px, which bleeds ~36px
+     BELOW its own edge — more than the band is tall — so at a lower z-index the
+     band was painted with a navy-tinted shadow and read grey next to the very
+     same colour above it. */
+  z-index: 3;
   /* Transparent by default so the curved block reads as floating on the
      aurora, which is what every page except the home page sits on. */
   background: transparent;
