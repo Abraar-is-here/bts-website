@@ -18,6 +18,14 @@
       link.target === '_blank'
     ) return;
 
+    // Same-page anchors are not navigations. These pages carry <base href="/">,
+    // so a bare "#id" would resolve against the base rather than the current
+    // document — the in-page links therefore have to be written as
+    // "/privacy/#id", which no longer matches the startsWith('#') test above.
+    // Compare the resolved URL instead and let the browser scroll natively.
+    if (link.hash && link.pathname === window.location.pathname
+        && link.host === window.location.host) return;
+
     e.preventDefault();
     document.body.classList.add('is-leaving');
 
