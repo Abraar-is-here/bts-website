@@ -988,6 +988,16 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
 .file-field__text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .file-field__main { font-size: 0.9375rem; color: var(--text-primary); }
 .file-field__hint { font-size: var(--fs-caption); color: var(--text-secondary); }
+/* Inline qualifier on a label, e.g. "Year of study (as of Sept 2026)" — needed
+   because applicants were entering the year they had just finished. */
+.field__hint {
+  font-weight: 400;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.01em;
+}
+.field__hint::before { content: '('; }
+.field__hint::after  { content: ')'; }
 .file-field__name {
   font-family: var(--font-body);
   font-weight: 500;
@@ -1618,35 +1628,15 @@ body.is-leaving {
 }
 
 /* Stats strip */
-.alumni__stats {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3) var(--space-5);
-  margin-bottom: var(--space-5);
-  padding: var(--space-3) var(--space-4);
-  background: rgba(10, 26, 63, 0.55);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-card);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-.alumni__stat { display: flex; flex-direction: column; gap: 2px; }
-.alumni__stat-value {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: clamp(1.4rem, 3vw, 2rem);
-  letter-spacing: -0.02em;
-  color: var(--text-primary);
-  line-height: 1;
-}
-.alumni__stat-label {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+.alumni__note {
+  max-width: 62ch;
+  margin: var(--space-5) auto 0;
+  text-align: center;
+  font-size: 0.9375rem;
+  line-height: 1.6;
   color: var(--text-secondary);
 }
+.alumni__note a { color: var(--accent-bright); }
 
 /* Directory — portrait card grid */
 .alumni__list {
@@ -1956,10 +1946,24 @@ body.is-leaving {
 
 @media (max-width: 860px) {
   .site-footer__top { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .site-footer__inner { padding: var(--space-5) var(--space-4) var(--space-4); }
 }
 @media (max-width: 520px) {
-  .site-footer__top { grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
-  .site-footer__bottom { flex-direction: column; align-items: flex-start; }
+  /* Two columns, not one: at 375px a single column made the footer 1.5 screens
+     tall. The link lists are short enough to sit side by side. */
+  .site-footer__top {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4) var(--space-3);
+  }
+  /* The brand block keeps the full width above the two link columns. */
+  .site-footer__top > :first-child { grid-column: 1 / -1; }
+  .site-footer { padding: var(--space-3); }
+  .site-footer__inner {
+    padding: var(--space-4) var(--space-3) var(--space-3);
+    border-radius: 28px;              /* 48px is disproportionate at this width */
+  }
+  .site-footer__blurb { max-width: none; }
+  .site-footer__bottom { flex-direction: column; align-items: flex-start; gap: var(--space-2); }
 }
 
 /* ===========================================================================
