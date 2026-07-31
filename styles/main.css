@@ -286,19 +286,20 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
 .nav__menu-btn {
   display: inline-flex;
   align-items: center;
-  gap: 9px;
+  gap: 5px;
   font-family: var(--font-body);
-  font-weight: 700;
-  font-size: 1.0625rem;
+  /* Matches .nav__link exactly, so Menu and Apply now read as one control set
+     rather than two competing buttons. */
+  font-weight: 500;
+  font-size: 0.9375rem;
   letter-spacing: 0.005em;
-  padding: 15px 24px;
+  padding: 9px 18px;
   border-radius: var(--radius-pill);
-  color: var(--text-on-light);
-  background: var(--accent-bright);
+  color: var(--text-primary);
+  background: none;
   border: none;
   cursor: pointer;
   white-space: nowrap;
-  box-shadow: var(--shadow-pill), 0 0 28px rgba(56, 189, 248, 0.5);
   transition: background var(--dur-fast) var(--ease-out),
               transform  var(--dur-fast) var(--ease-out);
 }
@@ -1851,19 +1852,25 @@ body.is-leaving {
 .site-footer {
   position: relative;
   z-index: 1;
-  background: var(--bg-abyss);
-  border-top: 1px solid var(--hairline);
-  padding: var(--space-6) 0 var(--space-4);
-  /* No top margin: the aurora is fixed behind everything, so any gap here
-     renders as a stray band of background between the page and the footer. */
-  margin-top: 0;
-  border-radius: var(--radius-card) var(--radius-card) 0 0;
+  /* The footer element is now the light band. A spread shadow was tried first
+     but it inherits the border-radius, so the outer corners rounded and the
+     fixed aurora showed through the square corners of the page. An opaque
+     full-bleed band cannot do that. */
+  background: var(--c-surface);
+  padding: var(--space-4);
 }
 .site-footer__inner {
-  width: 100%;
+  /* The dark block itself: inset by the parent's padding, deeply curved. */
+  background: var(--bg-abyss);
+  border-radius: 48px;
+  padding: var(--space-6) var(--gutter) var(--space-5);
+}
+/* Content stays on the site's container width even though the dark block is
+   full-bleed. */
+.site-footer__top,
+.site-footer__bottom {
   max-width: var(--container-max);
-  margin: 0 auto;
-  padding: 0 var(--gutter);
+  margin-inline: auto;
 }
 
 /* Brand block sits wider than the link columns so the strapline can breathe. */
