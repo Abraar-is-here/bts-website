@@ -1852,13 +1852,14 @@ body.is-leaving {
 .site-footer {
   position: relative;
   z-index: 1;
-  /* The footer element is now the light band. A spread shadow was tried first
-     but it inherits the border-radius, so the outer corners rounded and the
-     fixed aurora showed through the square corners of the page. An opaque
-     full-bleed band cannot do that. */
-  background: var(--c-surface);
-  padding: var(--space-4);
+  /* Transparent by default so the curved block reads as floating on the
+     aurora, which is what every page except the home page sits on. */
+  background: transparent;
+  padding: 24px;
 }
+/* Home only: the closing .panel above is --c-surface, so the band continues
+   that same white rather than cutting a gradient strip between them. */
+.site-footer--light { background: var(--c-surface); }
 .site-footer__inner {
   /* The dark block itself: inset by the parent's padding, deeply curved. */
   background: var(--bg-abyss);
