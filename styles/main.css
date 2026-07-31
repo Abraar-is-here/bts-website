@@ -183,12 +183,14 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
 .nav {
   position: fixed;
   top: var(--space-3);
-  left: var(--space-3);
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 100;
-  width: auto;
+  width: min(100% - 2 * var(--space-3), var(--container-max));
 
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: var(--space-4);
 
   padding: 10px 12px 10px 18px;
@@ -1953,4 +1955,76 @@ body.is-leaving {
 @media (max-width: 520px) {
   .site-footer__top { grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
   .site-footer__bottom { flex-direction: column; align-items: flex-start; }
+}
+
+/* ===========================================================================
+   Cookie consent
+   ---------------------------------------------------------------------------
+   Analytics cookies need opt-in under PECR, so nothing is loaded until the
+   visitor chooses. The banner is hidden by default and only revealed by JS
+   when no prior choice is stored — so it never flashes for returning visitors,
+   and never appears at all if JS is off (in which case no analytics loads
+   either, which is the correct fail-safe).
+   ========================================================================== */
+.cookie-bar[hidden] { display: none; }
+.cookie-bar {
+  position: fixed;
+  left: var(--space-3);
+  bottom: var(--space-3);
+  z-index: 200;
+  width: min(420px, calc(100% - 2 * var(--space-3)));
+  padding: var(--space-4);
+  border-radius: var(--radius-card);
+  background: var(--glass-fill-strong);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-card);
+  animation: cookie-in var(--dur-med) var(--ease-out) both;
+}
+@keyframes cookie-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+.cookie-bar__title {
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+.cookie-bar__text {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-3);
+}
+.cookie-bar__text a { color: var(--accent-bright); }
+.cookie-bar__actions { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.cookie-bar__btn {
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 10px 22px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background var(--dur-fast) var(--ease-out),
+              border-color var(--dur-fast) var(--ease-out);
+}
+/* Accept and reject carry equal visual weight — a reject styled as a
+   throwaway link is not a free choice. */
+.cookie-bar__btn--accept { background: var(--accent); color: #fff; }
+.cookie-bar__btn--accept:hover { background: var(--accent-hover); }
+.cookie-bar__btn--reject {
+  background: transparent;
+  color: var(--text-primary);
+  border-color: var(--glass-border);
+}
+.cookie-bar__btn--reject:hover { border-color: var(--text-secondary); }
+
+@media (prefers-reduced-motion: reduce) {
+  .cookie-bar { animation: none; }
+  .cookie-bar__btn { transition: none; }
 }
