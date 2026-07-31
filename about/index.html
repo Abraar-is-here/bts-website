@@ -2,13 +2,531 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- The About page became "Events and Speakers" at /events. This stub keeps
-       any previously shared /about link working. -->
-  <meta http-equiv="refresh" content="0; url=/events/" />
-  <link rel="canonical" href="/events/" />
-  <title>Events and Speakers — Bristol Trading Society</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <base href="/" />
+
+  <title>About us — Bristol Trading Society</title>
+  <meta name="description" content="What the Bristol Trading Society is, how it started in 2017, how the society is structured, and what it exists to do." />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ENSZNRQNLG"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-ENSZNRQNLG');
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="assets/img/bull.svg" />
+
+  <link rel="preload" href="assets/fonts/syne-800.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/fonts/dm-sans-400.woff2" as="font" type="font/woff2" crossorigin />
+
+  <link rel="stylesheet" href="styles/tokens/fonts.css?v=7" />
+  <link rel="stylesheet" href="styles/tokens/colors.css?v=13" />
+  <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
+  <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
+  <link rel="stylesheet" href="styles/main.css?v=40" />
+
+  <style>
+    /* -------------------------------------------------------------------------
+       About us — the identity page.
+       Deliberately holds no event listings, no division detail, no committee
+       names and no partnership pitch. Those live on their own pages; this one
+       answers "what is this society and how does it work" and hands off.
+       ------------------------------------------------------------------------- */
+    .abt { position: relative; padding: 120px 0 var(--space-6); }
+    .abt::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: radial-gradient(ellipse 95% 65% at 50% 12%,
+                  rgba(6, 17, 43, 0.66) 0%, rgba(6, 17, 43, 0.34) 48%, transparent 78%);
+      pointer-events: none;
+    }
+    .abt__wrap {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 var(--gutter);
+    }
+
+    .abt__kicker {
+      display: block;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-bright);
+      margin-bottom: var(--space-3);
+    }
+    .abt__title {
+      font-family: var(--font-display);
+      font-size: clamp(2.3rem, 5.6vw, 3.9rem);
+      font-weight: 800;
+      line-height: 1.03;
+      letter-spacing: -0.03em;
+      margin-bottom: var(--space-4);
+      max-width: 18ch;
+      text-wrap: balance;
+    }
+    .abt__lead {
+      font-size: 1.125rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      max-width: 60ch;
+    }
+
+    .abt__sec { margin-top: var(--space-7); }
+    .abt__sec-label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: var(--space-2);
+    }
+    .abt__sec-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 3.6vw, 2.5rem);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+      margin-bottom: var(--space-4);
+      text-wrap: balance;
+    }
+
+    /* Origin story: two columns of prose, so a long history doesn't become one
+       unreadable 100ch measure. */
+    .abt__story {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+      gap: var(--space-4) var(--space-5);
+    }
+    .abt__story p { color: var(--text-secondary); line-height: 1.75; margin-bottom: var(--space-3); }
+    .abt__story p:last-child { margin-bottom: 0; }
+    .abt__story strong { color: var(--text-primary); font-weight: 600; }
+
+    /* Reach figures — moved here from the sponsors page, because scale is an
+       identity fact, not a sales pitch. */
+    .reach {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: var(--space-4);
+      margin-top: var(--space-5);
+      padding: var(--space-4) 0;
+      border-top: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+    }
+    .reach__n {
+      display: block;
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 4.5vw, 3.1rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      font-variant-numeric: tabular-nums;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+    }
+    .reach__l { font-size: 0.9375rem; line-height: 1.5; color: var(--text-secondary); max-width: 24ch; }
+
+    /* The ladder: how someone actually moves through the society. Numbered
+       because the order is the point — each rung depends on the one below. */
+    .ladder { list-style: none; margin: 0; padding: 0; counter-reset: rung; }
+    .ladder li {
+      counter-increment: rung;
+      display: grid;
+      grid-template-columns: 62px minmax(0, 1fr);
+      gap: var(--space-3);
+      align-items: start;
+      padding: var(--space-4) 0;
+      border-top: 1px solid var(--hairline);
+    }
+    .ladder li:last-child { border-bottom: 1px solid var(--hairline); }
+    .ladder li::before {
+      content: counter(rung, decimal-leading-zero);
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--accent-bright);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+    .ladder h3 {
+      font-family: var(--font-body);
+      font-size: 1.125rem;
+      font-weight: 600;
+      line-height: 1.3;
+      margin-bottom: 6px;
+    }
+    .ladder p { color: var(--text-secondary); line-height: 1.65; max-width: 62ch; }
+
+    /* Principles: what the society optimises for. Three, not six — a list of
+       six values is a list nobody believes. */
+    .principles {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+      gap: var(--space-4);
+    }
+    .principle { padding-top: var(--space-3); border-top: 2px solid var(--accent); }
+    .principle:nth-child(2) { border-top-color: rgba(37, 99, 235, 0.55); }
+    .principle:nth-child(3) { border-top-color: rgba(141, 162, 196, 0.4); }
+    .principle h3 {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 800;
+      letter-spacing: -0.015em;
+      line-height: 1.2;
+      margin-bottom: var(--space-2);
+    }
+    .principle p { color: var(--text-secondary); line-height: 1.65; font-size: 0.9375rem; }
+
+    /* Hand-off tiles: this page deliberately stops short, so it needs to point
+       clearly at the pages that carry the detail. */
+    .onward {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+      gap: var(--space-3);
+    }
+    .onward a {
+      display: block;
+      padding: var(--space-4) var(--space-3);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-sm);
+      background: rgba(8, 19, 46, 0.6);
+      text-decoration: none;
+      transition: border-color var(--dur-fast) var(--ease-out),
+                  transform var(--dur-fast) var(--ease-out);
+    }
+    .onward a:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .onward strong {
+      display: block;
+      font-size: 1.0625rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+    .onward span { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.5; }
+    .onward em {
+      display: block;
+      margin-top: 10px;
+      font-style: normal;
+      font-size: 0.8125rem;
+      color: var(--accent-bright);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .onward a { transition: none; }
+      .onward a:hover { transform: none; }
+    }
+    @media (max-width: 520px) {
+      .ladder li { grid-template-columns: 44px minmax(0, 1fr); }
+    }
+  </style>
 </head>
 <body>
-  <p>This page has moved to <a href="/events/">Events and Speakers</a>.</p>
+
+  <a class="skip-link" href="#about">Skip to content</a>
+
+  <div class="aurora" aria-hidden="true">
+    <canvas id="aurora-canvas"></canvas>
+    <div class="aurora-fallback">
+      <span class="b1"></span><span class="b2"></span><span class="b3"></span>
+      <span class="b4"></span><span class="b5"></span><span class="b6"></span>
+      <span class="sheen"></span>
+    </div>
+  </div>
+
+  <nav class="nav" aria-label="Primary">
+    <a class="logo" href="/" aria-label="Bristol Trading Society — home">
+      <svg class="logo__bull" viewBox="0 0 93 78" fill="currentColor" aria-hidden="true" focusable="false">
+        <path fill-rule="evenodd" d="M65.13 6.00 L66.50 5.88 L66.88 6.25 L66.88 10.50 L71.88 15.25 L71.88 16.50 L72.88 17.25 L72.88 24.50 L70.88 26.25 L70.88 27.50 L66.88 31.25 L66.88 32.50 L67.88 33.25 L67.88 34.50 L69.88 36.25 L69.88 37.50 L70.88 38.25 L70.88 39.50 L71.88 40.25 L71.88 41.50 L72.88 42.25 L72.88 43.50 L73.88 44.25 L73.88 45.50 L75.88 47.25 L75.88 48.50 L76.88 49.25 L76.88 50.50 L77.88 51.25 L77.88 52.50 L78.88 53.25 L78.88 54.50 L80.88 56.25 L80.88 57.50 L81.88 58.25 L81.88 59.50 L82.88 60.25 L82.88 61.50 L83.88 62.25 L83.88 63.50 L84.88 64.25 L84.88 65.50 L86.88 67.25 L86.88 68.50 L87.88 69.25 L87.88 71.50 L87.50 71.88 L81.25 71.88 L80.88 71.50 L80.88 68.25 L79.88 67.50 L79.88 64.25 L78.88 63.50 L78.88 62.25 L78.50 61.88 L77.25 61.88 L76.50 60.88 L72.25 60.88 L71.25 59.88 L70.88 60.25 L70.88 62.50 L69.50 63.88 L68.25 63.88 L65.88 61.50 L65.88 60.25 L63.50 57.88 L62.00 57.88 L61.88 60.50 L62.88 61.25 L62.88 63.50 L63.88 64.25 L63.88 65.50 L64.88 66.25 L64.88 68.50 L65.88 69.25 L65.88 72.50 L65.50 72.88 L58.25 72.88 L56.88 71.25 L57.88 70.50 L57.88 68.25 L58.88 67.50 L58.88 65.25 L57.88 64.50 L57.88 63.25 L56.50 61.88 L55.25 61.88 L53.88 60.50 L53.88 58.25 L52.88 57.50 L52.88 54.25 L51.88 53.50 L51.88 52.25 L50.88 51.50 L50.88 50.25 L48.50 47.88 L47.88 48.25 L47.88 52.50 L48.88 53.25 L48.88 55.50 L49.88 56.25 L49.88 57.50 L50.88 58.25 L50.88 60.50 L51.88 61.25 L51.88 63.50 L51.50 63.88 L50.25 63.88 L49.50 64.88 L44.25 64.88 L43.50 63.88 L42.25 63.88 L36.50 57.88 L34.25 57.88 L32.50 59.88 L31.25 59.88 L29.50 61.88 L28.25 61.88 L27.50 62.88 L26.25 62.88 L24.50 64.88 L23.25 64.88 L22.50 65.88 L20.25 65.88 L19.50 66.88 L16.25 66.88 L15.88 67.25 L15.88 69.50 L14.88 70.25 L14.88 71.50 L13.50 72.88 L10.25 72.88 L8.88 71.50 L10.88 69.50 L10.88 68.25 L12.88 66.50 L12.88 65.25 L14.25 63.88 L15.50 63.88 L16.25 62.88 L18.50 62.88 L20.88 60.50 L20.88 59.25 L21.88 58.25 L21.50 57.88 L20.25 57.88 L19.50 58.88 L17.25 58.88 L16.50 59.88 L10.25 59.88 L9.50 58.88 L8.25 58.88 L5.88 56.50 L5.88 53.25 L7.88 51.50 L7.88 50.25 L14.88 43.50 L14.88 42.25 L15.88 41.50 L15.50 40.88 L13.25 40.88 L12.50 41.88 L8.25 41.88 L7.50 40.88 L6.25 40.88 L5.88 40.50 L5.88 39.25 L7.25 37.88 L8.50 37.88 L9.25 36.88 L10.50 36.88 L11.25 35.88 L14.50 35.88 L15.25 36.88 L16.50 36.88 L16.88 37.25 L16.88 38.50 L17.88 39.25 L17.88 41.50 L16.88 42.25 L16.88 44.50 L13.88 47.25 L13.88 48.50 L9.88 52.25 L9.88 55.50 L11.25 56.88 L13.50 56.88 L14.25 55.88 L16.50 55.88 L18.25 53.88 L19.50 53.88 L19.88 53.50 L19.88 52.25 L22.25 49.88 L23.50 49.88 L25.25 47.88 L26.50 47.88 L27.25 46.88 L30.50 46.88 L31.50 47.88 L31.88 47.50 L31.88 44.25 L32.88 43.50 L32.88 41.25 L33.88 40.50 L33.88 39.25 L38.25 34.88 L39.50 34.88 L40.25 33.88 L41.50 33.88 L42.25 32.88 L44.50 32.88 L44.88 32.50 L44.50 31.88 L43.25 31.88 L42.50 30.88 L41.25 30.88 L36.88 26.50 L36.88 20.25 L40.50 16.88 L40.88 17.50 L39.88 18.00 L39.88 22.50 L42.25 24.88 L43.50 24.88 L44.25 25.88 L48.50 25.88 L50.25 23.88 L54.50 23.88 L55.50 24.88 L56.25 23.88 L57.50 23.88 L58.25 22.88 L60.50 22.88 L61.25 23.88 L63.50 23.88 L65.88 21.50 L65.88 20.25 L66.88 19.50 L66.88 16.25 L65.88 15.50 L65.88 14.25 L63.88 12.50 L63.88 8.25 L64.88 7.50 L65.00 6.13 Z M58.13 31.00 L60.50 30.88 L60.88 31.25 L60.50 31.88 L59.25 31.88 L58.88 32.25 L59.88 33.50 L59.50 33.88 L58.25 33.88 L57.50 35.88 L56.88 35.50 L56.88 33.25 L57.88 32.50 L58.00 31.13 Z M51.13 39.00 L56.50 38.88 L56.88 39.25 L56.88 42.50 L56.50 42.88 L55.88 42.50 L55.88 40.25 L55.50 39.88 L51.00 39.88 L51.00 39.13 Z M50.13 40.00 L50.75 39.88 L50.88 40.50 L51.88 41.25 L51.88 42.50 L51.25 42.88 L49.88 41.50 L50.00 40.13 Z M71.13 53.00 L71.88 53.25 L71.88 56.50 L71.50 56.88 L70.88 56.50 L71.00 53.13 Z M61.13 57.00 L61.50 56.88 L61.88 57.75 L61.25 57.88 L61.00 57.13 Z M34.13 63.00 L36.50 62.88 L39.88 66.25 L39.88 67.50 L39.50 67.88 L38.25 67.88 L37.50 68.88 L34.25 68.88 L33.88 69.25 L33.88 70.50 L31.50 72.88 L29.25 72.88 L27.88 71.50 L27.88 70.25 L30.88 67.50 L30.88 64.25 L31.25 63.88 L33.50 63.88 L34.00 63.13 Z"></path>
+      </svg>
+      <span class="logo__word">
+        <span class="logo__bts">BTS</span>
+        <span class="logo__full">Bristol Trading Society</span>
+      </span>
+    </a>
+    <a class="nav__link nav__link--cta" href="/contact">Contact us</a>
+  </nav>
+
+  <div class="menu-float">
+    <button class="nav__menu-btn" aria-expanded="false" aria-haspopup="true">
+          <svg class="nav__menu-icon" width="18" height="12" viewBox="0 0 18 12" fill="none" aria-hidden="true">
+            <path d="M1 1h16M1 6h16M1 11h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          Menu
+          <svg class="nav__chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+            <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <ul class="nav__dropdown" role="menu">
+          <li><a class="nav__dropdown-link" href="/" role="menuitem">Home</a></li>
+          <li><a class="nav__dropdown-link" href="/about" role="menuitem">About us</a></li>
+          <li><a class="nav__dropdown-link" href="/events" role="menuitem">Events and Speakers</a></li>
+          <li><a class="nav__dropdown-link" href="/sponsors" role="menuitem">Sponsors</a></li>
+          <li><a class="nav__dropdown-link" href="/team" role="menuitem">Team</a></li>
+          <li><a class="nav__dropdown-link" href="/divisions" role="menuitem">Divisions</a></li>
+          <li><a class="nav__dropdown-link" href="/alumni" role="menuitem">Alumni</a></li>
+          <li><a class="nav__dropdown-link" href="/contact" role="menuitem">Contact us</a></li>
+        </ul>
+  </div>
+
+  <main id="about" class="abt" tabindex="-1">
+    <div class="abt__wrap">
+
+      <header>
+        <span class="abt__kicker">About us</span>
+        <h1 class="abt__title">A society for people who wanted to do the work, not read about it</h1>
+        <p class="abt__lead">
+          The Bristol Trading Society is a student-run society at the University of Bristol built
+          around markets &mdash; how they move, how they are traded, and how the people who trade
+          them actually think. We are run entirely by students, for students.
+        </p>
+      </header>
+
+      <!-- ===== Origins ===== -->
+      <section class="abt__sec" aria-labelledby="origin-title">
+        <span class="abt__sec-label">Since 2017</span>
+        <h2 class="abt__sec-title" id="origin-title">How it started</h2>
+
+        <div class="abt__story">
+          <div>
+            <p>
+              BTS began in <strong>2017</strong> as a Facebook group. It was founded by
+              <strong>Pratik Popat</strong>, then a Bristol student, and for its first stretch that
+              is genuinely all it was &mdash; somewhere for people interested in markets to argue
+              about them and share what they were reading.
+            </p>
+            <p>
+              What it was not, at the start, was a careers society. There was no committee, no
+              application process and no sponsors. It grew because there turned out to be a lot of
+              students at Bristol who wanted somewhere to talk about markets seriously, and nowhere
+              obvious to do it.
+            </p>
+          </div>
+          <div>
+            <p>
+              The structure came later, and came from a simple problem: a group chat cannot teach
+              anybody to pitch. So the society built the thing it was missing &mdash; divisions with
+              their own research agendas, an analyst intake selected by application, and a calendar
+              of events where members present work to people who do it professionally.
+            </p>
+            <p>
+              Today the society runs <strong>four divisions</strong>, selects an analyst cohort every
+              year, and works with trading firms, banks and platforms who recruit from it. The
+              original Facebook group is
+              <a href="https://www.facebook.com/groups/118280735556343/" target="_blank" rel="noopener noreferrer">still there</a>.
+            </p>
+          </div>
+        </div>
+
+        <div class="reach">
+          <div>
+            <span class="reach__n">800</span>
+            <span class="reach__l">members across the University of Bristol</span>
+          </div>
+          <div>
+            <span class="reach__n">40&ndash;50</span>
+            <span class="reach__l">analysts selected each year by competitive application</span>
+          </div>
+          <div>
+            <span class="reach__n">4</span>
+            <span class="reach__l">divisions, each running its own research agenda</span>
+          </div>
+          <div>
+            <span class="reach__n">2017</span>
+            <span class="reach__l">founded, and student-run every year since</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== Structure ===== -->
+      <section class="abt__sec" aria-labelledby="how-title">
+        <span class="abt__sec-label">Structure</span>
+        <h2 class="abt__sec-title" id="how-title">How the society works</h2>
+
+        <ol class="ladder">
+          <li>
+            <div>
+              <h3>Membership</h3>
+              <p>
+                Open to any Bristol student, whatever you study and whatever you know. Members get
+                the speaker events, the workshops, the Bloomberg sessions and the socials. Most
+                people start here and a lot of people stay here &mdash; that is a perfectly good
+                way to use the society.
+              </p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>The analyst programme</h3>
+              <p>
+                A smaller cohort selected by written application each year. Analysts join one
+                division and spend the year producing research inside it &mdash; building a view,
+                writing it up, and defending it. This is the part of the society that most closely
+                resembles the job.
+              </p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Division heads</h3>
+              <p>
+                Each division is run by a head who sets its research agenda, runs its sessions and
+                is accountable for what the division produces across the year. Heads are appointed
+                by application, usually from analysts who have already done a year in the division.
+              </p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>The committee</h3>
+              <p>
+                Runs the society itself &mdash; events, partnerships, finances and everything that
+                keeps it working. Also student, also unpaid, also doing this alongside a degree.
+              </p>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <!-- ===== Principles ===== -->
+      <section class="abt__sec" aria-labelledby="for-title">
+        <span class="abt__sec-label">What we optimise for</span>
+        <h2 class="abt__sec-title" id="for-title">Three things we actually care about</h2>
+
+        <div class="principles">
+          <div class="principle">
+            <h3>Produce, don&rsquo;t spectate</h3>
+            <p>
+              Reading about markets is easy and teaches you very little. Everything we run ends in
+              someone having to produce something &mdash; a pitch, a position, a written view &mdash;
+              and then stand behind it.
+            </p>
+          </div>
+          <div class="principle">
+            <h3>Be wrong in public</h3>
+            <p>
+              Our competitions and debates are adversarial on purpose. The point is not to win; it
+              is to have your reasoning taken apart by someone who knows more than you, early
+              enough for it to be useful.
+            </p>
+          </div>
+          <div class="principle">
+            <h3>No prior knowledge required</h3>
+            <p>
+              Members arrive from every degree, including ones with no finance in them at all. The
+              entry point is curiosity and the willingness to do the reading &mdash; not a CV that
+              already looks the part.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== Onward ===== -->
+      <section class="abt__sec" aria-labelledby="next-title">
+        <span class="abt__sec-label">Go deeper</span>
+        <h2 class="abt__sec-title" id="next-title">Where to look next</h2>
+
+        <div class="onward">
+          <a href="/divisions">
+            <strong>Divisions</strong>
+            <span>FICC, Equities, Macro and Quant &mdash; what each one actually researches.</span>
+            <em>See the divisions &rarr;</em>
+          </a>
+          <a href="/events">
+            <strong>Events and Speakers</strong>
+            <span>The competitions, simulations and speaker evenings we run each year.</span>
+            <em>See what we run &rarr;</em>
+          </a>
+          <a href="/team">
+            <strong>Team</strong>
+            <span>The committee and division heads running the society this year.</span>
+            <em>Meet the team &rarr;</em>
+          </a>
+          <a href="/alumni">
+            <strong>Alumni</strong>
+            <span>Where members have gone after Bristol, and what they do now.</span>
+            <em>See the directory &rarr;</em>
+          </a>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <script src="js/aurora.js?v=9" defer></script>
+  <script src="js/transitions.js?v=2" defer></script>
+  <script src="js/nav.js?v=1" defer></script>
+  <!-- ===== Site footer ===== -->
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+
+      <div class="site-footer__top">
+        <div>
+          <a class="site-footer__brand-mark" href="/" aria-label="Bristol Trading Society — home">
+            <svg viewBox="0 0 93 78" fill="currentColor" aria-hidden="true" focusable="false">
+              <path fill-rule="evenodd" d="M65.13 6.00 L66.50 5.88 L66.88 6.25 L66.88 10.50 L71.88 15.25 L71.88 16.50 L72.88 17.25 L72.88 24.50 L70.88 26.25 L70.88 27.50 L66.88 31.25 L66.88 32.50 L67.88 33.25 L67.88 34.50 L69.88 36.25 L69.88 37.50 L70.88 38.25 L70.88 39.50 L71.88 40.25 L71.88 41.50 L72.88 42.25 L72.88 43.50 L73.88 44.25 L73.88 45.50 L75.88 47.25 L75.88 48.50 L76.88 49.25 L76.88 50.50 L77.88 51.25 L77.88 52.50 L78.88 53.25 L78.88 54.50 L80.88 56.25 L80.88 57.50 L81.88 58.25 L81.88 59.50 L82.88 60.25 L82.88 61.50 L83.88 62.25 L83.88 63.50 L84.88 64.25 L84.88 65.50 L86.88 67.25 L86.88 68.50 L87.88 69.25 L87.88 71.50 L87.50 71.88 L81.25 71.88 L80.88 71.50 L80.88 68.25 L79.88 67.50 L79.88 64.25 L78.88 63.50 L78.88 62.25 L78.50 61.88 L77.25 61.88 L76.50 60.88 L72.25 60.88 L71.25 59.88 L70.88 60.25 L70.88 62.50 L69.50 63.88 L68.25 63.88 L65.88 61.50 L65.88 60.25 L63.50 57.88 L62.00 57.88 L61.88 60.50 L62.88 61.25 L62.88 63.50 L63.88 64.25 L63.88 65.50 L64.88 66.25 L64.88 68.50 L65.88 69.25 L65.88 72.50 L65.50 72.88 L58.25 72.88 L56.88 71.25 L57.88 70.50 L57.88 68.25 L58.88 67.50 L58.88 65.25 L57.88 64.50 L57.88 63.25 L56.50 61.88 L55.25 61.88 L53.88 60.50 L53.88 58.25 L52.88 57.50 L52.88 54.25 L51.88 53.50 L51.88 52.25 L50.88 51.50 L50.88 50.25 L48.50 47.88 L47.88 48.25 L47.88 52.50 L48.88 53.25 L48.88 55.50 L49.88 56.25 L49.88 57.50 L50.88 58.25 L50.88 60.50 L51.88 61.25 L51.88 63.50 L51.50 63.88 L50.25 63.88 L49.50 64.88 L44.25 64.88 L43.50 63.88 L42.25 63.88 L36.50 57.88 L34.25 57.88 L32.50 59.88 L31.25 59.88 L29.50 61.88 L28.25 61.88 L27.50 62.88 L26.25 62.88 L24.50 64.88 L23.25 64.88 L22.50 65.88 L20.25 65.88 L19.50 66.88 L16.25 66.88 L15.88 67.25 L15.88 69.50 L14.88 70.25 L14.88 71.50 L13.50 72.88 L10.25 72.88 L8.88 71.50 L10.88 69.50 L10.88 68.25 L12.88 66.50 L12.88 65.25 L14.25 63.88 L15.50 63.88 L16.25 62.88 L18.50 62.88 L20.88 60.50 L20.88 59.25 L21.88 58.25 L21.50 57.88 L20.25 57.88 L19.50 58.88 L17.25 58.88 L16.50 59.88 L10.25 59.88 L9.50 58.88 L8.25 58.88 L5.88 56.50 L5.88 53.25 L7.88 51.50 L7.88 50.25 L14.88 43.50 L14.88 42.25 L15.88 41.50 L15.50 40.88 L13.25 40.88 L12.50 41.88 L8.25 41.88 L7.50 40.88 L6.25 40.88 L5.88 40.50 L5.88 39.25 L7.25 37.88 L8.50 37.88 L9.25 36.88 L10.50 36.88 L11.25 35.88 L14.50 35.88 L15.25 36.88 L16.50 36.88 L16.88 37.25 L16.88 38.50 L17.88 39.25 L17.88 41.50 L16.88 42.25 L16.88 44.50 L13.88 47.25 L13.88 48.50 L9.88 52.25 L9.88 55.50 L11.25 56.88 L13.50 56.88 L14.25 55.88 L16.50 55.88 L18.25 53.88 L19.50 53.88 L19.88 53.50 L19.88 52.25 L22.25 49.88 L23.50 49.88 L25.25 47.88 L26.50 47.88 L27.25 46.88 L30.50 46.88 L31.50 47.88 L31.88 47.50 L31.88 44.25 L32.88 43.50 L32.88 41.25 L33.88 40.50 L33.88 39.25 L38.25 34.88 L39.50 34.88 L40.25 33.88 L41.50 33.88 L42.25 32.88 L44.50 32.88 L44.88 32.50 L44.50 31.88 L43.25 31.88 L42.50 30.88 L41.25 30.88 L36.88 26.50 L36.88 20.25 L40.50 16.88 L40.88 17.50 L39.88 18.00 L39.88 22.50 L42.25 24.88 L43.50 24.88 L44.25 25.88 L48.50 25.88 L50.25 23.88 L54.50 23.88 L55.50 24.88 L56.25 23.88 L57.50 23.88 L58.25 22.88 L60.50 22.88 L61.25 23.88 L63.50 23.88 L65.88 21.50 L65.88 20.25 L66.88 19.50 L66.88 16.25 L65.88 15.50 L65.88 14.25 L63.88 12.50 L63.88 8.25 L64.88 7.50 L65.00 6.13 Z M58.13 31.00 L60.50 30.88 L60.88 31.25 L60.50 31.88 L59.25 31.88 L58.88 32.25 L59.88 33.50 L59.50 33.88 L58.25 33.88 L57.50 35.88 L56.88 35.50 L56.88 33.25 L57.88 32.50 L58.00 31.13 Z M51.13 39.00 L56.50 38.88 L56.88 39.25 L56.88 42.50 L56.50 42.88 L55.88 42.50 L55.88 40.25 L55.50 39.88 L51.00 39.88 L51.00 39.13 Z M50.13 40.00 L50.75 39.88 L50.88 40.50 L51.88 41.25 L51.88 42.50 L51.25 42.88 L49.88 41.50 L50.00 40.13 Z M71.13 53.00 L71.88 53.25 L71.88 56.50 L71.50 56.88 L70.88 56.50 L71.00 53.13 Z M61.13 57.00 L61.50 56.88 L61.88 57.75 L61.25 57.88 L61.00 57.13 Z M34.13 63.00 L36.50 62.88 L39.88 66.25 L39.88 67.50 L39.50 67.88 L38.25 67.88 L37.50 68.88 L34.25 68.88 L33.88 69.25 L33.88 70.50 L31.50 72.88 L29.25 72.88 L27.88 71.50 L27.88 70.25 L30.88 67.50 L30.88 64.25 L31.25 63.88 L33.50 63.88 L34.00 63.13 Z"></path>
+            </svg>
+            <span class="site-footer__wordmark">Bristol Trading Society</span>
+          </a>
+          <p class="site-footer__blurb">
+            A student-run trading and markets society at the University of Bristol. Members research
+            instruments, pitch them, and defend them in front of people who do it professionally.
+          </p>
+        </div>
+
+        <div>
+          <p class="site-footer__col-title">Society</p>
+          <ul class="site-footer__list">
+            <li><a href="/about">About us</a></li>
+            <li><a href="/divisions">Divisions</a></li>
+            <li><a href="/events">Events and Speakers</a></li>
+            <li><a href="/team">Team</a></li>
+            <li><a href="/alumni">Alumni</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="site-footer__col-title">Get involved</p>
+          <ul class="site-footer__list">
+            <li><a href="/apply">Apply now</a></li>
+            <li><a href="/sponsors">Sponsors and partners</a></li>
+            <li><a href="/contact">Contact us</a></li>
+            <li><a href="https://www.linkedin.com/company/bristol-trading-society/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+            <li><a href="https://www.instagram.com/bristoltradingsoc/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+            <li><a href="https://www.facebook.com/groups/118280735556343/" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="site-footer__col-title">Find us</p>
+          <div class="site-footer__contact">
+            <address>
+              12 Priory Road Complex<br />
+              Clifton, Bristol<br />
+              BS8 1TU
+            </address>
+            <a href="mailto:bristol-trading-society@bristol.ac.uk">bristol-trading-society@bristol.ac.uk</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="site-footer__bottom">
+        <p>&copy; 2026 Bristol Trading Society &middot; University of Bristol</p>
+        <p class="site-footer__legal">
+          <a href="/privacy">Privacy Policy</a>
+        </p>
+      </div>
+
+    </div>
+  </footer>
+
 </body>
 </html>
