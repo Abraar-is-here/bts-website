@@ -77,9 +77,9 @@
     bar.setAttribute('aria-label', 'Cookie choices');
     bar.innerHTML =
       '<p class="cookie-bar__title">Cookies</p>' +
-      '<p class="cookie-bar__text">We’d like to use Google Analytics to see which pages ' +
-      'get read. It sets a cookie on your device. Nothing loads unless you accept, and the ' +
-      'site works exactly the same either way. See our <a href="/privacy">Privacy Policy</a>.</p>' +
+      '<p class="cookie-bar__text">We use analytics cookies to understand how this site is ' +
+      'used. Nothing is set unless you accept. ' +
+      '<a href="/privacy">Privacy Policy</a>.</p>' +
       '<div class="cookie-bar__actions">' +
         '<button type="button" class="cookie-bar__btn cookie-bar__btn--accept" data-accept>Accept</button>' +
         '<button type="button" class="cookie-bar__btn cookie-bar__btn--reject" data-reject>Reject</button>' +
