@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <base href="/" />
 
-  <title>Apply: Division Head — Bristol Trading Society</title>
-  <meta name="description" content="Apply for a Division Head role at the Bristol Trading Society — FICC, Equities, Macro, or Quant." />
+  <title>Applications — Bristol Trading Society</title>
+  <meta name="description" content="Division Head applications for the Bristol Trading Society closed on 5 August 2026. Analyst applications open in the new academic year." />
 
 
   <link rel="icon" type="image/svg+xml" href="assets/img/bull.svg" />
@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="styles/tokens/colors.css?v=13" />
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
-  <link rel="stylesheet" href="styles/main.css?v=47" />
+  <link rel="stylesheet" href="styles/main.css?v=48" />
 </head>
 <body>
 
@@ -69,170 +69,34 @@
     <div class="apply__inner">
 
       <header class="apply__head">
-        <h1 class="h2 apply__title">Division Head application</h1>
+        <h1 class="h2 apply__title">Division Head applications are closed</h1>
         <p class="body apply__sub">
-          Applications are open for Division Head roles across FICC, Equities, Macro and Quant.
-          Tell us about yourself and pick your top two divisions.
+          Applications closed at midnight BST on Wednesday 5 August 2026. Thank you to everyone who
+          applied.
         </p>
-        <div class="notice">
-          <p>
-            Your details and CV are held in the BTS analyst CV book and may be shared with our
-            sponsors and partner firms for recruitment purposes. To be removed, email
-            <a href="mailto:bristol-trading-society@bristol.ac.uk">bristol-trading-society@bristol.ac.uk</a>
-            &mdash; it will not affect your application. See our <a href="/privacy">Privacy Policy</a>.
-          </p>
-        </div>
       </header>
 
-      <!-- ===== Application form ===== -->
-      <form id="applyForm" class="form-card" novalidate enctype="multipart/form-data">
+      <div class="closed-card">
+        <p class="closed-card__title">What happens next</p>
+        <ul class="closed-card__list">
+          <li>We are reviewing every application submitted before the deadline.</li>
+          <li>Shortlisted candidates will be contacted at their university email address about final-round interviews.</li>
+          <li>We reply to everyone either way, so there is no need to chase.</li>
+        </ul>
 
-        <!-- Honeypot: hidden from people, often filled by bots. Real users leave it empty. -->
-        <div aria-hidden="true" style="position:absolute;left:-9999px;" tabindex="-1">
-          <label>Company<input type="text" name="company" tabindex="-1" autocomplete="off" /></label>
-        </div>
-
-        <!-- Section 1 — Profile -->
-        <fieldset class="form-section">
-          <legend class="form-section__title h4">Profile</legend>
-
-          <div class="field-grid">
-            <div class="field" data-field>
-              <label for="firstName">First name <span class="req" aria-hidden="true">*</span></label>
-              <input id="firstName" name="firstName" type="text" autocomplete="given-name" required />
-              <span class="field__error" data-error></span>
-            </div>
-
-            <div class="field" data-field>
-              <label for="lastName">Last name <span class="req" aria-hidden="true">*</span></label>
-              <input id="lastName" name="lastName" type="text" autocomplete="family-name" required />
-              <span class="field__error" data-error></span>
-            </div>
-
-            <div class="field field--full" data-field>
-              <label for="uniEmail">University email <span class="req" aria-hidden="true">*</span></label>
-              <input id="uniEmail" name="uniEmail" type="email" inputmode="email"
-                     autocomplete="email" placeholder="you@bristol.ac.uk" required />
-              <span class="field__error" data-error></span>
-            </div>
-
-            <div class="field" data-field>
-              <label for="personalEmail">Personal email <span class="opt">(optional)</span></label>
-              <input id="personalEmail" name="personalEmail" type="email" inputmode="email" autocomplete="email" />
-              <span class="field__error" data-error></span>
-            </div>
-
-            <div class="field" data-field>
-              <label for="phone">Phone number <span class="req" aria-hidden="true">*</span></label>
-              <input id="phone" name="phone" type="tel" inputmode="tel"
-                     autocomplete="tel" placeholder="+44 …" required />
-              <span class="field__error" data-error></span>
-            </div>
-
-            <div class="field" data-field>
-              <label for="year">Year of study <span class="field__hint">as of Sept 2026</span> <span class="req" aria-hidden="true">*</span></label>
-              <select id="year" name="year" required>
-                <option value="" disabled selected>Select…</option>
-                <option>1st year</option>
-                <option>2nd year</option>
-                <option>3rd year</option>
-                <option>4th year</option>
-                <option>Master's</option>
-                <option>PhD</option>
-              </select>
-              <span class="field__error" data-error></span>
-            </div>
-
-            <div class="field" data-field>
-              <label for="course">Course <span class="req" aria-hidden="true">*</span></label>
-              <input id="course" name="course" type="text" placeholder="e.g. BSc Economics &amp; Finance" required />
-              <span class="field__error" data-error></span>
-            </div>
-
-            <div class="field field--full" data-field>
-              <label for="linkedin">LinkedIn profile <span class="opt">(optional)</span></label>
-              <input id="linkedin" name="linkedin" type="url" inputmode="url"
-                     placeholder="https://www.linkedin.com/in/…" />
-              <span class="field__error" data-error></span>
-            </div>
-          </div>
-        </fieldset>
-
-        <!-- Section 2 — Application -->
-        <fieldset class="form-section">
-          <legend class="form-section__title h4">Application</legend>
-
-          <div class="field-grid">
-            <div class="field" data-field>
-              <label for="choice1">1st choice division <span class="req" aria-hidden="true">*</span></label>
-              <select id="choice1" name="choice1" required>
-                <option value="" disabled selected>Select…</option>
-                <option value="FICC">FICC</option>
-                <option value="Equities">Equities</option>
-                <option value="Macro">Macro</option>
-                <option value="Quant">Quant</option>
-              </select>
-              <span class="field__error" data-error></span>
-            </div>
-
-            <div class="field" data-field>
-              <label for="choice2">2nd choice division <span class="opt">(optional)</span></label>
-              <select id="choice2" name="choice2">
-                <option value="" disabled selected>Select…</option>
-                <option value="FICC">FICC</option>
-                <option value="Equities">Equities</option>
-                <option value="Macro">Macro</option>
-                <option value="Quant">Quant</option>
-              </select>
-              <span class="field__error" data-error></span>
-            </div>
-
-            <div class="field field--full" data-field>
-              <label for="cv">Resume / CV (PDF) <span class="req" aria-hidden="true">*</span></label>
-              <label class="file-field" for="cv">
-                <svg class="file-field__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                  <path d="M14 2v6h6"></path>
-                </svg>
-                <span class="file-field__text">
-                  <span class="file-field__main">Choose a PDF file</span>
-                  <span class="file-field__hint">PDF only · max 5&nbsp;MB</span>
-                  <span class="file-field__name" data-filename hidden></span>
-                </span>
-                <input id="cv" name="cv" type="file" accept="application/pdf,.pdf" required />
-              </label>
-              <span class="field__error" data-error></span>
-            </div>
-
-          </div>
-        </fieldset>
-
-        <div class="form-actions">
-          <button type="submit" class="btn btn--primary" data-submit>
-            <span data-submit-label>Submit application</span>
-            <span class="btn__arrow" aria-hidden="true">&rarr;</span>
-          </button>
-          <p class="form-status" role="status" aria-live="polite" data-status></p>
-        </div>
-      </form>
-
-      <!-- ===== Success state (revealed after submit) ===== -->
-      <div id="applyThanks" class="form-card form-thanks" hidden>
-        <svg class="form-thanks__check" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="12" cy="12" r="10"></circle>
-          <path d="m9 12 2 2 4-4"></path>
-        </svg>
-        <h2 class="h3 form-thanks__title">Thank you for your application</h2>
-        <p class="body form-thanks__body">
-          Our team will carefully review your profile. If you're shortlisted, we'll be in touch
-          at your university email. A confirmation email is on its way — if you don't see it, check your spam folder.
+        <p class="closed-card__title closed-card__title--spaced">Missed it?</p>
+        <p class="closed-card__text">
+          Analyst applications open in the new academic year and are announced to members first.
+          Join the <a href="https://chat.whatsapp.com/FgHSKA4Y4ww70iYxEz23lk" target="_blank" rel="noopener noreferrer">member WhatsApp group</a>
+          to hear when they do, or <a href="/contact">get in touch</a> if you have a question.
         </p>
-        <div class="form-thanks__actions">
-          <a class="btn btn--primary" href="/">Back to home</a>
+
+        <div class="closed-card__actions">
+          <a class="btn btn--primary" href="/divisions">Explore the divisions <span class="btn__arrow" aria-hidden="true">&rarr;</span></a>
+          <a class="btn btn--secondary" href="/about">About the society <span class="btn__arrow" aria-hidden="true">&rarr;</span></a>
         </div>
       </div>
+
 
     </div>
   </main>
