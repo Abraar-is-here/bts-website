@@ -90,139 +90,219 @@
       margin-bottom: var(--space-5);
     }
 
-    /* --- Partner logo wall -------------------------------------------------
-       Logos only. The descriptions that used to sit under each mark said very
-       little a sponsor cares about and turned a proof point into a wall of
-       text. A clean grid reads as credibility at a glance. */
+    /* --- Tier deck ---------------------------------------------------------
+       One tier fills the width at a time, with arrows to switch. Two tiers
+       side by side made each read as half a thing; full width lets the
+       benefits sit in columns and gives each tier room to feel distinct.
+       Without JS both plans simply stack, so the content is never trapped. */
+    .deck { position: relative; }
+    .deck__viewport { overflow: hidden; border-radius: var(--radius-card); }
+    .deck__track {
+      display: flex;
+      transition: transform 420ms var(--ease-out);
+    }
+    .plan {
+      flex: 0 0 100%;
+      min-width: 0;
+      padding: clamp(var(--space-4), 3.5vw, var(--space-5));
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-card);
+      background: rgba(8, 19, 46, 0.78);
+    }
+
+    /* The two tiers are deliberately different objects, not the same card with
+       a different price: different accent, different rule, different badge. */
+    .plan--principal {
+      border-color: rgba(56, 189, 248, 0.5);
+      background:
+        radial-gradient(ellipse 70% 100% at 0% 0%, rgba(37, 99, 235, 0.22) 0%, transparent 60%),
+        rgba(8, 19, 46, 0.82);
+    }
+    .plan--associate { border-color: rgba(141, 162, 196, 0.28); }
+
+    .plan__top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: var(--space-3) var(--space-4);
+      padding-bottom: var(--space-4);
+      margin-bottom: var(--space-5);
+      border-bottom: 1px solid var(--hairline);
+    }
+    .plan__badge {
+      display: inline-block;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      margin-bottom: var(--space-3);
+    }
+    .plan--principal .plan__badge { color: var(--c-navy); background: var(--accent-bright); }
+    .plan--associate .plan__badge { color: var(--text-secondary); border: 1px solid var(--glass-border); }
+    .plan__name {
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 3.4vw, 2.5rem);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      line-height: 1.05;
+      margin-bottom: 8px;
+    }
+    .plan__pitch { font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.6; max-width: 46ch; }
+    .plan__cost { text-align: right; flex: none; }
+    .plan__price {
+      font-family: var(--font-display);
+      font-size: clamp(2.25rem, 5vw, 3.25rem);
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      line-height: 1;
+      color: var(--text-primary);
+      font-variant-numeric: tabular-nums;
+    }
+    .plan__term { font-size: 0.8125rem; color: var(--text-secondary); margin-top: 6px; }
+
+    /* Benefits in columns, so a full-width tier does not become a long scroll. */
+    .plan__groups {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+      gap: var(--space-5) var(--space-4);
+    }
+    .plan__group-title {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      padding-bottom: 10px;
+      margin-bottom: var(--space-3);
+      border-bottom: 2px solid var(--accent);
+    }
+    .plan--associate .plan__group-title { border-bottom-color: rgba(141, 162, 196, 0.45); }
+    .plan__list { list-style: none; margin: 0; padding: 0; }
+    .plan__list li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 14px;
+      font-size: 0.9375rem;
+      line-height: 1.55;
+      color: var(--text-secondary);
+    }
+    .plan__list li::before {
+      content: '';
+      position: absolute;
+      left: 2px; top: 8px;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent-bright);
+    }
+    .plan--associate .plan__list li::before { background: rgba(141, 162, 196, 0.7); }
+    .plan__list strong { color: var(--text-primary); font-weight: 600; }
+
+    /* Controls sit outside the card on wide screens, below it when there is
+       no room beside it. */
+    .deck__arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      border: 1px solid var(--glass-border);
+      background: var(--glass-fill-strong);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: background var(--dur-fast) var(--ease-out),
+                  border-color var(--dur-fast) var(--ease-out);
+    }
+    .deck__arrow:hover { background: var(--accent); border-color: var(--accent); }
+    .deck__arrow--prev { left: calc(-1 * var(--space-4)); }
+    .deck__arrow--next { right: calc(-1 * var(--space-4)); }
+    .deck__arrow svg { width: 16px; height: 16px; }
+
+    .deck__dots {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-2);
+      margin-top: var(--space-4);
+    }
+    .deck__dot {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: inherit;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      padding: 8px 18px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--glass-border);
+      background: transparent;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: color var(--dur-fast) var(--ease-out),
+                  background var(--dur-fast) var(--ease-out),
+                  border-color var(--dur-fast) var(--ease-out);
+    }
+    .deck__dot[aria-selected="true"] {
+      color: var(--c-navy);
+      background: var(--text-primary);
+      border-color: var(--text-primary);
+    }
+
+    @media (max-width: 1100px) {
+      .deck__arrow--prev { left: 8px; }
+      .deck__arrow--next { right: 8px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .deck__track { transition: none; }
+      .deck__arrow, .deck__dot { transition: none; }
+    }
+
+    /* --- Partner logo wall ------------------------------------------------- */
     .logos {
       list-style: none;
       margin: 0;
       padding: 0;
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
       gap: var(--space-3);
     }
     .logos__item {
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 84px;
-      padding: 14px 18px;
+      height: 96px;
+      padding: 18px 22px;
       background: #ffffff;
-      border-radius: 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid transparent;
+      transition: transform var(--dur-fast) var(--ease-out);
     }
+    .logos__item:hover { transform: translateY(-2px); }
     /* Marks supplied white-on-transparent vanish on the light plate. */
-    .logos__item--dark {
-      background: var(--c-navy-abyss);
-      border: 1px solid var(--glass-border);
-    }
+    .logos__item--dark { background: var(--c-navy-abyss); border-color: var(--glass-border); }
     .logos__item img { max-height: 100%; max-width: 100%; width: auto; object-fit: contain; }
 
-    /* --- Tier cards --------------------------------------------------------
-       Two tiers only. A thin third tier reads as padding and gives a firm
-       permission to buy the cheapest thing on the page. */
-    .tiers {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
-      gap: var(--space-4);
-      align-items: start;
-    }
-    .tier {
-      display: flex;
-      flex-direction: column;
-      padding: var(--space-4);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-card);
-      background: rgba(8, 19, 46, 0.72);
-    }
-    /* The headline tier carries the accent so the eye lands there first. */
-    .tier--lead { border-color: rgba(56, 189, 248, 0.45); box-shadow: var(--shadow-card); }
-    .tier__flag {
-      font-size: 0.6875rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--accent-bright);
-      margin-bottom: var(--space-2);
-    }
-    .tier__name {
-      font-family: var(--font-display);
-      font-size: 1.5rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      line-height: 1.1;
-      margin-bottom: 6px;
-    }
-    .tier__price {
-      font-family: var(--font-display);
-      font-size: 2.25rem;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      line-height: 1;
-      color: var(--text-primary);
-      margin-bottom: 4px;
-    }
-    .tier__price { margin-bottom: 6px; }
-    .tier__head {
-      padding-bottom: var(--space-3);
-      margin-bottom: var(--space-4);
-      border-bottom: 1px solid var(--hairline);
-    }
-    .tier__term { font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.5; }
-    /* Groups the benefits so a sponsor can find the one thing they came for
-       (talent) without reading the whole list. */
-    .tier__group {
-      font-size: 0.6875rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--text-primary);
-      margin: var(--space-4) 0 var(--space-3);
-    }
-    .tier__group:first-of-type { margin-top: 0; }
-    .tier__list { list-style: none; margin: 0; padding: 0; }
-    .tier__list li {
-      position: relative;
-      padding-left: 24px;
-      margin-bottom: 12px;
-      font-size: 0.9375rem;
-      line-height: 1.55;
-      color: var(--text-secondary);
-    }
-    .tier__list li::before {
-      content: '';
-      position: absolute;
-      left: 4px; top: 8px;
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: var(--accent-bright);
-    }
-    .tier__list strong { color: var(--text-primary); font-weight: 600; }
-
-    /* --- Bespoke line ------------------------------------------------------ */
-    .bespoke {
+    /* CFA Institute require their approved wording in the same communication
+       as their mark; the logo may not appear on a standalone basis. */
+    .logos__note {
       margin-top: var(--space-4);
-      padding: var(--space-3) var(--space-4);
-      border: 1px dashed rgba(141, 162, 196, 0.4);
-      border-radius: var(--radius-sm);
-      font-size: 0.9375rem;
+      font-size: 0.75rem;
       line-height: 1.6;
       color: var(--text-secondary);
+      max-width: 82ch;
     }
-    .bespoke strong { color: var(--text-primary); font-weight: 600; }
-    .bespoke a { color: var(--accent-bright); }
 
-    /* --- Track record list ------------------------------------------------- */
-    .track { list-style: none; margin: 0; padding: 0; }
-    .track li {
-      padding: var(--space-3) 0;
-      border-top: 1px solid var(--hairline);
-      font-size: 0.9375rem;
-      line-height: 1.6;
-      color: var(--text-secondary);
+    @media (prefers-reduced-motion: reduce) {
+      .logos__item { transition: none; }
+      .logos__item:hover { transform: none; }
     }
-    .track li:last-child { border-bottom: 1px solid var(--hairline); }
-    .track strong { color: var(--text-primary); font-weight: 600; }
 
     /* --- Print: the page IS the brochure ----------------------------------
        Recruiters ask for a PDF to circulate internally. Rather than maintain a
@@ -232,25 +312,34 @@
       .spon::before { display: none; }
       .spon { padding: 0; min-height: 0; }
       body { background: #fff; color: #111; }
-      .spon__title, .spon__section-title, .tier__name, .tier__price,
-      .tier__group, .spon__claim, .tier__list strong, .track strong, .bespoke strong {
-        color: #000 !important;
-      }
-      .body, .spon__lead, .tier__term, .tier__list li,
-      .track li, .bespoke { color: #333 !important; }
-      .spon__eyebrow, .tier__flag { color: #555 !important; }
-      .tier, .spon__cta {
+
+      /* A printed page cannot be clicked through, so the deck unrolls: both
+         plans stack and the controls are dropped. */
+      .deck__viewport { overflow: visible; }
+      .deck__track { display: block; transform: none !important; }
+      .deck__arrow, .deck__dots { display: none !important; }
+      .plan { margin-bottom: 20px; break-inside: avoid; }
+
+      .spon__title, .spon__section-title, .spon__claim,
+      .plan__name, .plan__price, .plan__group-title,
+      .plan__list strong, .track strong, .bespoke strong { color: #000 !important; }
+      .body, .spon__lead, .plan__pitch, .plan__term, .plan__list li,
+      .track li, .bespoke, .logos__note { color: #333 !important; }
+      .spon__eyebrow, .plan__badge { color: #555 !important; }
+
+      .plan, .spon__cta {
         background: #fff !important;
         border: 1px solid #bbb !important;
         box-shadow: none !important;
         break-inside: avoid;
       }
-      .tier__list li::before { background: #555 !important; }
+      .plan--principal { border-color: #444 !important; }
+      .plan__badge { background: none !important; border: 1px solid #999 !important; }
+      .plan__group-title { border-bottom-color: #999 !important; }
+      .plan__list li::before { background: #555 !important; }
       .logos__item, .logos__item--dark { background: #fff !important; border: 1px solid #ddd !important; }
       .spon__section { margin-top: 24px; break-inside: avoid; }
       a { color: #000 !important; text-decoration: underline; }
-      /* Spell out link targets, since a printed page cannot be clicked. */
-      .spon__cta a[href^="mailto:"]::after { content: ""; }
     }
 
     /* --- Closing CTA --- */
@@ -338,68 +427,113 @@
 
       <!-- ===== Tiers ===== -->
       <section class="spon__section" aria-labelledby="tiers-title">
-        <h2 class="spon__section-title" id="tiers-title">Two tiers</h2>
+        <h2 class="spon__section-title" id="tiers-title">Partnership tiers</h2>
 
-        <div class="tiers">
+        <div class="deck" data-deck>
+          <button class="deck__arrow deck__arrow--prev" type="button" data-prev aria-label="Previous tier">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
 
-          <article class="tier tier--lead">
-            <div class="tier__head">
-              <p class="tier__flag">Headline Partner</p>
-              <p class="tier__price">&pound;4,000</p>
-              <p class="tier__term">per academic year &middot; one firm per cycle</p>
+          <div class="deck__viewport">
+            <div class="deck__track" data-track>
+
+              <article class="plan plan--principal" id="plan-principal" role="tabpanel" aria-labelledby="dot-principal">
+                <div class="plan__top">
+                  <div>
+                    <span class="plan__badge">Principal</span>
+                    <h3 class="plan__name">Principal Partner</h3>
+                    <p class="plan__pitch">
+                      Full access to the analyst cohort, your name on a flagship event, and first
+                      choice of dates in the recruiting calendar.
+                    </p>
+                  </div>
+                  <div class="plan__cost">
+                    <p class="plan__price">&pound;4,000</p>
+                    <p class="plan__term">per academic year</p>
+                  </div>
+                </div>
+
+                <div class="plan__groups">
+                  <div>
+                    <p class="plan__group-title">Talent</p>
+                    <ul class="plan__list">
+                      <li><strong>The analyst CV book</strong> &mdash; the full cohort and division heads, organised by division, sent direct to your team.</li>
+                      <li><strong>A closed evening with the analyst cohort</strong> &mdash; the selected analysts and division heads only, not the general membership.</li>
+                      <li><strong>Judging seats at the Annual Trading Competition</strong> &mdash; seven teams pitch and defend under questioning, so you spend an evening watching candidates think on their feet.</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p class="plan__group-title">Position</p>
+                    <ul class="plan__list">
+                      <li><strong>Named sponsor of a flagship event</strong> &mdash; the Annual Trading Competition, the Macro Debate or a simulation, subject to availability.</li>
+                      <li><strong>First pick of the calendar</strong> &mdash; Principal Partners choose dates before anyone else, so your session lands ahead of the spring-week cycle rather than after it.</li>
+                      <li><strong>Two sessions</strong> &mdash; a speaker evening, workshop, technical session or case study, run your way.</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p class="plan__group-title">Presence</p>
+                    <ul class="plan__list">
+                      <li><strong>Primary logo</strong> &mdash; society fleece, website, event materials and our Freshers&rsquo; Fair stand.</li>
+                      <li><strong>Division-level collaboration</strong> &mdash; set a research question, share data, or put your desk in front of the division closest to it.</li>
+                      <li><strong>Roles posted directly</strong> &mdash; spring weeks, internships and graduate schemes to the full membership.</li>
+                    </ul>
+                  </div>
+                </div>
+              </article>
+
+              <article class="plan plan--associate" id="plan-associate" role="tabpanel" aria-labelledby="dot-associate">
+                <div class="plan__top">
+                  <div>
+                    <span class="plan__badge">Associate</span>
+                    <h3 class="plan__name">Associate Partner</h3>
+                    <p class="plan__pitch">
+                      The CV book and a session with our members, without the flagship commitment.
+                    </p>
+                  </div>
+                  <div class="plan__cost">
+                    <p class="plan__price">&pound;2,500</p>
+                    <p class="plan__term">per academic year</p>
+                  </div>
+                </div>
+
+                <div class="plan__groups">
+                  <div>
+                    <p class="plan__group-title">Talent</p>
+                    <ul class="plan__list">
+                      <li><strong>The analyst CV book</strong> &mdash; the full cohort and division heads, organised by division.</li>
+                      <li><strong>Invitations to the Annual Trading Competition</strong> &mdash; attend, meet the teams and watch them present.</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p class="plan__group-title">Presence</p>
+                    <ul class="plan__list">
+                      <li><strong>One session</strong> &mdash; a speaker evening or a workshop with our members.</li>
+                      <li><strong>Logo</strong> &mdash; society fleece, website and event materials.</li>
+                      <li><strong>Collaboration with one division</strong> &mdash; the division closest to your desk.</li>
+                      <li><strong>Roles posted directly</strong> &mdash; spring weeks, internships and graduate schemes to the full membership.</li>
+                    </ul>
+                  </div>
+                </div>
+              </article>
+
             </div>
+          </div>
 
-            <p class="tier__group">Talent</p>
-            <ul class="tier__list">
-              <li><strong>The analyst CV book</strong> &mdash; the full cohort and division heads, organised by division, sent direct to your team.</li>
-              <li><strong>A closed evening with the analyst cohort</strong> &mdash; the selected analysts and division heads only, not the general membership.</li>
-              <li><strong>Judging seats at the Annual Trading Competition</strong> &mdash; seven teams pitch and defend under questioning. In practice you spend an evening watching candidates think on their feet.</li>
-            </ul>
+          <button class="deck__arrow deck__arrow--next" type="button" data-next aria-label="Next tier">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
 
-            <p class="tier__group">Position</p>
-            <ul class="tier__list">
-              <li><strong>Category exclusivity</strong> &mdash; no competing firm of your type at this tier for the year.</li>
-              <li><strong>Title sponsor of the Annual Trading Competition</strong> &mdash; our flagship event carries your name.</li>
-              <li><strong>First pick of the calendar</strong> &mdash; you choose your dates before any other partner, so your session lands ahead of the spring-week cycle rather than after it.</li>
-            </ul>
-
-            <p class="tier__group">Presence</p>
-            <ul class="tier__list">
-              <li><strong>Two sessions</strong> &mdash; a speaker evening, a workshop, a technical session, or a case study run your way.</li>
-              <li><strong>Primary logo</strong> &mdash; society fleece, website, event materials and our Freshers&rsquo; Fair stand.</li>
-              <li><strong>Division-level collaboration</strong> &mdash; set a research question, share data, or put your desk in front of the division closest to it.</li>
-              <li><strong>Roles posted directly</strong> &mdash; spring weeks, internships and graduate schemes to the full membership.</li>
-            </ul>
-          </article>
-
-          <article class="tier">
-            <div class="tier__head">
-              <p class="tier__flag">Division Partner</p>
-              <p class="tier__price">&pound;2,500</p>
-              <p class="tier__term">per academic year</p>
-            </div>
-
-            <p class="tier__group">Talent</p>
-            <ul class="tier__list">
-              <li><strong>The analyst CV book</strong> &mdash; the full cohort and division heads, organised by division.</li>
-              <li><strong>Invitations to the Annual Trading Competition</strong> &mdash; attend, meet the teams, watch them present.</li>
-            </ul>
-
-            <p class="tier__group">Presence</p>
-            <ul class="tier__list">
-              <li><strong>One session</strong> &mdash; a speaker evening or a workshop with our members.</li>
-              <li><strong>Logo</strong> &mdash; society fleece, website and event materials.</li>
-              <li><strong>Collaboration with one division</strong> &mdash; the division closest to your desk.</li>
-              <li><strong>Roles posted directly</strong> &mdash; spring weeks, internships and graduate schemes to the full membership.</li>
-            </ul>
-          </article>
-
+        <div class="deck__dots" role="tablist" aria-label="Partnership tiers">
+          <button class="deck__dot" type="button" role="tab" id="dot-principal" aria-controls="plan-principal" aria-selected="true">Principal &middot; &pound;4,000</button>
+          <button class="deck__dot" type="button" role="tab" id="dot-associate" aria-controls="plan-associate" aria-selected="false">Associate &middot; &pound;2,500</button>
         </div>
 
         <p class="bespoke">
-          <strong>Something else in mind?</strong> These are starting points, not fixed packages. If
-          you want a single event, a multi-year arrangement, or something built around a specific
-          hiring need, get in touch and we will put it together.
+          <strong>Something else in mind?</strong> These are starting points, not fixed packages.
+          Both tiers are open to as many firms as want them, and if you would prefer a single event,
+          a multi-year arrangement or something built around a specific hiring need, get in touch and
+          we will put it together.
         </p>
       </section>
 
@@ -430,6 +564,11 @@
           <li class="logos__item"><img src="assets/img/sponsors/commodities-people.png" alt="Commodities People" /></li>
           <li class="logos__item logos__item--dark"><img src="assets/img/sponsors/cfa.png" alt="CFA Institute" /></li>
         </ul>
+        <p class="logos__note">
+          Bristol Trading Society provides content and learning opportunities for students offered
+          by CFA Institute, the global leading association of investment professionals &mdash;
+          setting the standard for professional excellence.
+        </p>
       </section>
 
       <section class="spon__cta" aria-labelledby="spon-cta-title">
@@ -448,6 +587,50 @@
 
     </div>
   </main>
+
+
+  <script>
+    /* Tier deck. Progressive enhancement: without JS the plans stay in the DOM
+       and remain readable, so nothing is trapped behind a control. */
+    (function () {
+      var deck = document.querySelector('[data-deck]');
+      if (!deck) return;
+      var track = deck.querySelector('[data-track]');
+      var plans = Array.prototype.slice.call(track.children);
+      var dots  = Array.prototype.slice.call(document.querySelectorAll('.deck__dot'));
+      if (plans.length < 2) return;
+
+      var i = 0;
+      function show(n) {
+        i = (n + plans.length) % plans.length;
+        track.style.transform = 'translateX(' + (-100 * i) + '%)';
+        dots.forEach(function (d, k) { d.setAttribute('aria-selected', String(k === i)); });
+        // Keep off-screen panels out of the tab order, so keyboard users are
+        // not sent into a card they cannot see.
+        plans.forEach(function (pl, k) { pl.inert = (k !== i); });
+      }
+
+      deck.querySelector('[data-prev]').addEventListener('click', function () { show(i - 1); });
+      deck.querySelector('[data-next]').addEventListener('click', function () { show(i + 1); });
+      dots.forEach(function (d, k) { d.addEventListener('click', function () { show(k); }); });
+
+      deck.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowLeft')  { show(i - 1); }
+        if (e.key === 'ArrowRight') { show(i + 1); }
+      });
+
+      // Printing must include every plan, so undo the transform and the inert
+      // flags first, then restore. Otherwise only the visible tier reaches the
+      // PDF, which is the one thing this page exists to produce.
+      window.addEventListener('beforeprint', function () {
+        track.style.transform = 'none';
+        plans.forEach(function (pl) { pl.inert = false; });
+      });
+      window.addEventListener('afterprint', function () { show(i); });
+
+      show(0);
+    })();
+  </script>
 
   <script src="js/aurora.js?v=9" defer></script>
   <script src="js/transitions.js?v=3" defer></script>
