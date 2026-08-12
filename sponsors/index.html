@@ -79,6 +79,7 @@
 
     /* --- Reach claim --- */
     .spon__claim {
+      margin-top: var(--space-6);
       font-family: var(--font-display);
       font-size: clamp(1.5rem, 3.4vw, 2.125rem);
       font-weight: 800;
@@ -162,6 +163,15 @@
       font-variant-numeric: tabular-nums;
     }
     .plan__term { font-size: 0.8125rem; color: var(--text-secondary); margin-top: 6px; }
+    .plan__from {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 4px;
+    }
 
     /* Benefits in columns, so a full-width tier does not become a long scroll. */
     .plan__groups {
@@ -202,29 +212,28 @@
 
     /* Controls sit outside the card on wide screens, below it when there is
        no room beside it. */
+    /* Matches the hero slider controls: a translucent chevron sitting off the
+       card, not a button competing with the content. */
     .deck__arrow {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
       z-index: 2;
-      width: 44px;
-      height: 44px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      border: 1px solid var(--glass-border);
-      background: var(--glass-fill-strong);
-      -webkit-backdrop-filter: blur(12px);
-      backdrop-filter: blur(12px);
-      color: var(--text-primary);
+      background: none;
+      border: none;
+      padding: var(--space-3);
+      line-height: 0;
+      color: rgba(255, 255, 255, 0.22);
       cursor: pointer;
-      transition: background var(--dur-fast) var(--ease-out),
-                  border-color var(--dur-fast) var(--ease-out);
+      transition: color 0.25s ease;
     }
-    .deck__arrow:hover { background: var(--accent); border-color: var(--accent); }
-    .deck__arrow--prev { left: calc(-1 * var(--space-4)); }
-    .deck__arrow--next { right: calc(-1 * var(--space-4)); }
-    .deck__arrow svg { width: 16px; height: 16px; }
+    .deck__arrow:hover { color: rgba(255, 255, 255, 0.65); }
+    .deck__arrow svg { display: block; width: 36px; height: 36px; stroke-width: 1.5; }
+    /* Inside the card, sitting in its own padding — as the hero controls do.
+       Hanging them outside pushed past the page gutter and gave the document
+       a horizontal scrollbar. */
+    .deck__arrow--prev { left: 0; }
+    .deck__arrow--next { right: 0; }
 
     .deck__dots {
       display: flex;
@@ -232,6 +241,9 @@
       gap: var(--space-2);
       margin-top: var(--space-4);
     }
+    /* The bespoke note is a separate idea from the tier switcher, so it needs
+       real space rather than sitting on top of the tabs. */
+    .bespoke { margin-top: var(--space-6); }
     .deck__dot {
       display: inline-flex;
       align-items: center;
@@ -264,44 +276,86 @@
       .deck__arrow, .deck__dot { transition: none; }
     }
 
-    /* --- Partner logo wall ------------------------------------------------- */
+    /* --- Partner logo wall ------------------------------------------------
+       Every mark rendered the same way. Mixing white plates for dark logos
+       with dark plates for light ones made the grid look like two unrelated
+       sets. Normalising to a single monochrome weight on one surface reads as
+       a considered roster rather than a pile of assets. */
     .logos {
       list-style: none;
       margin: 0;
       padding: 0;
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: var(--space-3);
+      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: 1px;
+      background: var(--hairline);
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius-card);
+      overflow: hidden;
     }
+    /* Hairline grid: the 1px gap and the container background draw the rules,
+       so there is no per-card border to fight with. */
     .logos__item {
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 96px;
-      padding: 18px 22px;
-      background: #ffffff;
-      border-radius: var(--radius-sm);
-      border: 1px solid transparent;
-      transition: transform var(--dur-fast) var(--ease-out);
+      height: 110px;
+      padding: 22px 26px;
+      background: rgba(8, 19, 46, 0.72);
     }
-    .logos__item:hover { transform: translateY(-2px); }
-    /* Marks supplied white-on-transparent vanish on the light plate. */
-    .logos__item--dark { background: var(--c-navy-abyss); border-color: var(--glass-border); }
-    .logos__item img { max-height: 100%; max-width: 100%; width: auto; object-fit: contain; }
-
-    /* CFA Institute require their approved wording in the same communication
-       as their mark; the logo may not appear on a standalone basis. */
+    .logos__item img {
+      max-height: 100%;
+      max-width: 100%;
+      width: auto;
+      object-fit: contain;
+      /* Flatten every mark to a single white weight. */
+      filter: brightness(0) invert(1);
+      opacity: 0.72;
+      transition: opacity var(--dur-fast) var(--ease-out);
+    }
+    .logos__item:hover img { opacity: 1; }
     .logos__note {
       margin-top: var(--space-4);
-      font-size: 0.75rem;
+      font-size: 0.8125rem;
       line-height: 1.6;
       color: var(--text-secondary);
       max-width: 82ch;
     }
 
+    /* --- How it works ------------------------------------------------------
+       A corporate recruiter's first unasked question is how much admin this
+       will be. Four steps answers it before they have to ask. */
+    .steps {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+      gap: var(--space-4);
+      counter-reset: step;
+    }
+    .steps li { counter-increment: step; padding-top: var(--space-3); border-top: 1px solid var(--hairline); }
+    .steps li::before {
+      content: counter(step, decimal-leading-zero);
+      display: block;
+      font-family: var(--font-display);
+      font-size: 0.875rem;
+      font-weight: 800;
+      color: var(--accent-bright);
+      letter-spacing: 0.06em;
+      margin-bottom: var(--space-2);
+    }
+    .steps h3 {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 600;
+      line-height: 1.3;
+      margin-bottom: 6px;
+    }
+    .steps p { font-size: 0.875rem; line-height: 1.6; color: var(--text-secondary); }
+
     @media (prefers-reduced-motion: reduce) {
-      .logos__item { transition: none; }
-      .logos__item:hover { transform: none; }
+      .logos__item img { transition: none; }
     }
 
     /* --- Print: the page IS the brochure ----------------------------------
@@ -337,7 +391,9 @@
       .plan__badge { background: none !important; border: 1px solid #999 !important; }
       .plan__group-title { border-bottom-color: #999 !important; }
       .plan__list li::before { background: #555 !important; }
-      .logos__item, .logos__item--dark { background: #fff !important; border: 1px solid #ddd !important; }
+      .logos { background: none !important; border-color: #ddd !important; }
+      .logos__item { background: #fff !important; border: 1px solid #eee !important; }
+      .logos__item img { filter: none !important; opacity: 1 !important; }
       .spon__section { margin-top: 24px; break-inside: avoid; }
       a { color: #000 !important; text-decoration: underline; }
     }
@@ -415,15 +471,18 @@
 
       <header class="spon__head">
         <span class="spon__eyebrow">Sponsorship &middot; 2026/27</span>
-        <h1 class="spon__title">Partner with the Bristol Trading Society</h1>
-        <p class="spon__claim">
-          We send more members into industry than any other finance society at Bristol.
-        </p>
+        <h1 class="spon__title">Partner with us</h1>
         <p class="body spon__lead">
           Our analyst cohort is selected by competitive application, then spends the year producing
           and defending research. By the time your firm meets them, the filtering is done.
         </p>
       </header>
+
+      <!-- Given its own air rather than stacked under the title, where it was
+           competing with the lead for the same glance. -->
+      <p class="spon__claim">
+        We send more members into industry than any other finance society at Bristol.
+      </p>
 
       <!-- ===== Tiers ===== -->
       <section class="spon__section" aria-labelledby="tiers-title">
@@ -448,6 +507,7 @@
                     </p>
                   </div>
                   <div class="plan__cost">
+                    <span class="plan__from">From</span>
                     <p class="plan__price">&pound;4,000</p>
                     <p class="plan__term">per academic year</p>
                   </div>
@@ -467,7 +527,7 @@
                     <ul class="plan__list">
                       <li><strong>Named sponsor of a flagship event</strong> &mdash; the Annual Trading Competition, the Macro Debate or a simulation, subject to availability.</li>
                       <li><strong>First pick of the calendar</strong> &mdash; Principal Partners choose dates before anyone else, so your session lands ahead of the spring-week cycle rather than after it.</li>
-                      <li><strong>Two sessions</strong> &mdash; a speaker evening, workshop, technical session or case study, run your way.</li>
+                      <li><strong>Events on your terms</strong> &mdash; speaker evenings, workshops, technical sessions or case studies, as many as your calendar allows.</li>
                     </ul>
                   </div>
                   <div>
@@ -491,6 +551,7 @@
                     </p>
                   </div>
                   <div class="plan__cost">
+                    <span class="plan__from">From</span>
                     <p class="plan__price">&pound;2,500</p>
                     <p class="plan__term">per academic year</p>
                   </div>
@@ -507,7 +568,7 @@
                   <div>
                     <p class="plan__group-title">Presence</p>
                     <ul class="plan__list">
-                      <li><strong>One session</strong> &mdash; a speaker evening or a workshop with our members.</li>
+                      <li><strong>Events with our members</strong> &mdash; speaker evenings and workshops, scheduled around the calendar.</li>
                       <li><strong>Logo</strong> &mdash; society fleece, website and event materials.</li>
                       <li><strong>Collaboration with one division</strong> &mdash; the division closest to your desk.</li>
                       <li><strong>Roles posted directly</strong> &mdash; spring weeks, internships and graduate schemes to the full membership.</li>
@@ -525,15 +586,15 @@
         </div>
 
         <div class="deck__dots" role="tablist" aria-label="Partnership tiers">
-          <button class="deck__dot" type="button" role="tab" id="dot-principal" aria-controls="plan-principal" aria-selected="true">Principal &middot; &pound;4,000</button>
-          <button class="deck__dot" type="button" role="tab" id="dot-associate" aria-controls="plan-associate" aria-selected="false">Associate &middot; &pound;2,500</button>
+          <button class="deck__dot" type="button" role="tab" id="dot-principal" aria-controls="plan-principal" aria-selected="true">Principal &middot; from &pound;4,000</button>
+          <button class="deck__dot" type="button" role="tab" id="dot-associate" aria-controls="plan-associate" aria-selected="false">Associate &middot; from &pound;2,500</button>
         </div>
 
         <p class="bespoke">
           <strong>Something else in mind?</strong> These are starting points, not fixed packages.
-          Both tiers are open to as many firms as want them, and if you would prefer a single event,
-          a multi-year arrangement or something built around a specific hiring need, get in touch and
-          we will put it together.
+          Both tiers are open to as many firms as want them, and everything scales &mdash; a single
+          event, a multi-year arrangement, or something built around a specific hiring need. Tell us
+          what you are trying to achieve on a call and we will price it around that.
         </p>
       </section>
 
@@ -550,24 +611,47 @@
         </ul>
       </section>
 
+
+      <!-- ===== Process ===== -->
+      <section class="spon__section" aria-labelledby="how-title">
+        <h2 class="spon__section-title" id="how-title">How it works</h2>
+        <ol class="steps">
+          <li>
+            <h3>You email us</h3>
+            <p>Tell us roughly what you are hiring for. We reply within two working days.</p>
+          </li>
+          <li>
+            <h3>A call</h3>
+            <p>Half an hour to work out what is actually useful to you, and what it costs.</p>
+          </li>
+          <li>
+            <h3>Dates in the diary</h3>
+            <p>We agree the year up front, so your sessions land when they matter to your cycle.</p>
+          </li>
+          <li>
+            <h3>One point of contact</h3>
+            <p>A named committee member runs it end to end. You are not chasing students.</p>
+          </li>
+        </ol>
+      </section>
+
       <!-- ===== Partner logos ===== -->
       <section class="spon__section" aria-labelledby="roster-title">
         <h2 class="spon__section-title" id="roster-title">Firms we work with</h2>
         <ul class="logos" aria-label="Partner organisations">
           <li class="logos__item"><img src="assets/img/sponsors/drw.png" alt="DRW" /></li>
-          <li class="logos__item logos__item--dark"><img src="assets/img/sponsors/worldquant.png" alt="WorldQuant" /></li>
+          <li class="logos__item"><img src="assets/img/sponsors/worldquant.png" alt="WorldQuant" /></li>
           <li class="logos__item"><img src="assets/img/sponsors/etoro.png" alt="eToro" /></li>
-          <li class="logos__item logos__item--dark"><img src="assets/img/sponsors/outlook-energy.svg" alt="Outlook Energy" /></li>
+          <li class="logos__item"><img src="assets/img/sponsors/outlook-energy.svg" alt="Outlook Energy" /></li>
           <li class="logos__item"><img src="assets/img/sponsors/berenberg.png" alt="Berenberg" /></li>
           <li class="logos__item"><img src="assets/img/sponsors/hirehuub.png" alt="HireHuub" /></li>
           <li class="logos__item"><img src="assets/img/sponsors/headstart.png" alt="Headstart" /></li>
           <li class="logos__item"><img src="assets/img/sponsors/commodities-people.png" alt="Commodities People" /></li>
-          <li class="logos__item logos__item--dark"><img src="assets/img/sponsors/cfa.png" alt="CFA Institute" /></li>
         </ul>
         <p class="logos__note">
-          Bristol Trading Society provides content and learning opportunities for students offered
-          by CFA Institute, the global leading association of investment professionals &mdash;
-          setting the standard for professional excellence.
+          Bristol Trading Society also provides content and learning opportunities for students
+          offered by CFA Institute, the global leading association of investment professionals
+          &mdash; setting the standard for professional excellence.
         </p>
       </section>
 
