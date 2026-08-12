@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="styles/tokens/colors.css?v=13" />
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
-  <link rel="stylesheet" href="styles/main.css?v=49" />
+  <link rel="stylesheet" href="styles/main.css?v=50" />
 
   <style>
     /* -------------------------------------------------------------------------
@@ -188,25 +188,154 @@
     .partners-strip .partner__mark { height: 56px; padding: 8px 12px; }
     .partners-strip .partner__text { font-size: 0.8125rem; }
 
-    /* --- Offer list --- */
-    .offer {
+    /* --- Brochure figures band ------------------------------------------- */
+    .figures {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: var(--space-4);
+      padding: var(--space-4) 0;
+      border-top: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+      margin-top: var(--space-5);
     }
-    .offer__item {
+    .figures__n {
+      display: block;
+      font-family: var(--font-display);
+      font-size: clamp(1.9rem, 3.6vw, 2.6rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      font-variant-numeric: tabular-nums;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    .figures__l { font-size: 0.875rem; line-height: 1.45; color: var(--text-secondary); max-width: 20ch; }
+
+    /* --- Tier cards --------------------------------------------------------
+       Two tiers only. A thin third tier reads as padding and gives a firm
+       permission to buy the cheapest thing on the page. */
+    .tiers {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+      gap: var(--space-4);
+      align-items: start;
+    }
+    .tier {
+      display: flex;
+      flex-direction: column;
       padding: var(--space-4);
       border: 1px solid var(--glass-border);
       border-radius: var(--radius-card);
-      background: rgba(8, 19, 46, 0.6);
+      background: rgba(8, 19, 46, 0.72);
     }
-    .offer__item h3 {
-      font-family: var(--font-body);
-      font-size: 1.0625rem;
-      font-weight: 600;
-      margin-bottom: 8px;
+    /* The headline tier carries the accent so the eye lands there first. */
+    .tier--lead { border-color: rgba(56, 189, 248, 0.45); box-shadow: var(--shadow-card); }
+    .tier__flag {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-bright);
+      margin-bottom: var(--space-2);
     }
-    .offer__item p { font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.55; }
+    .tier__name {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+    .tier__price {
+      font-family: var(--font-display);
+      font-size: 2.25rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+    .tier__price small { font-size: 0.4em; font-weight: 600; letter-spacing: 0.02em; color: var(--text-secondary); }
+    .tier__for {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      padding-bottom: var(--space-3);
+      margin-bottom: var(--space-3);
+      border-bottom: 1px solid var(--hairline);
+    }
+    .tier__list { list-style: none; margin: 0; padding: 0; }
+    .tier__list li {
+      position: relative;
+      padding-left: 24px;
+      margin-bottom: 12px;
+      font-size: 0.9375rem;
+      line-height: 1.55;
+      color: var(--text-secondary);
+    }
+    .tier__list li::before {
+      content: '';
+      position: absolute;
+      left: 4px; top: 8px;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--accent-bright);
+    }
+    .tier__list strong { color: var(--text-primary); font-weight: 600; }
+
+    /* --- Bespoke line ------------------------------------------------------ */
+    .bespoke {
+      margin-top: var(--space-4);
+      padding: var(--space-3) var(--space-4);
+      border: 1px dashed rgba(141, 162, 196, 0.4);
+      border-radius: var(--radius-sm);
+      font-size: 0.9375rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+    .bespoke strong { color: var(--text-primary); font-weight: 600; }
+    .bespoke a { color: var(--accent-bright); }
+
+    /* --- Track record list ------------------------------------------------- */
+    .track { list-style: none; margin: 0; padding: 0; }
+    .track li {
+      padding: var(--space-3) 0;
+      border-top: 1px solid var(--hairline);
+      font-size: 0.9375rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+    .track li:last-child { border-bottom: 1px solid var(--hairline); }
+    .track strong { color: var(--text-primary); font-weight: 600; }
+
+    /* --- Print: the page IS the brochure ----------------------------------
+       Recruiters ask for a PDF to circulate internally. Rather than maintain a
+       separate document that drifts out of date, this prints to one. */
+    @media print {
+      .aurora, .nav, .site-footer, .cookie-bar, .skip-link { display: none !important; }
+      .spon::before { display: none; }
+      .spon { padding: 0; min-height: 0; }
+      body { background: #fff; color: #111; }
+      .spon__title, .spon__section-title, .tier__name, .tier__price,
+      .figures__n, .spon__claim, .tier__list strong, .track strong, .bespoke strong {
+        color: #000 !important;
+      }
+      .body, .spon__lead, .figures__l, .tier__for, .tier__list li,
+      .track li, .partner__text, .bespoke { color: #333 !important; }
+      .spon__eyebrow, .tier__flag { color: #555 !important; }
+      .tier, .spon__cta, .partner {
+        background: #fff !important;
+        border: 1px solid #bbb !important;
+        box-shadow: none !important;
+        break-inside: avoid;
+      }
+      .tier__list li::before { background: #555 !important; }
+      .partner__mark, .partner__mark--dark { background: #fff !important; border: 1px solid #ddd !important; }
+      .spon__section { margin-top: 24px; break-inside: avoid; }
+      a { color: #000 !important; text-decoration: underline; }
+      /* Spell out link targets, since a printed page cannot be clicked. */
+      .spon__cta a[href^="mailto:"]::after { content: ""; }
+    }
 
     /* --- Closing CTA --- */
     .spon__cta {
@@ -280,83 +409,125 @@
     <div class="spon__inner">
 
       <header class="spon__head">
-        <span class="spon__eyebrow">Sponsors &amp; Partners</span>
-        <h1 class="spon__title">The firms we work with</h1>
+        <span class="spon__eyebrow">Sponsorship &middot; 2026/27</span>
+        <h1 class="spon__title">Partner with the Bristol Trading Society</h1>
         <p class="body spon__lead">
-          We partner with trading firms, banks and platforms who want direct access to students
-          who are already doing the work. Below is who we work with, and what a partnership
-          with the Bristol Trading Society actually provides.
+          We are a student-run trading and markets society at the University of Bristol. Partners
+          work with us because our analyst cohort is selected, trained and producing research all
+          year &mdash; so by the time a firm meets them, the filtering is already done.
+        </p>
+        <p class="body spon__lead" style="margin-top: var(--space-3);">
+          This page is our brochure. Everything a partnership includes, and what it costs, is set
+          out below.
         </p>
       </header>
 
       <!-- ===== Reach ===== -->
       <section class="spon__section" aria-labelledby="reach-title">
-        <h2 class="spon__section-title" id="reach-title">Our reach</h2>
+        <h2 class="spon__section-title" id="reach-title">Who you would be reaching</h2>
         <p class="spon__claim">
           We send more members into industry than any other finance society at Bristol.
         </p>
-        <p class="body" style="color: var(--text-secondary); max-width: 62ch;">
-          800 members, an analyst cohort selected by competitive application each year, and four
-          divisions running their own research agendas &mdash;
-          <a href="/about">more about the society and how it is structured</a>.
+
+        <div class="figures">
+          <div>
+            <span class="figures__n">800</span>
+            <span class="figures__l">members across the University of Bristol</span>
+          </div>
+          <div>
+            <span class="figures__n">400+</span>
+            <span class="figures__l">applications a year to the analyst programme</span>
+          </div>
+          <div>
+            <span class="figures__n">7</span>
+            <span class="figures__l">analyst teams across four divisions</span>
+          </div>
+          <div>
+            <span class="figures__n">14</span>
+            <span class="figures__l">division head positions</span>
+          </div>
+          <div>
+            <span class="figures__n">2017</span>
+            <span class="figures__l">founded, and student-run every year since</span>
+          </div>
+        </div>
+
+        <p class="body" style="color: var(--text-secondary); max-width: 66ch; margin-top: var(--space-4);">
+          The four divisions &mdash; FICC, Equities, Macro and Quant &mdash; run as seven teams,
+          each with its own research agenda and its own division heads. Members go on to
+          Goldman Sachs, Millennium, Citi, Santander CIB, Standard Chartered and Deloitte among
+          others &mdash; see the <a href="/alumni">alumni directory</a> and
+          <a href="/about">how the society is structured</a>.
         </p>
       </section>
 
-      <!-- ===== What a partnership provides ===== -->
-      <section class="spon__section" aria-labelledby="offer-title">
-        <h2 class="spon__section-title" id="offer-title">What a partnership provides</h2>
-        <div class="offer">
+      <!-- ===== Tiers ===== -->
+      <section class="spon__section" aria-labelledby="tiers-title">
+        <h2 class="spon__section-title" id="tiers-title">Sponsorship tiers</h2>
+        <p class="body" style="color: var(--text-secondary); max-width: 64ch; margin-bottom: var(--space-5);">
+          Two tiers, both running the full academic year from September to June.
+        </p>
 
-          <div class="offer__item">
-            <h3>Access to the analyst programme</h3>
-            <p>
-              Over 400 students apply each year for roughly ten places per division. Analysts spend
-              the year producing research inside that division. Partners can receive the analyst
-              CV book directly.
-            </p>
-          </div>
+        <div class="tiers">
 
-          <div class="offer__item">
-            <h3>Speaking slots and events</h3>
-            <p>
-              Host an evening with our members, run a workshop, or co-host a competition. Past
-              partners have run simulations, championships and career sessions with us.
+          <article class="tier tier--lead">
+            <p class="tier__flag">Headline Partner</p>
+            <p class="tier__price">&pound;4,000 <small>/ year</small></p>
+            <p class="tier__for">
+              For firms that want their name on the year and first access to the analyst cohort.
+              Limited to one firm per cycle.
             </p>
-          </div>
+            <ul class="tier__list">
+              <li><strong>Title sponsor of the Annual Trading Competition</strong> &mdash; our flagship event, named for your firm, with judging seats for your team.</li>
+              <li><strong>The analyst CV book</strong> &mdash; CVs of the analyst cohort and division heads, sent directly to you.</li>
+              <li><strong>Two events of your choosing</strong> &mdash; a speaker evening, a workshop, a masterclass or a technical session.</li>
+              <li><strong>An invite-only evening with the analyst cohort</strong> &mdash; the selected analysts and division heads, not the general membership.</li>
+              <li><strong>Primary logo placement</strong> &mdash; society fleece, website, and all event materials.</li>
+              <li><strong>Priority on dates</strong> &mdash; first pick of the calendar, so your session is not competing with another firm.</li>
+              <li><strong>Division-level collaboration</strong> &mdash; set problem sets, share data, or work with a division on a live research question.</li>
+              <li><strong>Recruitment postings</strong> &mdash; spring weeks, internships and graduate roles to the full membership.</li>
+            </ul>
+          </article>
 
-          <div class="offer__item">
-            <h3>Division-level collaboration</h3>
-            <p>
-              Work directly with the division closest to your desk &mdash; providing resources,
-              data or problem sets to the FICC, Equities, Macro or Quant teams.
+          <article class="tier">
+            <p class="tier__flag">Division Partner</p>
+            <p class="tier__price">&pound;2,500 <small>/ year</small></p>
+            <p class="tier__for">
+              For firms that want a strong recruiting presence and a real session with members,
+              without the headline commitment.
             </p>
-          </div>
-
-          <div class="offer__item">
-            <h3>Brand presence</h3>
-            <p>
-              Logo placement across our site and event materials, and visibility at the
-              Freshers' Fair and our annual welcome event.
-            </p>
-          </div>
-
-          <div class="offer__item">
-            <h3>Recruitment pipeline</h3>
-            <p>
-              Advertise internships, spring weeks and graduate roles to a membership that is
-              already actively applying into markets roles.
-            </p>
-          </div>
-
-          <div class="offer__item">
-            <h3>A long-term relationship</h3>
-            <p>
-              Several of our partnerships have run for multiple years, carrying over as each
-              committee hands to the next.
-            </p>
-          </div>
+            <ul class="tier__list">
+              <li><strong>The analyst CV book</strong> &mdash; CVs of the analyst cohort and division heads.</li>
+              <li><strong>One event</strong> &mdash; a speaker evening or a workshop with our members.</li>
+              <li><strong>Logo placement</strong> &mdash; society fleece, website, and event materials.</li>
+              <li><strong>Collaboration with one division</strong> &mdash; the division closest to your desk.</li>
+              <li><strong>Recruitment postings</strong> &mdash; spring weeks, internships and graduate roles to the full membership.</li>
+              <li><strong>Invitations to the Annual Trading Competition</strong> &mdash; attend and meet the teams.</li>
+            </ul>
+          </article>
 
         </div>
+
+        <p class="bespoke">
+          <strong>Something else in mind?</strong> These are starting points, not fixed packages.
+          If you want a single event, a multi-year arrangement, or something built around a
+          specific hiring need, email
+          <a href="mailto:bristol-trading-society@bristol.ac.uk">bristol-trading-society@bristol.ac.uk</a>
+          and we will put something together.
+        </p>
+      </section>
+
+      <!-- ===== Track record ===== -->
+      <section class="spon__section" aria-labelledby="track-title">
+        <h2 class="spon__section-title" id="track-title">What partners have done with us</h2>
+        <ul class="track">
+          <li><strong>DRW</strong> &mdash; an invite-only evening for our analysts and division heads.</li>
+          <li><strong>SIGMA Financial</strong> &mdash; their CEO spoke to a full lecture theatre on trading and AI tooling, as part of an ongoing partnership.</li>
+          <li><strong>Standard Chartered</strong> &mdash; an evening with their Head of Macro Trading, AME. The discussion ran well past the scheduled finish.</li>
+          <li><strong>AmplifyME</strong> &mdash; a live portfolio-management simulation running $20m of capital. Sold out, then ran again by demand.</li>
+          <li><strong>TP ICAP</strong> &mdash; their Global Head of Compliance Technology on the data and liquidity side of the industry.</li>
+          <li><strong>Outlook Energy</strong> &mdash; our commodities partner brings BTS members to Energy Trading Week each year.</li>
+        </ul>
       </section>
 
       <!-- ===== Partner roster ===== -->
@@ -447,13 +618,15 @@
 
       <!-- ===== CTA ===== -->
       <section class="spon__cta" aria-labelledby="spon-cta-title">
-        <h2 id="spon-cta-title">Interested in partnering with us?</h2>
+        <h2 id="spon-cta-title">Starting a partnership</h2>
         <p>
-          We're always open to speaking with firms who want to reach students seriously
-          interested in markets. Tell us what you're looking for and we'll put a proposal together.
+          Email <strong>Hristiyan Minev</strong>, President, at
+          <a href="mailto:bristol-trading-society@bristol.ac.uk" style="color: var(--accent-bright);">bristol-trading-society@bristol.ac.uk</a>
+          and we will come back to you within two working days. Partnerships run September to June;
+          the earlier a firm commits, the more of the calendar is still open.
         </p>
-        <a class="btn btn--primary" href="/contact">
-          Get in touch
+        <a class="btn btn--primary" href="mailto:bristol-trading-society@bristol.ac.uk">
+          Email us about sponsorship
           <span class="btn__arrow" aria-hidden="true">&rarr;</span>
         </a>
       </section>
