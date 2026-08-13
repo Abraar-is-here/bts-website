@@ -314,6 +314,10 @@
       transition: opacity var(--dur-fast) var(--ease-out);
     }
     .logos__item:hover img { opacity: 1; }
+    /* CFA Institute forbid altering their mark. Theirs is supplied
+       white-on-transparent, so it already reads as white on the dark card and
+       is exempted from the monochrome filter rather than recoloured. */
+    .logos__item--asis img { filter: none; }
     .logos__note {
       margin-top: var(--space-4);
       font-size: 0.8125rem;
@@ -394,6 +398,8 @@
       .logos { background: none !important; border-color: #ddd !important; }
       .logos__item { background: #fff !important; border: 1px solid #eee !important; }
       .logos__item img { filter: none !important; opacity: 1 !important; }
+      /* CFA's white mark is invisible on a white print plate. */
+      .logos__item--asis { background: #0a1a3f !important; }
       .spon__section { margin-top: 24px; break-inside: avoid; }
       a { color: #000 !important; text-decoration: underline; }
     }
@@ -647,6 +653,7 @@
           <li class="logos__item"><img src="assets/img/sponsors/hirehuub.png" alt="HireHuub" /></li>
           <li class="logos__item"><img src="assets/img/sponsors/headstart.png" alt="Headstart" /></li>
           <li class="logos__item"><img src="assets/img/sponsors/commodities-people.png" alt="Commodities People" /></li>
+          <li class="logos__item logos__item--asis"><img src="assets/img/sponsors/cfa.png" alt="CFA Institute" /></li>
         </ul>
         <p class="logos__note">
           Bristol Trading Society also provides content and learning opportunities for students
