@@ -674,6 +674,16 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   max-width: 18ch;                   /* fits the longest word ("applications") */
 }
 
+/* Optional one-line subtitle under a slide headline. Matches the headline's
+   entrance timing so the slide arrives as one unit. */
+.hero__sub {
+  max-width: 46ch;
+  margin-top: var(--space-3);
+  margin-bottom: var(--space-4);
+  color: var(--text-secondary);
+  animation: rise-fade 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.24s both;
+}
+
 .hero__actions {
   display: flex;
   align-items: center;

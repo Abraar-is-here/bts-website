@@ -1,8 +1,8 @@
 /* ===========================================================================
    js/apply.js
    ---------------------------------------------------------------------------
-   Division Head application form: client-side validation, 1st/2nd-choice
-   exclusion, PDF handling, and submission to a Google Apps Script web app
+   Application form: client-side validation, 1st/2nd-choice exclusion, PDF
+   handling, and submission to a Google Apps Script web app
    (which writes to a Google Sheet + Drive and emails the committee).
 
    SETUP: paste your deployed Apps Script URL into CONFIG.APPS_SCRIPT_URL
@@ -77,7 +77,7 @@
     else if (name === 'phone' && v.replace(/\D/g, '').length < 7)
       setError(input, 'Enter a valid phone number.');
     else if (name === 'choice2' && choice1.value && v === choice1.value)
-      setError(input, 'Pick a different division from your 1st choice.');
+      setError(input, 'Pick a different option from your 1st choice.');
   }
 
   /* --- Validation -------------------------------------------------------- */
@@ -109,9 +109,9 @@
     if (form.phone.value.trim() && (form.phone.value.replace(/\D/g, '').length < 7)) {
       fail(form.phone, 'Enter a valid phone number.');
     }
-    // Two distinct divisions.
+    // 1st and 2nd choice must differ.
     if (choice1.value && choice2.value && choice1.value === choice2.value) {
-      fail(choice2, 'Pick a different division from your 1st choice.');
+      fail(choice2, 'Pick a different option from your 1st choice.');
     }
     // CV: required, PDF, within size.
     clearError(cvInput);
