@@ -68,6 +68,11 @@
   --shadow-glow: 0 0 32px rgba(37, 99, 235, 0.45); /* electric-blue lift      */
   --shadow-panel: 0 -24px 60px rgba(10, 26, 63, 0.45); /* light panel lift     */
 
+  /* --- Ordinal numerals ---------------------------------------------------
+     Step/rung counters (01, 02, ...) use one blue everywhere so the numbered
+     lists on About, Sponsors and elsewhere read as the same component.      */
+  --num-marker: var(--accent);
+
   /* --- Overlays & focus -------------------------------------------------- */
   --hover-tint: rgba(13, 43, 107, 0.85);    /* deep royal wash on nav hover      */
   --globe-halo: rgba(37, 99, 235, 0.12);    /* faint glow grounding the globe */

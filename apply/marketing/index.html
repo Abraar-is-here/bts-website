@@ -15,10 +15,10 @@
   <link rel="preload" href="assets/fonts/dm-sans-400.woff2" as="font" type="font/woff2" crossorigin />
 
   <link rel="stylesheet" href="styles/tokens/fonts.css?v=7" />
-  <link rel="stylesheet" href="styles/tokens/colors.css?v=14" />
+  <link rel="stylesheet" href="styles/tokens/colors.css?v=15" />
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
-  <link rel="stylesheet" href="styles/main.css?v=52" />
+  <link rel="stylesheet" href="styles/main.css?v=53" />
 
   <style>
     /* -------------------------------------------------------------------------
@@ -35,6 +35,10 @@
       color: var(--accent);
       margin-bottom: var(--space-3);
     }
+    /* On a role page the eyebrow doubles as the way back to the other role. */
+    a.apply__back { width: fit-content; text-decoration: none; }
+    a.apply__back:hover { color: var(--accent-bright); }
+    .apply__form-section h2 { margin-bottom: 0; }
 
     /* --- Hub: two role tiles ---------------------------------------------- */
     .picker {
@@ -146,6 +150,8 @@
       align-items: baseline;
       gap: 10px;
       padding: var(--space-3) var(--space-4);
+      /* Sits clear of the "Apply" heading rather than tucked under it. */
+      margin-top: var(--space-4);
       margin-bottom: var(--space-4);
       border-left: 2px solid var(--accent);
       background: rgba(37, 99, 235, 0.10);
@@ -221,7 +227,7 @@
     <div class="apply__inner">
 
       <header class="apply__head role-head">
-        <span class="apply__eyebrow"><a href="/apply/" style="color:inherit;">Committee applications</a> &middot; 2026/27</span>
+        <a class="apply__eyebrow apply__back" href="/apply/"><span aria-hidden="true">&larr;</span> All committee roles</a>
         <span class="role-head__badge">2 positions</span>
         <h1 class="h2 apply__title">Marketing &amp; Media Officer</h1>
         <p class="body apply__sub">You own how the society looks from the outside &mdash; to students deciding whether to join, and to firms deciding whether to work with us.</p>
@@ -231,9 +237,9 @@
         <div>
           <h2>The role</h2>
           <ul>
-            <li>Run our Instagram and LinkedIn day to day.</li>
-            <li>Cover events and turn them into content while it is still current.</li>
-            <li>Keep the website, LinkedIn page and Students&rsquo; Union listing accurate.</li>
+            <li>Run our Instagram and LinkedIn day to day, and keep the Students&rsquo; Union listing current.</li>
+            <li>Be at events with a camera. Every photo we put on the website and socials is one you took.</li>
+            <li>Turn a Wednesday evening into posted content while it is still current.</li>
             <li>Drive the pre-term push that fills the Welcome Event and analyst intake.</li>
           </ul>
         </div>
@@ -242,8 +248,8 @@
           <ul>
             <li>Consistency over flair. Weekly beats brilliant once a term.</li>
             <li>Judgement about what reads as professional. Our audience recruits for a living.</li>
-            <li>Some comfort with Canva, CapCut or similar. Useful, not essential.</li>
-            <li>Willing to be at events with a camera.</li>
+            <li>Hands-on with Canva, CapCut, Claude design or similar. This one is essential, not a nice-to-have.</li>
+            <li>A good eye behind a camera, and happy working a room while you shoot.</li>
           </ul>
         </div>
       </div>

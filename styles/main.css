@@ -346,7 +346,7 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   transition: background var(--dur-fast) var(--ease-out);
 }
 @media (hover: hover) and (pointer: fine) {
-  .nav__menu-btn:hover { background: var(--accent-bright); filter: brightness(1.08); }
+  .nav__menu-btn:hover { background: var(--hover-tint); }
   .nav__dropdown-link:hover { background: var(--hover-tint); }
 }
 
@@ -1194,12 +1194,19 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
 
 .div-panel__cols {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--space-4);
+  /* Two blocks per division now — Division Head and Analyst — so they sit side
+     by side where there is room and stack below 900px. Each column keeps a
+     comfortable measure rather than running the full page width. */
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: var(--space-4) var(--space-5);
   margin-top: var(--space-5);
-  /* Single column now, so cap the measure — full-width list items would
-     otherwise run well past a comfortable 65–75ch line length. */
-  max-width: 64ch;
+  max-width: 76ch;
+}
+.div-block__lead {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0 0 var(--space-3);
 }
 .div-block__title {
   margin-bottom: var(--space-3);
@@ -1224,7 +1231,17 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   font-weight: 700;
 }
 
-.divisions__cta { margin-top: var(--space-5); }
+.divisions__cta {
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--hairline);
+}
+.divisions__cta-note {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0 0 var(--space-3);
+}
 
 /* ---------------------------------------------------------------------------
    8. Responsive
@@ -1494,23 +1511,40 @@ body.is-leaving {
 /* Dim overlay matches the hero scrim's average brightness so the aurora
    looks identical in the partners strip and in the hero section. */
 .partners {
-  background: rgba(6, 17, 43, 0.50);
-  padding: var(--space-4) 0 calc(var(--space-6) + 64px);
+  /* Same ground as .start above it, so the marquee continues that region
+     rather than stacking a second translucent slab on top of it. */
+  background: var(--bg-abyss);
+  padding: var(--space-5) 0 calc(var(--space-6) + 64px);
   overflow: hidden;
   position: relative;
   isolation: isolate;
 }
 
+/* Divider is inset to the container rather than full-bleed: it separates the
+   marquee from the cards without drawing a hard edge across the whole page. */
+.partners::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(var(--container-max), calc(100% - var(--gutter) * 2));
+  height: 1px;
+  background: var(--hairline);
+}
+
+/* Typographically identical to .start__label, and on the same left edge, so
+   the two subsections read as one system. */
 .partners__label {
+  width: min(var(--container-max), calc(100% - var(--gutter) * 2));
+  margin: 0 auto var(--space-4);
   font-family: var(--font-body);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.13em;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--text-secondary);
-  text-align: center;
-  margin-bottom: var(--space-4);
-  opacity: 0.6;
+  text-align: left;
 }
 
 /* Single-row marquee stage — full-width, no mask. */
@@ -1846,10 +1880,12 @@ body.is-leaving {
 .start {
   position: relative;
   z-index: 2;
-  padding: var(--space-6) var(--gutter);
+  /* No bottom border and no bottom-edge colour change: the partners marquee
+     continues the same surface, so the two read as one region instead of two
+     dark slabs butted together. */
+  padding: var(--space-6) var(--gutter) var(--space-5);
   background: var(--bg-abyss);
   border-top: 1px solid var(--hairline);
-  border-bottom: 1px solid var(--hairline);
 }
 .start__inner { max-width: var(--container-max); margin: 0 auto; }
 .start__label {
@@ -1866,14 +1902,16 @@ body.is-leaving {
   gap: var(--space-4);
 }
 .start__card {
-  display: block;
+  /* Flex column so the "->" link is pinned to the bottom of every card. The
+     three blurbs are different lengths, so without this the links land at three
+     different heights and the row looks unaligned. */
+  display: flex;
+  flex-direction: column;
   padding-top: var(--space-3);
   border-top: 2px solid var(--accent);
   text-decoration: none;
   transition: border-color var(--dur-med) var(--ease-out);
 }
-.start__card:nth-child(2) { border-top-color: rgba(37, 99, 235, 0.55); }
-.start__card:nth-child(3) { border-top-color: rgba(141, 162, 196, 0.4); }
 @media (hover: hover) and (pointer: fine) {
   .start__card:hover { border-top-color: var(--accent-bright); }
   .start__card:hover .start__go { color: var(--accent-bright); }
@@ -1893,12 +1931,18 @@ body.is-leaving {
   font-weight: 800;
   letter-spacing: -0.015em;
   color: var(--text-primary);
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
-.start__text { font-size: 0.9375rem; line-height: 1.6; color: var(--text-secondary); }
+.start__text {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  max-width: 34ch;
+}
 .start__go {
   display: block;
-  margin-top: 12px;
+  margin-top: auto;
+  padding-top: var(--space-3);
   font-size: 0.8125rem;
   font-weight: 600;
   color: var(--accent);
