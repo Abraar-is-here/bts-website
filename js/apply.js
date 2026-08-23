@@ -23,11 +23,15 @@
 
   var form = document.getElementById('applyForm');
   if (!form) return;
+
+  // Each application form declares its own endpoint and the single role it is
+  // for. That keeps one script serving several forms, and keeps committee
+  // applications out of the Division Head spreadsheet.
+  var ENDPOINT = form.dataset.endpoint || CONFIG.APPS_SCRIPT_URL;
+  var ROLE = form.dataset.role || '';
   var thanks = document.getElementById('applyThanks');
   var DEMO = new URLSearchParams(location.search).get('demo') === '1';
 
-  var choice1 = form.choice1;
-  var choice2 = form.choice2;
   var cvInput = form.cv;
   var fileNameEl = form.querySelector('[data-filename]');
   var fileMainEl = form.querySelector('.file-field__main');
@@ -63,8 +67,8 @@
   /* Validate a single field (used on blur for early, gentle feedback). */
   function validateOne(input) {
     var name = input.name, v = (input.value || '').trim();
-    var required = ['firstName', 'lastName', 'uniEmail', 'phone', 'year', 'course',
-                    'choice1'].indexOf(name) !== -1;
+    var required = ['firstName', 'lastName', 'uniEmail', 'phone', 'year',
+                    'course'].indexOf(name) !== -1;
     clearError(input);
     if (required && !v) { setError(input, 'This field is required.'); return; }
     if (!v) return; // optional + empty
@@ -76,8 +80,6 @@
       setError(input, 'Enter a full link starting with http(s)://');
     else if (name === 'phone' && v.replace(/\D/g, '').length < 7)
       setError(input, 'Enter a valid phone number.');
-    else if (name === 'choice2' && choice1.value && v === choice1.value)
-      setError(input, 'Pick a different option from your 1st choice.');
   }
 
   /* --- Validation -------------------------------------------------------- */
@@ -85,7 +87,7 @@
     var firstInvalid = null;
     function fail(input, msg) { setError(input, msg); if (!firstInvalid) firstInvalid = input; }
 
-    var req = ['firstName', 'lastName', 'uniEmail', 'phone', 'year', 'course', 'choice1'];
+    var req = ['firstName', 'lastName', 'uniEmail', 'phone', 'year', 'course'];
     req.forEach(function (name) {
       var input = form[name];
       clearError(input);
@@ -109,10 +111,6 @@
     if (form.phone.value.trim() && (form.phone.value.replace(/\D/g, '').length < 7)) {
       fail(form.phone, 'Enter a valid phone number.');
     }
-    // 1st and 2nd choice must differ.
-    if (choice1.value && choice2.value && choice1.value === choice2.value) {
-      fail(choice2, 'Pick a different option from your 1st choice.');
-    }
     // CV: required, PDF, within size.
     clearError(cvInput);
     var file = cvInput.files && cvInput.files[0];
@@ -126,16 +124,6 @@
 
     return firstInvalid;
   }
-
-  /* --- 1st / 2nd choice exclusion --------------------------------------- */
-  function syncChoices() {
-    // Re-enable everything, then disable the 1st pick inside the 2nd menu.
-    Array.prototype.forEach.call(choice2.options, function (o) {
-      o.disabled = (o.value !== '' && o.value === choice1.value);
-    });
-    if (choice2.value && choice2.value === choice1.value) choice2.value = '';
-  }
-  choice1.addEventListener('change', function () { syncChoices(); clearError(choice2); });
 
   /* --- File field: reflect the chosen filename -------------------------- */
   cvInput.addEventListener('change', function () {
@@ -232,8 +220,7 @@
         year: form.year.value,
         course: form.course.value.trim(),
         linkedin: form.linkedin.value.trim(),
-        choice1: choice1.value,
-        choice2: choice2.value,
+        role: ROLE,
         cvName: file.name,
         cvType: file.type || 'application/pdf',
         cvBase64: b64,
@@ -245,7 +232,7 @@
         setTimeout(showThanks, 600);
         return;
       }
-      if (!CONFIG.APPS_SCRIPT_URL) {
+      if (!ENDPOINT) {
         sending(false);
         setStatus('This form isn’t connected yet. Please email us instead.', true);
         console.warn('[apply] CONFIG.APPS_SCRIPT_URL is empty — set it (see apps-script/SETUP.md).');
@@ -255,7 +242,7 @@
       // no-cors + text/plain = a "simple" request: it reaches Apps Script
       // (which can read it) without a blocked CORS preflight. The response is
       // opaque, so we treat a resolved fetch as success.
-      fetch(CONFIG.APPS_SCRIPT_URL, {
+      fetch(ENDPOINT, {
         method: 'POST',
         mode: 'no-cors',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
@@ -272,6 +259,4 @@
     });
   });
 
-  // Initialise the choice menus on load.
-  syncChoices();
 })();

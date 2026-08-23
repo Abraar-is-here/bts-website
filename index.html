@@ -22,10 +22,10 @@
        The ?v= query is a cache-buster: bump it whenever you edit a CSS file so
        returning visitors (and the dev server) pick up the change immediately. -->
   <link rel="stylesheet" href="styles/tokens/fonts.css?v=7" />
-  <link rel="stylesheet" href="styles/tokens/colors.css?v=13" />
+  <link rel="stylesheet" href="styles/tokens/colors.css?v=14" />
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
-  <link rel="stylesheet" href="styles/main.css?v=51" />
+  <link rel="stylesheet" href="styles/main.css?v=52" />
 </head>
 <body>
 
@@ -103,7 +103,12 @@
       <div class="hero-slide hero-slide--active" role="group" aria-roledescription="slide" aria-label="1 of 2" aria-hidden="false">
         <div class="container hero__inner hero__inner--launch">
           <div class="hero-launch">
-            <h1 class="display hero-launch__title">Welcome to the official BTS website</h1>
+            <span class="hero-launch__eyebrow">Michaelmas 2026</span>
+            <h1 class="display hero-launch__title">Learn markets by doing the work</h1>
+            <p class="hero-launch__sub">
+              A student-run trading and markets society at the University of Bristol.
+              Open to every degree, no prior finance required.
+            </p>
           </div>
         </div>
       </div>
@@ -111,10 +116,10 @@
       <!-- Slide 2: Committee applications -->
       <div class="hero-slide" role="group" aria-roledescription="slide" aria-label="2 of 2" aria-hidden="true">
         <div class="container hero__inner">
-          <h2 class="display hero__title">Four committee positions are open</h2>
+          <h2 class="display hero__title">Marketing &amp; Media and Outreach &amp; Operations</h2>
           <p class="body hero__sub">
-            Two Marketing &amp; Media Officers and two Outreach &amp; Operations Officers,
-            as we expand the society and its partnerships.
+            Four committee positions open, two in each role, as we expand the society
+            and its partnerships.
           </p>
           <div class="hero__actions">
             <a class="btn btn--primary" href="/apply">
@@ -150,6 +155,49 @@
     </div>
   </header>
 
+
+
+  <!-- =====================================================================
+       Start here — three routes in, for the new academic year
+       ===================================================================== -->
+  <section class="start" aria-labelledby="start-title">
+    <div class="start__inner">
+      <p class="start__label" id="start-title">New here? Start with one of these</p>
+      <div class="start__grid">
+
+        <a class="start__card" href="/about">
+          <p class="start__step">Anyone</p>
+          <span class="start__name">Become a member</span>
+          <p class="start__text">
+            Speaker evenings, workshops and Bloomberg sessions, open to every degree.
+            No prior finance needed.
+          </p>
+          <span class="start__go">What the society does &rarr;</span>
+        </a>
+
+        <a class="start__card" href="/divisions">
+          <p class="start__step">By application</p>
+          <span class="start__name">The analyst programme</span>
+          <p class="start__text">
+            Seven teams across four divisions. Research an instrument, pitch it, and defend
+            it in front of people who do it for a living.
+          </p>
+          <span class="start__go">See the divisions &rarr;</span>
+        </a>
+
+        <a class="start__card" href="/apply/">
+          <p class="start__step">Open now</p>
+          <span class="start__name">Join the committee</span>
+          <p class="start__text">
+            Four positions across Marketing &amp; Media and Outreach &amp; Operations,
+            as we expand the society.
+          </p>
+          <span class="start__go">View the roles &rarr;</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
 
   <!-- =====================================================================
        Partners & Sponsors marquee — dark strip between hero and globe panel
@@ -214,7 +262,7 @@
        ===================================================================== -->
   <section id="closing" class="section panel">
     <div class="container panel__inner">
-      <h2 class="h1 panel__title">More coming soon &mdash; see you in September 2026.</h2>
+      <h2 class="h1 panel__title">A new year starts in September. Come and find us.</h2>
 
       <!-- Interactive dot-matrix globe (js/globe.js, 2D canvas, no dependencies) -->
       <div class="globe-wrap">

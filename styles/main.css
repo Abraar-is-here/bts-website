@@ -1834,6 +1834,81 @@ body.is-leaving {
   .alumni-card__photo { width: 100px; height: 100px; }
 }
 
+
+/* ===========================================================================
+   Start-here band
+   ---------------------------------------------------------------------------
+   Sits under the hero for the new academic year. A fresher landing on the home
+   page has one question — "what do I actually do next?" — and three different
+   answers depending on how far in they want to go. Naming all three removes the
+   guesswork instead of funnelling everyone at one CTA that most are not ready for.
+   ========================================================================== */
+.start {
+  position: relative;
+  z-index: 2;
+  padding: var(--space-6) var(--gutter);
+  background: var(--bg-abyss);
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+}
+.start__inner { max-width: var(--container-max); margin: 0 auto; }
+.start__label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-4);
+}
+.start__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: var(--space-4);
+}
+.start__card {
+  display: block;
+  padding-top: var(--space-3);
+  border-top: 2px solid var(--accent);
+  text-decoration: none;
+  transition: border-color var(--dur-med) var(--ease-out);
+}
+.start__card:nth-child(2) { border-top-color: rgba(37, 99, 235, 0.55); }
+.start__card:nth-child(3) { border-top-color: rgba(141, 162, 196, 0.4); }
+@media (hover: hover) and (pointer: fine) {
+  .start__card:hover { border-top-color: var(--accent-bright); }
+  .start__card:hover .start__go { color: var(--accent-bright); }
+}
+.start__step {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+.start__name {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+.start__text { font-size: 0.9375rem; line-height: 1.6; color: var(--text-secondary); }
+.start__go {
+  display: block;
+  margin-top: 12px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--accent);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .start__card, .start__go { transition: none; }
+}
+
 /* ===========================================================================
    Site footer
    ---------------------------------------------------------------------------

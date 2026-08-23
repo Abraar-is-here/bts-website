@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <base href="/" />
 
-  <title>Committee Applications — Bristol Trading Society</title>
-  <meta name="description" content="Applications are open for four committee positions at the Bristol Trading Society — two Marketing &amp; Media Officers and two Outreach &amp; Operations Officers." />
+  <title>Outreach & Operations Officer — Bristol Trading Society</title>
+  <meta name="description" content="Two Outreach &amp; Operations Officer positions at the Bristol Trading Society. Own room bookings, event logistics and cold outreach to firms." />
 
 
   <link rel="icon" type="image/svg+xml" href="assets/img/bull.svg" />
@@ -174,7 +174,7 @@
 </head>
 <body>
 
-  <a class="skip-link" href="/apply/#apply">Skip to content</a>
+  <a class="skip-link" href="/apply/outreach/#apply">Skip to content</a>
 
   <div class="aurora" aria-hidden="true">
     <canvas id="aurora-canvas"></canvas>
@@ -220,47 +220,180 @@
   <main id="apply" class="section apply" tabindex="-1">
     <div class="apply__inner">
 
-      <header class="apply__head">
-        <span class="apply__eyebrow">Committee applications &middot; 2026/27</span>
-        <h1 class="h2 apply__title">Marketing &amp; Media and Outreach &amp; Operations</h1>
-        <p class="body apply__sub">
-          Four positions, two in each role, as we expand the society and its partnerships.
-          Apply to one.
-        </p>
+      <header class="apply__head role-head">
+        <span class="apply__eyebrow"><a href="/apply/" style="color:inherit;">Committee applications</a> &middot; 2026/27</span>
+        <span class="role-head__badge">2 positions</span>
+        <h1 class="h2 apply__title">Outreach &amp; Operations Officer</h1>
+        <p class="body apply__sub">You make things happen: the rooms are booked, and the firms we want to hear from have actually been contacted.</p>
       </header>
 
-      <div class="picker">
-        <a class="pick" href="/apply/marketing/">
-          <span class="pick__count">2 positions</span>
-          <span class="pick__name">Marketing &amp; Media Officer</span>
-          <span class="pick__line">
-            You own how the society looks from the outside &mdash; to students deciding whether to
-            join, and to firms deciding whether to work with us.
-          </span>
-          <span class="pick__go">View role and apply &rarr;</span>
-        </a>
-
-        <a class="pick" href="/apply/outreach/">
-          <span class="pick__count">2 positions</span>
-          <span class="pick__name">Outreach &amp; Operations Officer</span>
-          <span class="pick__line">
-            You make things happen: the rooms are booked, and the firms we want to hear from have
-            actually been contacted.
-          </span>
-          <span class="pick__go">View role and apply &rarr;</span>
-        </a>
+      <div class="role-cols">
+        <div>
+          <h2>The role</h2>
+          <ul>
+            <li>Own room bookings and event logistics with the SU and the University.</li>
+            <li>Write and send cold outreach to trading firms, banks and platforms.</li>
+            <li>Keep a record of who was contacted and when, so nothing dies at handover.</li>
+            <li>Follow up. Most first emails get no reply; the value is in the second.</li>
+          </ul>
+        </div>
+        <div>
+          <h2>What we look for</h2>
+          <ul>
+            <li>Comfortable writing to a stranger at a firm, and not put off by silence.</li>
+            <li>Organised. Bookings, deadlines and a pipeline that is genuinely maintained.</li>
+            <li>Care with wording. You are sometimes the first thing a firm reads from us.</li>
+            <li>Discretion around anything commercial.</li>
+          </ul>
+        </div>
       </div>
 
-      <p class="apply__foot">
-        Division Head applications closed on 5 August 2026 and are at final interview stage.
-        Analyst applications open at the start of the academic year.
-      </p>
+      <!-- ===== Application ===== -->
+      <section class="apply__form-section" aria-labelledby="form-title">
+        <h2 class="h3" id="form-title">Apply</h2>
+
+        <div class="form-role">
+          <span class="form-role__label">Applying for</span>
+          <span class="form-role__value">Outreach &amp; Operations Officer</span>
+          <a class="form-role__swap" href="/apply/">Change role</a>
+        </div>
+
+        <div class="notice">
+          <p>
+            Your details and CV are held in the BTS analyst CV book and may be shared with our
+            sponsors and partner firms for recruitment purposes. To be removed, email
+            <a href="mailto:bristol-trading-society@bristol.ac.uk">bristol-trading-society@bristol.ac.uk</a>
+            &mdash; it will not affect your application. See our <a href="/privacy">Privacy Policy</a>.
+          </p>
+        </div>
+
+        <!-- data-endpoint is intentionally empty until the committee Apps Script
+             is deployed (see apps-script/CommitteeCode.gs). Empty means the form
+             refuses to submit rather than silently losing an application. -->
+        <form id="applyForm" class="form-card" novalidate enctype="multipart/form-data"
+              data-endpoint=""
+              data-role="Outreach &amp; Operations Officer">
+
+          <!-- Honeypot: hidden from people, often filled by bots. Real users leave it empty. -->
+          <div aria-hidden="true" style="position:absolute;left:-9999px;" tabindex="-1">
+            <label>Company<input type="text" name="company" tabindex="-1" autocomplete="off" /></label>
+          </div>
+
+          <fieldset class="form-section">
+            <legend class="form-section__title h4">Your details</legend>
+
+            <div class="field-grid">
+              <div class="field" data-field>
+                <label for="firstName">First name <span class="req" aria-hidden="true">*</span></label>
+                <input id="firstName" name="firstName" type="text" autocomplete="given-name" required />
+                <span class="field__error" data-error></span>
+              </div>
+
+              <div class="field" data-field>
+                <label for="lastName">Last name <span class="req" aria-hidden="true">*</span></label>
+                <input id="lastName" name="lastName" type="text" autocomplete="family-name" required />
+                <span class="field__error" data-error></span>
+              </div>
+
+              <div class="field field--full" data-field>
+                <label for="uniEmail">University email <span class="req" aria-hidden="true">*</span></label>
+                <input id="uniEmail" name="uniEmail" type="email" inputmode="email"
+                       autocomplete="email" placeholder="you@bristol.ac.uk" required />
+                <span class="field__error" data-error></span>
+              </div>
+
+              <div class="field" data-field>
+                <label for="personalEmail">Personal email <span class="opt">(optional)</span></label>
+                <input id="personalEmail" name="personalEmail" type="email" inputmode="email" autocomplete="email" />
+                <span class="field__error" data-error></span>
+              </div>
+
+              <div class="field" data-field>
+                <label for="phone">Phone number <span class="req" aria-hidden="true">*</span></label>
+                <input id="phone" name="phone" type="tel" inputmode="tel"
+                       autocomplete="tel" placeholder="+44 …" required />
+                <span class="field__error" data-error></span>
+              </div>
+
+              <div class="field" data-field>
+                <label for="year">Year of study <span class="field__hint">as of Sept 2026</span> <span class="req" aria-hidden="true">*</span></label>
+                <select id="year" name="year" required>
+                  <option value="" disabled selected>Select…</option>
+                  <option>1st year</option>
+                  <option>2nd year</option>
+                  <option>3rd year</option>
+                  <option>4th year</option>
+                  <option>Master's</option>
+                  <option>PhD</option>
+                </select>
+                <span class="field__error" data-error></span>
+              </div>
+
+              <div class="field" data-field>
+                <label for="course">Course <span class="req" aria-hidden="true">*</span></label>
+                <input id="course" name="course" type="text" placeholder="e.g. BSc Economics &amp; Finance" required />
+                <span class="field__error" data-error></span>
+              </div>
+
+              <div class="field field--full" data-field>
+                <label for="linkedin">LinkedIn profile <span class="opt">(optional)</span></label>
+                <input id="linkedin" name="linkedin" type="url" inputmode="url"
+                       placeholder="https://www.linkedin.com/in/…" />
+                <span class="field__error" data-error></span>
+              </div>
+
+              <div class="field field--full" data-field>
+                <label for="cv">Resume / CV (PDF) <span class="req" aria-hidden="true">*</span></label>
+                <label class="file-field" for="cv">
+                  <svg class="file-field__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                       stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <path d="M14 2v6h6"></path>
+                  </svg>
+                  <span class="file-field__text">
+                    <span class="file-field__main">Choose a PDF file</span>
+                    <span class="file-field__hint">PDF only · max 5&nbsp;MB</span>
+                    <span class="file-field__name" data-filename hidden></span>
+                  </span>
+                  <input id="cv" name="cv" type="file" accept="application/pdf,.pdf" required />
+                </label>
+                <span class="field__error" data-error></span>
+              </div>
+            </div>
+          </fieldset>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn--primary" data-submit>
+              <span data-submit-label>Submit application</span>
+              <span class="btn__arrow" aria-hidden="true">&rarr;</span>
+            </button>
+            <p class="form-status" role="status" aria-live="polite" data-status></p>
+          </div>
+        </form>
+
+        <div id="applyThanks" class="form-card form-thanks" hidden>
+          <svg class="form-thanks__check" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="m9 12 2 2 4-4"></path>
+          </svg>
+          <h2 class="h3 form-thanks__title">Thank you for your application</h2>
+          <p class="body form-thanks__body">
+            We will review your application and be in touch at your university email either way.
+            A confirmation email is on its way — if you don't see it, check your spam folder.
+          </p>
+          <div class="form-thanks__actions">
+            <a class="btn btn--primary" href="/">Back to home</a>
+          </div>
+        </div>
+      </section>
 
     </div>
   </main>
 
 
   <script src="js/aurora.js?v=9" defer></script>
+  <script src="js/apply.js?v=13" defer></script>
   <script src="js/transitions.js?v=3" defer></script>
   <script src="js/nav.js?v=1" defer></script>
   <!-- ===== Site footer ===== -->
