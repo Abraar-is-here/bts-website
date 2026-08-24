@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="styles/tokens/colors.css?v=15" />
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
-  <link rel="stylesheet" href="styles/main.css?v=59" />
+  <link rel="stylesheet" href="styles/main.css?v=60" />
 
   <style>
     /* -------------------------------------------------------------------------
@@ -26,18 +26,43 @@
        Deliberately spare. A candidate deciding whether to apply needs the role,
        what it involves, and the form. Everything else is noise.
        ------------------------------------------------------------------------- */
+    /* Matches the page-header eyebrow used on About, Events, Privacy and 404:
+       13px / 0.12em / --accent-bright. It was 12px / 0.16em / --accent, which
+       was both off-convention and only 3.3:1 against the page at small size. */
     .apply__eyebrow {
       display: block;
-      font-size: 0.75rem;
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
       font-weight: 600;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--accent);
+      color: var(--accent-bright);
       margin-bottom: var(--space-3);
+    }
+    /* .apply__title and .apply__sub were bare hooks with no rules, so they fell
+       back to the .h2 and .body utilities and came out a step smaller and a
+       weight lighter than every other page header. */
+    .apply__title {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 5.5vw, 3.4rem);
+      font-weight: 800;
+      line-height: 1.03;
+      letter-spacing: -0.03em;
+      margin-bottom: var(--space-4);
+      /* Wider than the 18ch used for prose headings: these titles are role
+         names, and 18ch broke "Marketing & Media Officer" over three lines. */
+      max-width: 24ch;
+      text-wrap: balance;
+    }
+    .apply__sub {
+      font-size: 1.125rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      max-width: 60ch;
     }
     /* On a role page the eyebrow doubles as the way back to the other role. */
     a.apply__back { width: fit-content; text-decoration: none; }
-    a.apply__back:hover { color: var(--accent-bright); }
+    a.apply__back:hover { color: var(--text-primary); }
     .apply__form-section h2 { margin-bottom: 0; }
 
     /* --- Hub: two role tiles ---------------------------------------------- */
