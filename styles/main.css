@@ -524,7 +524,9 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   display: flex;
   justify-content: center;
   text-align: center;
-  max-width: 680px;
+  /* Wide enough for the full society name on one line; the headline's own
+     font-size rule is what actually guarantees the fit. */
+  max-width: min(1600px, 100%);
   margin-inline: auto;
 }
 
@@ -547,10 +549,32 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
 }
 
 .hero-launch__title {
-  max-width: 14ch;
+  max-width: 20ch;
   text-wrap: balance;
   margin: 0;
   text-align: center;
+}
+
+/* Both slide headlines contain a phrase that must not break: "Bristol Trading
+   Society" (17.04em) on slide 1 and "Outreach & Operations" (17.74em) on slide 2.
+   At the full display size the longest needs ~1700px, which no ordinary desktop
+   has, so they were wrapping mid-phrase. Above 900px both are sized off the space
+   actually available rather than a fixed clamp, using the same divisor so the two
+   slides stay the same size as the slider advances — 18.6 is the widest phrase
+   plus ~5% slack for font-loading variance. Below 900px no size fits on one line,
+   so they wrap naturally as before. */
+@media (min-width: 900px) {
+  .hero-launch__title,
+  .hero__title--roles {
+    font-size: min(var(--fs-display), calc((100vw - 2 * var(--gutter)) / 18.6));
+    max-width: none;
+    text-wrap: wrap;
+  }
+  .hero-launch__name,
+  .hero__role {
+    display: block;
+    white-space: nowrap;
+  }
 }
 
 .hero-launch__sub {
@@ -673,6 +697,23 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   margin-bottom: clamp(var(--space-4), 6vh, var(--space-5));
   max-width: 18ch;                   /* fits the longest word ("applications") */
 }
+
+/* Small label above a slide headline — carries the count so the headline is
+   free to be nothing but the role names. */
+.hero__eyebrow {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  margin-bottom: var(--space-3);
+}
+
+/* Two roles, one per line, no connective between them. */
+.hero__title--roles { max-width: 22ch; }
+.hero__role { display: block; }
 
 /* Optional one-line subtitle under a slide headline. Matches the headline's
    entrance timing so the slide arrives as one unit. */
@@ -1379,6 +1420,7 @@ body.is-leaving {
   to   { opacity: 1; transform: translateY(0);    }
 }
 
+.hero__eyebrow,
 .hero__title,
 .hero-launch__title {
   animation: rise-fade 0.72s cubic-bezier(0.22, 1, 0.36, 1) 0.08s both;

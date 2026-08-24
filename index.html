@@ -25,7 +25,7 @@
   <link rel="stylesheet" href="styles/tokens/colors.css?v=15" />
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
-  <link rel="stylesheet" href="styles/main.css?v=53" />
+  <link rel="stylesheet" href="styles/main.css?v=56" />
 </head>
 <body>
 
@@ -103,7 +103,7 @@
       <div class="hero-slide hero-slide--active" role="group" aria-roledescription="slide" aria-label="1 of 2" aria-hidden="false">
         <div class="container hero__inner hero__inner--launch">
           <div class="hero-launch">
-            <h1 class="display hero-launch__title">Welcome to the Bristol Trading Society</h1>
+            <h1 class="display hero-launch__title">Welcome to the <span class="hero-launch__name">Bristol Trading Society</span></h1>
             <p class="hero-launch__sub">
               A student-run trading and markets society at the University of Bristol.
               Open to every degree, no prior finance required.
@@ -115,10 +115,16 @@
       <!-- Slide 2: Committee applications -->
       <div class="hero-slide" role="group" aria-roledescription="slide" aria-label="2 of 2" aria-hidden="true">
         <div class="container hero__inner">
-          <h2 class="display hero__title">Marketing &amp; Media and Outreach &amp; Operations</h2>
+          <!-- The two role names each already contain an ampersand, so joining
+               them with "and" read as one run-on title. Stacked as two lines with
+               the count moved into the eyebrow, they scan as a list. -->
+          <span class="hero__eyebrow">Four committee roles open</span>
+          <h2 class="display hero__title hero__title--roles">
+            <span class="hero__role">Marketing &amp; Media</span>
+            <span class="hero__role">Outreach &amp; Operations</span>
+          </h2>
           <p class="body hero__sub">
-            Four committee positions open, two in each role, as we expand the society
-            and its partnerships.
+            Two positions in each, as we expand the society and its partnerships.
           </p>
           <div class="hero__actions">
             <a class="btn btn--primary" href="/apply">
