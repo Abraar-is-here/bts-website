@@ -741,6 +741,10 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
 .hero__actions {
   display: flex;
   align-items: center;
+  /* Flex children ignore the parent's text-align, so the centred hero needs an
+     explicit justify-content -- without it these defaulted to flex-start and sat
+     hard left under centred copy. */
+  justify-content: center;
   gap: var(--space-4);
   flex-wrap: wrap;
 }
@@ -1354,10 +1358,10 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
 @media (max-width: 420px) {
   .hero__actions {
     flex-direction: column;
-    align-items: flex-start;
+    /* Column direction, so centring is the cross axis. */
+    align-items: center;
     gap: var(--space-3);
   }
-
 }
 
 /* Team page: tighter photos on small screens */
