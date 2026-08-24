@@ -450,8 +450,15 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
 }
 
 /* Non-hero dark sections get the same dim overlay as the hero scrim average
-   so the aurora reads at consistent brightness across every page. */
-.section:not(.hero):not(.panel) {
+   so the aurora reads at consistent brightness across every page.
+
+   .page-dark carries the same baseline to the pages whose <main> is not a
+   .section (About, Alumni, Events, Privacy, Sponsors, Team, 404). Those were
+   left undimmed, so the site had two different aurora brightnesses and no
+   single footer tone could match both. Their own radial scrims still stack on
+   top for extra contrast behind the header, then fade back to this baseline. */
+.section:not(.hero):not(.panel),
+main.page-dark {
   background: rgba(6, 17, 43, 0.50);
 }
 .container {
@@ -933,7 +940,13 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: linear-gradient(180deg, rgba(6,17,43,0.7) 0%, rgba(6,17,43,0.45) 100%);
+  /* Holds full strength behind the form, then fades to nothing so the section
+     ends on the same 50% baseline the footer now uses. Every other page's scrim
+     already fades to transparent at its edges; this one did not. */
+  background: linear-gradient(180deg,
+              rgba(6,17,43,0.7) 0%,
+              rgba(6,17,43,0.7) 60%,
+              rgba(6,17,43,0) 100%);
   pointer-events: none;
 }
 .apply__inner {
@@ -2027,9 +2040,11 @@ body.is-leaving {
      band was painted with a navy-tinted shadow and read grey next to the very
      same colour above it. */
   z-index: 3;
-  /* Transparent by default so the curved block reads as floating on the
-     aurora, which is what every page except the home page sits on. */
-  background: transparent;
+  /* The curved block still floats on the aurora, but the 24px frame around it
+     carries the same dim overlay as .section. Left fully transparent, it was
+     the only region on the site showing the aurora at 100% while everything
+     above it showed 50%, so the footer read visibly brighter than the page. */
+  background: rgba(6, 17, 43, 0.50);
   padding: 24px;
 }
 /* Home only: the closing .panel above is --c-surface, so the band continues
