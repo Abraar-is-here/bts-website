@@ -5,9 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <base href="/" />
 
-  <title>Committee Applications — Bristol Trading Society</title>
-  <meta name="description" content="Applications are open for four committee positions at the Bristol Trading Society — two Marketing &amp; Media Officers and two Outreach &amp; Operations Officers." />
-
+  <title>How we pick people &mdash; Bristol Trading Society</title>
+  <meta name="description" content="The Bristol Trading Society publishes its selection process in full: what we are listening for in an interview, what a strong answer looks like, the stages every applicant goes through, and what we do not assess." />
 
   <link rel="icon" type="image/svg+xml" href="assets/img/bull.svg" />
 
@@ -22,184 +21,178 @@
 
   <style>
     /* -------------------------------------------------------------------------
-       Applications — hub and the two role pages.
-       Deliberately spare. A candidate deciding whether to apply needs the role,
-       what it involves, and the form. Everything else is noise.
+       How we select — deliberately the quietest page on the site.
+
+       The subject is fairness, so the page is built to look like a document
+       rather than a pitch: the aurora is desaturated to near-monochrome slate
+       and sat under a heavy scrim, the accent is used once, and the only
+       structural device is the rubric itself. Numbering is used here because
+       the stages genuinely are a sequence -- order is information the reader
+       needs -- which is not true of most numbered lists.
        ------------------------------------------------------------------------- */
-    /* Matches the page-header eyebrow used on About, Events, Privacy and 404:
-       13px / 0.12em / --accent-bright. It was 12px / 0.16em / --accent, which
-       was both off-convention and only 3.3:1 against the page at small size. */
-    .apply__eyebrow {
+    :root {
+      --c-navy:       #0d1420;
+      --c-royal-deep: #1b2740;
+      --c-royal:      #2c3d5e;
+      --c-sky:        #6b86b5;
+    }
+
+    .sel { position: relative; padding: 120px 0 var(--space-7); }
+    .sel::before {
+      content: '';
+      position: absolute; inset: 0; z-index: 0;
+      background: linear-gradient(180deg,
+                  rgba(8, 14, 24, 0.82) 0%,
+                  rgba(8, 14, 24, 0.72) 60%,
+                  rgba(8, 14, 24, 0.55) 100%);
+    }
+    .sel__wrap {
+      position: relative; z-index: 1;
+      width: min(var(--container-max), calc(100% - var(--gutter) * 2));
+      margin-inline: auto;
+    }
+
+    .sel__kicker {
       display: block;
-      font-family: var(--font-body);
-      font-size: 0.8125rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent-bright);
+      font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--accent-bright);
       margin-bottom: var(--space-3);
     }
-    /* .apply__title and .apply__sub were bare hooks with no rules, so they fell
-       back to the .h2 and .body utilities and came out a step smaller and a
-       weight lighter than every other page header. */
-    .apply__title {
+    .sel__title {
       font-family: var(--font-display);
       font-size: clamp(2.2rem, 5.5vw, 3.4rem);
-      font-weight: 800;
-      line-height: 1.03;
-      letter-spacing: -0.03em;
-      margin-bottom: var(--space-4);
-      /* Wider than the 18ch used for prose headings: these titles are role
-         names, and 18ch broke "Marketing & Media Officer" over three lines. */
-      max-width: 24ch;
-      text-wrap: balance;
+      font-weight: 800; line-height: 1.03; letter-spacing: -0.03em;
+      margin: 0 0 var(--space-4); max-width: 18ch; text-wrap: balance;
     }
-    .apply__sub {
-      font-size: 1.125rem;
-      line-height: 1.7;
-      color: var(--text-secondary);
-      max-width: 60ch;
+    .sel__lead {
+      font-size: 1.125rem; line-height: 1.7;
+      color: var(--text-secondary); max-width: 34rem; margin: 0;
     }
 
-    /* --- Hub: two role tiles ---------------------------------------------- */
-    .picker {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
-      gap: var(--space-4);
-      margin-top: var(--space-6);
-    }
-    .pick {
-      display: flex;
-      flex-direction: column;
-      padding: var(--space-5) var(--space-4) var(--space-4);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-card);
-      background: rgba(8, 19, 46, 0.72);
-      text-decoration: none;
-      transition: border-color var(--dur-med) var(--ease-out),
-                  transform var(--dur-med) var(--ease-out);
-    }
-    @media (hover: hover) and (pointer: fine) {
-      .pick:hover { border-color: var(--accent); transform: translateY(-3px); }
-    }
-    .pick__count {
-      display: inline-block;
-      align-self: flex-start;
-      font-size: 0.6875rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: #fff;
-      background: var(--accent);
-      padding: 5px 12px;
-      border-radius: var(--radius-pill);
-      margin-bottom: var(--space-4);
-    }
-    .pick__name {
+    .sel__sec { margin-top: var(--space-7); }
+    .sel__sec-title {
       font-family: var(--font-display);
-      font-size: clamp(1.4rem, 2.6vw, 1.75rem);
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      line-height: 1.1;
-      color: var(--text-primary);
-      margin-bottom: var(--space-3);
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 800; letter-spacing: -0.02em;
+      margin: 0 0 var(--space-3);
     }
-    .pick__line { font-size: 0.9375rem; line-height: 1.6; color: var(--text-secondary); flex: 1; }
-    .pick__go {
-      margin-top: var(--space-4);
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: var(--accent-bright);
-    }
+    .sel__body { font-size: 1rem; line-height: 1.7; color: var(--text-secondary); max-width: 34rem; margin: 0; }
+    .sel__body + .sel__body { margin-top: var(--space-3); }
+    .sel__body strong { color: var(--text-primary); font-weight: 600; }
 
-    /* --- Role page -------------------------------------------------------- */
-    .role-head { max-width: 60ch; }
-    .role-head__badge {
-      display: inline-block;
-      font-size: 0.6875rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: #fff;
-      background: var(--accent);
-      padding: 5px 12px;
-      border-radius: var(--radius-pill);
-      margin-bottom: var(--space-3);
+    /* ---- The rubric: two columns, weak against strong -------------------- */
+    .rubric { margin-top: var(--space-5); }
+    .rubric__row { padding: var(--space-4) 0; border-top: 1px solid var(--hairline); }
+    .rubric__row:last-child { border-bottom: 1px solid var(--hairline); }
+    .rubric__name {
+      font-family: var(--font-display);
+      font-size: 1.125rem; font-weight: 800; letter-spacing: -0.01em;
+      color: var(--text-primary); margin: 0 0 var(--space-3);
     }
-    .role-cols {
+    .rubric__pair {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
-      gap: var(--space-5) var(--space-4);
-      margin-top: var(--space-6);
-      padding-top: var(--space-5);
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+      gap: var(--space-3) var(--space-4);
+    }
+    .rubric__side { }
+    .rubric__label {
+      display: block;
+      font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; margin-bottom: 8px;
+    }
+    .rubric__side--weak   .rubric__label { color: var(--text-secondary); }
+    .rubric__side--strong .rubric__label { color: var(--accent-bright); }
+    .rubric__side p { font-size: 0.9375rem; line-height: 1.6; color: var(--text-secondary); margin: 0; }
+    .rubric__side--strong p { color: var(--text-primary); }
+
+    /* ---- Stages: a real sequence, so numbered --------------------------- */
+    .stages { list-style: none; margin: var(--space-5) 0 0; padding: 0; counter-reset: stage; }
+    .stages li {
+      counter-increment: stage;
+      display: grid;
+      grid-template-columns: 3rem minmax(0, 1fr);
+      gap: var(--space-3);
+      padding: var(--space-4) 0;
       border-top: 1px solid var(--hairline);
     }
-    .role-cols h2 {
-      font-size: 0.6875rem;
-      font-weight: 700;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--text-primary);
-      margin-bottom: var(--space-3);
+    .stages li:last-child { border-bottom: 1px solid var(--hairline); }
+    .stages li::before {
+      content: counter(stage, decimal-leading-zero);
+      font-family: var(--font-display);
+      font-size: 1.25rem; font-weight: 800;
+      color: var(--num-marker); line-height: 1.2;
     }
-    .role-cols ul { list-style: none; margin: 0; padding: 0; }
-    .role-cols li {
-      position: relative;
-      padding-left: 18px;
-      margin-bottom: 12px;
-      font-size: 0.9375rem;
-      line-height: 1.55;
-      color: var(--text-secondary);
-    }
-    .role-cols li::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 8px;
-      width: 5px; height: 5px;
-      border-radius: 50%;
-      background: var(--accent);
-    }
+    .stages h3 { font-size: 1.0625rem; font-weight: 700; color: var(--text-primary); margin: 0 0 6px; }
+    .stages p  { font-size: 0.9375rem; line-height: 1.6; color: var(--text-secondary); margin: 0; max-width: 46ch; }
 
-    /* --- Form block -------------------------------------------------------
-       The privacy notice needs clear air beneath it: run together, it reads as
-       a form field rather than a disclosure. */
-    .apply__form-section { margin-top: var(--space-7); }
-    .apply__form-section .notice { margin-bottom: var(--space-6); }
-    .form-role {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: baseline;
-      gap: 10px;
-      padding: var(--space-3) var(--space-4);
-      margin-bottom: var(--space-4);
+    /* ---- The one line worth pulling out --------------------------------- */
+    .pullout {
+      margin-top: var(--space-6);
+      padding: var(--space-5) var(--space-4);
       border-left: 2px solid var(--accent);
-      background: rgba(37, 99, 235, 0.10);
+      background: rgba(37, 99, 235, 0.08);
       border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
     }
-    .form-role__label {
-      font-size: 0.6875rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--text-secondary);
+    .pullout p {
+      font-family: var(--font-display);
+      font-size: clamp(1.25rem, 2.6vw, 1.6rem);
+      font-weight: 800; letter-spacing: -0.02em; line-height: 1.25;
+      color: var(--text-primary); margin: 0; max-width: 24ch;
     }
-    .form-role__value { font-size: 1rem; font-weight: 600; color: var(--text-primary); }
-    .form-role__swap { font-size: 0.8125rem; color: var(--accent-bright); margin-left: auto; }
+    .pullout span {
+      display: block; margin-top: var(--space-3);
+      font-family: var(--font-body);
+      font-size: 0.9375rem; font-weight: 400; line-height: 1.6;
+      color: var(--text-secondary); letter-spacing: 0; max-width: 44ch;
+    }
 
-    .apply__foot {
-      margin-top: var(--space-6);
-      padding-top: var(--space-4);
-      border-top: 1px solid var(--hairline);
-      font-size: 0.875rem;
-      line-height: 1.6;
-      color: var(--text-secondary);
+    .sel__cta { margin-top: var(--space-6); padding-top: var(--space-4); border-top: 1px solid var(--hairline); }
+    .sel__cta p { font-size: 0.9375rem; color: var(--text-secondary); margin: 0 0 var(--space-3); max-width: 44ch; }
+
+    @media (max-width: 640px) {
+      .sel { padding-top: 96px; }
+      .stages li { grid-template-columns: 2.25rem minmax(0, 1fr); }
     }
+
   </style>
 
+  <!-- Structured data. Gives crawlers and AI answers facts to quote instead of
+       inferring them from prose. Every value here is verifiable on the site. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": "https://bristoltradingsoc.co.uk/#organization",
+    "name": "Bristol Trading Society",
+    "alternateName": "BTS",
+    "url": "https://bristoltradingsoc.co.uk/",
+    "logo": "https://bristoltradingsoc.co.uk/assets/img/bull.svg",
+    "foundingDate": "2017",
+    "description": "The largest markets-focused society at the University of Bristol. Student-run, covering equities, FICC, macro and quantitative trading through an analyst programme, speaker events and Bloomberg Terminal sessions.",
+    "email": "bristol-trading-society@bristol.ac.uk",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "12 Priory Road Complex",
+      "addressLocality": "Bristol",
+      "postalCode": "BS8 1TU",
+      "addressCountry": "GB"
+    },
+    "parentOrganization": {
+      "@type": "CollegeOrUniversity",
+      "name": "University of Bristol",
+      "url": "https://www.bristol.ac.uk/"
+    },
+    "knowsAbout": ["Equities", "Fixed income", "FICC", "Macro trading", "Quantitative trading", "Bloomberg Terminal"],
+    "sameAs": [
+      "https://www.linkedin.com/company/bristol-trading-society/",
+      "https://www.instagram.com/bristoltradingsociety/"
+    ]
+  }
+  </script>
 </head>
 <body>
 
-  <a class="skip-link" href="/apply/#apply">Skip to content</a>
+  <a class="skip-link" href="/selection/#selection">Skip to content</a>
 
   <div class="aurora" aria-hidden="true">
     <canvas id="aurora-canvas"></canvas>
@@ -209,6 +202,7 @@
       <span class="sheen"></span>
     </div>
   </div>
+
 
   <nav class="nav" aria-label="Primary">
     <a class="logo" href="/" aria-label="Bristol Trading Society — home">
@@ -244,46 +238,155 @@
     </ul>
   </nav>
 
-  <main id="apply" class="section apply" tabindex="-1">
-    <div class="apply__inner">
+  <main id="selection" class="sel page-dark" tabindex="-1">
+    <div class="sel__wrap">
 
-      <header class="apply__head">
-        <span class="apply__eyebrow">Committee roles</span>
-        <!-- The two tiles below name the roles, so repeating both in the
-             headline made it a run-on with three ampersands in it. -->
-        <h1 class="h2 apply__title">Four positions open</h1>
-        <p class="body apply__sub">
-          Two in each role, as we expand the society and its partnerships.
-          You can apply to one. We review applications as they arrive and close
-          each role once it is filled, so earlier is better.
+      <header>
+        <span class="sel__kicker">Selection</span>
+        <h1 class="sel__title">How we pick people</h1>
+        <p class="sel__lead">
+          Published in full, because a process you cannot see is indistinguishable from a
+          process that does not exist. This is what we ask, what we are listening for, and
+          what happens after.
         </p>
       </header>
 
-      <div class="picker">
-        <a class="pick" href="/apply/marketing/">
-          <span class="pick__count">2 positions</span>
-          <span class="pick__name">Marketing &amp; Media Officer</span>
-          <span class="pick__line">
-            Most people meet the society through Instagram long before they come to an
-            event. This role runs that.
-          </span>
-          <span class="pick__go">View role and apply &rarr;</span>
-        </a>
+      <!-- ===== The rubric ===== -->
+      <section class="sel__sec" aria-labelledby="listening">
+        <h2 class="sel__sec-title" id="listening">What we are listening for</h2>
+        <p class="sel__body">
+          Three things, in every interview. The difference between a weak answer and a strong
+          one is almost never knowledge. It is whether the answer is specific, and whether you
+          can say where it stops.
+        </p>
 
-        <a class="pick" href="/apply/outreach/">
-          <span class="pick__count">2 positions</span>
-          <span class="pick__name">Outreach &amp; Operations Officer</span>
-          <span class="pick__line">
-            Booking the rooms and emailing the firms we want speaking in them.
-          </span>
-          <span class="pick__go">View role and apply &rarr;</span>
-        </a>
-      </div>
+        <div class="rubric">
 
-      <p class="apply__foot">
-        Division Head applications closed on 5 August 2026 and are at final interview stage.
-        Analyst applications open at the start of the academic year.
-      </p>
+          <div class="rubric__row">
+            <p class="rubric__name">Evidence over assertion</p>
+            <div class="rubric__pair">
+              <div class="rubric__side rubric__side--weak">
+                <span class="rubric__label">Weak</span>
+                <p>&ldquo;I&rsquo;m very interested in markets and I follow them closely.&rdquo;</p>
+              </div>
+              <div class="rubric__side rubric__side--strong">
+                <span class="rubric__label">Strong</span>
+                <p>A position you took a view on, when, why, and what it did next.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="rubric__row">
+            <p class="rubric__name">A real example, owned</p>
+            <div class="rubric__pair">
+              <div class="rubric__side rubric__side--weak">
+                <span class="rubric__label">Weak</span>
+                <p>&ldquo;We organised an event and it went really well.&rdquo;</p>
+              </div>
+              <div class="rubric__side rubric__side--strong">
+                <span class="rubric__label">Strong</span>
+                <p>What you personally did, what went wrong, and what you changed because of it.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="rubric__row">
+            <p class="rubric__name">Reasoning out loud</p>
+            <div class="rubric__pair">
+              <div class="rubric__side rubric__side--weak">
+                <span class="rubric__label">Weak</span>
+                <p>A confident number with no working, or silence while you search for one.</p>
+              </div>
+              <div class="rubric__side rubric__side--strong">
+                <span class="rubric__label">Strong</span>
+                <p>Assumptions stated, the method walked through, and the answer caveated.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="pullout">
+          <p>&ldquo;I don&rsquo;t know&rdquo; is not a failed answer.</p>
+          <span>
+            Guessing and hoping is. If you have reached the edge of what you know, say so and
+            then say how you would work it out. That is the answer we are looking for.
+          </span>
+        </div>
+      </section>
+
+      <!-- ===== Stages ===== -->
+      <section class="sel__sec" aria-labelledby="stages">
+        <h2 class="sel__sec-title" id="stages">The stages</h2>
+        <p class="sel__body">
+          The same for everyone, in this order.
+        </p>
+
+        <ol class="stages">
+          <li>
+            <div>
+              <h3>Written application</h3>
+              <p>
+                The form and your CV. No cover letter, and no question that asks you to
+                explain why you are passionate about anything.
+              </p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Review</h3>
+              <p>
+                Every application is read. We are looking for something you have actually
+                done, not the university you came from or the course you are on.
+              </p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Interview</h3>
+              <p>
+                Thirty minutes, covering behavioural, competency-based and technical
+                questions. The technical section is on the division you applied to, so you
+                know the ground in advance.
+              </p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Decision</h3>
+              <p>
+                Everyone hears back either way. Nobody is left to work it out from silence.
+              </p>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <!-- ===== What we do not do ===== -->
+      <section class="sel__sec" aria-labelledby="dont">
+        <h2 class="sel__sec-title" id="dont">What we do not do</h2>
+        <p class="sel__body">
+          <strong>No brainteasers.</strong> Puzzles about golf balls and aeroplanes test
+          whether you have seen the puzzle before.
+        </p>
+        <p class="sel__body">
+          <strong>No prior finance requirement.</strong> Several of the strongest people in
+          the society arrived from degrees with no markets content at all.
+        </p>
+        <p class="sel__body">
+          <strong>No hidden criteria.</strong> Everything we assess is on this page. If you
+          are told nothing else before your interview, you have still been told everything
+          that matters.
+        </p>
+
+        <div class="sel__cta">
+          <p>Committee applications are open now, and reviewed as they arrive.</p>
+          <a class="btn btn--primary" href="/apply/">
+            See the roles
+            <span class="btn__arrow" aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+      </section>
 
     </div>
   </main>
@@ -292,7 +395,8 @@
   <script src="js/aurora.js?v=9" defer></script>
   <script src="js/transitions.js?v=3" defer></script>
   <script src="js/nav.js?v=1" defer></script>
-  <!-- ===== Site footer ===== -->
+  <script src="js/cookies.js?v=3" defer></script>
+  <script src="js/signup.js?v=1" defer></script>
   <footer class="site-footer">
     <div class="site-footer__inner">
 
@@ -375,8 +479,5 @@
 
     </div>
   </footer>
-
-  <script src="js/cookies.js?v=3" defer></script>
-  <script src="js/signup.js?v=1" defer></script>
 </body>
 </html>

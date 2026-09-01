@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="styles/tokens/colors.css?v=15" />
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
-  <link rel="stylesheet" href="styles/main.css?v=62" />
+  <link rel="stylesheet" href="styles/main.css?v=64" />
 
   <style>
     /* -------------------------------------------------------------------------
@@ -221,6 +221,8 @@
           <li><a class="nav__dropdown-link" href="/sponsors" role="menuitem">Sponsors</a></li>
           <li><a class="nav__dropdown-link" href="/team" role="menuitem">Team</a></li>
           <li><a class="nav__dropdown-link" href="/divisions" role="menuitem">Divisions</a></li>
+          <li><a class="nav__dropdown-link" href="/research" role="menuitem">Research</a></li>
+          <li><a class="nav__dropdown-link" href="/selection" role="menuitem">How we pick people</a></li>
           <li><a class="nav__dropdown-link" href="/alumni" role="menuitem">Alumni</a></li>
         </ul>
       </li>
@@ -625,6 +627,26 @@
         </div>
       </div>
 
+      <!-- Mailing list. Deliberately in the footer rather than the page body:
+           it should be findable from anywhere and interrupt nothing. -->
+      <div class="signup">
+        <div class="signup__copy">
+          <p class="signup__title">Hear when things happen</p>
+          <p class="signup__note">
+            Speaker evenings, the analyst intake, and new research as it is published.
+            A few emails a term. No spam, unsubscribe any time.
+          </p>
+        </div>
+        <form class="signup__form" id="signupForm" novalidate
+              data-endpoint="https://script.google.com/macros/s/AKfycbwSJBkkMEvdsN8O9SO6fCjkABVbpaCvKVaic2C74pNu0BnkUEAmm8U84vw__Ag_ezEbZw/exec">
+          <label class="visually-hidden" for="signupEmail">Email address</label>
+          <input class="signup__input" id="signupEmail" name="email" type="email"
+                 inputmode="email" autocomplete="email" placeholder="you@bristol.ac.uk" required />
+          <button class="signup__btn" type="submit">Subscribe</button>
+          <p class="signup__status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+
       <div class="site-footer__bottom">
         <p>&copy; 2026 Bristol Trading Society &middot; University of Bristol</p>
         <p class="site-footer__legal">
@@ -639,5 +661,6 @@
   <script src="js/transitions.js?v=3" defer></script>
   <script src="js/nav.js?v=1" defer></script>
   <script src="js/cookies.js?v=3" defer></script>
+  <script src="js/signup.js?v=1" defer></script>
 </body>
 </html>

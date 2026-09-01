@@ -5,9 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <base href="/" />
 
-  <title>About Us — Bristol Trading Society</title>
-  <meta name="description" content="What the Bristol Trading Society is, how it started in 2017, how the society is structured, and what it exists to do." />
-
+  <title>Research and the books &mdash; Bristol Trading Society</title>
+  <meta name="description" content="Every pitch the Bristol Trading Society publishes is date-stamped at the level it was made and revisited six months later with what happened, including the ones that broke. Plus monthly notes on our mock equity and FICC books." />
 
   <link rel="icon" type="image/svg+xml" href="assets/img/bull.svg" />
 
@@ -22,203 +21,177 @@
 
   <style>
     /* -------------------------------------------------------------------------
-       About Us — the identity page.
-       Deliberately holds no event listings, no division detail, no committee
-       names and no partnership pitch. Those live on their own pages; this one
-       answers "what is this society and how does it work" and hands off.
+       Research — the blotter.
+
+       Every other page on this site is glass cards floating on the aurora. This
+       one is a record, so it is built like one: hairline rows, monospaced
+       metadata, date stamps, verdict chips. The aurora is re-tinted toward teal
+       (the shader reads its palette from these tokens at runtime) so the page
+       reads as the workroom rather than the shopfront.
        ------------------------------------------------------------------------- */
-    .abt { position: relative; padding: 120px 0 var(--space-6); }
-    .abt::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      background: radial-gradient(ellipse 95% 65% at 50% 12%,
-                  rgba(6, 17, 43, 0.66) 0%, rgba(6, 17, 43, 0.34) 48%, transparent 78%);
-      pointer-events: none;
-    }
-    .abt__wrap {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      max-width: var(--container-max);
-      margin: 0 auto;
-      padding: 0 var(--gutter);
+    :root {
+      --c-navy:       #071729;
+      --c-royal-deep: #0a3247;
+      --c-royal:      #10566e;
+      --c-sky:        #37b3c4;
+
+      --held:  #46c397;   /* thesis survived contact                */
+      --broke: #e0796f;   /* thesis did not                          */
+      --open:  #8da2c4;   /* not yet six months old                  */
     }
 
-    .abt__kicker {
+    .rsr { position: relative; padding: 120px 0 var(--space-7); }
+    .rsr::before {
+      content: '';
+      position: absolute; inset: 0; z-index: 0;
+      background: linear-gradient(180deg,
+                  rgba(4, 14, 26, 0.72) 0%,
+                  rgba(4, 14, 26, 0.55) 55%,
+                  rgba(4, 14, 26, 0) 100%);
+    }
+    .rsr__wrap {
+      position: relative; z-index: 1;
+      width: min(var(--container-max), calc(100% - var(--gutter) * 2));
+      margin-inline: auto;
+    }
+
+    /* ---- Header ---------------------------------------------------------- */
+    .rsr__kicker {
       display: block;
-      font-size: 0.8125rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent-bright);
+      font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--accent-bright);
       margin-bottom: var(--space-3);
     }
-    .abt__title {
+    .rsr__title {
       font-family: var(--font-display);
-      font-size: clamp(2.3rem, 5.6vw, 3.9rem);
-      font-weight: 800;
-      line-height: 1.03;
-      letter-spacing: -0.03em;
-      margin-bottom: var(--space-4);
-      max-width: 18ch;
-      text-wrap: balance;
+      font-size: clamp(2.2rem, 5.5vw, 3.4rem);
+      font-weight: 800; line-height: 1.03; letter-spacing: -0.03em;
+      margin: 0 0 var(--space-4); max-width: 20ch; text-wrap: balance;
     }
-    .abt__lead {
-      font-size: 1.125rem;
-      line-height: 1.7;
-      color: var(--text-secondary);
-      max-width: 60ch;
+    .rsr__lead {
+      font-size: 1.125rem; line-height: 1.7;
+      color: var(--text-secondary); max-width: 34rem; margin: 0;
     }
 
-    .abt__sec { margin-top: var(--space-7); }
-    .abt__sec-label {
-      display: block;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--text-secondary);
-      margin-bottom: var(--space-2);
-    }
-    .abt__sec-title {
-      font-family: var(--font-display);
-      font-size: clamp(1.75rem, 3.6vw, 2.5rem);
-      font-weight: 800;
-      line-height: 1.08;
-      letter-spacing: -0.025em;
-      margin-bottom: var(--space-4);
-      text-wrap: balance;
-    }
-
-    /* Origin story: two columns of prose, so a long history doesn't become one
-       unreadable 100ch measure. */
-    .abt__story {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
-      gap: var(--space-4) var(--space-5);
-    }
-    .abt__story p { color: var(--text-secondary); line-height: 1.75; margin-bottom: var(--space-3); }
-    .abt__story p:last-child { margin-bottom: 0; }
-    .abt__story strong { color: var(--text-primary); font-weight: 600; }
-
-    /* Reach figures — moved here from the sponsors page, because scale is an
-       identity fact, not a sales pitch. */
-    .reach {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-      gap: var(--space-4);
-      margin-top: var(--space-5);
-      padding: var(--space-4) 0;
-      border-top: 1px solid var(--hairline);
+    /* ---- Section scaffolding --------------------------------------------- */
+    .rsr__sec { margin-top: var(--space-7); }
+    .rsr__sec-head {
+      display: flex; align-items: baseline; gap: var(--space-3);
+      flex-wrap: wrap;
+      padding-bottom: var(--space-3);
       border-bottom: 1px solid var(--hairline);
+      margin-bottom: var(--space-5);
     }
-    .reach__n {
-      display: block;
+    .rsr__sec-title {
       font-family: var(--font-display);
-      font-size: clamp(2.2rem, 4.5vw, 3.1rem);
-      font-weight: 800;
-      line-height: 1;
-      letter-spacing: -0.03em;
-      font-variant-numeric: tabular-nums;
-      color: var(--text-primary);
-      margin-bottom: 10px;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 800; letter-spacing: -0.02em; margin: 0;
     }
-    .reach__l { font-size: 0.9375rem; line-height: 1.5; color: var(--text-secondary); max-width: 24ch; }
+    .rsr__sec-note {
+      font-family: var(--font-mono, ui-monospace, 'SFMono-Regular', Menlo, monospace);
+      font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--text-secondary); margin: 0 0 0 auto;
+    }
+    .rsr__body { font-size: 1rem; line-height: 1.7; color: var(--text-secondary); max-width: 34rem; }
+    .rsr__body + .rsr__body { margin-top: var(--space-3); }
+    .rsr__body strong { color: var(--text-primary); font-weight: 600; }
 
-    /* The ladder: how someone actually moves through the society. Numbered
-       because the order is the point — each rung depends on the one below. */
-    .ladder { list-style: none; margin: 0; padding: 0; counter-reset: rung; }
-    .ladder li {
-      counter-increment: rung;
+    /* ---- The standard: four rules, stated before any results exist ------- */
+    .rules { list-style: none; margin: 0; padding: 0; counter-reset: rule; }
+    .rules li {
+      counter-increment: rule;
       display: grid;
-      grid-template-columns: 62px minmax(0, 1fr);
+      grid-template-columns: 3rem minmax(0, 1fr);
       gap: var(--space-3);
-      align-items: start;
       padding: var(--space-4) 0;
       border-top: 1px solid var(--hairline);
     }
-    .ladder li:last-child { border-bottom: 1px solid var(--hairline); }
-    .ladder li::before {
-      content: counter(rung, decimal-leading-zero);
+    .rules li:last-child { border-bottom: 1px solid var(--hairline); }
+    .rules li::before {
+      content: counter(rule, decimal-leading-zero);
       font-family: var(--font-display);
-      font-size: 1.5rem;
-      font-weight: 800;
-      color: var(--num-marker);
-      line-height: 1.1;
-      letter-spacing: -0.02em;
+      font-size: 1.25rem; font-weight: 800;
+      color: var(--num-marker); line-height: 1.2;
     }
-    .ladder h3 {
-      font-family: var(--font-body);
-      font-size: 1.125rem;
-      font-weight: 600;
-      line-height: 1.3;
-      margin-bottom: 6px;
+    .rules h3 {
+      font-size: 1.0625rem; font-weight: 700;
+      color: var(--text-primary); margin: 0 0 6px;
     }
-    .ladder p { color: var(--text-secondary); line-height: 1.65; max-width: 62ch; }
+    .rules p { font-size: 0.9375rem; line-height: 1.6; color: var(--text-secondary); margin: 0; max-width: 46ch; }
 
-    /* Principles: what the society optimises for. Three, not six — a list of
-       six values is a list nobody believes. */
-    .principles {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
-      gap: var(--space-4);
-    }
-    .principle { padding-top: var(--space-3); border-top: 2px solid var(--accent); }
-    .principle:nth-child(2) { border-top-color: rgba(37, 99, 235, 0.55); }
-    .principle:nth-child(3) { border-top-color: rgba(141, 162, 196, 0.4); }
-    .principle h3 {
-      font-family: var(--font-display);
-      font-size: 1.2rem;
-      font-weight: 800;
-      letter-spacing: -0.015em;
-      line-height: 1.2;
-      margin-bottom: var(--space-2);
-    }
-    .principle p { color: var(--text-secondary); line-height: 1.65; font-size: 0.9375rem; }
-
-    /* Hand-off tiles: this page deliberately stops short, so it needs to point
-       clearly at the pages that carry the detail. */
-    .onward {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
-      gap: var(--space-3);
-    }
-    .onward a {
-      display: block;
-      padding: var(--space-4) var(--space-3);
+    /* ---- The record format ----------------------------------------------- */
+    .record {
+      margin-top: var(--space-5);
       border: 1px solid var(--glass-border);
       border-radius: var(--radius-sm);
-      background: rgba(8, 19, 46, 0.6);
-      text-decoration: none;
-      transition: border-color var(--dur-fast) var(--ease-out),
-                  transform var(--dur-fast) var(--ease-out);
+      background: rgba(4, 14, 26, 0.55);
+      overflow: hidden;
     }
-    .onward a:hover { border-color: var(--accent); transform: translateY(-2px); }
-    .onward strong {
-      display: block;
-      font-size: 1.0625rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 4px;
+    .record__bar {
+      display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap;
+      padding: 10px var(--space-4);
+      border-bottom: 1px solid var(--hairline);
+      background: rgba(4, 14, 26, 0.6);
+      font-family: var(--font-mono, ui-monospace, 'SFMono-Regular', Menlo, monospace);
+      font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--text-secondary);
     }
-    .onward span { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.5; }
-    .onward em {
+    .record__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)); }
+    .record__cell {
+      padding: var(--space-3) var(--space-4);
+      border-top: 1px solid var(--hairline);
+      border-right: 1px solid var(--hairline);
+    }
+    .record__cell:last-child { border-right: none; }
+    .record__k {
       display: block;
-      margin-top: 10px;
-      font-style: normal;
-      font-size: 0.8125rem;
-      color: var(--accent-bright);
+      font-family: var(--font-mono, ui-monospace, 'SFMono-Regular', Menlo, monospace);
+      font-size: 0.6875rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--accent-bright); margin-bottom: 6px;
+    }
+    .record__v { font-size: 0.875rem; line-height: 1.5; color: var(--text-secondary); }
+
+    /* ---- Verdict chips ---------------------------------------------------- */
+    .verdicts { display: flex; gap: var(--space-3); flex-wrap: wrap; margin-top: var(--space-4); }
+    .chip {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 7px 14px;
+      border: 1px solid currentColor;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-mono, ui-monospace, 'SFMono-Regular', Menlo, monospace);
+      font-size: 0.6875rem; letter-spacing: 0.12em; text-transform: uppercase;
+    }
+    .chip::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+    .chip--held  { color: var(--held); }
+    .chip--broke { color: var(--broke); }
+    .chip--open  { color: var(--open); }
+    .chip__note { color: var(--text-secondary); letter-spacing: 0; text-transform: none; font-size: 0.75rem; }
+
+    /* ---- Empty state: the archive has not opened yet ---------------------- */
+    .awaiting {
+      margin-top: var(--space-5);
+      padding: var(--space-5) var(--space-4);
+      border: 1px dashed var(--glass-border);
+      border-radius: var(--radius-sm);
+    }
+    .awaiting__stamp {
+      font-family: var(--font-mono, ui-monospace, 'SFMono-Regular', Menlo, monospace);
+      font-size: 0.6875rem; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--accent-bright); margin: 0 0 var(--space-3);
+    }
+    .awaiting p { font-size: 0.9375rem; line-height: 1.65; color: var(--text-secondary); margin: 0; max-width: 46ch; }
+    .awaiting p + p { margin-top: var(--space-3); }
+
+    @media (max-width: 640px) {
+      .rsr { padding-top: 96px; }
+      .rules li { grid-template-columns: 2.25rem minmax(0, 1fr); }
+      .record__cell { border-right: none; }
+      .rsr__sec-note { margin-left: 0; }
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      .onward a { transition: none; }
-      .onward a:hover { transform: none; }
-    }
-    @media (max-width: 520px) {
-      .ladder li { grid-template-columns: 44px minmax(0, 1fr); }
-    }
+    .rsr__body--gap   { margin-top: var(--space-5); }
+    .rsr__body--small { margin-top: var(--space-3); font-size: 0.875rem; }
+
   </style>
 
   <!-- Structured data. Gives crawlers and AI answers facts to quote instead of
@@ -257,7 +230,7 @@
 </head>
 <body>
 
-  <a class="skip-link" href="/about/#about">Skip to content</a>
+  <a class="skip-link" href="/research/#research">Skip to content</a>
 
   <div class="aurora" aria-hidden="true">
     <canvas id="aurora-canvas"></canvas>
@@ -267,6 +240,7 @@
       <span class="sheen"></span>
     </div>
   </div>
+
 
   <nav class="nav" aria-label="Primary">
     <a class="logo" href="/" aria-label="Bristol Trading Society — home">
@@ -302,227 +276,223 @@
     </ul>
   </nav>
 
-  <main id="about" class="abt page-dark" tabindex="-1">
-    <div class="abt__wrap">
+  <main id="research" class="rsr page-dark" tabindex="-1">
+    <div class="rsr__wrap">
 
       <header>
-        <span class="abt__kicker">About Us</span>
-        <h1 class="abt__title">A society for people who wanted to do the work, not read about it</h1>
-        <p class="abt__lead">
-          The Bristol Trading Society is the largest markets-focused society at the University of
-          Bristol, built around how markets move, how they are traded, and how the people who trade
-          them actually think. We are run entirely by students, for students.
+        <span class="rsr__kicker">Research</span>
+        <h1 class="rsr__title">The work, and how it aged</h1>
+        <p class="rsr__lead">
+          Every pitch we publish is stamped with the level it was made at and the date it
+          was made. Six months later the author comes back and writes what happened.
+          Including the ones that broke.
         </p>
       </header>
 
-      <!-- ===== Origins ===== -->
-      <section class="abt__sec" aria-labelledby="origin-title">
-        <span class="abt__sec-label">Since 2017</span>
-        <h2 class="abt__sec-title" id="origin-title">How it started</h2>
-
-        <div class="abt__story">
-          <div>
-            <p>
-              BTS was founded in <strong>2017</strong> by <strong>Pratik Popat</strong>, then a
-              Bristol student. It has been run by students every year since, with the whole committee
-              turning over as each cohort graduates.
-            </p>
-            <p>
-              The divisions have not stayed still. The line-up has been rebuilt several times as
-              markets and member interest shifted &mdash; <strong>cryptocurrency</strong> and
-              <strong>derivatives</strong> have both run as standalone divisions in past years. What
-              gets researched is decided by what members actually want to work on, not by a fixed
-              structure inherited from whoever ran it last.
-            </p>
-          </div>
-          <div>
-            <p>
-              Today it runs four &mdash; <strong>FICC, Equities, Macro and Quant</strong> &mdash; split across
-              seven teams, since FICC, Equities and Quant each run two. Every team sets its own
-              research agenda and has its own division heads, fourteen positions in total.
-            </p>
-            <p>
-              The analyst programme has become the hardest part of the society to get into. It now
-              draws <strong>over 400 applications</strong> a year for roughly ten places per team &mdash;
-              and it is the reason firms recruit from the cohort directly.
-            </p>
-          </div>
+      <!-- ===== The standard ===== -->
+      <section class="rsr__sec" aria-labelledby="standard">
+        <div class="rsr__sec-head">
+          <h2 class="rsr__sec-title" id="standard">The standard</h2>
+          <p class="rsr__sec-note">Set before the first entry</p>
         </div>
 
-        <div class="reach">
-          <div>
-            <span class="reach__n">800</span>
-            <span class="reach__l">members across the University of Bristol</span>
-          </div>
-          <div>
-            <span class="reach__n">400+</span>
-            <span class="reach__l">applications a year to the analyst programme</span>
-          </div>
-          <div>
-            <span class="reach__n">7</span>
-            <span class="reach__l">analyst teams, ~10 places each</span>
-          </div>
-          <div>
-            <span class="reach__n">14</span>
-            <span class="reach__l">division head positions across four divisions</span>
-          </div>
-          <div>
-            <span class="reach__n">2017</span>
-            <span class="reach__l">founded, and student-run every year since</span>
-          </div>
-        </div>
-      </section>
+        <p class="rsr__body">
+          Most societies publish their best work and quietly lose the rest. That produces a
+          page which proves nothing, because a reader cannot tell what was left out. So the
+          rules are fixed here first, in public, while the archive is still empty.
+        </p>
 
-      <!-- ===== Structure ===== -->
-      <section class="abt__sec" aria-labelledby="how-title">
-        <span class="abt__sec-label">Structure</span>
-        <h2 class="abt__sec-title" id="how-title">How the society works</h2>
-
-        <ol class="ladder">
+        <ol class="rules">
           <li>
             <div>
-              <h3>Membership</h3>
+              <h3>Stamped at entry</h3>
               <p>
-                Open to any Bristol student, whatever you study and whatever you know. Members get
-                the speaker events, the workshops, the Bloomberg sessions and the socials. Most
-                people start here and a lot of people stay here &mdash; that is a perfectly good
-                way to use the society.
+                Instrument, level and date, recorded when the pitch is made. The record is
+                not edited afterwards.
               </p>
             </div>
           </li>
           <li>
             <div>
-              <h3>The analyst programme</h3>
+              <h3>Revisited at six months</h3>
               <p>
-                Over 400 applications a year for roughly ten places per team. Analysts join one
-                team and spend the year producing research inside it &mdash; building a view,
-                writing it up, and defending it. This is the part of the society that most closely
-                resembles the job, and the reason firms recruit from the cohort.
+                The same author returns and writes what happened, what they read correctly,
+                and what they misread.
               </p>
             </div>
           </li>
           <li>
             <div>
-              <h3>Division heads</h3>
+              <h3>The misses stay up</h3>
               <p>
-                Each division is run by a head who sets its research agenda, runs its sessions and
-                is accountable for what the division produces across the year. Heads are appointed
-                by application, usually from analysts who have already done a year in the division.
+                A thesis that broke is not taken down. The revisit note is the reason the
+                archive is worth reading.
               </p>
             </div>
           </li>
           <li>
             <div>
-              <h3>The committee</h3>
+              <h3>Named</h3>
               <p>
-                Runs the society itself &mdash; events, partnerships, finances and everything that
-                keeps it working. Also student, also unpaid, also doing this alongside a degree.
+                Every piece carries its author and their year. They own the call and they
+                own the review of it.
               </p>
             </div>
           </li>
         </ol>
+
+        <p class="rsr__body rsr__body--gap">
+          <strong>Why publish the misses.</strong> Desks do not hire people for having been
+          right. They hire people who can say why they were wrong, in specific terms, without
+          flinching. A record that shows only the wins is a marketing page. This is not one.
+        </p>
       </section>
 
-      <!-- ===== Mentorship ===== -->
-      <section class="abt__sec" aria-labelledby="mentor-title">
-        <span class="abt__sec-label">Member to member</span>
-        <h2 class="abt__sec-title" id="mentor-title">Mentorship</h2>
+      <!-- ===== Pitches ===== -->
+      <section class="rsr__sec" aria-labelledby="pitches">
+        <div class="rsr__sec-head">
+          <h2 class="rsr__sec-title" id="pitches">Pitches</h2>
+          <p class="rsr__sec-note">Equities &middot; FICC &middot; Macro &middot; Quant</p>
+        </div>
 
-        <div class="abt__story">
-          <div>
-            <p>
-              Breaking into trading or investment banking is mostly an information problem. The
-              people a year or two ahead of you know which applications open when, what an online
-              assessment actually tests, and how a superday runs &mdash; and that knowledge does not
-              appear in any prospectus.
-            </p>
+        <p class="rsr__body">
+          Each entry is a single instrument and a single thesis, with the full note attached
+          as a PDF. This is the shape every record takes.
+        </p>
+
+        <div class="record">
+          <div class="record__bar">
+            <span>Record format</span>
+            <span aria-hidden="true">&middot;</span>
+            <span>Nine fields, no exceptions</span>
           </div>
-          <div>
-            <p>
-              So we pair them up. Members who have secured <strong>spring weeks, summer internships,
-              off-cycles and graduate roles</strong> mentor members who are just starting out
-              &mdash; on applications, interviews, and what the work is really like.
-            </p>
-            <p>
-              It is student to student and free, but places are limited and allocated by
-              application. We look for members who are serious about the industry and will engage
-              properly with both the programme and the society. Places are not permanent: members
-              who stop engaging make way for those who will.
-            </p>
+          <div class="record__grid">
+            <div class="record__cell">
+              <span class="record__k">Instrument</span>
+              <span class="record__v">Ticker or contract</span>
+            </div>
+            <div class="record__cell">
+              <span class="record__k">Thesis</span>
+              <span class="record__v">One line, in the author&rsquo;s words</span>
+            </div>
+            <div class="record__cell">
+              <span class="record__k">Division</span>
+              <span class="record__v">Equities, FICC, Macro or Quant</span>
+            </div>
+            <div class="record__cell">
+              <span class="record__k">Author</span>
+              <span class="record__v">Name and year of study</span>
+            </div>
+            <div class="record__cell">
+              <span class="record__k">Entry level</span>
+              <span class="record__v">Price at the time of writing</span>
+            </div>
+            <div class="record__cell">
+              <span class="record__k">Entry date</span>
+              <span class="record__v">Fixed on publication</span>
+            </div>
+            <div class="record__cell">
+              <span class="record__k">Note</span>
+              <span class="record__v">The full write-up, as a PDF</span>
+            </div>
+            <div class="record__cell">
+              <span class="record__k">Revisit</span>
+              <span class="record__v">Written at six months</span>
+            </div>
+            <div class="record__cell">
+              <span class="record__k">Verdict</span>
+              <span class="record__v">One of the three below</span>
+            </div>
           </div>
+        </div>
+
+        <div class="verdicts">
+          <span class="chip chip--held">Held</span>
+          <span class="chip chip--broke">Broke</span>
+          <span class="chip chip--open">Open</span>
+        </div>
+        <p class="rsr__body rsr__body--small">
+          <em>Held</em> and <em>Broke</em> are assigned by the author at the revisit.
+          <em>Open</em> means the six months are not up.
+        </p>
+
+        <div class="awaiting">
+          <p class="awaiting__stamp">Archive opens with the analyst programme</p>
+          <p>
+            There is nothing here yet, and nothing will be backfilled. The first entry will
+            carry the date it was actually written, which is the only way the six-month
+            revisit means anything.
+          </p>
+          <p>
+            If you are a firm and want to be sent entries as they land,
+            <a href="/contact">get in touch</a>.
+          </p>
         </div>
       </section>
 
+      <!-- ===== The books ===== -->
+      <section class="rsr__sec" aria-labelledby="books">
+        <div class="rsr__sec-head">
+          <h2 class="rsr__sec-title" id="books">The books</h2>
+          <p class="rsr__sec-note">Monthly</p>
+        </div>
 
-      <!-- ===== Principles ===== -->
-      <section class="abt__sec" aria-labelledby="for-title">
-        <span class="abt__sec-label">What we optimise for</span>
-        <h2 class="abt__sec-title" id="for-title">Three things we actually care about</h2>
+        <p class="rsr__body">
+          We run a mock equity portfolio and a mock FICC book on Bloomberg Terminal. Once a
+          month each one is written up: what we were holding, why, what moved it, and what
+          the P&amp;L did.
+        </p>
+        <p class="rsr__body">
+          <strong>The reasoning is the point, not the return.</strong> A book down four percent
+          with a clear account of why is worth more to a reader on a desk than one up twelve
+          with no explanation. The write-up is also the part that teaches &mdash; it is hard to
+          hide a vague thesis from a monthly note.
+        </p>
 
-        <div class="principles">
-          <div class="principle">
-            <h3>Produce, don&rsquo;t spectate</h3>
-            <p>
-              Reading about markets is easy and teaches you very little. Everything we run ends in
-              someone having to produce something &mdash; a pitch, a position, a written view &mdash;
-              and then stand behind it.
-            </p>
+        <div class="record">
+          <div class="record__bar">
+            <span>Monthly note</span>
+            <span aria-hidden="true">&middot;</span>
+            <span>Both books, same format</span>
           </div>
-          <div class="principle">
-            <h3>Be wrong in public</h3>
-            <p>
-              Our competitions and debates are adversarial on purpose. The point is not to win; it
-              is to have your reasoning taken apart by someone who knows more than you, early
-              enough for it to be useful.
-            </p>
-          </div>
-          <div class="principle">
-            <h3>No prior knowledge required</h3>
-            <p>
-              Members arrive from every degree, including ones with no finance in them at all. The
-              entry point is curiosity and the willingness to do the reading &mdash; not a CV that
-              already looks the part.
-            </p>
+          <div class="record__grid">
+            <div class="record__cell">
+              <span class="record__k">Positions</span>
+              <span class="record__v">What was held, and at what size</span>
+            </div>
+            <div class="record__cell">
+              <span class="record__k">Reasoning</span>
+              <span class="record__v">Why each one was on</span>
+            </div>
+            <div class="record__cell">
+              <span class="record__k">What moved</span>
+              <span class="record__v">The month, in the author&rsquo;s reading</span>
+            </div>
+            <div class="record__cell">
+              <span class="record__k">P&amp;L</span>
+              <span class="record__v">Month and running, unedited</span>
+            </div>
           </div>
         </div>
-      </section>
 
-      <!-- ===== Onward ===== -->
-      <section class="abt__sec" aria-labelledby="next-title">
-        <span class="abt__sec-label">Go deeper</span>
-        <h2 class="abt__sec-title" id="next-title">Where to look next</h2>
-
-        <div class="onward">
-          <a href="/divisions">
-            <strong>Divisions</strong>
-            <span>FICC, Equities, Macro and Quant &mdash; what each one actually researches.</span>
-            <em>See the divisions &rarr;</em>
-          </a>
-          <a href="/events">
-            <strong>Events and Speakers</strong>
-            <span>The competitions, simulations and speaker evenings we run each year.</span>
-            <em>See what we run &rarr;</em>
-          </a>
-          <a href="/team">
-            <strong>Team</strong>
-            <span>The committee and division heads running the society this year.</span>
-            <em>Meet the team &rarr;</em>
-          </a>
-          <a href="/alumni">
-            <strong>Alumni</strong>
-            <span>Where members have gone after Bristol, and what they do now.</span>
-            <em>See the directory &rarr;</em>
-          </a>
+        <div class="awaiting">
+          <p class="awaiting__stamp">First note follows the first month of trading</p>
+          <p>
+            The books run on paper, on Bloomberg Terminal, with real prices. No capital is
+            managed and nothing here is advice.
+          </p>
         </div>
       </section>
 
     </div>
   </main>
 
+
   <script src="js/aurora.js?v=9" defer></script>
   <script src="js/transitions.js?v=3" defer></script>
   <script src="js/nav.js?v=1" defer></script>
-  <!-- ===== Site footer ===== -->
+  <script src="js/cookies.js?v=3" defer></script>
+  <script src="js/signup.js?v=1" defer></script>
   <footer class="site-footer">
     <div class="site-footer__inner">
 
@@ -605,8 +575,5 @@
 
     </div>
   </footer>
-
-  <script src="js/cookies.js?v=3" defer></script>
-  <script src="js/signup.js?v=1" defer></script>
 </body>
 </html>

@@ -37,12 +37,19 @@ var CONFIG = {
 var HEADERS = ['Submitted', 'First name', 'Last name', 'University email',
   'Personal email', 'Phone', 'Year', 'Course', 'LinkedIn', 'Role', 'CV'];
 
+var LIST_SHEET = 'Mailing list';
+var LIST_HEADERS = ['Subscribed', 'Email', 'Signed up from'];
+
 function doPost(e) {
   try {
     var data = JSON.parse(e.postData.contents);
 
     // Honeypot: real applicants leave this empty; bots fill it. Drop silently.
     if (data.company) return json({ ok: true });
+
+    // Mailing-list signups come through the same deployment so there is only
+    // one URL to keep in sync, but land in their own sheet.
+    if (data.type === 'subscribe') return subscribe(data);
 
     if (!data.firstName || !data.lastName ||
         !/^[^@\s]+@bristol\.ac\.uk$/i.test(data.uniEmail || '')) {
@@ -76,6 +83,34 @@ function doPost(e) {
   }
 }
 
+/**
+ * Mailing list. Deduplicates on email so a second signup does not create a
+ * second row -- the committee will be pasting this column straight into a BCC
+ * field, and duplicates there are visible to recipients.
+ */
+function subscribe(data) {
+  var email = String(data.email || '').trim();
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+    return json({ ok: false, error: 'Invalid email' });
+  }
+
+  var ss = spreadsheet();
+  var sheet = ss.getSheetByName(LIST_SHEET) || ss.insertSheet(LIST_SHEET);
+  if (sheet.getLastRow() === 0) sheet.appendRow(LIST_HEADERS);
+
+  var existing = sheet.getLastRow() > 1
+    ? sheet.getRange(2, 2, sheet.getLastRow() - 1, 1).getValues()
+    : [];
+  for (var i = 0; i < existing.length; i++) {
+    if (String(existing[i][0]).trim().toLowerCase() === email.toLowerCase()) {
+      return json({ ok: true, duplicate: true });
+    }
+  }
+
+  sheet.appendRow([new Date(), email, data.page || '']);
+  return json({ ok: true });
+}
+
 /** Accepts either a bare Drive folder ID or a full folder URL. */
 function folderId(s) {
   var m = String(s).match(/[-\w]{25,}/);
@@ -86,7 +121,7 @@ function doGet() {
   return ContentService.createTextOutput('BTS committee applications endpoint is live.');
 }
 
-function getSheet() {
+function spreadsheet() {
   var ss = CONFIG.SHEET_ID
     ? SpreadsheetApp.openById(CONFIG.SHEET_ID)
     : SpreadsheetApp.getActiveSpreadsheet();
@@ -94,6 +129,11 @@ function getSheet() {
     throw new Error('No spreadsheet. Set CONFIG.SHEET_ID if this is a ' +
       'standalone script rather than one bound to the Sheet.');
   }
+  return ss;
+}
+
+function getSheet() {
+  var ss = spreadsheet();
   var sheet = ss.getSheetByName(CONFIG.SHEET_NAME) || ss.insertSheet(CONFIG.SHEET_NAME);
   if (sheet.getLastRow() === 0) sheet.appendRow(HEADERS);
   return sheet;
