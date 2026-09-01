@@ -298,11 +298,11 @@
           </p>
         </div>
 
-        <!-- data-endpoint is intentionally empty until the committee Apps Script
-             is deployed (see apps-script/CommitteeCode.gs). Empty means the form
-             refuses to submit rather than silently losing an application. -->
+        <!-- Committee applications endpoint (apps-script/CommitteeCode.gs).
+             Deliberately NOT the Division Head script -- this one writes to the
+             separate committee sheet and reads the role below. -->
         <form id="applyForm" class="form-card" novalidate enctype="multipart/form-data"
-              data-endpoint=""
+              data-endpoint="https://script.google.com/macros/s/AKfycbwSJBkkMEvdsN8O9SO6fCjkABVbpaCvKVaic2C74pNu0BnkUEAmm8U84vw__Ag_ezEbZw/exec"
               data-role="Outreach &amp; Operations Officer">
 
           <!-- Honeypot: hidden from people, often filled by bots. Real users leave it empty. -->
