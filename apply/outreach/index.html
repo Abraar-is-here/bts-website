@@ -132,7 +132,12 @@
     }
     .role-cols {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+      /* Single column since "What we look for" was removed, so cap the measure
+         -- full-width bullets would run well past a comfortable line length. */
+      grid-template-columns: minmax(0, 1fr);
+      /* ch resolves against this element's 1rem, not the 0.9375rem list text,
+         so 62ch came out wider than the container and constrained nothing. */
+      max-width: 34rem;
       gap: var(--space-5) var(--space-4);
       margin-top: var(--space-6);
       padding-top: var(--space-5);
@@ -273,15 +278,6 @@
             <li>Write and send cold outreach to trading firms, banks and platforms.</li>
             <li>Keep a record of who was contacted and when, so nothing dies at handover.</li>
             <li>Follow up. Most first emails get no reply; the value is in the second.</li>
-          </ul>
-        </div>
-        <div>
-          <h2>What we look for</h2>
-          <ul>
-            <li>Comfortable cold emailing firms you have never spoken to, and not put off by silence.</li>
-            <li>Organised. Bookings, deadlines and a pipeline that is genuinely maintained.</li>
-            <li>Care with wording. You are sometimes the first thing a firm reads from us.</li>
-            <li>Discretion around anything commercial.</li>
           </ul>
         </div>
       </div>

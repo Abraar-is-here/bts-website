@@ -132,7 +132,12 @@
     }
     .role-cols {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+      /* Single column since "What we look for" was removed, so cap the measure
+         -- full-width bullets would run well past a comfortable line length. */
+      grid-template-columns: minmax(0, 1fr);
+      /* ch resolves against this element's 1rem, not the 0.9375rem list text,
+         so 62ch came out wider than the container and constrained nothing. */
+      max-width: 34rem;
       gap: var(--space-5) var(--space-4);
       margin-top: var(--space-6);
       padding-top: var(--space-5);
@@ -273,15 +278,6 @@
             <li>Be at events with a camera. Every photo we put on the website and socials is one you took.</li>
             <li>Turn a Wednesday evening into posted content while it is still current.</li>
             <li>Drive the pre-term push that fills the Welcome Event and analyst intake.</li>
-          </ul>
-        </div>
-        <div>
-          <h2>What we look for</h2>
-          <ul>
-            <li>Consistency over flair. Weekly beats brilliant once a term.</li>
-            <li>Judgement about what reads as professional. Our audience recruits for a living.</li>
-            <li>Hands-on with Canva, CapCut, Claude design or similar. This one is essential, not a nice-to-have.</li>
-            <li>A good eye behind a camera, and happy working a room while you shoot.</li>
           </ul>
         </div>
       </div>
