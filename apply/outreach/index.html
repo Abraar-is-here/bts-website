@@ -58,7 +58,10 @@
       font-size: 1.125rem;
       line-height: 1.7;
       color: var(--text-secondary);
-      max-width: 60ch;
+      /* Same measure as the role bullets and the rolling note below. The three
+         prose blocks were 737px, 560px and 616px wide, which is what made the
+         column look ragged. */
+      max-width: 34rem;
     }
     /* On a role page the eyebrow doubles as the way back to the other role. */
     a.apply__back { width: fit-content; text-decoration: none; }
@@ -118,6 +121,17 @@
 
     /* --- Role page -------------------------------------------------------- */
     .role-head { max-width: 60ch; }
+    /* Back-link and count on one line. Stacked, they made four separate rows
+       before the title; on one row they frame the header block instead. */
+    .role-head__meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3);
+      flex-wrap: wrap;
+      margin-bottom: var(--space-4);
+    }
+    .role-head__meta .apply__eyebrow { margin-bottom: 0; }
     .role-head__badge {
       display: inline-block;
       font-size: 0.6875rem;
@@ -128,7 +142,6 @@
       background: var(--accent);
       padding: 5px 12px;
       border-radius: var(--radius-pill);
-      margin-bottom: var(--space-3);
     }
     .role-cols {
       display: grid;
@@ -139,9 +152,11 @@
          so 62ch came out wider than the container and constrained nothing. */
       max-width: 34rem;
       gap: var(--space-5) var(--space-4);
+      /* No divider: the rule ran to 560px while the header above it ran to
+         737px and the form below to 760px, so it read as a broken line rather
+         than a section break. The gap does that job on its own, and matches
+         how the Apply section below is separated. */
       margin-top: var(--space-6);
-      padding-top: var(--space-5);
-      border-top: 1px solid var(--hairline);
     }
     .role-cols h2 {
       font-size: 0.6875rem;
@@ -172,14 +187,18 @@
     /* --- Form block -------------------------------------------------------
        The privacy notice needs clear air beneath it: run together, it reads as
        a form field rather than a disclosure. */
-    .apply__form-section { margin-top: var(--space-7); }
+    .apply__form-section { margin-top: var(--space-6); }
     .apply__form-section .notice { margin-bottom: var(--space-6); }
+    /* The box stays on the form's width, but its text takes the same measure as
+       every other prose block on the page. It was running to 687px -- about 88
+       characters -- which is well past a readable line. */
+    .apply__form-section .notice p { max-width: 34rem; }
     .apply__rolling {
       margin: 0 0 var(--space-4);
       font-size: 0.9375rem;
       line-height: 1.6;
       color: var(--text-secondary);
-      max-width: 60ch;
+      max-width: 34rem;
     }
     .form-role {
       display: flex;
@@ -187,9 +206,11 @@
       align-items: baseline;
       gap: 10px;
       padding: var(--space-3) var(--space-4);
-      /* Sits clear of the "Apply" heading rather than tucked under it. */
+      /* Sits clear of the "Apply" heading rather than tucked under it, but
+         close to the rolling note under it: the two together answer "what am I
+         applying for and how is it judged". 16 inside the pair, 32 around it. */
       margin-top: var(--space-4);
-      margin-bottom: var(--space-4);
+      margin-bottom: var(--space-3);
       border-left: 2px solid var(--accent);
       background: rgba(37, 99, 235, 0.10);
       border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
@@ -264,8 +285,10 @@
     <div class="apply__inner">
 
       <header class="apply__head role-head">
-        <a class="apply__eyebrow apply__back" href="/apply/"><span aria-hidden="true">&larr;</span> All committee roles</a>
-        <span class="role-head__badge">2 positions</span>
+        <div class="role-head__meta">
+          <a class="apply__eyebrow apply__back" href="/apply/"><span aria-hidden="true">&larr;</span> All committee roles</a>
+          <span class="role-head__badge">2 positions</span>
+        </div>
         <h1 class="h2 apply__title">Outreach &amp; Operations Officer</h1>
         <p class="body apply__sub">Booking the rooms and emailing the firms we want speaking in them.</p>
       </header>
