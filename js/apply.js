@@ -27,7 +27,16 @@
   // Each application form declares its own endpoint and the single role it is
   // for. That keeps one script serving several forms, and keeps committee
   // applications out of the Division Head spreadsheet.
-  var ENDPOINT = form.dataset.endpoint || CONFIG.APPS_SCRIPT_URL;
+  //
+  // The absent/empty distinction matters and MUST NOT be collapsed to `||`.
+  // A form with no data-endpoint at all is the legacy Division Head form and
+  // falls back to CONFIG. A form that declares data-endpoint="" is a form whose
+  // own script has not been deployed yet, and must refuse to send -- with `||`
+  // it silently posted committee applications into the Division Head sheet,
+  // where they arrived with "1st choice: undefined" and the wrong subject line.
+  var ENDPOINT = form.hasAttribute('data-endpoint')
+    ? form.getAttribute('data-endpoint').trim()
+    : CONFIG.APPS_SCRIPT_URL;
   var ROLE = form.dataset.role || '';
   var thanks = document.getElementById('applyThanks');
   var DEMO = new URLSearchParams(location.search).get('demo') === '1';
@@ -235,7 +244,8 @@
       if (!ENDPOINT) {
         sending(false);
         setStatus('This form isn’t connected yet. Please email us instead.', true);
-        console.warn('[apply] CONFIG.APPS_SCRIPT_URL is empty — set it (see apps-script/SETUP.md).');
+        console.error('[apply] No endpoint for role "' + (ROLE || 'unknown') +
+          '". Set data-endpoint on the form to its deployed Apps Script URL.');
         return;
       }
 
