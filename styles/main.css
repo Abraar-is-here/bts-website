@@ -1307,6 +1307,41 @@ main.page-dark {
   padding-top: var(--space-4);
   border-top: 1px solid var(--hairline);
 }
+/* Selection is not in the menu -- it is reached from the two pages where the
+   question "how do I get in / how did they get in" actually occurs. */
+.divisions__cta-aside {
+  margin: var(--space-4) 0 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  max-width: 52ch;
+}
+.team__selection {
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--hairline);
+  max-width: 52ch;
+}
+.team__selection-title {
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  margin: 0 0 8px;
+}
+.team__selection-note {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0 0 var(--space-3);
+}
+.team__selection-link {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--accent-bright);
+}
+
 .divisions__cta-note {
   font-size: 0.9375rem;
   line-height: 1.6;

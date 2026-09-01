@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="styles/tokens/colors.css?v=15" />
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
-  <link rel="stylesheet" href="styles/main.css?v=64" />
+  <link rel="stylesheet" href="styles/main.css?v=65" />
 
   <style>
     /* -------------------------------------------------------------------------
@@ -30,12 +30,8 @@
        reads as the workroom rather than the shopfront.
        ------------------------------------------------------------------------- */
     :root {
-      --c-navy:       #071729;
-      --c-royal-deep: #0a3247;
-      --c-royal:      #10566e;
-      --c-sky:        #37b3c4;
-
-      --held:  #46c397;   /* thesis survived contact                */
+      /* Verdict colours only. The aurora keeps the site palette. */
+      --held:  #46c397;   /* thesis survived contact                 */
       --broke: #e0796f;   /* thesis did not                          */
       --open:  #8da2c4;   /* not yet six months old                  */
     }
@@ -45,9 +41,9 @@
       content: '';
       position: absolute; inset: 0; z-index: 0;
       background: linear-gradient(180deg,
-                  rgba(4, 14, 26, 0.72) 0%,
-                  rgba(4, 14, 26, 0.55) 55%,
-                  rgba(4, 14, 26, 0) 100%);
+                  rgba(6, 17, 43, 0.70) 0%,
+                  rgba(6, 17, 43, 0.50) 55%,
+                  rgba(6, 17, 43, 0) 100%);
     }
     .rsr__wrap {
       position: relative; z-index: 1;
@@ -124,14 +120,14 @@
       margin-top: var(--space-5);
       border: 1px solid var(--glass-border);
       border-radius: var(--radius-sm);
-      background: rgba(4, 14, 26, 0.55);
+      background: rgba(10, 26, 63, 0.55);
       overflow: hidden;
     }
     .record__bar {
       display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap;
       padding: 10px var(--space-4);
       border-bottom: 1px solid var(--hairline);
-      background: rgba(4, 14, 26, 0.6);
+      background: rgba(10, 26, 63, 0.62);
       font-family: var(--font-mono, ui-monospace, 'SFMono-Regular', Menlo, monospace);
       font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase;
       color: var(--text-secondary);
@@ -192,6 +188,107 @@
     .rsr__body--gap   { margin-top: var(--space-5); }
     .rsr__body--small { margin-top: var(--space-3); font-size: 0.875rem; }
 
+
+    /* ---- Coming-soon gate ------------------------------------------------
+       main[data-state="soon"] hides .rsr__live and shows .soon. Flip the
+       attribute to "live" when the first reports go up. */
+    main[data-state="soon"] .rsr__live { display: none; }
+    main[data-state="live"] .soon      { display: none; }
+
+    .soon {
+      margin-top: var(--space-6);
+      padding: var(--space-5) var(--space-4);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-sm);
+      background: rgba(10, 26, 63, 0.55);
+      max-width: 40rem;
+    }
+    .soon__stamp {
+      font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--accent-bright); margin: 0 0 var(--space-3);
+    }
+    .soon__title {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800;
+      letter-spacing: -0.02em; margin: 0 0 var(--space-3);
+    }
+    .soon__note { font-size: 0.9375rem; line-height: 1.65; color: var(--text-secondary); margin: 0 0 var(--space-4); max-width: 46ch; }
+    .soon__list { list-style: none; margin: 0; padding: 0; }
+    .soon__list li {
+      position: relative; padding-left: 18px; margin-bottom: 10px;
+      font-size: 0.9375rem; line-height: 1.55; color: var(--text-secondary);
+    }
+    .soon__list li::before {
+      content: ''; position: absolute; left: 0; top: 9px;
+      width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
+    }
+    .soon__list strong { color: var(--text-primary); font-weight: 600; }
+    .soon__foot { margin: var(--space-4) 0 0; font-size: 0.875rem; color: var(--text-secondary); }
+
+    /* ---- Tables ----------------------------------------------------------- */
+    .tbl-wrap { margin-top: var(--space-4); overflow-x: auto; }
+    .tbl {
+      width: 100%; border-collapse: collapse;
+      font-size: 0.875rem; white-space: nowrap;
+    }
+    .tbl th {
+      text-align: left; padding: 10px var(--space-3) 10px 0;
+      font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--text-secondary);
+      border-bottom: 1px solid var(--glass-border);
+    }
+    .tbl td {
+      padding: 14px var(--space-3) 14px 0;
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--hairline);
+      vertical-align: baseline;
+    }
+    .tbl th.num, .tbl td.num { text-align: right; padding-right: var(--space-4); font-variant-numeric: tabular-nums; }
+    .tbl td:first-child { color: var(--text-primary); font-weight: 600; }
+    .tbl__empty td {
+      padding: var(--space-4) 0; color: var(--text-secondary);
+      font-style: normal; border-bottom: none;
+    }
+    .tbl__ret--up   { color: var(--held); font-weight: 600; }
+    .tbl__ret--down { color: var(--broke); font-weight: 600; }
+    .tbl__ret--flat { color: var(--text-secondary); }
+
+    .rsr__foot { margin: var(--space-3) 0 0; font-size: 0.8125rem; line-height: 1.6; color: var(--text-secondary); max-width: 52ch; }
+
+    /* ---- Books, one per division ------------------------------------------ */
+    .books {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+      gap: var(--space-3);
+      margin-top: var(--space-4);
+    }
+    .book {
+      padding: var(--space-4);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-sm);
+      background: rgba(10, 26, 63, 0.45);
+    }
+    .book__div {
+      font-family: var(--font-display);
+      font-size: 1.0625rem; font-weight: 800; letter-spacing: -0.01em;
+      color: var(--text-primary); margin: 0 0 8px;
+    }
+    .book__state { font-size: 0.8125rem; color: var(--text-secondary); margin: 0 0 var(--space-3); }
+    .book__last  { font-size: 0.8125rem; color: var(--text-secondary); margin: 0; font-variant-numeric: tabular-nums; }
+
+    .rollup {
+      display: flex; align-items: baseline; gap: var(--space-3);
+      margin-top: var(--space-4); padding-top: var(--space-3);
+      border-top: 1px solid var(--hairline);
+    }
+    .rollup__k {
+      font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--text-secondary); margin: 0;
+    }
+    .rollup__v {
+      font-family: var(--font-display); font-size: 1.25rem; font-weight: 800;
+      color: var(--text-primary); margin: 0 0 0 auto; font-variant-numeric: tabular-nums;
+    }
   </style>
 
   <!-- Structured data. Gives crawlers and AI answers facts to quote instead of
@@ -268,7 +365,6 @@
           <li><a class="nav__dropdown-link" href="/team" role="menuitem">Team</a></li>
           <li><a class="nav__dropdown-link" href="/divisions" role="menuitem">Divisions</a></li>
           <li><a class="nav__dropdown-link" href="/research" role="menuitem">Research</a></li>
-          <li><a class="nav__dropdown-link" href="/selection" role="menuitem">How we pick people</a></li>
           <li><a class="nav__dropdown-link" href="/alumni" role="menuitem">Alumni</a></li>
         </ul>
       </li>
@@ -276,214 +372,216 @@
     </ul>
   </nav>
 
-  <main id="research" class="rsr page-dark" tabindex="-1">
+  <!-- data-state="soon" hides everything below the coming-soon panel. Change it
+       to data-state="live" when the first reports go up; nothing else moves. -->
+  <main id="research" class="rsr page-dark" data-state="soon" tabindex="-1">
     <div class="rsr__wrap">
 
-      <header>
+      <header class="rsr__head">
         <span class="rsr__kicker">Research</span>
-        <h1 class="rsr__title">The work, and how it aged</h1>
+        <h1 class="rsr__title">Research and the books</h1>
         <p class="rsr__lead">
-          Every pitch we publish is stamped with the level it was made at and the date it
-          was made. Six months later the author comes back and writes what happened.
-          Including the ones that broke.
+          Everything the divisions produce, published as they produce it. Notes, trades and
+          monthly book reviews, each one dated and attributed.
         </p>
       </header>
 
-      <!-- ===== The standard ===== -->
-      <section class="rsr__sec" aria-labelledby="standard">
-        <div class="rsr__sec-head">
-          <h2 class="rsr__sec-title" id="standard">The standard</h2>
-          <p class="rsr__sec-note">Set before the first entry</p>
-        </div>
-
-        <p class="rsr__body">
-          Most societies publish their best work and quietly lose the rest. That produces a
-          page which proves nothing, because a reader cannot tell what was left out. So the
-          rules are fixed here first, in public, while the archive is still empty.
+      <!-- ===== Shown until the first reports land ===== -->
+      <section class="soon" aria-labelledby="soon-title">
+        <p class="soon__stamp">Opens with the academic year</p>
+        <h2 class="soon__title" id="soon-title">Coming soon</h2>
+        <p class="soon__note">
+          The archive opens when the analyst programme starts. Nothing will be backfilled:
+          every entry carries the date it was written, which is what makes the six-month
+          review of it worth reading.
         </p>
-
-        <ol class="rules">
-          <li>
-            <div>
-              <h3>Stamped at entry</h3>
-              <p>
-                Instrument, level and date, recorded when the pitch is made. The record is
-                not edited afterwards.
-              </p>
-            </div>
-          </li>
-          <li>
-            <div>
-              <h3>Revisited at six months</h3>
-              <p>
-                The same author returns and writes what happened, what they read correctly,
-                and what they misread.
-              </p>
-            </div>
-          </li>
-          <li>
-            <div>
-              <h3>The misses stay up</h3>
-              <p>
-                A thesis that broke is not taken down. The revisit note is the reason the
-                archive is worth reading.
-              </p>
-            </div>
-          </li>
-          <li>
-            <div>
-              <h3>Named</h3>
-              <p>
-                Every piece carries its author and their year. They own the call and they
-                own the review of it.
-              </p>
-            </div>
-          </li>
-        </ol>
-
-        <p class="rsr__body rsr__body--gap">
-          <strong>Why publish the misses.</strong> Desks do not hire people for having been
-          right. They hire people who can say why they were wrong, in specific terms, without
-          flinching. A record that shows only the wins is a marketing page. This is not one.
+        <ul class="soon__list">
+          <li><strong>Research notes</strong> &mdash; written by each division, published as PDFs</li>
+          <li><strong>Trades</strong> &mdash; entry price and date, marked at every monthly review</li>
+          <li><strong>The books</strong> &mdash; one per division, reviewed monthly</li>
+        </ul>
+        <p class="soon__foot">
+          Firms who want these as they are published can
+          <a href="/contact">ask to be added to the list</a>.
         </p>
       </section>
 
-      <!-- ===== Pitches ===== -->
-      <section class="rsr__sec" aria-labelledby="pitches">
-        <div class="rsr__sec-head">
-          <h2 class="rsr__sec-title" id="pitches">Pitches</h2>
-          <p class="rsr__sec-note">Equities &middot; FICC &middot; Macro &middot; Quant</p>
-        </div>
+      <!-- ===== Everything below is live only when data-state="live" ===== -->
+      <div class="rsr__live">
 
-        <p class="rsr__body">
-          Each entry is a single instrument and a single thesis, with the full note attached
-          as a PDF. This is the shape every record takes.
-        </p>
-
-        <div class="record">
-          <div class="record__bar">
-            <span>Record format</span>
-            <span aria-hidden="true">&middot;</span>
-            <span>Nine fields, no exceptions</span>
+        <!-- ---- Research notes ---- -->
+        <section class="rsr__sec" aria-labelledby="notes">
+          <div class="rsr__sec-head">
+            <h2 class="rsr__sec-title" id="notes">Research notes</h2>
+            <p class="rsr__sec-note">Updated as published</p>
           </div>
-          <div class="record__grid">
-            <div class="record__cell">
-              <span class="record__k">Instrument</span>
-              <span class="record__v">Ticker or contract</span>
-            </div>
-            <div class="record__cell">
-              <span class="record__k">Thesis</span>
-              <span class="record__v">One line, in the author&rsquo;s words</span>
-            </div>
-            <div class="record__cell">
-              <span class="record__k">Division</span>
-              <span class="record__v">Equities, FICC, Macro or Quant</span>
-            </div>
-            <div class="record__cell">
-              <span class="record__k">Author</span>
-              <span class="record__v">Name and year of study</span>
-            </div>
-            <div class="record__cell">
-              <span class="record__k">Entry level</span>
-              <span class="record__v">Price at the time of writing</span>
-            </div>
-            <div class="record__cell">
-              <span class="record__k">Entry date</span>
-              <span class="record__v">Fixed on publication</span>
-            </div>
-            <div class="record__cell">
-              <span class="record__k">Note</span>
-              <span class="record__v">The full write-up, as a PDF</span>
-            </div>
-            <div class="record__cell">
-              <span class="record__k">Revisit</span>
-              <span class="record__v">Written at six months</span>
-            </div>
-            <div class="record__cell">
-              <span class="record__k">Verdict</span>
-              <span class="record__v">One of the three below</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="verdicts">
-          <span class="chip chip--held">Held</span>
-          <span class="chip chip--broke">Broke</span>
-          <span class="chip chip--open">Open</span>
-        </div>
-        <p class="rsr__body rsr__body--small">
-          <em>Held</em> and <em>Broke</em> are assigned by the author at the revisit.
-          <em>Open</em> means the six months are not up.
-        </p>
-
-        <div class="awaiting">
-          <p class="awaiting__stamp">Archive opens with the analyst programme</p>
-          <p>
-            There is nothing here yet, and nothing will be backfilled. The first entry will
-            carry the date it was actually written, which is the only way the six-month
-            revisit means anything.
+          <p class="rsr__body">
+            Written work from all four divisions. Macro publishes thematic reports; the
+            others publish notes behind a specific instrument. Every note is a PDF, named
+            and dated.
           </p>
-          <p>
-            If you are a firm and want to be sent entries as they land,
-            <a href="/contact">get in touch</a>.
-          </p>
-        </div>
-      </section>
 
-      <!-- ===== The books ===== -->
-      <section class="rsr__sec" aria-labelledby="books">
-        <div class="rsr__sec-head">
-          <h2 class="rsr__sec-title" id="books">The books</h2>
-          <p class="rsr__sec-note">Monthly</p>
-        </div>
+          <div class="tbl-wrap">
+            <table class="tbl">
+              <caption class="visually-hidden">Research notes by division</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Date</th>
+                  <th scope="col">Division</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">Author</th>
+                  <th scope="col">Note</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Copy this row per note. Put the PDF in assets/research/.
 
-        <p class="rsr__body">
-          We run a mock equity portfolio and a mock FICC book on Bloomberg Terminal. Once a
-          month each one is written up: what we were holding, why, what moved it, and what
-          the P&amp;L did.
-        </p>
-        <p class="rsr__body">
-          <strong>The reasoning is the point, not the return.</strong> A book down four percent
-          with a clear account of why is worth more to a reader on a desk than one up twelve
-          with no explanation. The write-up is also the part that teaches &mdash; it is hard to
-          hide a vague thesis from a monthly note.
-        </p>
-
-        <div class="record">
-          <div class="record__bar">
-            <span>Monthly note</span>
-            <span aria-hidden="true">&middot;</span>
-            <span>Both books, same format</span>
+                <tr>
+                  <td>12 Oct 2026</td>
+                  <td>Macro</td>
+                  <td>Title of the note</td>
+                  <td>Author name, 2nd year</td>
+                  <td><a href="assets/research/filename.pdf">PDF</a></td>
+                </tr>
+                -->
+                <tr class="tbl__empty">
+                  <td colspan="5">No notes published yet.</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          <div class="record__grid">
-            <div class="record__cell">
-              <span class="record__k">Positions</span>
-              <span class="record__v">What was held, and at what size</span>
-            </div>
-            <div class="record__cell">
-              <span class="record__k">Reasoning</span>
-              <span class="record__v">Why each one was on</span>
-            </div>
-            <div class="record__cell">
-              <span class="record__k">What moved</span>
-              <span class="record__v">The month, in the author&rsquo;s reading</span>
-            </div>
-            <div class="record__cell">
-              <span class="record__k">P&amp;L</span>
-              <span class="record__v">Month and running, unedited</span>
-            </div>
+        </section>
+
+        <!-- ---- Trades ---- -->
+        <section class="rsr__sec" aria-labelledby="trades">
+          <div class="rsr__sec-head">
+            <h2 class="rsr__sec-title" id="trades">Trades</h2>
+            <p class="rsr__sec-note">Marked at each monthly review</p>
           </div>
-        </div>
-
-        <div class="awaiting">
-          <p class="awaiting__stamp">First note follows the first month of trading</p>
-          <p>
-            The books run on paper, on Bloomberg Terminal, with real prices. No capital is
-            managed and nothing here is advice.
+          <p class="rsr__body">
+            Every position each division puts on, with the price and date it went on at.
+            The return is measured from that entry and is not edited afterwards. Losers stay
+            on the page.
           </p>
-        </div>
-      </section>
 
+          <div class="tbl-wrap">
+            <table class="tbl tbl--trades" data-tracker>
+              <caption class="visually-hidden">Open and closed trades by division</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Division</th>
+                  <th scope="col">Instrument</th>
+                  <th scope="col">Side</th>
+                  <th scope="col" class="num">Entry</th>
+                  <th scope="col">Entered</th>
+                  <th scope="col" class="num">Last</th>
+                  <th scope="col" class="num">Return</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- To add a trade, copy this row and fill it in. js/tracker.js
+                     works out the Return cell from data-entry, data-last and
+                     data-side, so those are the only numbers to keep current.
+
+                <tr data-entry="187.40" data-last="201.10" data-side="long">
+                  <td>Equities</td>
+                  <td>TICKER</td>
+                  <td>Long</td>
+                  <td class="num">187.40</td>
+                  <td>12 Oct 2026</td>
+                  <td class="num">201.10</td>
+                  <td class="num" data-return>&mdash;</td>
+                  <td>Open</td>
+                </tr>
+                -->
+                <tr class="tbl__empty">
+                  <td colspan="8">No trades on yet.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="rsr__foot">
+            Prices are marked when the monthly review is written, not streamed live. Paper
+            trades on Bloomberg Terminal. No capital is managed and nothing here is advice.
+          </p>
+        </section>
+
+        <!-- ---- The books ---- -->
+        <section class="rsr__sec" aria-labelledby="books">
+          <div class="rsr__sec-head">
+            <h2 class="rsr__sec-title" id="books">The books</h2>
+            <p class="rsr__sec-note">Monthly, per division</p>
+          </div>
+          <p class="rsr__body">
+            Each division runs its own book and reviews it monthly: what was held, why, what
+            moved and what the P&amp;L did. The society roll-up sits underneath.
+          </p>
+
+          <div class="books">
+            <article class="book">
+              <p class="book__div">Equities</p>
+              <p class="book__state">Opens with the academic year</p>
+              <p class="book__last">Latest review &mdash;</p>
+            </article>
+            <article class="book">
+              <p class="book__div">FICC</p>
+              <p class="book__state">Opens with the academic year</p>
+              <p class="book__last">Latest review &mdash;</p>
+            </article>
+            <article class="book">
+              <p class="book__div">Macro</p>
+              <p class="book__state">Opens with the academic year</p>
+              <p class="book__last">Latest review &mdash;</p>
+            </article>
+            <article class="book">
+              <p class="book__div">Quant</p>
+              <p class="book__state">Opens with the academic year</p>
+              <p class="book__last">Latest review &mdash;</p>
+            </article>
+          </div>
+
+          <div class="rollup">
+            <p class="rollup__k">Society roll-up</p>
+            <p class="rollup__v">&mdash;</p>
+          </div>
+        </section>
+
+        <!-- ---- The standard ---- -->
+        <section class="rsr__sec" aria-labelledby="standard">
+          <div class="rsr__sec-head">
+            <h2 class="rsr__sec-title" id="standard">The standard</h2>
+            <p class="rsr__sec-note">Fixed before the first entry</p>
+          </div>
+          <ol class="rules">
+            <li>
+              <div>
+                <h3>Stamped at entry</h3>
+                <p>Instrument, level and date, recorded when the call is made. Not edited after.</p>
+              </div>
+            </li>
+            <li>
+              <div>
+                <h3>Reviewed at six months</h3>
+                <p>The author returns and writes what happened and what they misread.</p>
+              </div>
+            </li>
+            <li>
+              <div>
+                <h3>The misses stay up</h3>
+                <p>A thesis that broke is not removed. The review of it is the point.</p>
+              </div>
+            </li>
+            <li>
+              <div>
+                <h3>Named</h3>
+                <p>Every piece carries its author and their year.</p>
+              </div>
+            </li>
+          </ol>
+        </section>
+
+      </div>
     </div>
   </main>
 
@@ -492,6 +590,7 @@
   <script src="js/transitions.js?v=3" defer></script>
   <script src="js/nav.js?v=1" defer></script>
   <script src="js/cookies.js?v=3" defer></script>
+  <script src="js/tracker.js?v=1" defer></script>
   <script src="js/signup.js?v=1" defer></script>
   <footer class="site-footer">
     <div class="site-footer__inner">
