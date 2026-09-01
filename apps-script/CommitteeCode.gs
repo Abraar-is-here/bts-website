@@ -8,6 +8,9 @@
  * SETUP
  *  1. Create a NEW Google Sheet for committee applications.
  *  2. Extensions ▸ Apps Script, paste this file in, and set CONFIG below.
+ *     If that editor will not open, create a standalone project at
+ *     script.google.com/create instead, paste this in, and set CONFIG.SHEET_ID
+ *     to the Sheet's ID. Everything else is identical.
  *  3. Deploy ▸ New deployment ▸ Web app — Execute as: Me, Who has access: Anyone.
  *  4. Paste the resulting /exec URL into the data-endpoint attribute on BOTH
  *     committee application forms:
@@ -18,6 +21,12 @@
  */
 
 var CONFIG = {
+  // Leave EMPTY when this script lives inside the Sheet (Extensions ▸ Apps
+  // Script). Set it to the Sheet's ID when running as a STANDALONE project from
+  // script.google.com — getActiveSpreadsheet() returns null there.
+  // The ID is the long string in the Sheet URL:
+  //   docs.google.com/spreadsheets/d/<THIS_PART>/edit
+  SHEET_ID: '',
   CV_FOLDER_ID: '',                 // Drive folder for committee CVs — set this
   COMMITTEE_EMAIL: 'bristol-trading-society@bristol.ac.uk',
   CC_EMAILS: '',
@@ -78,7 +87,13 @@ function doGet() {
 }
 
 function getSheet() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = CONFIG.SHEET_ID
+    ? SpreadsheetApp.openById(CONFIG.SHEET_ID)
+    : SpreadsheetApp.getActiveSpreadsheet();
+  if (!ss) {
+    throw new Error('No spreadsheet. Set CONFIG.SHEET_ID if this is a ' +
+      'standalone script rather than one bound to the Sheet.');
+  }
   var sheet = ss.getSheetByName(CONFIG.SHEET_NAME) || ss.insertSheet(CONFIG.SHEET_NAME);
   if (sheet.getLastRow() === 0) sheet.appendRow(HEADERS);
   return sheet;
