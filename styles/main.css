@@ -1245,12 +1245,6 @@ main.page-dark {
   margin-top: var(--space-5);
   max-width: 76ch;
 }
-.div-block__lead {
-  font-size: 0.9375rem;
-  line-height: 1.6;
-  color: var(--text-secondary);
-  margin: 0 0 var(--space-3);
-}
 .div-block__title {
   margin-bottom: var(--space-3);
   padding-bottom: var(--space-2);
