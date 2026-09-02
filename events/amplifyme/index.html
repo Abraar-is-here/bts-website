@@ -77,17 +77,6 @@
     }
     html[data-theme="amplifyme"] .rail__media video,
     html[data-theme="amplifyme"] .fact { background: #131316; }
-    html[data-theme="amplifyme"] .theme-flag { display: block; }
-    .theme-flag {
-      display: none;
-      margin: 0 0 var(--space-4);
-      padding: 10px var(--space-3);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-sm);
-      font-size: 0.8125rem;
-      font-weight: 600;
-      color: var(--accent-bright);
-    }
 
     .ev-page { position: relative; padding: 120px 0 var(--space-7); }
     .ev-page::before {
@@ -229,7 +218,9 @@
       line-height: 1.5;
       color: var(--text-secondary);
     }
-    .rail__free { color: var(--accent-bright); }
+    /* .rail__facts dd is (0,1,1) and outranked a bare .rail__free (0,1,0), so
+       the one value worth highlighting was rendering as plain body text. */
+    .rail__facts .rail__free { color: var(--accent-bright); }
     .rail__btn { width: 100%; justify-content: center; }
 
     /* Below 900px the rail is no longer a rail: it goes back to being a block
@@ -395,11 +386,6 @@
 
   <main id="event" class="ev-page page-dark" tabindex="-1">
     <div class="ev-page__wrap">
-
-      <p class="theme-flag">
-        Theme preview &mdash; AmplifyME colours. Drop the <code>?theme=amplifyme</code>
-        from the URL for the normal site palette.
-      </p>
 
       <a class="ev-page__back" href="/events"><span aria-hidden="true">&larr;</span> All events</a>
 
@@ -576,13 +562,12 @@
   </main>
 
 
-  <!-- Theme switch must run before aurora.js reads the palette tokens, so it is
-       inline and not deferred. -->
-  <script>
-    if (new URLSearchParams(location.search).get('theme') === 'amplifyme') {
-      document.documentElement.setAttribute('data-theme', 'amplifyme');
-    }
-  </script>
+  <!-- AmplifyME's black/white/red is this page's palette. Set inline and not
+       deferred because aurora.js reads the colour tokens at start-up, so the
+       attribute has to be on <html> before it runs.
+       To put the page back on the site palette, delete this script: every themed
+       rule hangs off [data-theme="amplifyme"] and falls away with it. -->
+  <script>document.documentElement.setAttribute('data-theme', 'amplifyme');</script>
   <script src="js/aurora.js?v=9" defer></script>
   <script src="js/transitions.js?v=3" defer></script>
   <script src="js/nav.js?v=1" defer></script>
