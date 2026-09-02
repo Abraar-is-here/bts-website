@@ -122,6 +122,15 @@
       max-width: 20ch;
       text-wrap: balance;
     }
+    /* One paragraph on the page carries the fact that decides whether someone
+       turns up. It gets a panel; nothing else in the body does. */
+    .ev-page__body--key {
+      padding: var(--space-4);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: var(--radius-sm);
+      background: rgba(56, 189, 248, 0.08);
+      color: var(--text-primary);
+    }
     .ev-page__note {
       margin: var(--space-3) 0 0;
       font-size: 0.8125rem; color: var(--text-secondary);
@@ -276,7 +285,7 @@
         </div>
         <div class="fact">
           <span class="fact__k">Venue</span>
-          <span class="fact__v">To be confirmed<span class="fact__sub">University of Bristol</span></span>
+          <span class="fact__v">Sloane Robinson Building<span class="fact__sub">Near Bristol Temple Meads &middot; room to be confirmed</span></span>
         </div>
         <div class="fact">
           <span class="fact__k">Open to</span>
@@ -296,6 +305,12 @@
           You start with on-demand foundations, move up through live workshops built around
           problems that desks actually face, and finish each track with a careers
           masterclass and live Q&amp;A.
+        </p>
+        <p class="ev-page__body ev-page__body--key">
+          <strong>It is free for every Bristol student.</strong> Pathways is normally
+          licensed to universities per student. Bristol is one of AmplifyME&rsquo;s
+          longest-standing partners, so access is included at no cost &mdash; you do not
+          need to be a BTS member, and you do not need to pay for anything.
         </p>
 
         <div class="tracks-wrap">
@@ -351,6 +366,10 @@
           the room is scored, and the score follows you.
         </p>
         <ul class="ev-list">
+          <li>
+            <strong>Free access, for everyone.</strong> Every University of Bristol student
+            gets Pathways at no cost. Most universities pay per student licence.
+          </li>
           <li>
             <strong>Assessed performance.</strong> Every simulation is marked, and you can
             improve your score by repeating them across the term.
