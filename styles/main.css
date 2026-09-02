@@ -542,15 +542,6 @@ main.page-dark {
   gap: var(--space-4);
 }
 
-.hero-launch__eyebrow {
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.5);
-  margin: 0;
-}
 
 .hero-launch__title {
   max-width: 20ch;
@@ -584,15 +575,6 @@ main.page-dark {
   }
 }
 
-.hero-launch__sub {
-  font-family: var(--font-body);
-  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
-  color: rgba(255, 255, 255, 0.55);
-  margin: 0;
-  text-align: center;
-  max-width: 36ch;
-  line-height: 1.5;
-}
 
 /* ---- Navigation arrows ---- */
 .hero-ctrl {
@@ -708,7 +690,6 @@ main.page-dark {
   text-align: center;
   margin-inline: auto;
 }
-.hero__inner .hero__sub,
 .hero__inner .hero__title {
   margin-inline: auto;
 }
@@ -735,15 +716,6 @@ main.page-dark {
 .hero__title--roles { max-width: 22ch; }
 .hero__role { display: block; }
 
-/* Optional one-line subtitle under a slide headline. Matches the headline's
-   entrance timing so the slide arrives as one unit. */
-.hero__sub {
-  max-width: 46ch;
-  margin-top: var(--space-3);
-  margin-bottom: var(--space-4);
-  color: var(--text-secondary);
-  animation: rise-fade 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.24s both;
-}
 
 .hero__actions {
   display: flex;

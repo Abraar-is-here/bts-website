@@ -25,7 +25,7 @@
   <link rel="stylesheet" href="styles/tokens/colors.css?v=15" />
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
-  <link rel="stylesheet" href="styles/main.css?v=65" />
+  <link rel="stylesheet" href="styles/main.css?v=66" />
 
   <!-- Structured data. Gives crawlers and AI answers facts to quote instead of
        inferring them from prose. Every value here is verifiable on the site. -->
@@ -134,7 +134,7 @@
           <li><a class="nav__dropdown-link" href="/alumni" role="menuitem">Alumni</a></li>
         </ul>
       </li>
-      <li><a class="nav__link nav__link--cta" href="/apply">Apply now</a></li>
+      <li><a class="nav__link nav__link--cta" href="/apply/">Apply now</a></li>
     </ul>
   </nav>
 
@@ -149,10 +149,6 @@
         <div class="container hero__inner hero__inner--launch">
           <div class="hero-launch">
             <h1 class="display hero-launch__title">Welcome to the <span class="hero-launch__name">Bristol Trading Society</span></h1>
-            <p class="hero-launch__sub">
-              A student-run trading and markets society at the University of Bristol.
-              Open to every degree, no prior finance required.
-            </p>
           </div>
         </div>
       </div>
@@ -168,15 +164,11 @@
             <span class="hero__role">Marketing &amp; Media</span>
             <span class="hero__role">Outreach &amp; Operations</span>
           </h2>
-          <p class="body hero__sub">
-            Two positions in each, as we expand the society and its partnerships.
-          </p>
+          <!-- One destination, so one button. The nav already carries an "Apply
+               now" pill to the same place, and /apply/ is a role picker rather
+               than a form, so "See the roles" is what actually happens next. -->
           <div class="hero__actions">
-            <a class="btn btn--primary" href="/apply">
-              Apply now
-              <span class="btn__arrow" aria-hidden="true">&rarr;</span>
-            </a>
-            <a class="btn btn--secondary" href="/apply">
+            <a class="btn btn--primary" href="/apply/">
               See the roles
               <span class="btn__arrow" aria-hidden="true">&rarr;</span>
             </a>
@@ -362,7 +354,7 @@
         <div>
           <p class="site-footer__col-title">Get involved</p>
           <ul class="site-footer__list">
-            <li><a href="/apply">Applications</a></li>
+            <li><a href="/apply/">Applications</a></li>
             <li><a href="/sponsors">Sponsors and partners</a></li>
             <li><a href="/contact">Contact us</a></li>
             <li><a href="https://www.linkedin.com/company/bristol-trading-society/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
