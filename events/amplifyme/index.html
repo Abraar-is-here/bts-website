@@ -222,6 +222,12 @@
        the one value worth highlighting was rendering as plain body text. */
     .rail__facts .rail__free { color: var(--accent-bright); }
     .rail__btn { width: 100%; justify-content: center; }
+    .rail__note {
+      margin: var(--space-3) 0 0;
+      font-size: 0.8125rem;
+      line-height: 1.5;
+      color: var(--text-secondary);
+    }
 
     /* Below 900px the rail is no longer a rail: it goes back to being a block
        above the reading column, so the facts are still the first thing seen. */
@@ -315,7 +321,16 @@
     "@context": "https://schema.org",
     "@type": "Event",
     "name": "AmplifyME Pathways launch",
-    "startDate": "2026-09-22",
+    "startDate": "2026-09-22T18:00:00+01:00",
+    "endDate": "2026-09-22T20:00:00+01:00",
+    "url": "https://bristoltradingsoc.co.uk/events/amplifyme/",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "GBP",
+      "availability": "https://schema.org/InStock",
+      "url": "https://mycareer.bristol.ac.uk/student/svc/events.html#/user/event/8905"
+    },
     "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
     "eventStatus": "https://schema.org/EventScheduled",
     "description": "A live trading simulation run by AmplifyME with the Bristol Trading Society. Open to all University of Bristol students, no experience needed.",
@@ -531,7 +546,7 @@
               </div>
               <div>
                 <dt>Time</dt>
-                <dd>To be confirmed</dd>
+                <dd>18:00 &ndash; 20:00</dd>
               </div>
               <div>
                 <dt>Venue</dt>
@@ -544,10 +559,13 @@
                   <span>All Bristol students &middot; no membership needed</span></dd>
               </div>
             </dl>
-            <a class="btn btn--primary rail__btn" href="/events">
-              See the rest of the year
+            <a class="btn btn--primary rail__btn" href="https://mycareer.bristol.ac.uk/student/svc/events.html#/user/event/8905"
+               target="_blank" rel="noopener">
+              Sign up
               <span class="btn__arrow" aria-hidden="true">&rarr;</span>
             </a>
+            <p class="rail__note">Booking runs through mycareer, so you will need
+              your University login.</p>
           </div>
         </aside>
       </div>
