@@ -109,6 +109,48 @@
       width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
     }
 
+    /* The headline section gets one flag; nothing else on the page does, so it
+       reads as emphasis rather than another eyebrow. */
+    .ev-page__flag {
+      display: inline-block;
+      font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--accent-bright);
+      margin-bottom: var(--space-2);
+    }
+    .ev-page__note {
+      margin: var(--space-3) 0 0;
+      font-size: 0.8125rem; color: var(--text-secondary);
+    }
+
+    /* Pathways progression. A real matrix -- three tracks against five rising
+       levels -- so a table is the honest element for it, not a card grid. */
+    .tracks-wrap { margin-top: var(--space-4); overflow-x: auto; }
+    .tracks { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+    .tracks th, .tracks td {
+      text-align: left; vertical-align: top;
+      padding: 12px var(--space-3) 12px 0;
+      border-bottom: 1px solid var(--hairline);
+    }
+    .tracks thead th {
+      font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--text-secondary);
+      border-bottom: 1px solid var(--glass-border);
+      white-space: nowrap;
+    }
+    .tracks tbody th {
+      color: var(--text-primary); font-weight: 700; white-space: nowrap;
+      padding-right: var(--space-4);
+    }
+    .tracks tbody td { color: var(--text-secondary); min-width: 11rem; }
+    .tracks__meta {
+      display: block; margin-top: 3px;
+      font-size: 0.6875rem; font-weight: 400; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--text-secondary);
+    }
+    .tracks tbody tr:last-child th,
+    .tracks tbody tr:last-child td { border-bottom: none; }
+    .ev-list strong { color: var(--text-primary); font-weight: 600; }
+
     .ev-page__cta {
       margin-top: var(--space-6); padding-top: var(--space-4);
       border-top: 1px solid var(--hairline);
@@ -201,9 +243,9 @@
       <span class="ev-page__tag">With AmplifyME</span>
       <h1 class="ev-page__title">Financial Accelerator</h1>
       <p class="ev-page__lead">
-        A live trading simulation run by AmplifyME, where you take positions as part of a
-        desk and see how your decisions play out against the market and against everyone
-        else in the room.
+        A live trading simulation run by AmplifyME, and the launch of Pathways &mdash; their
+        platform for building assessed, practical experience across markets, banking and
+        quant through the rest of the year.
       </p>
 
       <div class="facts">
@@ -225,8 +267,102 @@
         </div>
       </div>
 
+      <section class="ev-page__sec" aria-labelledby="pathways">
+        <span class="ev-page__flag">The headline</span>
+        <h2 class="ev-page__h2" id="pathways">The launch of Pathways</h2>
+        <p class="ev-page__body">
+          This session doubles as the launch of <strong>AmplifyME Pathways</strong>, their
+          platform for building practical experience across markets, banking and quant.
+          Rather than one workshop and nothing after it, Pathways is a structured route that
+          runs through the year and gets harder as you go.
+        </p>
+        <p class="ev-page__body">
+          You start with on-demand foundations, move up through live workshops built around
+          problems that desks actually face, and finish each track with a careers
+          masterclass and live Q&amp;A.
+        </p>
+
+        <div class="tracks-wrap">
+          <table class="tracks">
+            <caption class="visually-hidden">The three Pathways tracks and their levels</caption>
+            <thead>
+              <tr>
+                <th scope="col">Level</th>
+                <th scope="col">Markets</th>
+                <th scope="col">Banking</th>
+                <th scope="col">Quant</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">0 <span class="tracks__meta">On demand &middot; 1 hr</span></th>
+                <td>Single stock trading</td>
+                <td>Introduction to modelling</td>
+                <td>Intro to quant</td>
+              </tr>
+              <tr>
+                <th scope="row">1 <span class="tracks__meta">Live &middot; 2 hrs</span></th>
+                <td>Portfolio management</td>
+                <td>Three statement modelling</td>
+                <td>Introduction to Python</td>
+              </tr>
+              <tr>
+                <th scope="row">2 <span class="tracks__meta">Live &middot; 2 hrs</span></th>
+                <td>Hedge fund trading strategies</td>
+                <td>Valuation modelling</td>
+                <td>Quantitative market making</td>
+              </tr>
+              <tr>
+                <th scope="row">3 <span class="tracks__meta">Live &middot; 2 hrs</span></th>
+                <td>Investment bank trading</td>
+                <td>Leveraged buyout modelling</td>
+                <td>Portfolio analysis</td>
+              </tr>
+              <tr>
+                <th scope="row">Masterclass <span class="tracks__meta">Live &middot; 1 hr</span></th>
+                <td colspan="3">Careers masterclass and live Q&amp;A in each track</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="ev-page__note">Source: AmplifyME Pathways platform brochure.</p>
+      </section>
+
+      <section class="ev-page__sec" aria-labelledby="whyitmatters">
+        <h2 class="ev-page__h2" id="whyitmatters">Why it is worth turning up for</h2>
+        <p class="ev-page__body">
+          The simulations are assessed. That is the part most people miss: what you do in
+          the room is scored, and the score follows you.
+        </p>
+        <ul class="ev-list">
+          <li>
+            <strong>Assessed performance.</strong> Every simulation is marked, and you can
+            improve your score by repeating them across the term.
+          </li>
+          <li>
+            <strong>Referrals to firms.</strong> AmplifyME invite top performers to their
+            High Potential Candidate programme, which refers students to partner firms
+            including Morgan Stanley and UBS. They say they only ever pass on positive
+            referrals.
+          </li>
+          <li>
+            <strong>Evidence for your CV.</strong> Performance data feeds a finance CV
+            builder, and each completed track carries a certificate accredited by the
+            London Institute of Banking &amp; Finance.
+          </li>
+          <li>
+            <strong>Leaderboards.</strong> Individual and university-level, so you can see
+            where you sit &mdash; and where Bristol sits against everyone else.
+          </li>
+          <li>
+            <strong>Deadlines in one place.</strong> An application tracker pre-loaded with
+            internship and graduate deadlines.
+          </li>
+        </ul>
+      </section>
+
       <section class="ev-page__sec" aria-labelledby="what">
-        <h2 class="ev-page__h2" id="what">What it is</h2>
+        <h2 class="ev-page__h2" id="what">The simulation on the day</h2>
         <p class="ev-page__body">
           AmplifyME&rsquo;s Financial Accelerator puts you on a simulated trading floor. You
           are given a desk, a book and live market conditions, and you trade them. Everyone
