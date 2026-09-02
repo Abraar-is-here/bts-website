@@ -27,6 +27,46 @@
        and what you actually do. So the page leads with a fact panel rather than
        prose, and the writing sits underneath it. Site palette throughout.
        ------------------------------------------------------------------------- */
+    /* ---- AmplifyME theme, preview only -----------------------------------
+       /events/amplifyme/?theme=amplifyme sets data-theme on <html> and swaps the
+       page to their black / white / red. The aurora shader reads these four
+       tokens at runtime, so it re-tints with everything else. Nothing changes
+       without the parameter. */
+    html[data-theme="amplifyme"] {
+      --c-navy:       #0b0b0d;
+      --c-royal-deep: #1a1214;
+      --c-royal:      #6b1220;
+      --c-sky:        #e03131;
+
+      --accent:        #e03131;
+      --accent-hover:  #c92a2a;
+      --accent-bright: #ff6b6b;
+      --text-primary:  #f5f5f6;
+      --text-secondary:#a8a8ad;
+      --hairline:      rgba(245, 245, 246, 0.14);
+      --glass-border:  rgba(245, 245, 246, 0.22);
+      --bg-abyss:      #0b0b0d;
+    }
+    html[data-theme="amplifyme"] .ev-page::before {
+      background: linear-gradient(180deg,
+                  rgba(11, 11, 13, 0.80) 0%,
+                  rgba(11, 11, 13, 0.62) 60%,
+                  rgba(11, 11, 13, 0) 100%);
+    }
+    html[data-theme="amplifyme"] .rail__media video,
+    html[data-theme="amplifyme"] .fact { background: #131316; }
+    html[data-theme="amplifyme"] .theme-flag { display: block; }
+    .theme-flag {
+      display: none;
+      margin: 0 0 var(--space-4);
+      padding: 10px var(--space-3);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-sm);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--accent-bright);
+    }
+
     .ev-page { position: relative; padding: 120px 0 var(--space-7); }
     .ev-page::before {
       content: '';
@@ -115,67 +155,60 @@
 
     .rail {
       position: sticky;
-      top: var(--space-5);
-      /* A sticky block taller than the viewport hides its own bottom -- the
-         button and the note were below the fold on a laptop-height screen and
-         unreachable while pinned. Cap it and let it scroll inside itself. */
+      /* Centred vertically on tall screens, but never above a comfortable top
+         offset on short ones. On a laptop this is barely different from
+         top-pinning, because the rail is nearly as tall as the viewport. */
+      top: max(var(--space-5), calc(50vh - 19.5rem));  /* 19.5rem = half the rail */
       max-height: calc(100vh - var(--space-5) * 2);
       overflow-y: auto;
       overscroll-behavior: contain;
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-sm);
-      background: rgba(10, 26, 63, 0.62);
     }
-    .rail__media { margin: 0; overflow: hidden; border-radius: var(--radius-sm) var(--radius-sm) 0 0; }
+    /* No container border, no dividers, no coloured banner. The old rail stacked
+       five different treatments in one box, which is what made it look cheap.
+       Now: one image, four typographic rows, one button. */
+    .rail__media { margin: 0 0 var(--space-4); }
     .rail__media video {
       display: block;
       width: 100%;
-      /* Source is 620x828 portrait. Cropped to a wider window here so the rail
-         stays short enough to fit a laptop screen; the full frame is not the
-         point, the full room is. */
+      /* Source is 620x828 portrait; cropped to a wide window so the rail clears
+         a laptop viewport. The room is the subject, not the framing. */
       aspect-ratio: 16 / 10;
       object-fit: cover;
+      border-radius: var(--radius-sm);
       background: var(--bg-abyss);
     }
     .rail__media figcaption {
-      padding: 10px var(--space-3);
+      margin-top: 8px;
       font-size: 0.75rem;
       color: var(--text-secondary);
-      border-bottom: 1px solid var(--hairline);
     }
-    /* The facts stack inside the rail rather than sitting four across. */
-    .rail .facts {
-      display: block;
-      margin: 0;
-      border: 0;
-      border-radius: 0;
-      background: none;
-    }
-    .rail .fact {
-      padding: 12px var(--space-3);
-      background: none;
-      border-bottom: 1px solid var(--hairline);
-    }
-    .rail__key {
-      margin: 0;
-      padding: 12px var(--space-3);
-      font-size: 0.875rem;
+    .rail__facts { margin: 0 0 var(--space-4); }
+    .rail__facts > div + div { margin-top: var(--space-3); }
+    .rail__facts dt {
+      font-size: 0.6875rem;
       font-weight: 700;
-      color: var(--accent-bright);
-      border-bottom: 1px solid var(--hairline);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 3px;
     }
-    .rail__key span {
-      display: block; margin-top: 3px;
-      font-size: 0.8125rem; font-weight: 400; color: var(--text-secondary);
-    }
-    .rail__btn { width: calc(100% - var(--space-3) * 2); margin: var(--space-3); justify-content: center; }
-    .rail__note {
+    .rail__facts dd {
       margin: 0;
-      padding: 0 var(--space-3) var(--space-3);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      line-height: 1.35;
+      color: var(--text-primary);
+    }
+    .rail__facts dd span {
+      display: block;
+      margin-top: 3px;
       font-size: 0.8125rem;
-      line-height: 1.55;
+      font-weight: 400;
+      line-height: 1.5;
       color: var(--text-secondary);
     }
+    .rail__free { color: var(--accent-bright); }
+    .rail__btn { width: 100%; justify-content: center; }
 
     /* Below 900px the rail is no longer a rail: it goes back to being a block
        above the reading column, so the facts are still the first thing seen. */
@@ -219,15 +252,6 @@
       max-width: 20ch;
       text-wrap: balance;
     }
-    /* One paragraph on the page carries the fact that decides whether someone
-       turns up. It gets a panel; nothing else in the body does. */
-    .ev-page__body--key {
-      padding: var(--space-4);
-      border: 1px solid rgba(56, 189, 248, 0.35);
-      border-radius: var(--radius-sm);
-      background: rgba(56, 189, 248, 0.08);
-      color: var(--text-primary);
-    }
     .ev-page__note {
       margin: var(--space-3) 0 0;
       font-size: 0.8125rem; color: var(--text-secondary);
@@ -262,17 +286,6 @@
     .tracks tbody tr:last-child td { border-bottom: none; }
     .ev-list strong { color: var(--text-primary); font-weight: 600; }
 
-    /* Supporting evidence, not a section of its own. Set quieter and narrower
-       so it reads as an aside rather than a fifth equal heading. */
-    .ev-note {
-      margin-top: var(--space-6);
-      padding: var(--space-4);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-sm);
-      background: rgba(10, 26, 63, 0.45);
-      max-width: 38rem;
-    }
-    .ev-note p { margin: 0; font-size: 0.9375rem; line-height: 1.65; color: var(--text-secondary); }
 
     .ev-page__cta {
       margin-top: var(--space-6); padding-top: var(--space-4);
@@ -361,6 +374,11 @@
   <main id="event" class="ev-page page-dark" tabindex="-1">
     <div class="ev-page__wrap">
 
+      <p class="theme-flag">
+        Theme preview &mdash; AmplifyME colours. Drop the <code>?theme=amplifyme</code>
+        from the URL for the normal site palette.
+      </p>
+
       <a class="ev-page__back" href="/events"><span aria-hidden="true">&larr;</span> All events</a>
 
       <span class="ev-page__tag">With AmplifyME</span>
@@ -385,12 +403,6 @@
           You start with on-demand foundations, move up through live workshops built around
           problems that desks actually face, and finish each track with a careers
           masterclass and live Q&amp;A.
-        </p>
-        <p class="ev-page__body ev-page__body--key">
-          <strong>It is free for every Bristol student.</strong> Pathways is normally
-          licensed to universities per student. Bristol is one of AmplifyME&rsquo;s
-          longest-standing partners, so access is included at no cost &mdash; you do not
-          need to be a BTS member, and you do not need to pay for anything.
         </p>
 
         <div class="tracks-wrap">
@@ -497,14 +509,6 @@
         </ul>
       </section>
 
-      <aside class="ev-note">
-        <p>
-          BTS has run AmplifyME sessions in previous years and filled a lecture theatre off
-          our own network. It is consistently one of the best-attended things we do, and one
-          of the few where you leave having actually done the work rather than watched
-          someone describe it.
-        </p>
-      </aside>
 
         </div>
 
@@ -518,21 +522,26 @@
               </video>
               <figcaption>A previous AmplifyME session at Bristol</figcaption>
             </figure>
-        <div class="facts">
-          <div class="fact">
-            <span class="fact__k">Date</span>
-            <span class="fact__v">Tuesday 22 September 2026</span>
-          </div>
-          <div class="fact">
-            <span class="fact__k">Time</span>
-            <span class="fact__v">To be confirmed</span>
-          </div>
-          <div class="fact">
-            <span class="fact__k">Venue</span>
-            <span class="fact__v">Sloane Robinson Building<span class="fact__sub">New University of Bristol campus &middot; room to be confirmed</span></span>
-          </div>
-        </div>
-            <p class="rail__key">Free for every Bristol student<span>No membership required</span></p>
+            <dl class="rail__facts">
+              <div>
+                <dt>Date</dt>
+                <dd>Tuesday 22 September 2026</dd>
+              </div>
+              <div>
+                <dt>Time</dt>
+                <dd>To be confirmed</dd>
+              </div>
+              <div>
+                <dt>Venue</dt>
+                <dd>Sloane Robinson Building
+                  <span>New University of Bristol campus &middot; room to be confirmed</span></dd>
+              </div>
+              <div>
+                <dt>Cost</dt>
+                <dd class="rail__free">Free
+                  <span>All Bristol students &middot; no membership needed</span></dd>
+              </div>
+            </dl>
             <a class="btn btn--primary rail__btn" href="/events">
               See the rest of the year
               <span class="btn__arrow" aria-hidden="true">&rarr;</span>
@@ -545,6 +554,13 @@
   </main>
 
 
+  <!-- Theme switch must run before aurora.js reads the palette tokens, so it is
+       inline and not deferred. -->
+  <script>
+    if (new URLSearchParams(location.search).get('theme') === 'amplifyme') {
+      document.documentElement.setAttribute('data-theme', 'amplifyme');
+    }
+  </script>
   <script src="js/aurora.js?v=9" defer></script>
   <script src="js/transitions.js?v=3" defer></script>
   <script src="js/nav.js?v=1" defer></script>
