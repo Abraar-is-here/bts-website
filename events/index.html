@@ -115,14 +115,14 @@
       content: '';
       width: 7px; height: 7px;
       border-radius: 50%;
-      background: var(--accent-bright);
-      box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.55);
+      background: var(--accent);
+      box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.55);
       animation: pulse 2.4s var(--ease-out) infinite;
     }
     @keyframes pulse {
-      0%   { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.5); }
-      70%  { box-shadow: 0 0 0 9px rgba(56, 189, 248, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); }
+      0%   { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.5); }
+      70%  { box-shadow: 0 0 0 9px rgba(37, 99, 235, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
     }
     /* width, not flex-basis: the parent is a column flex container, where
        flex-basis would size the height instead. */
@@ -377,8 +377,8 @@
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--c-navy);
-      background: var(--accent-bright);
+      color: #fff;
+      background: var(--accent);
       padding: 3px 7px;
       border-radius: 4px;
     }

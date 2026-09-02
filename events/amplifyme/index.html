@@ -46,7 +46,29 @@
       --hairline:      rgba(245, 245, 246, 0.14);
       --glass-border:  rgba(245, 245, 246, 0.22);
       --bg-abyss:      #0b0b0d;
+
+      /* These four carry royal blue baked into rgba() values, so overriding
+         --accent alone left blue on the nav bar, the nav hover, the button glow
+         and the focus ring. */
+      --glass-fill:        rgba(19, 19, 22, 0.72);
+      --glass-fill-strong: rgba(19, 19, 22, 0.86);
+      --hover-tint:        rgba(107, 18, 32, 0.85);
+      --shadow-glow:       0 0 32px rgba(224, 49, 49, 0.40);
+      --shadow-pill:       0 10px 30px rgba(0, 0, 0, 0.55),
+                           0 2px 6px rgba(0, 0, 0, 0.45);
+      --globe-halo:        rgba(224, 49, 49, 0.12);
+      --focus-ring:        #ff6b6b;
     }
+    /* Three more are written as literal rgba in main.css rather than tokens. */
+    html[data-theme="amplifyme"] .btn--primary:hover {
+      box-shadow: 0 0 44px rgba(224, 49, 49, 0.55), var(--shadow-pill);
+    }
+    html[data-theme="amplifyme"] .field:focus-visible,
+    html[data-theme="amplifyme"] input:focus-visible,
+    html[data-theme="amplifyme"] .signup__input:focus-visible {
+      box-shadow: 0 0 0 3px rgba(224, 49, 49, 0.35);
+    }
+    html[data-theme="amplifyme"] .nav { background: var(--glass-fill); }
     html[data-theme="amplifyme"] .ev-page::before {
       background: linear-gradient(180deg,
                   rgba(11, 11, 13, 0.80) 0%,

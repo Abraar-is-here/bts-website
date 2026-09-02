@@ -141,7 +141,9 @@
       border-radius: var(--radius-pill);
       margin-bottom: var(--space-3);
     }
-    .plan--principal .plan__badge { color: var(--c-navy); background: var(--accent-bright); }
+    /* White on royal, matching every other pill on the site. Was navy on sky,
+       which was the one light-blue fill that stood out as too bright. */
+    .plan--principal .plan__badge { color: #fff; background: var(--accent); }
     .plan--associate .plan__badge { color: var(--text-secondary); border: 1px solid var(--glass-border); }
     .plan__name {
       font-family: var(--font-display);
@@ -205,7 +207,7 @@
       left: 2px; top: 8px;
       width: 6px; height: 6px;
       border-radius: 50%;
-      background: var(--accent-bright);
+      background: var(--accent);
     }
     .plan--associate .plan__list li::before { background: rgba(141, 162, 196, 0.7); }
     .plan__list strong { color: var(--text-primary); font-weight: 600; }
