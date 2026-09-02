@@ -146,6 +146,47 @@
       margin-bottom: 2px;
     }
     .next-item__when { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.45; }
+
+    /* A next-item that has a page behind it becomes a link across its whole
+       row. The dashed chip means "no date yet"; a solid one means "go here". */
+    .next-item--live { padding: 0; }
+    .next-item__link {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3);
+      width: 100%;
+      padding: var(--space-3) 0;
+      text-decoration: none;
+      color: inherit;
+      transition: opacity var(--dur-fast) var(--ease-out);
+    }
+    .next-item--live:first-child .next-item__link { padding-top: 0; }
+    .next-item__chip--go {
+      border-style: solid;
+      border-color: var(--accent);
+      color: var(--text-primary);
+      background: rgba(37, 99, 235, 0.14);
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .next-item__link:hover { opacity: 0.78; }
+      .next-item__link:hover .next-item__chip--go { background: rgba(37, 99, 235, 0.24); }
+    }
+    .next-item__link:active { transform: scale(0.995); }
+
+    .term__link { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(56, 189, 248, 0.4); }
+    .term__link:hover { color: var(--accent-bright); }
+
+    .row__link { color: inherit; text-decoration: none; }
+    .row__link:hover { color: var(--accent-bright); }
+    .row__more { margin-top: var(--space-3); font-size: 0.875rem; font-weight: 600; }
+    .row__more a { color: var(--accent-bright); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .next-item__link { transition: none; }
+      .next-item__link:active { transform: none; }
+    }
     /* An honest placeholder: says "we don't have a date" without pretending
        to be a button that goes somewhere. */
     .next-item__chip {
@@ -603,6 +644,15 @@
       <div class="next">
         <span class="next__flag">Next up</span>
         <ul class="next__list">
+          <li class="next-item next-item--live">
+            <a class="next-item__link" href="/events/amplifyme/">
+              <div class="next-item__body">
+                <p class="next-item__title">AmplifyME Financial Accelerator</p>
+                <p class="next-item__when">Tuesday 22 September 2026 &mdash; open to all Bristol students</p>
+              </div>
+              <span class="next-item__chip next-item__chip--go">Details &rarr;</span>
+            </a>
+          </li>
           <li class="next-item">
             <div class="next-item__body">
               <p class="next-item__title">Division head applications</p>
@@ -632,6 +682,7 @@
           <div class="term">
             <p class="term__span">September &ndash; December</p>
             <ul class="term__list">
+              <li><a class="term__link" href="/events/amplifyme/">AmplifyME Financial Accelerator</a> <span class="term__when">22 September</span></li>
               <li>Annual Welcome Event <span class="term__when">Late September</span></li>
               <li>Analyst programme opens <span class="term__when">October</span></li>
               <li>Bloomberg Terminal sessions <span class="term__when">Throughout</span></li>
@@ -642,7 +693,6 @@
           <div class="term">
             <p class="term__span">January &ndash; March</p>
             <ul class="term__list">
-              <li>AmplifyME trading simulator <span class="term__when">Spring</span></li>
               <li>Macro Debate Competition <span class="term__when">Spring</span></li>
               <li>Division workshops <span class="term__when">Termly</span></li>
               <li>Industry socials <span class="term__when">By invitation</span></li>
@@ -752,11 +802,16 @@
             </div>
             <div>
               <span class="row__tag">With AmplifyME</span>
-              <h3 class="row__title">AmplifyME Trading Simulator</h3>
+              <h3 class="row__title">
+                <a class="row__link" href="/events/amplifyme/">AmplifyME Financial Accelerator</a>
+              </h3>
               <p class="row__text">
                 A live portfolio-management simulation. Members manage $20m of capital through a
                 compressed year of market moves, news and research, and are ranked on what they do
                 with it. Our first event sold out; a second followed by demand.
+              </p>
+              <p class="row__more">
+                <a href="/events/amplifyme/">Next session, 22 September &rarr;</a>
               </p>
             </div>
           </article>
