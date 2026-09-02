@@ -43,7 +43,10 @@
     }
 
     .ev-page__back {
-      display: inline-block;
+      /* block, not inline-block: the tag below it is also inline-block, so the
+         two flowed onto the same line and the tag sat 113px off the left edge. */
+      display: block;
+      width: fit-content;
       font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.12em;
       text-transform: uppercase; color: var(--accent-bright);
       text-decoration: none; margin-bottom: var(--space-4);
@@ -61,7 +64,9 @@
       font-family: var(--font-display);
       font-size: clamp(2.2rem, 5.5vw, 3.4rem);
       font-weight: 800; line-height: 1.03; letter-spacing: -0.03em;
-      margin: 0 0 var(--space-4); max-width: 20ch; text-wrap: balance;
+      /* ch resolves against this element's own 54px display face, so 20ch came
+         out at 1160px and constrained nothing. A rem measure actually binds. */
+      margin: 0 0 var(--space-4); max-width: 32rem; text-wrap: balance;
     }
     .ev-page__lead {
       font-size: 1.125rem; line-height: 1.7;
@@ -109,13 +114,13 @@
       width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
     }
 
-    /* The headline section gets one flag; nothing else on the page does, so it
-       reads as emphasis rather than another eyebrow. */
-    .ev-page__flag {
-      display: inline-block;
-      font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.14em;
-      text-transform: uppercase; color: var(--accent-bright);
-      margin-bottom: var(--space-2);
+    /* The lead section is set a size step larger rather than being labelled.
+       Five sections at one h2 size read as five equal things; the type does the
+       ranking here instead of another uppercase eyebrow. */
+    .ev-page__h2--lead {
+      font-size: clamp(1.9rem, 4.2vw, 2.75rem);
+      max-width: 20ch;
+      text-wrap: balance;
     }
     .ev-page__note {
       margin: var(--space-3) 0 0;
@@ -150,6 +155,18 @@
     .tracks tbody tr:last-child th,
     .tracks tbody tr:last-child td { border-bottom: none; }
     .ev-list strong { color: var(--text-primary); font-weight: 600; }
+
+    /* Supporting evidence, not a section of its own. Set quieter and narrower
+       so it reads as an aside rather than a fifth equal heading. */
+    .ev-note {
+      margin-top: var(--space-6);
+      padding: var(--space-4);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-sm);
+      background: rgba(10, 26, 63, 0.45);
+      max-width: 38rem;
+    }
+    .ev-note p { margin: 0; font-size: 0.9375rem; line-height: 1.65; color: var(--text-secondary); }
 
     .ev-page__cta {
       margin-top: var(--space-6); padding-top: var(--space-4);
@@ -268,8 +285,7 @@
       </div>
 
       <section class="ev-page__sec" aria-labelledby="pathways">
-        <span class="ev-page__flag">The headline</span>
-        <h2 class="ev-page__h2" id="pathways">The launch of Pathways</h2>
+        <h2 class="ev-page__h2 ev-page__h2--lead" id="pathways">The launch of Pathways</h2>
         <p class="ev-page__body">
           This session doubles as the launch of <strong>AmplifyME Pathways</strong>, their
           platform for building practical experience across markets, banking and quant.
@@ -374,10 +390,6 @@
           trade in your life, this is the session that shows you what the job actually
           involves.
         </p>
-      </section>
-
-      <section class="ev-page__sec" aria-labelledby="expect">
-        <h2 class="ev-page__h2" id="expect">What to expect</h2>
         <ul class="ev-list">
           <li>A briefing on the instruments and the scenario before you start.</li>
           <li>Live simulated trading, in teams, against the rest of the room.</li>
@@ -386,15 +398,14 @@
         </ul>
       </section>
 
-      <section class="ev-page__sec" aria-labelledby="history">
-        <h2 class="ev-page__h2" id="history">We have run this before</h2>
-        <p class="ev-page__body">
+      <aside class="ev-note">
+        <p>
           BTS has run AmplifyME sessions in previous years and filled a lecture theatre off
           our own network. It is consistently one of the best-attended things we do, and one
           of the few where you leave having actually done the work rather than watched
           someone describe it.
         </p>
-      </section>
+      </aside>
 
       <div class="ev-page__cta">
         <p>
