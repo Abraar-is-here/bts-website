@@ -25,7 +25,7 @@
   <link rel="stylesheet" href="styles/tokens/colors.css?v=15" />
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
-  <link rel="stylesheet" href="styles/main.css?v=67" />
+  <link rel="stylesheet" href="styles/main.css?v=68" />
 
   <!-- Structured data. Gives crawlers and AI answers facts to quote instead of
        inferring them from prose. Every value here is verifiable on the site. -->
@@ -164,6 +164,20 @@
             <span class="hero__role">Marketing &amp; Media</span>
             <span class="hero__role">Outreach &amp; Operations</span>
           </h2>
+          <!-- Live deadline. Takes the mono face reserved for status moments,
+               which also keeps the digits from jittering as they tick. Sits above
+               the button: the clock is the reason to press it. -->
+          <p class="hero__deadline" data-countdown="2026-09-08T18:00:00+01:00">
+            <span class="hero__deadline-label">Applications close in</span>
+            <span class="hero__deadline-clock" aria-hidden="true">
+              <span class="hero__deadline-unit" data-cd-days hidden><span data-cd="d">0</span>d</span>
+              <span class="hero__deadline-unit"><span data-cd="h">00</span>h</span>
+              <span class="hero__deadline-unit"><span data-cd="m">00</span>m</span>
+              <span class="hero__deadline-unit"><span data-cd="s">00</span>s</span>
+            </span>
+            <span class="visually-hidden">Applications close at 6pm on Tuesday 8 September 2026.</span>
+          </p>
+
           <!-- One destination, so one button. The nav already carries an "Apply
                now" pill to the same place, and /apply/ is a role picker rather
                than a form, so "See the roles" is what actually happens next. -->
@@ -322,6 +336,7 @@
   <script src="js/transitions.js?v=3" defer></script>
   <script src="js/marquee.js?v=1" defer></script>
   <script src="js/nav.js?v=1" defer></script>
+  <script src="js/countdown.js?v=1" defer></script>
   <!-- ===== Site footer ===== -->
   <footer class="site-footer site-footer--light">
     <div class="site-footer__inner">
