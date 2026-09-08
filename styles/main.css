@@ -756,66 +756,6 @@ main.page-dark {
 /* Two roles, one per line, no connective between them. */
 .hero__title--roles { max-width: 22ch; }
 
-/* --- Hero deadline countdown ----------------------------------------------
-   A live clock is exactly the "status" moment --font-mono is reserved for, and
-   the monospace figures stop the row twitching as the seconds tick. Glass to
-   match the nav bar, so it reads as instrumentation rather than decoration. */
-.hero__deadline {
-  display: inline-flex;
-  align-items: center;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 6px 12px;
-  margin: 0 auto clamp(var(--space-4), 5vh, var(--space-5));
-  padding: 8px 18px;
-  border-radius: var(--radius-pill);
-  background: var(--glass-fill);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
-  backdrop-filter: blur(14px) saturate(140%);
-  border: 1px solid var(--glass-border);
-}
-
-.hero__deadline-label {
-  font-family: var(--font-body);
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.62);
-}
-
-.hero__deadline-clock {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 8px;
-  font-family: var(--font-mono);
-  font-size: 1.0625rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  color: var(--text-primary);
-  font-variant-numeric: tabular-nums;
-}
-
-/* The unit letters are quieter than the figures they follow. */
-.hero__deadline-unit { font-size: 0.75rem; font-weight: 400; color: rgba(255, 255, 255, 0.55); }
-.hero__deadline-unit [data-cd] { font-size: 1.0625rem; font-weight: 700; color: var(--text-primary); }
-/* Explicit, because the inline-flex above would otherwise beat [hidden]. */
-.hero__deadline-unit[hidden] { display: none; }
-
-/* Past the deadline the pill collapses to a single quiet line. */
-.hero__deadline--closed {
-  font-family: var(--font-body);
-  font-size: 0.8125rem;
-  letter-spacing: 0.06em;
-  color: rgba(255, 255, 255, 0.62);
-}
-
-@media (max-width: 420px) {
-  .hero__deadline { padding: 7px 14px; gap: 4px 10px; }
-  .hero__deadline-label { font-size: 0.625rem; letter-spacing: 0.12em; }
-  .hero__deadline-clock { font-size: 0.9375rem; gap: 6px; }
-  .hero__deadline-unit [data-cd] { font-size: 0.9375rem; }
-}
 .hero__role { display: block; }
 
 
