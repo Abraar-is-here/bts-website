@@ -213,6 +213,14 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   line-height: 1;
 }
 
+/* Official lockup artwork (bull + wordmark in one image). Sized by height so
+   the wide aspect ratio carries the width. */
+.logo__lockup {
+  display: block;
+  height: 26px;
+  width: auto;
+}
+
 .logo__bull {
   width: 30px;
   height: auto;
@@ -1375,6 +1383,7 @@ main.page-dark {
 @media (max-width: 560px) {
   .logo__full { display: none; }
   .logo__bull { width: 22px; }
+  .logo__lockup { height: 20px; }
   .logo__bts  { font-size: 1rem; }
   .logo       { gap: 6px; padding: 2px 4px; }
   .nav {
@@ -1406,6 +1415,7 @@ main.page-dark {
   .nav__menu-btn { padding: 9px 13px; font-size: 0.8125rem; gap: 6px; }
   .nav__menu-icon { width: 15px; height: 10px; }
   .logo__bull { width: 18px; }
+  .logo__lockup { height: 17px; }
   .logo__bts  { font-size: 0.875rem; }
   .logo       { gap: 4px; padding: 2px 2px; }
 }
@@ -2027,9 +2037,10 @@ body.is-leaving {
   text-decoration: none;
   transition: border-color var(--dur-med) var(--ease-out);
 }
+/* Cards are no longer whole links, so hover belongs to the links inside them
+   rather than the card: a lit border on a card you cannot click would lie. */
 @media (hover: hover) and (pointer: fine) {
-  .start__card:hover { border-top-color: var(--accent-bright); }
-  .start__card:hover .start__go { color: var(--accent-bright); }
+  a.start__go:hover { color: var(--accent-bright); }
 }
 .start__step {
   font-size: 0.6875rem;
@@ -2061,8 +2072,51 @@ body.is-leaving {
   font-size: 0.8125rem;
   font-weight: 600;
   color: var(--accent);
+  text-decoration: none;
   transition: color var(--dur-fast) var(--ease-out);
 }
+/* Status line, not a link: reads as information rather than an invitation. */
+.start__go--static { color: var(--text-secondary); }
+/* Join button sits where the blurb was, so it leads the card. */
+.start__join { align-self: flex-start; margin-top: var(--space-2); }
+
+/* --- Home: the start cards as the hero ---------------------------------------
+   Sits on the aurora rather than the abyss ground the section used to have.
+   Placed after .hero so these win on equal specificity. */
+.hero--start {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(var(--space-6) + 64px) var(--gutter) var(--space-6);
+}
+.hero-start {
+  position: relative;
+  z-index: 1;                          /* above the hero scrim */
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+.hero-start__name {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.5rem, 3.2vw, 2.25rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin: 0 0 var(--space-2);
+}
+.hero--start .start__label { color: rgba(255, 255, 255, 0.72); }
+.hero--start .start__card {
+  padding: var(--space-4);
+  background: var(--glass-fill);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid var(--glass-border);
+  border-top: 2px solid var(--accent);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-pill);
+}
+.hero--start .start__text { color: rgba(244, 247, 251, 0.78); }
 
 @media (prefers-reduced-motion: reduce) {
   .start__card, .start__go { transition: none; }
