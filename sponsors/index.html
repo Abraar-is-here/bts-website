@@ -111,15 +111,19 @@
       background: rgba(8, 19, 46, 0.78);
     }
 
-    /* The two tiers are deliberately different objects, not the same card with
-       a different price: different accent, different rule, different badge. */
-    .plan--principal {
-      border-color: rgba(56, 189, 248, 0.5);
+    /* Three tiers, told apart by a muted metallic accent on the border, badge
+       and bullets. Kept low in saturation so they sit inside the navy palette
+       rather than reading as literal gold, silver and bronze foil. Gold also
+       keeps the corner glow the top tier has always had. */
+    .plan--gold {
+      --tier: #c9a64b;
+      border-color: rgba(201, 166, 75, 0.55);
       background:
-        radial-gradient(ellipse 70% 100% at 0% 0%, rgba(37, 99, 235, 0.22) 0%, transparent 60%),
+        radial-gradient(ellipse 70% 100% at 0% 0%, rgba(201, 166, 75, 0.14) 0%, transparent 60%),
         rgba(8, 19, 46, 0.82);
     }
-    .plan--associate { border-color: rgba(141, 162, 196, 0.28); }
+    .plan--silver { --tier: #c0c7d1; border-color: rgba(192, 199, 209, 0.38); }
+    .plan--bronze { --tier: #c8895a; border-color: rgba(200, 137, 90, 0.4); }
 
     .plan__top {
       display: flex;
@@ -143,8 +147,11 @@
     }
     /* White on royal, matching every other pill on the site. Was navy on sky,
        which was the one light-blue fill that stood out as too bright. */
-    .plan--principal .plan__badge { color: #fff; background: var(--accent); }
-    .plan--associate .plan__badge { color: var(--text-secondary); border: 1px solid var(--glass-border); }
+    /* Gold is filled (navy on gold, ~7:1); Silver and Bronze are outlined, so
+       the top tier still reads first. */
+    .plan--gold .plan__badge { color: #0a1a3f; background: var(--tier); }
+    .plan--silver .plan__badge,
+    .plan--bronze .plan__badge { color: var(--tier); border: 1px solid var(--tier); }
     .plan__name {
       font-family: var(--font-display);
       font-size: clamp(1.75rem, 3.4vw, 2.5rem);
@@ -207,7 +214,6 @@
       margin-bottom: var(--space-3);
       border-bottom: 2px solid var(--accent);
     }
-    .plan--associate .plan__group-title { border-bottom-color: rgba(141, 162, 196, 0.45); }
     .plan__list { list-style: none; margin: 0; padding: 0; }
     .plan__list li {
       position: relative;
@@ -225,7 +231,21 @@
       border-radius: 50%;
       background: var(--accent);
     }
-    .plan--associate .plan__list li::before { background: rgba(141, 162, 196, 0.7); }
+    .plan--gold .plan__list li::before,
+    .plan--silver .plan__list li::before,
+    .plan--bronze .plan__list li::before { background: var(--tier); }
+    /* Headings only: each benefit is its own label now, so it takes the primary
+       colour, and the list flows into columns instead of the old three groups. */
+    .plan__list--flat {
+      columns: 3 220px;
+      column-gap: var(--space-4);
+      margin-top: var(--space-2);
+    }
+    .plan__list--flat li {
+      break-inside: avoid;
+      color: var(--text-primary);
+      font-weight: 500;
+    }
     .plan__list strong { color: var(--text-primary); font-weight: 600; }
 
     /* Controls sit outside the card on wide screens, below it when there is
@@ -344,6 +364,36 @@
       max-width: 82ch;
     }
 
+    /* --- Partner track record ------------------------------------------------
+       Was unstyled, so it fell back to browser discs indented 40px: the only
+       block off the page gutter. Now the same dot-and-label pattern as the tier
+       lists, with the firm in primary and what they ran in secondary. */
+    .track { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; max-width: 70ch; }
+    .track li {
+      position: relative;
+      padding-left: 20px;
+      font-size: 0.9375rem;
+      line-height: 1.55;
+      color: var(--text-secondary);
+    }
+    .track li::before {
+      content: '';
+      position: absolute;
+      left: 2px; top: 9px;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+    .track strong { color: var(--text-primary); font-weight: 600; }
+
+    /* Body copy is secondary everywhere else on the page; the bespoke note was
+       the one paragraph in primary. Its lead-in stays bright. */
+    .bespoke { color: var(--text-secondary); }
+    .bespoke strong { color: var(--text-primary); }
+
+    /* Steps draw their own top rule, so a heading underline above them doubled up. */
+    .spon__section-title--bare { border-bottom: 0; padding-bottom: 0; }
+
     /* --- How it works ------------------------------------------------------
        A corporate recruiter's first unasked question is how much admin this
        will be. Four steps answers it before they have to ask. */
@@ -380,6 +430,46 @@
       .logos__item img { transition: none; }
     }
 
+    /* --- Phones -------------------------------------------------------------
+       Desktop spacing and controls, compressed for a 360-430px screen. */
+    @media (max-width: 640px) {
+      /* Rhythm: 128px between sections and 64px under headings read as empty
+         screens on a phone. */
+      .spon__head { margin-bottom: var(--space-5); }
+      .spon__section { margin-top: var(--space-5); }
+      .spon__section-title { margin-bottom: var(--space-4); }
+      .spon__claim { margin-top: var(--space-5); margin-bottom: var(--space-4); font-size: 1.25rem; }
+      .bespoke { margin-top: var(--space-4); }
+
+      /* Tier switcher: tabs above the card so all three tiers are visible
+         before scrolling a long card, sized to a 44px tap target. The arrows
+         sat on top of the bullet text, so the tabs are the only control. */
+      .spon__section--tiers { display: flex; flex-direction: column; }
+      .spon__section--tiers > .spon__section-title { order: -2; }
+      .spon__section--tiers > .deck__dots { order: -1; margin: 0 0 var(--space-3); }
+      .deck__dot { min-height: 44px; padding: 10px 20px; }
+      .deck__arrow { display: none; }
+
+      /* Card: tighter padding and no dead band between pricing and the list. */
+      .plan { padding: 24px; }
+      .plan__top { padding-bottom: var(--space-3); margin-bottom: var(--space-3); }
+      .plan__list--flat { margin-top: 0; }
+      /* Pricing wraps under the name here, so it aligns left with it. */
+      .plan__cost { text-align: left; }
+      /* 44px tap height without moving the text. */
+      .plan__quote a { display: inline-block; padding: 12px 0; margin: -12px 0; }
+
+      /* Logos: two columns instead of nine full-width rows, with marks balanced
+         by shape rather than all capped to the same box. */
+      /* dense backfills the hole the full-width Commodities People tile leaves. */
+      .logos { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-flow: row dense; }
+      .logos__item { height: 88px; padding: 16px 18px; }
+      .logos__item img { max-height: 34px; }
+      .logos__item--square img { max-height: 52px; }
+      .logos__item--wide { grid-column: 1 / -1; }
+      .logos__item--wide img { max-height: 30px; }
+    }
+
     /* --- Print: the page IS the brochure ----------------------------------
        Recruiters ask for a PDF to circulate internally. Rather than maintain a
        separate document that drifts out of date, this prints to one. */
@@ -409,7 +499,7 @@
         box-shadow: none !important;
         break-inside: avoid;
       }
-      .plan--principal { border-color: #444 !important; }
+      .plan--gold { border-color: #444 !important; }
       .plan__badge { background: none !important; border: 1px solid #999 !important; }
       .plan__group-title { border-bottom-color: #999 !important; }
       .plan__list li::before { background: #555 !important; }
@@ -503,7 +593,7 @@
       </p>
 
       <!-- ===== Tiers ===== -->
-      <section class="spon__section" aria-labelledby="tiers-title">
+      <section class="spon__section spon__section--tiers" aria-labelledby="tiers-title">
         <h2 class="spon__section-title" id="tiers-title">Partnership tiers</h2>
 
         <div class="deck" data-deck>
@@ -514,83 +604,70 @@
           <div class="deck__viewport">
             <div class="deck__track" data-track>
 
-              <article class="plan plan--principal" id="plan-principal" role="tabpanel" aria-labelledby="dot-principal">
+              <article class="plan plan--gold" id="plan-gold" role="tabpanel" aria-labelledby="dot-gold">
                 <div class="plan__top">
                   <div>
-                    <span class="plan__badge">Principal</span>
-                    <h3 class="plan__name">Principal Partner</h3>
-                    <p class="plan__pitch">
-                      Full access to the analyst cohort, your name on a flagship event, and first
-                      choice of dates in the recruiting calendar.
-                    </p>
+                    <span class="plan__badge">Gold</span>
+                    <h3 class="plan__name">Gold Partner</h3>
                   </div>
                   <div class="plan__cost">
                     <span class="plan__from">Pricing</span>
-                    <p class="plan__quote"><a href="mailto:bristol-trading-society@bristol.ac.uk?subject=Principal%20Partner%20quote">Email us</a> for a quote</p>
+                    <p class="plan__quote"><a href="mailto:bristol-trading-society@bristol.ac.uk?subject=Gold%20Partner%20quote">Email us</a> for a quote</p>
                   </div>
                 </div>
 
-                <div class="plan__groups">
-                  <div>
-                    <p class="plan__group-title">Talent</p>
-                    <ul class="plan__list">
-                      <li><strong>The analyst CV book</strong> &mdash; the full cohort and division heads, organised by division, sent direct to your team.</li>
-                      <li><strong>A closed evening with the analyst cohort</strong> &mdash; the selected analysts and division heads only, not the general membership.</li>
-                      <li><strong>Judging seats at the Annual Trading Competition</strong> &mdash; eleven teams pitch and defend under questioning, so you spend an evening watching candidates think on their feet.</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p class="plan__group-title">Position</p>
-                    <ul class="plan__list">
-                      <li><strong>Named sponsor of a flagship event</strong> &mdash; the Annual Trading Competition, the Macro Debate or a simulation, subject to availability.</li>
-                      <li><strong>First pick of the calendar</strong> &mdash; Principal Partners choose dates before anyone else, so your session lands ahead of the spring-week cycle rather than after it.</li>
-                      <li><strong>Events on your terms</strong> &mdash; speaker evenings, workshops, technical sessions or case studies, as many as your calendar allows.</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p class="plan__group-title">Presence</p>
-                    <ul class="plan__list">
-                      <li><strong>Primary logo</strong> &mdash; society fleece, website, event materials and our Freshers&rsquo; Fair stand.</li>
-                      <li><strong>Division-level collaboration</strong> &mdash; set a research question, share data, or put your desk in front of the division closest to it.</li>
-                      <li><strong>Roles posted directly</strong> &mdash; spring weeks, internships and graduate schemes to the full membership.</li>
-                    </ul>
-                  </div>
-                </div>
+                <ul class="plan__list plan__list--flat">
+                  <li>The analyst CV book</li>
+                  <li>A closed evening with the analyst cohort</li>
+                  <li>Judging seats at the Annual Trading Competition</li>
+                  <li>Named sponsor of a flagship event</li>
+                  <li>First pick of the calendar</li>
+                  <li>Events on your terms</li>
+                  <li>Primary logo</li>
+                  <li>Division-level collaboration</li>
+                  <li>Roles posted directly</li>
+                </ul>
               </article>
 
-              <article class="plan plan--associate" id="plan-associate" role="tabpanel" aria-labelledby="dot-associate">
+              <article class="plan plan--silver" id="plan-silver" role="tabpanel" aria-labelledby="dot-silver">
                 <div class="plan__top">
                   <div>
-                    <span class="plan__badge">Associate</span>
-                    <h3 class="plan__name">Associate Partner</h3>
-                    <p class="plan__pitch">
-                      The CV book and a session with our members, without the flagship commitment.
-                    </p>
+                    <span class="plan__badge">Silver</span>
+                    <h3 class="plan__name">Silver Partner</h3>
                   </div>
                   <div class="plan__cost">
                     <span class="plan__from">Pricing</span>
-                    <p class="plan__quote"><a href="mailto:bristol-trading-society@bristol.ac.uk?subject=Associate%20Partner%20quote">Email us</a> for a quote</p>
+                    <p class="plan__quote"><a href="mailto:bristol-trading-society@bristol.ac.uk?subject=Silver%20Partner%20quote">Email us</a> for a quote</p>
                   </div>
                 </div>
 
-                <div class="plan__groups">
+                <ul class="plan__list plan__list--flat">
+                  <li>The analyst CV book</li>
+                  <li>Invitations to the Annual Trading Competition</li>
+                  <li>Events with our members</li>
+                  <li>Logo</li>
+                  <li>Collaboration with one division</li>
+                  <li>Roles posted directly</li>
+                </ul>
+              </article>
+
+              <article class="plan plan--bronze" id="plan-bronze" role="tabpanel" aria-labelledby="dot-bronze">
+                <div class="plan__top">
                   <div>
-                    <p class="plan__group-title">Talent</p>
-                    <ul class="plan__list">
-                      <li><strong>The analyst CV book</strong> &mdash; the full cohort and division heads, organised by division.</li>
-                      <li><strong>Invitations to the Annual Trading Competition</strong> &mdash; attend, meet the teams and watch them present.</li>
-                    </ul>
+                    <span class="plan__badge">Bronze</span>
+                    <h3 class="plan__name">Bronze Partner</h3>
                   </div>
-                  <div>
-                    <p class="plan__group-title">Presence</p>
-                    <ul class="plan__list">
-                      <li><strong>Events with our members</strong> &mdash; speaker evenings and workshops, scheduled around the calendar.</li>
-                      <li><strong>Logo</strong> &mdash; society fleece, website and event materials.</li>
-                      <li><strong>Collaboration with one division</strong> &mdash; the division closest to your desk.</li>
-                      <li><strong>Roles posted directly</strong> &mdash; spring weeks, internships and graduate schemes to the full membership.</li>
-                    </ul>
+                  <div class="plan__cost">
+                    <span class="plan__from">Pricing</span>
+                    <p class="plan__quote"><a href="mailto:bristol-trading-society@bristol.ac.uk?subject=Bronze%20Partner%20quote">Email us</a> for a quote</p>
                   </div>
                 </div>
+
+                <ul class="plan__list plan__list--flat">
+                  <li>The analyst CV book</li>
+                  <li>Logo</li>
+                  <li>Roles posted directly</li>
+                </ul>
               </article>
 
             </div>
@@ -602,13 +679,14 @@
         </div>
 
         <div class="deck__dots" role="tablist" aria-label="Partnership tiers">
-          <button class="deck__dot" type="button" role="tab" id="dot-principal" aria-controls="plan-principal" aria-selected="true">Principal</button>
-          <button class="deck__dot" type="button" role="tab" id="dot-associate" aria-controls="plan-associate" aria-selected="false">Associate</button>
+          <button class="deck__dot" type="button" role="tab" id="dot-gold" aria-controls="plan-gold" aria-selected="true">Gold</button>
+          <button class="deck__dot" type="button" role="tab" id="dot-silver" aria-controls="plan-silver" aria-selected="false">Silver</button>
+          <button class="deck__dot" type="button" role="tab" id="dot-bronze" aria-controls="plan-bronze" aria-selected="false">Bronze</button>
         </div>
 
         <p class="bespoke">
           <strong>Something else in mind?</strong> These are starting points, not fixed packages.
-          Both tiers are open to as many firms as want them, and everything scales &mdash; a single
+          All three tiers are open to as many firms as want them, and everything scales &mdash; a single
           event, a multi-year arrangement, or something built around a specific hiring need. Tell us
           what you are trying to achieve on a call and we will price it around that.
         </p>
@@ -630,7 +708,7 @@
 
       <!-- ===== Process ===== -->
       <section class="spon__section" aria-labelledby="how-title">
-        <h2 class="spon__section-title" id="how-title">How it works</h2>
+        <h2 class="spon__section-title spon__section-title--bare" id="how-title">How it works</h2>
         <ol class="steps">
           <li>
             <h3>You email us</h3>
@@ -656,13 +734,13 @@
         <h2 class="spon__section-title" id="roster-title">Firms we work with</h2>
         <ul class="logos" aria-label="Partner organisations">
           <li class="logos__item"><img src="assets/img/sponsors/drw.png" alt="DRW" /></li>
-          <li class="logos__item"><img src="assets/img/sponsors/worldquant.png" alt="WorldQuant" /></li>
+          <li class="logos__item logos__item--square"><img src="assets/img/sponsors/worldquant.png" alt="WorldQuant" /></li>
           <li class="logos__item"><img src="assets/img/sponsors/etoro.png" alt="eToro" /></li>
           <li class="logos__item"><img src="assets/img/sponsors/outlook-energy.svg" alt="Outlook Energy" /></li>
-          <li class="logos__item"><img src="assets/img/sponsors/berenberg.png" alt="Berenberg" /></li>
+          <li class="logos__item logos__item--square"><img src="assets/img/sponsors/berenberg.png" alt="Berenberg" /></li>
           <li class="logos__item"><img src="assets/img/sponsors/hirehuub.png" alt="HireHuub" /></li>
-          <li class="logos__item"><img src="assets/img/sponsors/headstart.png" alt="Headstart" /></li>
-          <li class="logos__item"><img src="assets/img/sponsors/commodities-people.png" alt="Commodities People" /></li>
+          <li class="logos__item logos__item--square"><img src="assets/img/sponsors/headstart.png" alt="Headstart" /></li>
+          <li class="logos__item logos__item--wide"><img src="assets/img/sponsors/commodities-people.png" alt="Commodities People" /></li>
           <li class="logos__item logos__item--asis"><img src="assets/img/sponsors/cfa.png" alt="CFA Institute" /></li>
         </ul>
         <p class="logos__note">
