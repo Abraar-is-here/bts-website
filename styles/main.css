@@ -1740,6 +1740,11 @@ body.is-leaving {
 .partners__logo[alt="WorldQuant"]     { transform: scale(1.5); }
 .partners__logo[alt="Outlook Energy"] { transform: scale(1.2); }
 .partners__logo[alt="HireHuub"]       { transform: scale(1.1); }
+/* Jane Street and ICE ship on transparent backgrounds in white/colour, so the
+   invert rule above would turn them dark. Flatten every opaque pixel to white. */
+.partners__logo[alt="Jane Street"],
+.partners__logo[alt="ICE"] { filter: brightness(0) invert(1); mix-blend-mode: normal; }
+.partners__logo[alt="ICE"] { transform: scale(1.6); }
 
 @media (hover: hover) and (pointer: fine) {
   .partners__stage:hover .partners__logo[src$=".png"] {
@@ -1751,6 +1756,10 @@ body.is-leaving {
   }
   .partners__stage:hover .partners__logo[src$=".svg"] {
     filter: none;
+  }
+  /* ICE's wordmark is black; in true colour it would vanish on the dark strip. */
+  .partners__stage:hover .partners__logo[alt="ICE"] {
+    filter: brightness(0) invert(1);
   }
 }
 
