@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <base href="/" />
 
-  <title>Events and Speakers — Bristol Trading Society</title>
+  <title>Events — Bristol Trading Society</title>
   <meta name="description" content="What the Bristol Trading Society does across the year — our annual trading competition, macro debate, speaker events and industry sessions." />
 
 
@@ -22,7 +22,7 @@
 
   <style>
     /* =========================================================================
-       Events and Speakers
+       Events
        -------------------------------------------------------------------------
        Deliberately NOT one card grid repeated. The page runs a weight ladder:
 
@@ -141,9 +141,12 @@
     }
     .next-item__when { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.45; }
 
-    /* A next-item that has a page behind it becomes a link across its whole
-       row. The dashed chip means "no date yet"; a solid one means "go here". */
-    .next-item--live { padding: 0; }
+    /* A next-item with a page behind it is boxed, tinted and carries a solid pill,
+       so it reads as a control. Everything else in the list is plain text on a
+       hairline with a dashed chip -- the "nothing to click here" state. The box
+       replaces the hairlines either side of it, hence the two border resets. */
+    .next-item--live { border-top: 0; padding: 0; }
+    .next-item--live + .next-item { border-top: 0; }
     .next-item__link {
       display: flex;
       flex-wrap: wrap;
@@ -151,35 +154,56 @@
       justify-content: space-between;
       gap: var(--space-3);
       width: 100%;
-      padding: var(--space-3) 0;
+      padding: var(--space-3) var(--space-4);
+      border: 1px solid rgba(37, 99, 235, 0.55);
+      border-radius: var(--radius-sm);
+      background: rgba(37, 99, 235, 0.14);
       text-decoration: none;
       color: inherit;
-      transition: opacity var(--dur-fast) var(--ease-out);
+      transition: background var(--dur-fast) var(--ease-out),
+                  border-color var(--dur-fast) var(--ease-out);
     }
-    .next-item--live:first-child .next-item__link { padding-top: 0; }
-    .next-item__chip--go {
+    .next-item__link:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 3px; }
+    /* Two classes on purpose. The base .next-item__chip rule is declared further
+       down at ONE class, so a bare .next-item__chip--go lost to it and rendered
+       with the dashed grey border and grey text of the "Closed" chip -- which is
+       why this row looked no different from the ones that do nothing. */
+    .next-item__chip.next-item__chip--go {
       border-style: solid;
       border-color: var(--accent);
-      color: var(--text-primary);
-      background: rgba(37, 99, 235, 0.14);
+      background: var(--accent);
+      color: #fff;
     }
+    .next-item__arrow { display: inline-block; transition: transform var(--dur-fast) var(--ease-out); }
     @media (hover: hover) and (pointer: fine) {
-      .next-item__link:hover { opacity: 0.78; }
-      .next-item__link:hover .next-item__chip--go { background: rgba(37, 99, 235, 0.24); }
+      .next-item__link:hover { background: rgba(37, 99, 235, 0.24); border-color: var(--accent); }
+      .next-item__link:hover .next-item__chip--go { background: var(--accent-hover); border-color: var(--accent-hover); }
+      .next-item__link:hover .next-item__title { text-decoration: underline; text-underline-offset: 3px; }
+      .next-item__link:hover .next-item__arrow { transform: translateX(3px); }
     }
     .next-item__link:active { transform: scale(0.995); }
 
     .term__link { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(56, 189, 248, 0.4); }
     .term__link:hover { color: var(--accent-bright); }
 
-    .row__link { color: inherit; text-decoration: none; }
+    /* Underline plus an arrow, both always on: a heading that is a link has to say
+       so before the pointer gets there, and touch screens have no hover. */
+    .row__link {
+      color: inherit;
+      text-decoration: underline;
+      text-decoration-color: rgba(37, 99, 235, 0.75);
+      text-decoration-thickness: 2px;
+      text-underline-offset: 0.16em;
+    }
+    .row__link::after { content: '\00a0\2192'; color: var(--accent-bright); text-decoration: none; display: inline-block; }
     .row__link:hover { color: var(--accent-bright); }
     .row__more { margin-top: var(--space-3); font-size: 0.875rem; font-weight: 600; }
     .row__more a { color: var(--accent-bright); }
 
     @media (prefers-reduced-motion: reduce) {
-      .next-item__link { transition: none; }
+      .next-item__link, .next-item__arrow { transition: none; }
       .next-item__link:active { transform: none; }
+      .next-item__link:hover .next-item__arrow { transform: none; }
     }
     /* An honest placeholder: says "we don't have a date" without pretending
        to be a button that goes somewhere. */
@@ -603,7 +627,7 @@
         <ul class="nav__dropdown" role="menu">
           <li><a class="nav__dropdown-link" href="/" role="menuitem">Home</a></li>
           <li><a class="nav__dropdown-link" href="/about" role="menuitem">About Us</a></li>
-          <li><a class="nav__dropdown-link" href="/events" role="menuitem">Events and Speakers</a></li>
+          <li><a class="nav__dropdown-link" href="/events" role="menuitem">Events</a></li>
           <li><a class="nav__dropdown-link" href="/sponsors" role="menuitem">Sponsors</a></li>
           <li><a class="nav__dropdown-link" href="/team" role="menuitem">Team</a></li>
           <li><a class="nav__dropdown-link" href="/alumni" role="menuitem">Alumni</a></li>
@@ -618,7 +642,7 @@
     <!-- ===================== Head + credibility + next up ==================== -->
     <div class="wrap">
       <header class="ev__head">
-        <span class="ev__kicker">Events and Speakers</span>
+        <span class="ev__kicker">Events</span>
         <h1 class="ev__title">Where the year happens</h1>
       </header>
 
@@ -645,8 +669,15 @@
                 <p class="next-item__title">AmplifyME Pathways launch</p>
                 <p class="next-item__when">Tuesday 22 September 2026, 18:00 &mdash; free for all Bristol students</p>
               </div>
-              <span class="next-item__chip next-item__chip--go">Details &rarr;</span>
+              <span class="next-item__chip next-item__chip--go">View event <span class="next-item__arrow" aria-hidden="true">&rarr;</span></span>
             </a>
+          </li>
+          <li class="next-item">
+            <div class="next-item__body">
+              <p class="next-item__title">Annual Welcome Event</p>
+              <p class="next-item__when">Thursday 24 September 2026, 18:00&ndash;19:00</p>
+            </div>
+            <span class="next-item__chip">24 Sept</span>
           </li>
         </ul>
       </div>
@@ -665,7 +696,7 @@
             <ul class="term__list">
               <li>Analyst applications open <span class="term__when">21 September</span></li>
               <li><a class="term__link" href="/events/amplifyme/">AmplifyME Pathways launch</a> <span class="term__when">22 September</span></li>
-              <li>Annual Welcome Event <span class="term__when">Late September</span></li>
+              <li>Annual Welcome Event <span class="term__when">24 September</span></li>
               <li>Bloomberg Terminal sessions <span class="term__when">Throughout</span></li>
               <li>Mentorship pairings open <span class="term__when">Application season</span></li>
               <li>Speaker evenings <span class="term__when">Fortnightly</span></li>
@@ -1128,7 +1159,7 @@
           <p class="site-footer__col-title">Society</p>
           <ul class="site-footer__list">
             <li><a href="/about">About Us</a></li>
-            <li><a href="/events">Events and Speakers</a></li>
+            <li><a href="/events">Events</a></li>
             <li><a href="/team">Team</a></li>
             <li><a href="/alumni">Alumni</a></li>
           </ul>
