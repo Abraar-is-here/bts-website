@@ -124,6 +124,7 @@
     }
     .plan--silver { --tier: #c0c7d1; border-color: rgba(192, 199, 209, 0.38); }
     .plan--bronze { --tier: #c8895a; border-color: rgba(200, 137, 90, 0.4); }
+    .plan--bespoke { --tier: var(--accent-bright); border-color: rgba(56, 189, 248, 0.35); }
 
     .plan__top {
       display: flex;
@@ -151,7 +152,8 @@
        the top tier still reads first. */
     .plan--gold .plan__badge { color: #0a1a3f; background: var(--tier); }
     .plan--silver .plan__badge,
-    .plan--bronze .plan__badge { color: var(--tier); border: 1px solid var(--tier); }
+    .plan--bronze .plan__badge,
+    .plan--bespoke .plan__badge { color: var(--tier); border: 1px solid var(--tier); }
     .plan__name {
       font-family: var(--font-display);
       font-size: clamp(1.75rem, 3.4vw, 2.5rem);
@@ -233,7 +235,8 @@
     }
     .plan--gold .plan__list li::before,
     .plan--silver .plan__list li::before,
-    .plan--bronze .plan__list li::before { background: var(--tier); }
+    .plan--bronze .plan__list li::before,
+    .plan--bespoke .plan__list li::before { background: var(--tier); }
     /* Headings only: each benefit is its own label now, so it takes the primary
        colour, and the list flows into columns instead of the old three groups. */
     .plan__list--flat {
@@ -281,7 +284,6 @@
     }
     /* The bespoke note is a separate idea from the tier switcher, so it needs
        real space rather than sitting on top of the tabs. */
-    .bespoke { margin-top: var(--space-6); }
     .deck__dot {
       display: inline-flex;
       align-items: center;
@@ -388,8 +390,6 @@
 
     /* Body copy is secondary everywhere else on the page; the bespoke note was
        the one paragraph in primary. Its lead-in stays bright. */
-    .bespoke { color: var(--text-secondary); }
-    .bespoke strong { color: var(--text-primary); }
 
     /* Steps draw their own top rule, so a heading underline above them doubled up. */
     .spon__section-title--bare { border-bottom: 0; padding-bottom: 0; }
@@ -439,7 +439,6 @@
       .spon__section { margin-top: var(--space-5); }
       .spon__section-title { margin-bottom: var(--space-4); }
       .spon__claim { margin-top: var(--space-5); margin-bottom: var(--space-4); font-size: 1.25rem; }
-      .bespoke { margin-top: var(--space-4); }
 
       /* Tier switcher: tabs above the card so all three tiers are visible
          before scrolling a long card, sized to a 44px tap target. The arrows
@@ -667,6 +666,25 @@
                 </ul>
               </article>
 
+              <article class="plan plan--bespoke" id="plan-bespoke" role="tabpanel" aria-labelledby="dot-bespoke">
+                <div class="plan__head">
+                  <div>
+                    <span class="plan__badge">Bespoke</span>
+                    <h3 class="plan__name">Bespoke Partner</h3>
+                  </div>
+                  <div class="plan__cost">
+                    <span class="plan__from">Pricing</span>
+                    <p class="plan__quote"><a href="mailto:bristol-trading-society@bristol.ac.uk?subject=Bespoke%20partnership">Email us</a> to discuss</p>
+                  </div>
+                </div>
+
+                <ul class="plan__list plan__list--flat">
+                  <li>Built around what your firm needs</li>
+                  <li>Anything from a single event to a multi-year partnership</li>
+                  <li>Shaped around a specific hiring need or division</li>
+                </ul>
+              </article>
+
             </div>
           </div>
 
@@ -679,14 +697,9 @@
           <button class="deck__dot" type="button" role="tab" id="dot-gold" aria-controls="plan-gold" aria-selected="true">Gold</button>
           <button class="deck__dot" type="button" role="tab" id="dot-silver" aria-controls="plan-silver" aria-selected="false">Silver</button>
           <button class="deck__dot" type="button" role="tab" id="dot-bronze" aria-controls="plan-bronze" aria-selected="false">Bronze</button>
+          <button class="deck__dot" type="button" role="tab" id="dot-bespoke" aria-controls="plan-bespoke" aria-selected="false">Bespoke</button>
         </div>
 
-        <p class="bespoke">
-          <strong>Something else in mind?</strong> These are starting points, not fixed packages.
-          All three tiers are open to as many firms as want them, and everything scales &mdash; a single
-          event, a multi-year arrangement, or something built around a specific hiring need. Tell us
-          what you are trying to achieve on a call and we will price it around that.
-        </p>
       </section>
 
       <!-- ===== Track record ===== -->
