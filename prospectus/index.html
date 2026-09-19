@@ -398,34 +398,6 @@
     /* --- How it works ------------------------------------------------------
        A corporate recruiter's first unasked question is how much admin this
        will be. Four steps answers it before they have to ask. */
-    .steps {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
-      gap: var(--space-4);
-      counter-reset: step;
-    }
-    .steps li { counter-increment: step; padding-top: var(--space-3); border-top: 1px solid var(--hairline); }
-    .steps li::before {
-      content: counter(step, decimal-leading-zero);
-      display: block;
-      font-family: var(--font-display);
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: var(--num-marker);
-      letter-spacing: 0.06em;
-      margin-bottom: var(--space-2);
-    }
-    .steps h3 {
-      font-family: var(--font-body);
-      font-size: 1rem;
-      font-weight: 600;
-      line-height: 1.3;
-      margin-bottom: 6px;
-    }
-    .steps p { font-size: 0.875rem; line-height: 1.6; color: var(--text-secondary); }
 
     @media (prefers-reduced-motion: reduce) {
       .logos__item img { transition: none; }
@@ -534,6 +506,23 @@
       max-width: 54ch;
       margin: 0 auto var(--space-4);
     }
+
+    /* Alumni destinations: plain name chips, then a link to the full directory. */
+    .destinations { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+    .destinations li {
+      padding: 9px 16px; border: 1px solid var(--glass-border); border-radius: var(--radius-pill);
+      font-size: 0.9375rem; font-weight: 600; color: var(--text-primary); background: rgba(10, 26, 63, 0.45);
+    }
+    .spon__more {
+      display: inline-flex; gap: 6px; margin-top: var(--space-4);
+      font-size: 0.9375rem; font-weight: 600; color: var(--accent-bright); text-decoration: none;
+    }
+    .spon__more span { transition: transform var(--dur-fast) var(--ease-out); }
+    @media (hover: hover) and (pointer: fine) {
+      .spon__more:hover { text-decoration: underline; text-underline-offset: 3px; }
+      .spon__more:hover span { transform: translateX(3px); }
+    }
+    @media (prefers-reduced-motion: reduce) { .spon__more span { transition: none; } }
   </style>
 </head>
 <body>
@@ -725,6 +714,22 @@
       </section>
 
       <!-- ===== Track record ===== -->
+      <!-- ===== Where members go ===== -->
+      <section class="spon__section" aria-labelledby="alumni-title">
+        <h2 class="spon__section-title" id="alumni-title">Where our members end up</h2>
+        <ul class="destinations">
+          <li>Goldman Sachs</li>
+          <li>Citi</li>
+          <li>Millennium Management</li>
+          <li>Glencore</li>
+          <li>Standard Chartered</li>
+          <li>Santander CIB</li>
+          <li>Deloitte</li>
+          <li>Rede Partners</li>
+        </ul>
+        <a class="spon__more" href="/alumni/">See the alumni directory <span aria-hidden="true">&rarr;</span></a>
+      </section>
+
       <section class="spon__section" aria-labelledby="track-title">
         <h2 class="spon__section-title" id="track-title">What partners have run with us</h2>
         <ul class="track">
@@ -738,28 +743,6 @@
       </section>
 
 
-      <!-- ===== Process ===== -->
-      <section class="spon__section" aria-labelledby="how-title">
-        <h2 class="spon__section-title spon__section-title--bare" id="how-title">How it works</h2>
-        <ol class="steps">
-          <li>
-            <h3>You email us</h3>
-            <p>Tell us roughly what you are hiring for. We reply within two working days.</p>
-          </li>
-          <li>
-            <h3>A call</h3>
-            <p>Half an hour to work out what is actually useful to you, and what it costs.</p>
-          </li>
-          <li>
-            <h3>Dates in the diary</h3>
-            <p>We agree the year up front, so your sessions land when they matter to your cycle.</p>
-          </li>
-          <li>
-            <h3>One point of contact</h3>
-            <p>A named committee member runs it end to end. You are not chasing students.</p>
-          </li>
-        </ol>
-      </section>
 
       <!-- ===== Partner logos ===== -->
 
