@@ -508,11 +508,26 @@
     }
 
     /* Alumni destinations: plain name chips, then a link to the full directory. */
-    .destinations { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
-    .destinations li {
-      padding: 9px 16px; border: 1px solid var(--glass-border); border-radius: var(--radius-pill);
-      font-size: 0.9375rem; font-weight: 600; color: var(--text-primary); background: rgba(10, 26, 63, 0.45);
+    /* Employer logos, deliberately quieter than the partner wall above: no box,
+       smaller, dimmer, one row. They must not read as sponsors. */
+    .destinations__note {
+      margin: 0 0 var(--space-4); font-size: 0.875rem; color: var(--text-secondary);
     }
+    .destinations {
+      list-style: none; margin: 0; padding: 0;
+      display: flex; flex-wrap: wrap; align-items: center;
+      gap: var(--space-4) var(--space-5);
+    }
+    .destinations img {
+      display: block; height: 30px; width: auto; max-width: 170px; object-fit: contain;
+      filter: brightness(0) invert(1); opacity: 0.6;
+    }
+    /* Equal height makes wide wordmarks dominate stacked marks, so size by shape. */
+    .destinations img[alt="Goldman Sachs"],
+    .destinations img[alt="Standard Chartered"] { height: 44px; }
+    .destinations img[alt="Citi"] { height: 34px; }
+    .destinations img[alt="Millennium Management"],
+    .destinations img[alt="Glencore"] { height: 24px; }
     .spon__more {
       display: inline-flex; gap: 6px; margin-top: var(--space-4);
       font-size: 0.9375rem; font-weight: 600; color: var(--accent-bright); text-decoration: none;
@@ -717,15 +732,13 @@
       <!-- ===== Where members go ===== -->
       <section class="spon__section" aria-labelledby="alumni-title">
         <h2 class="spon__section-title" id="alumni-title">Where our members end up</h2>
+        <p class="destinations__note">Firms our alumni have joined</p>
         <ul class="destinations">
-          <li>Goldman Sachs</li>
-          <li>Citi</li>
-          <li>Millennium Management</li>
-          <li>Glencore</li>
-          <li>Standard Chartered</li>
-          <li>Santander CIB</li>
-          <li>Deloitte</li>
-          <li>Rede Partners</li>
+          <li><img src="assets/img/alumni-firms/goldman-sachs.webp" alt="Goldman Sachs" loading="lazy" /></li>
+          <li><img src="assets/img/alumni-firms/citi.webp" alt="Citi" loading="lazy" /></li>
+          <li><img src="assets/img/alumni-firms/millennium.png" alt="Millennium Management" loading="lazy" /></li>
+          <li><img src="assets/img/alumni-firms/glencore.webp" alt="Glencore" loading="lazy" /></li>
+          <li><img src="assets/img/alumni-firms/standard-chartered.webp" alt="Standard Chartered" loading="lazy" /></li>
         </ul>
         <a class="spon__more" href="/alumni/">See the alumni directory <span aria-hidden="true">&rarr;</span></a>
       </section>
