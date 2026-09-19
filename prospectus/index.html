@@ -371,33 +371,32 @@
        Was unstyled, so it fell back to browser discs indented 40px: the only
        block off the page gutter. Now the same dot-and-label pattern as the tier
        lists, with the firm in primary and what they ran in secondary. */
-    .track { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; max-width: 70ch; }
-    .track li {
-      position: relative;
-      padding-left: 20px;
-      font-size: 0.9375rem;
-      line-height: 1.55;
-      color: var(--text-secondary);
+    /* Track record as a ledger: one row per partner, firm in the display face,
+       what they ran beside it. Rows with hairlines, not bullets or cards. */
+    .track { margin: 0; border-top: 1px solid var(--hairline); }
+    .track__row {
+      display: grid;
+      grid-template-columns: 17rem minmax(0, 1fr);
+      gap: var(--space-2) var(--space-4);
+      align-items: baseline;
+      padding: var(--space-3) 0;
+      border-bottom: 1px solid var(--hairline);
     }
-    .track li::before {
-      content: '';
-      position: absolute;
-      left: 2px; top: 9px;
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--accent);
+    .track dt {
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: var(--text-primary);
+      white-space: nowrap;
     }
-    .track strong { color: var(--text-primary); font-weight: 600; }
+    .track dd { margin: 0; font-size: 0.9375rem; line-height: 1.55; color: var(--text-secondary); max-width: 60ch; }
+    @media (max-width: 640px) {
+      .track__row { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+    }
 
-    /* Body copy is secondary everywhere else on the page; the bespoke note was
-       the one paragraph in primary. Its lead-in stays bright. */
 
-    /* Steps draw their own top rule, so a heading underline above them doubled up. */
-    .spon__section-title--bare { border-bottom: 0; padding-bottom: 0; }
 
-    /* --- How it works ------------------------------------------------------
-       A corporate recruiter's first unasked question is how much admin this
-       will be. Four steps answers it before they have to ask. */
 
     @media (prefers-reduced-motion: reduce) {
       .logos__item img { transition: none; }
@@ -462,7 +461,8 @@
       .plan__name, .plan__price, .plan__group-title,
       .plan__list strong, .track strong, .bespoke strong { color: #000 !important; }
       .body, .spon__lead, .plan__pitch, .plan__term, .plan__list li,
-      .track li, .bespoke, .logos__note { color: #333 !important; }
+      .track dd, .logos__note { color: #333 !important; }
+      .track dt { color: #000 !important; }
       .spon__eyebrow, .plan__badge { color: #555 !important; }
 
       .plan, .spon__cta {
@@ -526,6 +526,7 @@
     .destinations img[alt="Goldman Sachs"],
     .destinations img[alt="Standard Chartered"] { height: 44px; }
     .destinations img[alt="Citi"] { height: 34px; }
+    .destinations img[alt="Barclays"] { height: 24px; }
     .destinations img[alt="Millennium Management"],
     .destinations img[alt="Glencore"] { height: 24px; }
     .spon__more {
@@ -736,6 +737,7 @@
         <ul class="destinations">
           <li><img src="assets/img/alumni-firms/goldman-sachs.webp" alt="Goldman Sachs" loading="lazy" /></li>
           <li><img src="assets/img/alumni-firms/citi.webp" alt="Citi" loading="lazy" /></li>
+          <li><img src="assets/img/alumni-firms/barclays.png" alt="Barclays" loading="lazy" /></li>
           <li><img src="assets/img/alumni-firms/millennium.png" alt="Millennium Management" loading="lazy" /></li>
           <li><img src="assets/img/alumni-firms/glencore.webp" alt="Glencore" loading="lazy" /></li>
           <li><img src="assets/img/alumni-firms/standard-chartered.webp" alt="Standard Chartered" loading="lazy" /></li>
@@ -745,14 +747,32 @@
 
       <section class="spon__section" aria-labelledby="track-title">
         <h2 class="spon__section-title" id="track-title">What partners have run with us</h2>
-        <ul class="track">
-          <li><strong>DRW</strong> &mdash; a closed evening for our analysts and division heads.</li>
-          <li><strong>SIGMA Financial</strong> &mdash; their CEO to a full lecture theatre on trading and AI tooling.</li>
-          <li><strong>Standard Chartered</strong> &mdash; an evening with their Head of Macro Trading, AME.</li>
-          <li><strong>AmplifyME</strong> &mdash; a live portfolio simulation running $20m. Sold out, then ran again by demand.</li>
-          <li><strong>TP ICAP</strong> &mdash; their Global Head of Compliance Technology on data and liquidity.</li>
-          <li><strong>WorldQuant</strong> &mdash; competition routes and resources for our Quant division.</li>
-        </ul>
+        <dl class="track">
+          <div class="track__row">
+            <dt>DRW</dt>
+            <dd>A closed evening for our analysts and division heads.</dd>
+          </div>
+          <div class="track__row">
+            <dt>SIGMA Financial</dt>
+            <dd>Their CEO spoke to a full lecture theatre on trading and AI tooling.</dd>
+          </div>
+          <div class="track__row">
+            <dt>Standard Chartered</dt>
+            <dd>An evening with their Head of Macro Trading, AME.</dd>
+          </div>
+          <div class="track__row">
+            <dt>AmplifyME</dt>
+            <dd>A live $20m portfolio simulation. Sold out, then ran again by demand.</dd>
+          </div>
+          <div class="track__row">
+            <dt>TP ICAP</dt>
+            <dd>Their Global Head of Compliance Technology on data and liquidity.</dd>
+          </div>
+          <div class="track__row">
+            <dt>WorldQuant</dt>
+            <dd>Competition routes and resources for our Quant division.</dd>
+          </div>
+        </dl>
       </section>
 
 
