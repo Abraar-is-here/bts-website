@@ -109,6 +109,11 @@
     if (form.phone.value.trim() && (form.phone.value.replace(/\D/g, '').length < 7)) {
       fail(form.phone, 'Enter a valid phone number.');
     }
+    // Optional answer: at most 150 words.
+    clearError(form.why);
+    if (wordCount(form.why.value) > WHY_MAX_WORDS) {
+      fail(form.why, 'Please keep your answer to ' + WHY_MAX_WORDS + ' words or fewer.');
+    }
     // CV: required, PDF, within size.
     clearError(cvInput);
     var file = cvInput.files && cvInput.files[0];
@@ -131,6 +136,17 @@
       : "Why have you selected this as your first division?";
   }
   choice1.addEventListener("change", syncChoices);
+
+  /* --- 150-word limit on the optional answer ----------------------------- */
+  var WHY_MAX_WORDS = 150;
+  var whyCount = form.querySelector("[data-why-count]");
+  function wordCount(s) { s = s.trim(); return s ? s.split(/\s+/).length : 0; }
+  function updateWhyCount() {
+    var n = wordCount(form.why.value);
+    whyCount.textContent = n + " / " + WHY_MAX_WORDS + " words";
+    whyCount.classList.toggle("is-over", n > WHY_MAX_WORDS);
+  }
+  form.why.addEventListener("input", updateWhyCount);
 
   /* --- File field: reflect the chosen filename -------------------------- */
   cvInput.addEventListener('change', function () {
