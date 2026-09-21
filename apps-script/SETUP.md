@@ -66,3 +66,20 @@ Do this once, signed into the **society's** Google account (not a personal one, 
   deployments ▸ ✏️ Edit ▸ Version: New version ▸ Deploy** to publish it (the URL stays
   the same).
 - **Volume:** comfortably handles your 20–40 applicants on Google's free quotas.
+
+---
+
+# Analyst applications (separate sheet)
+
+Analyst applications use their own script, **`AnalystCode.gs`**, so they land in their own
+Sheet and Drive folder and never mix with Division Head or committee applications.
+
+1. Create a new Drive folder (e.g. `Analyst CVs 2026`) and a new Sheet (e.g. `Analyst Applications 2026`).
+2. In the Sheet: **Extensions ▸ Apps Script**, paste all of `AnalystCode.gs`.
+3. Fill `CONFIG`: `CV_FOLDER_ID` (folder ID), `COMMITTEE_EMAIL`, optional `CC_EMAILS`.
+   If the editor won't open from the Sheet, make a standalone project and set `SHEET_ID` instead.
+4. **Deploy ▸ New deployment ▸ Web app** — Execute as **Me**, access **Anyone**. Copy the `/exec` URL.
+5. Paste it into `data-endpoint="…"` on the `<form id="applyForm">` in `apply/index.html`.
+   Until this is set the form refuses to submit (it never silently drops an application).
+6. Test with a dummy CV: a row appears in the new Sheet, the CV in the folder, and emails go out.
+   `?demo=1` on `/apply` walks the success screen without sending anything.
