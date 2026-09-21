@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <base href="/" />
 
-  <title>What you will do as an analyst &mdash; Bristol Trading Society</title>
+  <title>Divisions &mdash; Bristol Trading Society</title>
   <meta name="description" content="What a Bristol Trading Society analyst actually does in FICC, Equities, Macro and Quant, and what you will learn in each division." />
 
   <link rel="icon" type="image/svg+xml" href="assets/img/bull.svg" />
@@ -17,15 +17,37 @@
   <link rel="stylesheet" href="styles/tokens/colors.css?v=15" />
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
-  <link rel="stylesheet" href="styles/main.css?v=73" />
+  <link rel="stylesheet" href="styles/main.css?v=76" />
 
 
   <style>
     .apply { padding-block-start: 128px; }
-    .divs { display:grid; gap:var(--space-4); margin-top:var(--space-6); }
-    .div { padding:var(--space-5) var(--space-4); border:1px solid var(--glass-border); border-radius:var(--radius-card); background:rgba(8,19,46,.72); }
-    .div__name { font-family:var(--font-display); font-size:clamp(1.5rem,3vw,1.9rem); font-weight:800; letter-spacing:-.02em; line-height:1.1; color:var(--text-primary); margin:0 0 var(--space-2); }
-    .div__what { margin:0 0 var(--space-4); color:var(--text-secondary); line-height:1.55; max-width:62ch; }
+    .divs { margin-top:var(--space-6); border-top:1px solid var(--hairline); }
+    .div { border-bottom:1px solid var(--hairline); }
+    .div__name { margin:0; font:inherit; }
+    .div__btn { display:flex; align-items:center; justify-content:space-between; gap:var(--space-4); width:100%; padding:var(--space-5) 0; background:none; border:0; color:var(--text-primary); text-align:left; cursor:pointer; font:inherit; }
+    .div__btn:focus-visible { outline:2px solid var(--accent-bright); outline-offset:4px; border-radius:6px; }
+    .div__label { display:flex; flex-direction:column; gap:6px; min-width:0; }
+    .div__title { font-family:var(--font-display); font-size:clamp(1.75rem,4.2vw,2.75rem); font-weight:800; letter-spacing:-.03em; line-height:1.05; transition:color .3s ease; }
+    .div__what { font-size:.9375rem; line-height:1.5; color:var(--text-secondary); max-width:56ch; font-weight:400; }
+    .div__icon { position:relative; flex:none; width:36px; height:36px; border-radius:50%; border:1px solid var(--glass-border); transition:background .35s ease, border-color .35s ease, transform .5s cubic-bezier(.16,1,.3,1); }
+    .div__icon::before, .div__icon::after { content:""; position:absolute; left:50%; top:50%; width:14px; height:2px; margin:-1px 0 0 -7px; background:currentColor; border-radius:2px; transition:transform .5s cubic-bezier(.16,1,.3,1); }
+    .div__icon::after { transform:rotate(90deg); }
+    @media (hover:hover) and (pointer:fine) { .div__btn:hover .div__title { color:var(--accent-bright); } .div__btn:hover .div__icon { border-color:var(--accent); } }
+    .div.is-open .div__icon { background:var(--accent); border-color:var(--accent); transform:rotate(180deg); }
+    .div.is-open .div__icon::after { transform:rotate(0deg); }
+    /* Height animates via grid rows; the content also eases up and fades in. */
+    .div__panel { display:grid; grid-template-rows:0fr; transition:grid-template-rows .6s cubic-bezier(.16,1,.3,1); }
+    .div.is-open .div__panel { grid-template-rows:1fr; }
+    .div__panel-clip { overflow:hidden; min-height:0; opacity:0; transform:translateY(14px); transition:opacity .45s ease, transform .6s cubic-bezier(.16,1,.3,1); }
+    .div.is-open .div__panel-clip { opacity:1; transform:none; transition-delay:.08s; }
+    .div__cols { padding:var(--space-2) 0 var(--space-6); }
+    .roles-cta { margin-top:var(--space-7); padding:var(--space-6) var(--space-5); border:1px solid var(--glass-border); border-radius:var(--radius-card); background:rgba(8,19,46,.72); text-align:center; }
+    .roles-cta__title { font-family:var(--font-display); font-size:clamp(1.6rem,3.6vw,2.25rem); font-weight:800; letter-spacing:-.03em; line-height:1.1; color:var(--text-primary); margin:0 0 var(--space-2); }
+    .roles-cta__text { color:var(--text-secondary); line-height:1.6; margin:0 auto var(--space-4); max-width:46ch; }
+    .roles-cta__text a { color:var(--accent-bright); }
+@media (max-width:640px) {      .div__btn { padding:var(--space-4) 0; gap:var(--space-3); }      .div__title { font-size:clamp(1.6rem,8vw,2rem); }      .div__what { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; font-size:.875rem; }      .div.is-open .div__what { -webkit-line-clamp:unset; display:block; }      .div__icon { width:32px; height:32px; }      .div__cols { gap:var(--space-4); padding-bottom:var(--space-5); }      .roles-cta { padding:var(--space-5) var(--space-4); margin-top:var(--space-6); }      .roles-cta .btn { width:100%; justify-content:center; }    }
+    @media (prefers-reduced-motion:reduce) { .div__panel, .div__panel-clip, .div__icon, .div__icon::before, .div__icon::after, .div__title { transition:none; } }
     .div__cols { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr)); gap:var(--space-4); }
     .div__cols h3 { font-size:.6875rem; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--text-primary); margin:0 0 var(--space-2); }
     .div__cols ul { list-style:none; margin:0; padding:0; }
@@ -33,6 +55,8 @@
     .div__cols li::before { content:""; position:absolute; left:0; top:.6em; width:5px; height:5px; border-radius:50%; background:var(--accent); }
     .apply__eyebrow { display:block; font-size:.75rem; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--accent-bright); margin-bottom:var(--space-3); }
     .apply__head { max-width:60ch; }
+    /* Same heading treatment as the rest of the site (see .sel__title). */
+    .apply__title { font-family:var(--font-display); font-size:clamp(2.2rem,5.5vw,3.4rem); font-weight:800; line-height:1.03; letter-spacing:-0.03em; color:var(--text-primary); text-wrap:balance; margin:0 0 var(--space-4); }
     .apply__form-section { margin-top:var(--space-5); }
     .form-card .notice { margin:var(--space-5) 0 var(--space-4); }
     .field textarea { resize: vertical; min-height: 120px; line-height: 1.5; }
@@ -81,124 +105,185 @@
 
       <header class="apply__head">
         <span class="apply__eyebrow">Analyst programme &middot; 2026/27</span>
-        <h1 class="h2 apply__title">What you will do as an analyst</h1>
+        <h1 class="h2 apply__title">Divisions</h1>
         <p class="body apply__sub">
           Thirteen teams sit across four divisions. Every analyst researches something real,
-          presents it, and defends it in front of people who do this for a living. Here is what
-          that looks like in each division, and what you will come away knowing.
+          presents it, and defends it in front of people who do this for a living. Choose a
+          division to see what that looks like and what you will learn.
+        </p>
+        <p class="body apply__sub" style="margin-top:var(--space-3)">
+          Each team specialises in a different market within its division, so your experience
+          will depend on the team you join.
         </p>
       </header>
 
-      <p class="body apply__sub" style="margin-top:var(--space-5)">
-        Each team specialises in a different market within its division, so your experience will depend on the team you join.
-      </p>
-
-      <div class="divs">
-
-        <section class="div" aria-labelledby="d-equities">
-          <h2 class="div__name" id="d-equities">Equities</h2>
-          <p class="div__what">Fundamental investing: work out what a company is worth and argue for buying or selling it.</p>
-          <div class="div__cols">
-            <div>
-              <h3>You will</h3>
-              <ul>
-                <li>Research a company end to end and pitch it to the room.</li>
-                <li>Build a DCF and a comparables set, and defend every assumption.</li>
-                <li>Own a sector and follow its earnings through the year.</li>
-                <li>Run live positions in a mock portfolio on Bloomberg or a similar trading platform.</li>
-              </ul>
-            </div>
-            <div>
-              <h3>You will learn</h3>
-              <ul>
-                <li>Reading accounts and earnings calls.</li>
-                <li>Valuation: DCF, multiples, comparables.</li>
-                <li>Turning research into a long or short case.</li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <section class="div" aria-labelledby="d-ficc">
-          <h2 class="div__name" id="d-ficc">FICC</h2>
-          <p class="div__what">Fixed income, currencies and commodities: bonds, interest rates, FX and everything driven by central banks.</p>
-          <div class="div__cols">
-            <div>
-              <h3>You will</h3>
-              <ul>
-                <li>Build and defend a relative-value idea across rates, credit, FX or commodities.</li>
-                <li>Read a central-bank decision and work out what it does to the yield curve.</li>
-                <li>Trade a mock FICC book on Bloomberg or a similar trading platform and explain your P&amp;L.</li>
-              </ul>
-            </div>
-            <div>
-              <h3>You will learn</h3>
-              <ul>
-                <li>Yield curves, carry, duration, basis and spreads.</li>
-                <li>How inflation and policy move prices.</li>
-                <li>The vocabulary trading desks actually use.</li>
-              </ul>
+      <div class="divs" data-accordion>
+        <section class="div">
+          <h2 class="div__name">
+            <button class="div__btn" type="button" id="b-equities" aria-expanded="false" aria-controls="p-equities">
+              <span class="div__label"><span class="div__title">Equities</span><span class="div__what">Fundamental investing: work out what a company is worth and argue for buying or selling it.</span></span>
+              <span class="div__icon" aria-hidden="true"></span>
+            </button>
+          </h2>
+          <div class="div__panel" id="p-equities" role="region" aria-labelledby="b-equities">
+            <div class="div__panel-clip">
+                      <div class="div__cols">
+                        <div>
+                          <h3>You will</h3>
+                          <ul>
+                            <li>Research a company end to end and pitch it to the room.</li>
+                            <li>Build a DCF and a comparables set, and defend every assumption.</li>
+                            <li>Own a sector and follow its earnings through the year.</li>
+                            <li>Run live positions in a mock portfolio on Bloomberg or a similar trading platform.</li>
+                          </ul>
+                        </div>
+                        <div>
+                          <h3>You will learn</h3>
+                          <ul>
+                            <li>Reading accounts and earnings calls.</li>
+                            <li>Valuation: DCF, multiples, comparables.</li>
+                            <li>Turning research into a long or short case.</li>
+                          </ul>
+                        </div>
+                      </div>
             </div>
           </div>
         </section>
 
-        <section class="div" aria-labelledby="d-macro">
-          <h2 class="div__name" id="d-macro">Macro</h2>
-          <p class="div__what">Top-down: form a view on where the world economy is heading and express it across asset classes.</p>
-          <div class="div__cols">
-            <div>
-              <h3>You will</h3>
-              <ul>
-                <li>Form a view on a macro theme and write it up as research.</li>
-                <li>Express that view across rates, FX, equities and commodities.</li>
-                <li>Track the data calendar and react to releases as they land.</li>
-                <li>Argue your case in the annual macro debate.</li>
-              </ul>
-            </div>
-            <div>
-              <h3>You will learn</h3>
-              <ul>
-                <li>Economic cycles, central banks and policy.</li>
-                <li>How a data release feeds through to cross-asset trades.</li>
-                <li>Tying geopolitics back to what markets are doing.</li>
-              </ul>
+        <section class="div">
+          <h2 class="div__name">
+            <button class="div__btn" type="button" id="b-ficc" aria-expanded="false" aria-controls="p-ficc">
+              <span class="div__label"><span class="div__title">FICC</span><span class="div__what">Fixed income, currencies and commodities: bonds, interest rates, FX and everything driven by central banks.</span></span>
+              <span class="div__icon" aria-hidden="true"></span>
+            </button>
+          </h2>
+          <div class="div__panel" id="p-ficc" role="region" aria-labelledby="b-ficc">
+            <div class="div__panel-clip">
+                      <div class="div__cols">
+                        <div>
+                          <h3>You will</h3>
+                          <ul>
+                            <li>Build and defend a relative-value idea across rates, credit, FX or commodities.</li>
+                            <li>Read a central-bank decision and work out what it does to the yield curve.</li>
+                            <li>Trade a mock FICC book on Bloomberg or a similar trading platform and explain your P&amp;L.</li>
+                          </ul>
+                        </div>
+                        <div>
+                          <h3>You will learn</h3>
+                          <ul>
+                            <li>Yield curves, carry, duration, basis and spreads.</li>
+                            <li>How inflation and policy move prices.</li>
+                            <li>The vocabulary trading desks actually use.</li>
+                          </ul>
+                        </div>
+                      </div>
             </div>
           </div>
         </section>
 
-        <section class="div" aria-labelledby="d-quant">
-          <h2 class="div__name" id="d-quant">Quant</h2>
-          <p class="div__what">Systematic trading: use statistics and code to design a strategy and test whether it really works.</p>
-          <div class="div__cols">
-            <div>
-              <h3>You will</h3>
-              <ul>
-                <li>Learn Python for markets: pandas, scikit-learn and the rest of the stack.</li>
-                <li>Clean real option-chain data and engineer features from it.</li>
-                <li>Backtest a strategy honestly and find where it breaks.</li>
-                <li>Ship the result as a dashboard you can show an employer.</li>
-              </ul>
+        <section class="div">
+          <h2 class="div__name">
+            <button class="div__btn" type="button" id="b-macro" aria-expanded="false" aria-controls="p-macro">
+              <span class="div__label"><span class="div__title">Macro</span><span class="div__what">Top-down: form a view on where the world economy is heading and express it across asset classes.</span></span>
+              <span class="div__icon" aria-hidden="true"></span>
+            </button>
+          </h2>
+          <div class="div__panel" id="p-macro" role="region" aria-labelledby="b-macro">
+            <div class="div__panel-clip">
+                      <div class="div__cols">
+                        <div>
+                          <h3>You will</h3>
+                          <ul>
+                            <li>Form a view on a macro theme and write it up as research.</li>
+                            <li>Express that view across rates, FX, equities and commodities.</li>
+                            <li>Track the data calendar and react to releases as they land.</li>
+                            <li>Argue your case in the annual macro debate.</li>
+                          </ul>
+                        </div>
+                        <div>
+                          <h3>You will learn</h3>
+                          <ul>
+                            <li>Economic cycles, central banks and policy.</li>
+                            <li>How a data release feeds through to cross-asset trades.</li>
+                            <li>Tying geopolitics back to what markets are doing.</li>
+                          </ul>
+                        </div>
+                      </div>
             </div>
-            <div>
-              <h3>You will learn</h3>
-              <ul>
-                <li>Programming and statistics applied to markets.</li>
-                <li>Backtesting, and the traps that fool it.</li>
-                <li>Pricing options and benchmarking models against Black&ndash;Scholes.</li>
-              </ul>
+          </div>
+        </section>
+
+        <section class="div">
+          <h2 class="div__name">
+            <button class="div__btn" type="button" id="b-quant" aria-expanded="false" aria-controls="p-quant">
+              <span class="div__label"><span class="div__title">Quant</span><span class="div__what">Systematic trading: use statistics and code to design a strategy and test whether it really works.</span></span>
+              <span class="div__icon" aria-hidden="true"></span>
+            </button>
+          </h2>
+          <div class="div__panel" id="p-quant" role="region" aria-labelledby="b-quant">
+            <div class="div__panel-clip">
+                      <div class="div__cols">
+                        <div>
+                          <h3>You will</h3>
+                          <ul>
+                            <li>Learn Python for markets: pandas, scikit-learn and the rest of the stack.</li>
+                            <li>Clean real option-chain data and engineer features from it.</li>
+                            <li>Backtest a strategy honestly and find where it breaks.</li>
+                            <li>Ship the result as a dashboard you can show an employer.</li>
+                          </ul>
+                        </div>
+                        <div>
+                          <h3>You will learn</h3>
+                          <ul>
+                            <li>Programming and statistics applied to markets.</li>
+                            <li>Backtesting, and the traps that fool it.</li>
+                            <li>Pricing options and benchmarking models against Black&ndash;Scholes.</li>
+                          </ul>
+                        </div>
+                      </div>
             </div>
           </div>
         </section>
 
       </div>
 
-      <p class="apply__foot">
-        No prior finance experience is required. Read <a href="/selection">how we pick people</a>
-        to see what we assess, then <a href="/apply">apply to the analyst programme</a>.
-      </p>
+      <section class="roles-cta" aria-labelledby="cta-title">
+        <h2 class="roles-cta__title" id="cta-title">Ready to apply?</h2>
+        <p class="roles-cta__text">
+          No prior finance experience is required. Read <a href="/selection">how we pick people</a>
+          to see what we assess.
+        </p>
+        <a class="btn btn--primary" href="/apply">
+          Apply to the analyst programme
+          <span class="btn__arrow" aria-hidden="true">&rarr;</span>
+        </a>
+      </section>
 
     </div>
   </main>
+
+  <script>
+    /* One division open at a time. The panel height animates in CSS. */
+    (function () {
+      var root = document.querySelector('[data-accordion]');
+      if (!root) return;
+      var btns = root.querySelectorAll('.div__btn');
+      btns.forEach(function (b) {
+        b.addEventListener('click', function () {
+          var open = b.getAttribute('aria-expanded') === 'true';
+          btns.forEach(function (o) {
+            o.setAttribute('aria-expanded', 'false');
+            o.closest('.div').classList.remove('is-open');
+          });
+          if (!open) {
+            b.setAttribute('aria-expanded', 'true');
+            b.closest('.div').classList.add('is-open');
+          }
+        });
+      });
+    })();
+  </script>
+
 
 
 

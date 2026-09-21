@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="styles/tokens/colors.css?v=15" />
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
-  <link rel="stylesheet" href="styles/main.css?v=73" />
+  <link rel="stylesheet" href="styles/main.css?v=76" />
 
   <style>
     /* -------------------------------------------------------------------------
@@ -105,6 +105,10 @@
       column-gap: var(--space-4);
     }
     .legal__toc li { margin-bottom: 8px; break-inside: avoid; }
+    @media (hover: none), (max-width: 768px) {
+      .legal__toc li { margin-bottom: 0; }
+      .legal__toc a { display: inline-flex; align-items: center; min-height: 44px; }
+    }
     .legal__toc a {
       font-size: 0.9375rem;
       color: var(--text-primary);

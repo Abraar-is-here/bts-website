@@ -17,13 +17,15 @@
   <link rel="stylesheet" href="styles/tokens/colors.css?v=15" />
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
-  <link rel="stylesheet" href="styles/main.css?v=73" />
+  <link rel="stylesheet" href="styles/main.css?v=76" />
 
 
   <style>
     .apply { padding-block-start: 128px; }
     .apply__eyebrow { display:block; font-size:.75rem; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--accent-bright); margin-bottom:var(--space-3); }
     .apply__head { max-width:60ch; }
+    /* Same heading treatment as the rest of the site (see .sel__title). */
+    .apply__title { font-family:var(--font-display); font-size:clamp(2.2rem,5.5vw,3.4rem); font-weight:800; line-height:1.03; letter-spacing:-0.03em; color:var(--text-primary); text-wrap:balance; margin:0 0 var(--space-4); }
     .apply__form-section { margin-top:var(--space-5); }
     .form-card .notice { margin:var(--space-5) 0 var(--space-4); }
     .field textarea { resize: vertical; min-height: 120px; line-height: 1.5; }

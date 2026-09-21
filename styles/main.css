@@ -1822,6 +1822,7 @@ body.is-leaving {
   grid-template-columns: repeat(3, 1fr);
   gap: var(--space-4);
   list-style: none;
+  padding: 0;
 }
 
 .alumni-card {
@@ -1998,7 +1999,7 @@ body.is-leaving {
   .alumni__list { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 480px) {
-  .alumni__list { grid-template-columns: 1fr; max-width: 360px; margin-inline: auto; }
+  .alumni__list { grid-template-columns: minmax(0, 1fr); max-width: min(360px, 100%); margin-inline: auto; }
   .alumni-card__photo { width: 100px; height: 100px; }
 }
 
@@ -2474,4 +2475,21 @@ body.is-leaving {
   flex-wrap: wrap;
   gap: var(--space-3);
   margin-top: var(--space-4);
+}
+
+/* Touch and small screens: footer links and the Menu button get a 44px hit
+   area without changing how they look. */
+@media (hover: none), (max-width: 768px) {
+  .nav__menu-btn { min-height: 44px; }
+  .logo { min-height: 44px; }
+  .site-footer__list li { margin-bottom: 0; }
+  .site-footer__list a,
+  .site-footer__contact a,
+  .site-footer__legal a,
+  .site-footer__brand-mark {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  .site-footer__legal { gap: 0 var(--space-4); }
 }
