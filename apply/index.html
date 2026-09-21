@@ -21,10 +21,11 @@
 
 
   <style>
-    .apply__eyebrow { display:block; font-size:.75rem; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--accent); margin-bottom:var(--space-3); }
+    .apply { padding-block-start: 128px; }
+    .apply__eyebrow { display:block; font-size:.75rem; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--accent-bright); margin-bottom:var(--space-3); }
     .apply__head { max-width:60ch; }
-    .apply__form-section { margin-top:var(--space-6); }
-    .apply__form-section .notice { margin-bottom:var(--space-6); }
+    .apply__form-section { margin-top:var(--space-5); }
+    .form-card .notice { margin:var(--space-5) 0 var(--space-4); }
     .field textarea { resize: vertical; min-height: 120px; line-height: 1.5; }
     .apply__foot { margin-top:var(--space-6); padding-top:var(--space-4); border-top:1px solid var(--hairline); font-size:.875rem; line-height:1.6; color:var(--text-secondary); }
     .apply__foot a { color:var(--accent-bright); }
@@ -63,7 +64,6 @@
           <li><a class="nav__dropdown-link" href="/alumni" role="menuitem">Alumni</a></li>
         </ul>
       </li>
-      <li><a class="nav__link nav__link--cta" href="https://www.bristolsu.org.uk/groups/bristol-trading-society-2436" target="_blank" rel="noopener noreferrer">Become a member<span class="visually-hidden"> (opens in a new tab)</span></a></li>
     </ul>
   </nav>
 
@@ -81,18 +81,7 @@
         </p>
       </header>
 
-      <section class="apply__form-section" aria-labelledby="form-title">
-        <h2 class="h3" id="form-title">Apply</h2>
-
-        <div class="notice">
-          <p>
-            Your details and CV are held in the BTS analyst CV book and may be shared with our
-            sponsors and partner firms for recruitment purposes. To be removed, email
-            <a href="mailto:bristol-trading-society@bristol.ac.uk">bristol-trading-society@bristol.ac.uk</a>
-            &mdash; it will not affect your application. See our <a href="/privacy">Privacy Policy</a>.
-          </p>
-        </div>
-
+      <section class="apply__form-section" aria-label="Application form">
         <!-- data-endpoint = the deployed ANALYST Apps Script (apps-script/AnalystCode.gs),
              which writes to the new analyst applications sheet. Empty means the form
              refuses to submit rather than silently losing an application. -->
@@ -184,7 +173,7 @@
                 <label for="why"><span data-why-label>Why have you selected this as your first division?</span> <span class="opt">(optional)</span></label>
                 <textarea id="why" name="why" rows="5" maxlength="1500"
                           placeholder="A few sentences: what draws you to this division, and any relevant interest or experience."></textarea>
-                <span class="field__hint">Optional, but strong applications usually have an answer.</span>
+                <span class="field__hint">A few sentences is plenty.</span>
                 <span class="field__error" data-error></span>
               </div>
 
@@ -207,6 +196,15 @@
               </div>
             </div>
           </fieldset>
+
+        <div class="notice">
+          <p>
+            Your details and CV are held in the BTS analyst CV book and may be shared with our
+            sponsors and partner firms for recruitment purposes. To be removed, email
+            <a href="mailto:bristol-trading-society@bristol.ac.uk">bristol-trading-society@bristol.ac.uk</a>
+            &mdash; it will not affect your application. See our <a href="/privacy">Privacy Policy</a>.
+          </p>
+        </div>
 
           <div class="form-actions">
             <button type="submit" class="btn btn--primary" data-submit>
