@@ -1,0 +1,71 @@
+diff --git a/about/index.html b/about/index.html
+index 37fb595..a20959c 100644
+--- a/about/index.html
++++ b/about/index.html
+@@ -481,11 +481,11 @@
+         <h2 class="abt__sec-title" id="next-title">Where to look next</h2>
+ 
+         <div class="onward">
+-          <a href="/apply">
++          <div class="onward__static">
+             <strong>The analyst programme</strong>
+             <span>FICC, Equities, Macro and Quant, run as thirteen teams.</span>
+-            <em>Applications are open</em>
+-          </a>
++            <em>Applications opening soon</em>
++          </div>
+           <a href="/events">
+             <strong>Events</strong>
+             <span>The competitions, simulations and speaker evenings we run each year.</span>
+diff --git a/events/index.html b/events/index.html
+index dd40ec7..8ab0c26 100644
+--- a/events/index.html
++++ b/events/index.html
+@@ -651,7 +651,7 @@
+           <li class="next-item">
+             <div class="next-item__body">
+               <p class="next-item__title">Analyst applications</p>
+-              <p class="next-item__when">Now open &mdash; <a href="/apply">apply here</a></p>
++              <p class="next-item__when">Opening soon &mdash; more details to follow</p>
+             </div>
+             <span class="next-item__chip">21 Sept</span>
+           </li>
+@@ -686,7 +686,7 @@
+           <div class="term">
+             <p class="term__span">September &ndash; December</p>
+             <ul class="term__list">
+-              <li><a class="term__link" href="/apply">Analyst applications open</a> <span class="term__when">21 September</span></li>
++              <li>Analyst applications open <span class="term__when">Soon</span></li>
+               <li><a class="term__link" href="/events/amplifyme/">AmplifyME Pathways launch</a> <span class="term__when">22 September</span></li>
+               <li>Annual Welcome Event <span class="term__when">24 September</span></li>
+               <li>Bloomberg Terminal sessions <span class="term__when">Throughout</span></li>
+diff --git a/index.html b/index.html
+index be77767..b4bfb9a 100644
+--- a/index.html
++++ b/index.html
+@@ -166,10 +166,7 @@
+               Thirteen teams across four divisions. Research an instrument, pitch it, and defend
+               it in front of people who do it for a living.
+             </p>
+-            <a class="btn btn--primary start__join" href="/apply">
+-              Apply now
+-              <span class="btn__arrow" aria-hidden="true">&rarr;</span>
+-            </a>
++            <p class="start__go start__go--static">Applications opening soon</p>
+           </div>
+ 
+       </div>
+diff --git a/selection/index.html b/selection/index.html
+index 68722fe..dd54101 100644
+--- a/selection/index.html
++++ b/selection/index.html
+@@ -362,8 +362,7 @@
+         </p>
+ 
+         <div class="sel__cta">
+-          <p>Analyst applications are now open. <a href="/apply">Apply here</a> &mdash; everything
+-             above still applies.</p>
++          <p>Analyst applications are opening soon, and everything above still applies.</p>
+         </div>
+       </section>
+ 
