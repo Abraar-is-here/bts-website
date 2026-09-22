@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="styles/tokens/colors.css?v=15" />
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
-  <link rel="stylesheet" href="styles/main.css?v=76" />
+  <link rel="stylesheet" href="styles/main.css?v=78" />
 
   <style>
     /* -------------------------------------------------------------------------
@@ -226,6 +226,30 @@
        ------------------------------------------------------------------------- */
     .team__tier--division-heads { animation-delay: 0.95s; }
 
+    /* Every division-head card is the SAME width with the SAME gap, so circles
+       sit on one shared grid: sized by content, a long name ("Tash Munjanganja")
+       pushed its circle sideways and the rows drifted apart. With equal cells, a
+       centred row of two lands exactly under the middle two of a row of four. */
+    .team__tier--division-heads {
+      --dh-w: 200px;
+      --dh-gap: clamp(16px, 3vw, 48px);
+    }
+    .team__tier--division-heads .team__tier-cards { gap: var(--space-4) var(--dh-gap); }
+    .team__tier--division-heads .team-card {
+      flex: 0 0 var(--dh-w);
+      width: var(--dh-w);
+      text-align: center;
+    }
+    .team__tier--division-heads .team-card__name { text-wrap: balance; }
+
+    /* Phones: two per row keeps 13 cards from becoming one long column, and the
+       smaller cell keeps the same shared grid. */
+    @media (max-width: 560px) {
+      .team__tier--division-heads { --dh-w: 144px; --dh-gap: 16px; }
+      .team__tier--division-heads .team-card__photo { width: 128px; height: 128px; }
+      .team__tier--division-heads .team-card__name { font-size: 1rem; }
+    }
+
     /* Division sub-group inside the tier */
     .div-group {
       display: flex;
@@ -312,6 +336,13 @@
 <body>
 
   <a class="skip-link" href="/team/#team">Skip to content</a>
+  <!-- Announcement ticker, styled as a market tape. The whole bar links to the
+       application form. The scrolling tape is decorative and hidden from screen
+       readers; the link's own label carries the message once. Omitted on /apply. -->
+  <a class="ticker" href="/apply" aria-label="Analyst applications now open. Apply now.">
+    <span class="ticker__badge" aria-hidden="true"><span class="ticker__live"></span>BTS</span>
+    <span class="ticker__tape" aria-hidden="true"><span class="ticker__track"><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">FICC</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Equities</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Macro</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Quant</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk"><span class="tk__sym">Places</span><span class="tk__val">60</span></span><span class="tk"><span class="tk__sym">Teams</span><span class="tk__val">13</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">FICC</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Equities</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Macro</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Quant</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk"><span class="tk__sym">Places</span><span class="tk__val">60</span></span><span class="tk"><span class="tk__sym">Teams</span><span class="tk__val">13</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">FICC</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Equities</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Macro</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Quant</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk"><span class="tk__sym">Places</span><span class="tk__val">60</span></span><span class="tk"><span class="tk__sym">Teams</span><span class="tk__val">13</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">FICC</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Equities</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Macro</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Quant</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk"><span class="tk__sym">Places</span><span class="tk__val">60</span></span><span class="tk"><span class="tk__sym">Teams</span><span class="tk__val">13</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">FICC</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Equities</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Macro</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Quant</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk"><span class="tk__sym">Places</span><span class="tk__val">60</span></span><span class="tk"><span class="tk__sym">Teams</span><span class="tk__val">13</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">FICC</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Equities</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Macro</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Quant</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk"><span class="tk__sym">Places</span><span class="tk__val">60</span></span><span class="tk"><span class="tk__sym">Teams</span><span class="tk__val">13</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span></span></span>
+  </a>
 
   <div class="aurora" aria-hidden="true">
     <canvas id="aurora-canvas"></canvas>
@@ -396,9 +427,9 @@
             <p class="team-card__role">General Secretary</p>
           </a>
 
-          <a class="team-card team-card--smooth" href="https://www.linkedin.com/in/tomhoad1/" target="_blank" rel="noopener noreferrer" aria-label="Tom Hoad, Treasurer — LinkedIn profile">
+          <a class="team-card" href="https://www.linkedin.com/in/tomhoad1/" target="_blank" rel="noopener noreferrer" aria-label="Tom Hoad, Treasurer — LinkedIn profile">
             <div class="team-card__photo">
-              <img class="team-card__img" src="assets/img/team/tom-hoad.jpg" alt="Tom Hoad" onerror="this.style.display='none'" />
+              <img class="team-card__img" src="assets/img/team/division-heads/tom-hoad.jpg" alt="Tom Hoad" onerror="this.style.display='none'" />
               <svg class="team-card__img" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="180" height="180" fill="#0d2b6b"/><text x="90" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="62" font-weight="700" fill="#38bdf8" letter-spacing="-2">TH</text></svg>
               <div class="team-card__overlay" aria-hidden="true"><svg class="team-card__li-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
             </div>
@@ -427,34 +458,38 @@
         <div class="div-group">
           <span class="div-group__label">Equities</span>
           <div class="team__tier-cards">
-            <div class="team-card team-card--hiring" aria-label="Equities Division Head — appointed, announcing soon">
-              <div class="team-card__photo team-card__photo--open">
-                <div class="hiring-avatar"><svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="26" cy="18" r="10" fill="white"/><path d="M6 46c0-11.046 8.954-20 20-20s20 8.954 20 20" fill="white"/></svg></div>
+            <a class="team-card" href="https://www.linkedin.com/in/tash-munjanganja-437081232/" target="_blank" rel="noopener noreferrer" aria-label="Tash Munjanganja, Equities Division Head &mdash; LinkedIn profile">
+              <div class="team-card__photo">
+                <img class="team-card__img" src="assets/img/team/division-heads/tash-munjanganja.jpg" alt="Tash Munjanganja" onerror="this.style.display='none'" />
+                <svg class="team-card__img" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="180" height="180" fill="#0d2b6b"/><text x="90" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="62" font-weight="700" fill="#38bdf8" letter-spacing="-2">TM</text></svg>
+                <div class="team-card__overlay" aria-hidden="true"><svg class="team-card__li-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
               </div>
-              <p class="team-card__name">Announcing soon</p>
-              <p class="team-card__role">Equities</p>
-            </div>
-            <div class="team-card team-card--hiring" aria-label="Equities Division Head — appointed, announcing soon">
-              <div class="team-card__photo team-card__photo--open">
-                <div class="hiring-avatar"><svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="26" cy="18" r="10" fill="white"/><path d="M6 46c0-11.046 8.954-20 20-20s20 8.954 20 20" fill="white"/></svg></div>
+              <p class="team-card__name">Tash Munjanganja</p>
+            </a>
+            <a class="team-card" href="https://www.linkedin.com/in/toluwani-ayetan-287a29262/" target="_blank" rel="noopener noreferrer" aria-label="Tolu Ayetan, Equities Division Head &mdash; LinkedIn profile">
+              <div class="team-card__photo">
+                <img class="team-card__img" src="assets/img/team/division-heads/tolu-ayetan.jpg" alt="Tolu Ayetan" onerror="this.style.display='none'" />
+                <svg class="team-card__img" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="180" height="180" fill="#0d2b6b"/><text x="90" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="62" font-weight="700" fill="#38bdf8" letter-spacing="-2">TA</text></svg>
+                <div class="team-card__overlay" aria-hidden="true"><svg class="team-card__li-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
               </div>
-              <p class="team-card__name">Announcing soon</p>
-              <p class="team-card__role">Equities</p>
-            </div>
-            <div class="team-card team-card--hiring" aria-label="Equities Division Head — appointed, announcing soon">
-              <div class="team-card__photo team-card__photo--open">
-                <div class="hiring-avatar"><svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="26" cy="18" r="10" fill="white"/><path d="M6 46c0-11.046 8.954-20 20-20s20 8.954 20 20" fill="white"/></svg></div>
+              <p class="team-card__name">Tolu Ayetan</p>
+            </a>
+            <a class="team-card" href="https://www.linkedin.com/in/ibrahim-ali3/" target="_blank" rel="noopener noreferrer" aria-label="Ibrahim Ali, Equities Division Head &mdash; LinkedIn profile">
+              <div class="team-card__photo">
+                <img class="team-card__img" src="assets/img/team/division-heads/ibrahim-ali.jpg" alt="Ibrahim Ali" onerror="this.style.display='none'" />
+                <svg class="team-card__img" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="180" height="180" fill="#0d2b6b"/><text x="90" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="62" font-weight="700" fill="#38bdf8" letter-spacing="-2">IA</text></svg>
+                <div class="team-card__overlay" aria-hidden="true"><svg class="team-card__li-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
               </div>
-              <p class="team-card__name">Announcing soon</p>
-              <p class="team-card__role">Equities</p>
-            </div>
-            <div class="team-card team-card--hiring" aria-label="Equities Division Head — appointed, announcing soon">
-              <div class="team-card__photo team-card__photo--open">
-                <div class="hiring-avatar"><svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="26" cy="18" r="10" fill="white"/><path d="M6 46c0-11.046 8.954-20 20-20s20 8.954 20 20" fill="white"/></svg></div>
+              <p class="team-card__name">Ibrahim Ali</p>
+            </a>
+            <a class="team-card" href="https://www.linkedin.com/in/tomhoad1/" target="_blank" rel="noopener noreferrer" aria-label="Tom Hoad, Equities Division Head &mdash; LinkedIn profile">
+              <div class="team-card__photo">
+                <img class="team-card__img" src="assets/img/team/division-heads/tom-hoad.jpg" alt="Tom Hoad" onerror="this.style.display='none'" />
+                <svg class="team-card__img" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="180" height="180" fill="#0d2b6b"/><text x="90" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="62" font-weight="700" fill="#38bdf8" letter-spacing="-2">TH</text></svg>
+                <div class="team-card__overlay" aria-hidden="true"><svg class="team-card__li-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
               </div>
-              <p class="team-card__name">Announcing soon</p>
-              <p class="team-card__role">Equities</p>
-            </div>
+              <p class="team-card__name">Tom Hoad</p>
+            </a>
           </div>
         </div>
 
@@ -462,34 +497,38 @@
         <div class="div-group">
           <span class="div-group__label">FICC</span>
           <div class="team__tier-cards">
-            <div class="team-card team-card--hiring" aria-label="FICC Division Head — appointed, announcing soon">
-              <div class="team-card__photo team-card__photo--open">
-                <div class="hiring-avatar"><svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="26" cy="18" r="10" fill="white"/><path d="M6 46c0-11.046 8.954-20 20-20s20 8.954 20 20" fill="white"/></svg></div>
+            <a class="team-card" href="https://www.linkedin.com/in/anaymistry/" target="_blank" rel="noopener noreferrer" aria-label="Anay Mistry, FICC Division Head &mdash; LinkedIn profile">
+              <div class="team-card__photo">
+                <img class="team-card__img" src="assets/img/team/division-heads/anay-mistry.jpg" alt="Anay Mistry" onerror="this.style.display='none'" />
+                <svg class="team-card__img" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="180" height="180" fill="#0d2b6b"/><text x="90" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="62" font-weight="700" fill="#38bdf8" letter-spacing="-2">AM</text></svg>
+                <div class="team-card__overlay" aria-hidden="true"><svg class="team-card__li-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
               </div>
-              <p class="team-card__name">Announcing soon</p>
-              <p class="team-card__role">FICC</p>
-            </div>
-            <div class="team-card team-card--hiring" aria-label="FICC Division Head — appointed, announcing soon">
-              <div class="team-card__photo team-card__photo--open">
-                <div class="hiring-avatar"><svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="26" cy="18" r="10" fill="white"/><path d="M6 46c0-11.046 8.954-20 20-20s20 8.954 20 20" fill="white"/></svg></div>
+              <p class="team-card__name">Anay Mistry</p>
+            </a>
+            <a class="team-card" href="https://www.linkedin.com/in/valeriy-sinko-51b954266/" target="_blank" rel="noopener noreferrer" aria-label="Val Sinko, FICC Division Head &mdash; LinkedIn profile">
+              <div class="team-card__photo">
+                <img class="team-card__img" src="assets/img/team/division-heads/val-sinko.jpg" alt="Val Sinko" onerror="this.style.display='none'" />
+                <svg class="team-card__img" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="180" height="180" fill="#0d2b6b"/><text x="90" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="62" font-weight="700" fill="#38bdf8" letter-spacing="-2">VS</text></svg>
+                <div class="team-card__overlay" aria-hidden="true"><svg class="team-card__li-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
               </div>
-              <p class="team-card__name">Announcing soon</p>
-              <p class="team-card__role">FICC</p>
-            </div>
-            <div class="team-card team-card--hiring" aria-label="FICC Division Head — appointed, announcing soon">
-              <div class="team-card__photo team-card__photo--open">
-                <div class="hiring-avatar"><svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="26" cy="18" r="10" fill="white"/><path d="M6 46c0-11.046 8.954-20 20-20s20 8.954 20 20" fill="white"/></svg></div>
+              <p class="team-card__name">Val Sinko</p>
+            </a>
+            <a class="team-card" href="https://www.linkedin.com/in/manolo-kidel-5877242a0/" target="_blank" rel="noopener noreferrer" aria-label="Manolo Kidel, FICC Division Head &mdash; LinkedIn profile">
+              <div class="team-card__photo">
+                <img class="team-card__img" src="assets/img/team/division-heads/manolo-kidel.jpg" alt="Manolo Kidel" onerror="this.style.display='none'" />
+                <svg class="team-card__img" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="180" height="180" fill="#0d2b6b"/><text x="90" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="62" font-weight="700" fill="#38bdf8" letter-spacing="-2">MK</text></svg>
+                <div class="team-card__overlay" aria-hidden="true"><svg class="team-card__li-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
               </div>
-              <p class="team-card__name">Announcing soon</p>
-              <p class="team-card__role">FICC</p>
-            </div>
-            <div class="team-card team-card--hiring" aria-label="FICC Division Head — appointed, announcing soon">
-              <div class="team-card__photo team-card__photo--open">
-                <div class="hiring-avatar"><svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="26" cy="18" r="10" fill="white"/><path d="M6 46c0-11.046 8.954-20 20-20s20 8.954 20 20" fill="white"/></svg></div>
+              <p class="team-card__name">Manolo Kidel</p>
+            </a>
+            <a class="team-card" href="https://www.linkedin.com/in/aledvonoppell/" target="_blank" rel="noopener noreferrer" aria-label="Aled von Oppell, FICC Division Head &mdash; LinkedIn profile">
+              <div class="team-card__photo">
+                <img class="team-card__img" src="assets/img/team/division-heads/aled-von-oppell.jpg" alt="Aled von Oppell" onerror="this.style.display='none'" />
+                <svg class="team-card__img" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="180" height="180" fill="#0d2b6b"/><text x="90" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="62" font-weight="700" fill="#38bdf8" letter-spacing="-2">AO</text></svg>
+                <div class="team-card__overlay" aria-hidden="true"><svg class="team-card__li-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
               </div>
-              <p class="team-card__name">Announcing soon</p>
-              <p class="team-card__role">FICC</p>
-            </div>
+              <p class="team-card__name">Aled von Oppell</p>
+            </a>
           </div>
         </div>
 
@@ -497,27 +536,30 @@
         <div class="div-group">
           <span class="div-group__label">Quant</span>
           <div class="team__tier-cards">
-            <div class="team-card team-card--hiring" aria-label="Quant Division Head — appointed, announcing soon">
-              <div class="team-card__photo team-card__photo--open">
-                <div class="hiring-avatar"><svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="26" cy="18" r="10" fill="white"/><path d="M6 46c0-11.046 8.954-20 20-20s20 8.954 20 20" fill="white"/></svg></div>
+            <a class="team-card" href="https://www.linkedin.com/in/kometh-tauch/" target="_blank" rel="noopener noreferrer" aria-label="Kometh Tauch, Quant Division Head &mdash; LinkedIn profile">
+              <div class="team-card__photo">
+                <img class="team-card__img" src="assets/img/team/division-heads/kometh-tauch.jpg" alt="Kometh Tauch" onerror="this.style.display='none'" />
+                <svg class="team-card__img" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="180" height="180" fill="#0d2b6b"/><text x="90" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="62" font-weight="700" fill="#38bdf8" letter-spacing="-2">KT</text></svg>
+                <div class="team-card__overlay" aria-hidden="true"><svg class="team-card__li-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
               </div>
-              <p class="team-card__name">Announcing soon</p>
-              <p class="team-card__role">Quant</p>
-            </div>
-            <div class="team-card team-card--hiring" aria-label="Quant Division Head — appointed, announcing soon">
-              <div class="team-card__photo team-card__photo--open">
-                <div class="hiring-avatar"><svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="26" cy="18" r="10" fill="white"/><path d="M6 46c0-11.046 8.954-20 20-20s20 8.954 20 20" fill="white"/></svg></div>
+              <p class="team-card__name">Kometh Tauch</p>
+            </a>
+            <a class="team-card" href="https://www.linkedin.com/in/aditya-verma-27av/" target="_blank" rel="noopener noreferrer" aria-label="Aditya Verma, Quant Division Head &mdash; LinkedIn profile">
+              <div class="team-card__photo">
+                <img class="team-card__img" src="assets/img/team/division-heads/aditya-verma.jpg" alt="Aditya Verma" onerror="this.style.display='none'" />
+                <svg class="team-card__img" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="180" height="180" fill="#0d2b6b"/><text x="90" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="62" font-weight="700" fill="#38bdf8" letter-spacing="-2">AV</text></svg>
+                <div class="team-card__overlay" aria-hidden="true"><svg class="team-card__li-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
               </div>
-              <p class="team-card__name">Announcing soon</p>
-              <p class="team-card__role">Quant</p>
-            </div>
-            <div class="team-card team-card--hiring" aria-label="Quant Division Head — appointed, announcing soon">
-              <div class="team-card__photo team-card__photo--open">
-                <div class="hiring-avatar"><svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="26" cy="18" r="10" fill="white"/><path d="M6 46c0-11.046 8.954-20 20-20s20 8.954 20 20" fill="white"/></svg></div>
+              <p class="team-card__name">Aditya Verma</p>
+            </a>
+            <a class="team-card" href="https://www.linkedin.com/in/willlbarry/" target="_blank" rel="noopener noreferrer" aria-label="Will Barry, Quant Division Head &mdash; LinkedIn profile">
+              <div class="team-card__photo">
+                <img class="team-card__img" src="assets/img/team/division-heads/will-barry.jpg" alt="Will Barry" onerror="this.style.display='none'" />
+                <svg class="team-card__img" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="180" height="180" fill="#0d2b6b"/><text x="90" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="62" font-weight="700" fill="#38bdf8" letter-spacing="-2">WB</text></svg>
+                <div class="team-card__overlay" aria-hidden="true"><svg class="team-card__li-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
               </div>
-              <p class="team-card__name">Announcing soon</p>
-              <p class="team-card__role">Quant</p>
-            </div>
+              <p class="team-card__name">Will Barry</p>
+            </a>
           </div>
         </div>
 
@@ -525,20 +567,22 @@
         <div class="div-group">
           <span class="div-group__label">Macro</span>
           <div class="team__tier-cards">
-            <div class="team-card team-card--hiring" aria-label="Macro Division Head — appointed, announcing soon">
-              <div class="team-card__photo team-card__photo--open">
-                <div class="hiring-avatar"><svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="26" cy="18" r="10" fill="white"/><path d="M6 46c0-11.046 8.954-20 20-20s20 8.954 20 20" fill="white"/></svg></div>
+            <a class="team-card" href="https://www.linkedin.com/in/manasvi-kommuri-824066241/" target="_blank" rel="noopener noreferrer" aria-label="Manasvi Kommuri, Macro Division Head &mdash; LinkedIn profile">
+              <div class="team-card__photo">
+                <img class="team-card__img" src="assets/img/team/division-heads/manasvi-kommuri.jpg" alt="Manasvi Kommuri" onerror="this.style.display='none'" />
+                <svg class="team-card__img" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="180" height="180" fill="#0d2b6b"/><text x="90" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="62" font-weight="700" fill="#38bdf8" letter-spacing="-2">MK</text></svg>
+                <div class="team-card__overlay" aria-hidden="true"><svg class="team-card__li-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
               </div>
-              <p class="team-card__name">Announcing soon</p>
-              <p class="team-card__role">Macro</p>
-            </div>
-            <div class="team-card team-card--hiring" aria-label="Macro Division Head — appointed, announcing soon">
-              <div class="team-card__photo team-card__photo--open">
-                <div class="hiring-avatar"><svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="26" cy="18" r="10" fill="white"/><path d="M6 46c0-11.046 8.954-20 20-20s20 8.954 20 20" fill="white"/></svg></div>
+              <p class="team-card__name">Manasvi Kommuri</p>
+            </a>
+            <a class="team-card" href="https://www.linkedin.com/in/lenny-tucker-3b0324282/" target="_blank" rel="noopener noreferrer" aria-label="Lenny Tucker, Macro Division Head &mdash; LinkedIn profile">
+              <div class="team-card__photo">
+                <img class="team-card__img" src="assets/img/team/division-heads/lenny-tucker.jpg" alt="Lenny Tucker" onerror="this.style.display='none'" />
+                <svg class="team-card__img" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="180" height="180" fill="#0d2b6b"/><text x="90" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="62" font-weight="700" fill="#38bdf8" letter-spacing="-2">LT</text></svg>
+                <div class="team-card__overlay" aria-hidden="true"><svg class="team-card__li-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
               </div>
-              <p class="team-card__name">Announcing soon</p>
-              <p class="team-card__role">Macro</p>
-            </div>
+              <p class="team-card__name">Lenny Tucker</p>
+            </a>
           </div>
         </div>
 

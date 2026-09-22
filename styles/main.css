@@ -2493,3 +2493,181 @@ body.is-leaving {
   }
   .site-footer__legal { gap: 0 var(--space-4); }
 }
+
+
+/* ===========================================================================
+   Announcement ticker: a market tape
+   ---------------------------------------------------------------------------
+   Near-black terminal strip in Space Mono. A fixed BTS badge with a live dot
+   on the left; entries scroll past as symbol + value, with green up-ticks for
+   what is open. Pure CSS: the nav is a later sibling, so it is pushed down
+   with a sibling selector and nothing shifts after load.
+   =========================================================================== */
+:root { --ticker-h: 34px; }
+
+.ticker {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 110;                       /* above the nav (100) */
+  height: var(--ticker-h);
+  display: flex;
+  align-items: stretch;
+  background: #05080f;
+  border-bottom: 1px solid rgba(141, 162, 196, 0.16);
+  color: #e6ebf3;
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.ticker__badge {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 14px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #fff;
+  background: var(--accent);
+}
+.ticker__live {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.55);
+  animation: ticker-live 2s ease-out infinite;
+}
+@keyframes ticker-live {
+  0%   { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.55); }
+  70%  { box-shadow: 0 0 0 7px rgba(34, 197, 94, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+/* Soft fade at both ends, so entries slide in and out of the tape. */
+.ticker__tape {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 28px, #000 calc(100% - 28px), transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 28px, #000 calc(100% - 28px), transparent);
+}
+.ticker__track {
+  display: inline-flex;
+  align-items: center;
+  animation: ticker-scroll 70s linear infinite;
+  will-change: transform;
+}
+.tk {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 0 20px;
+  border-right: 1px solid rgba(141, 162, 196, 0.18);
+}
+.tk__sym { font-weight: 700; color: #fff; }
+.tk__val { color: #9fb0cc; }
+.tk--up .tk__val { color: #22c55e; }
+.tk--cta .tk__sym,
+.tk--cta .tk__val { color: var(--accent-bright); }
+
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+/* Stop to read, or to click. */
+.ticker:hover .ticker__track,
+.ticker:focus-visible .ticker__track { animation-play-state: paused; }
+.ticker:focus-visible { outline: 2px solid var(--accent-bright); outline-offset: -3px; }
+@media (hover: hover) and (pointer: fine) {
+  .ticker:hover { background: #0a1020; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ticker__track, .ticker__live { animation: none; }
+}
+@media (max-width: 560px) {
+  .ticker__badge { padding: 0 10px; }
+  .tk { padding: 0 14px; gap: 8px; }
+}
+
+/* Make room: the nav drops below the bar, and page content moves down with it. */
+.ticker ~ .nav { top: calc(var(--ticker-h) + var(--space-3)); }
+body:has(> .ticker) { padding-top: var(--ticker-h); }
+
+/* ===========================================================================
+   Home start cards: one shared subgrid
+   ---------------------------------------------------------------------------
+   Each card spans five rows of the parent grid (step, title, blurb, main
+   button, extra link) and inherits those rows, so every row lines up across
+   all three cards however long each blurb is -- the three main buttons sit on
+   one line. Browsers without subgrid fall back to a normal stacked card.
+   =========================================================================== */
+.hero--start .start__card {
+  display: grid;
+  grid-row: span 5;
+  grid-template-rows: subgrid;
+  row-gap: 0;
+  align-content: start;
+}
+.hero--start .start__text { align-self: start; }
+.hero--start .start__join {
+  justify-self: start;
+  align-self: start;
+  margin-top: var(--space-3);
+}
+.hero--start .start__go { margin-top: 0; padding-top: 14px; align-self: start; }
+
+.start__social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 14px;
+  align-self: start;
+}
+.start__chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 8px 18px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  color: #fff;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background var(--dur-fast) var(--ease-out),
+              border-color var(--dur-fast) var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .start__chip:hover { background: rgba(255, 255, 255, 0.1); border-color: #fff; }
+}
+.start__chip:focus-visible { outline: 2px solid var(--accent-bright); outline-offset: 3px; }
+
+/* --- Flagship start card: the analyst programme ------------------------------
+   Same treatment as the flagship row on the events page: filled blue with a
+   glow, a wider column, and the only solid button in the row. */
+@media (min-width: 960px) {
+  .hero--start .start__grid { grid-template-columns: 1.35fr 1fr 1fr; }
+}
+.hero--start .start__card--flagship {
+  border: 1px solid rgba(56, 189, 248, 0.7);
+  background:
+    radial-gradient(ellipse 80% 120% at 100% 0%, rgba(56, 189, 248, 0.32) 0%, transparent 60%),
+    linear-gradient(135deg, #1d4ed8 0%, #2563eb 55%, #1e40af 100%);
+  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.18), 0 22px 56px -14px rgba(37, 99, 235, 0.7);
+}
+.start__card--flagship .start__step { color: rgba(255, 255, 255, 0.85); }
+.start__card--flagship .start__name { font-size: clamp(1.5rem, 2.1vw, 1.875rem); color: #fff; }
+.hero--start .start__card--flagship .start__text { color: rgba(255, 255, 255, 0.88); }
+.start__card--flagship .start__join {
+  background: #fff;
+  color: #0a1a3f;
+  box-shadow: 0 8px 22px rgba(6, 17, 43, 0.35);
+}
+.start__card--flagship .start__go { color: #fff; }
+@media (hover: hover) and (pointer: fine) {
+  .start__card--flagship .start__join:hover { background: #f4f7fb; color: #0a1a3f; }
+  .start__card--flagship a.start__go:hover { color: #dbeafe; }
+}

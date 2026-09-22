@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="styles/tokens/colors.css?v=15" />
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
-  <link rel="stylesheet" href="styles/main.css?v=76" />
+  <link rel="stylesheet" href="styles/main.css?v=78" />
 
   <style>
     /* =========================================================================
@@ -175,11 +175,62 @@
       color: #fff;
     }
     .next-item__arrow { display: inline-block; transition: transform var(--dur-fast) var(--ease-out); }
+
+    /* Flagship: the analyst intake. Filled rather than tinted, a glow rather
+       than a hairline, and a white CTA -- the one row on the page that should
+       be impossible to scroll past. */
+    .next-item--flagship { margin-bottom: var(--space-3); }
+    .next-item--flagship .next-item__link {
+      padding: var(--space-4);
+      border: 1px solid rgba(56, 189, 248, 0.7);
+      background:
+        radial-gradient(ellipse 80% 140% at 100% 0%, rgba(56, 189, 248, 0.32) 0%, transparent 60%),
+        linear-gradient(135deg, #1d4ed8 0%, #2563eb 55%, #1e40af 100%);
+      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.18), 0 18px 48px -12px rgba(37, 99, 235, 0.65);
+    }
+    .next-item__kicker {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.82);
+      margin-bottom: 6px;
+    }
+    .next-item--flagship .next-item__title {
+      font-family: var(--font-display);
+      font-size: clamp(1.375rem, 2.6vw, 1.875rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .next-item--flagship .next-item__when { color: rgba(255, 255, 255, 0.85); }
+    .next-item__chip.next-item__chip--apply {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 48px;
+      padding: 12px 26px;
+      font-size: 0.875rem;
+      border: 0;
+      background: #fff;
+      color: #0a1a3f;
+      box-shadow: 0 6px 18px rgba(6, 17, 43, 0.35);
+    }
     @media (hover: hover) and (pointer: fine) {
       .next-item__link:hover { background: rgba(37, 99, 235, 0.24); border-color: var(--accent); }
       .next-item__link:hover .next-item__chip--go { background: var(--accent-hover); border-color: var(--accent-hover); }
       .next-item__link:hover .next-item__title { text-decoration: underline; text-underline-offset: 3px; }
       .next-item__link:hover .next-item__arrow { transform: translateX(3px); }
+      .next-item--flagship .next-item__link:hover {
+        border-color: #7dd3fc;
+        background:
+          radial-gradient(ellipse 80% 140% at 100% 0%, rgba(56, 189, 248, 0.42) 0%, transparent 60%),
+          linear-gradient(135deg, #2563eb 0%, #3b82f6 55%, #1d4ed8 100%);
+      }
+      .next-item--flagship .next-item__link:hover .next-item__title { text-decoration: none; }
+      .next-item--flagship .next-item__link:hover .next-item__chip--apply { background: #f4f7fb; }
     }
     .next-item__link:active { transform: scale(0.995); }
 
@@ -603,6 +654,13 @@
 <body>
 
   <a class="skip-link" href="/events/#events">Skip to content</a>
+  <!-- Announcement ticker, styled as a market tape. The whole bar links to the
+       application form. The scrolling tape is decorative and hidden from screen
+       readers; the link's own label carries the message once. Omitted on /apply. -->
+  <a class="ticker" href="/apply" aria-label="Analyst applications now open. Apply now.">
+    <span class="ticker__badge" aria-hidden="true"><span class="ticker__live"></span>BTS</span>
+    <span class="ticker__tape" aria-hidden="true"><span class="ticker__track"><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">FICC</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Equities</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Macro</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Quant</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk"><span class="tk__sym">Places</span><span class="tk__val">60</span></span><span class="tk"><span class="tk__sym">Teams</span><span class="tk__val">13</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">FICC</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Equities</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Macro</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Quant</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk"><span class="tk__sym">Places</span><span class="tk__val">60</span></span><span class="tk"><span class="tk__sym">Teams</span><span class="tk__val">13</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">FICC</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Equities</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Macro</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Quant</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk"><span class="tk__sym">Places</span><span class="tk__val">60</span></span><span class="tk"><span class="tk__sym">Teams</span><span class="tk__val">13</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">FICC</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Equities</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Macro</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Quant</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk"><span class="tk__sym">Places</span><span class="tk__val">60</span></span><span class="tk"><span class="tk__sym">Teams</span><span class="tk__val">13</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">FICC</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Equities</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Macro</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Quant</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk"><span class="tk__sym">Places</span><span class="tk__val">60</span></span><span class="tk"><span class="tk__sym">Teams</span><span class="tk__val">13</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">FICC</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Equities</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Macro</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Quant</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk"><span class="tk__sym">Places</span><span class="tk__val">60</span></span><span class="tk"><span class="tk__sym">Teams</span><span class="tk__val">13</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span></span></span>
+  </a>
 
   <div class="aurora" aria-hidden="true">
     <canvas id="aurora-canvas"></canvas>
@@ -649,12 +707,18 @@
       <div class="next">
         <span class="next__flag">Next up</span>
         <ul class="next__list">
-          <li class="next-item">
-            <div class="next-item__body">
-              <p class="next-item__title">Analyst applications</p>
-              <p class="next-item__when">Now open &mdash; <a href="/apply">apply here</a></p>
-            </div>
-            <span class="next-item__chip">22 Sept</span>
+          <!-- The flagship intake, so it outranks every other row: a filled
+               gradient card, display-type title and a solid white CTA, where the
+               AmplifyME row below is only tinted. The whole card is the link. -->
+          <li class="next-item next-item--live next-item--flagship">
+            <a class="next-item__link" href="/apply">
+              <div class="next-item__body">
+                <p class="next-item__kicker">Flagship &middot; Now open</p>
+                <p class="next-item__title">Analyst applications</p>
+                <p class="next-item__when">60 places across FICC, Equities, Macro and Quant.</p>
+              </div>
+              <span class="next-item__chip next-item__chip--apply">Apply now <span class="next-item__arrow" aria-hidden="true">&rarr;</span></span>
+            </a>
           </li>
           <li class="next-item next-item--live">
             <a class="next-item__link" href="/events/amplifyme/">

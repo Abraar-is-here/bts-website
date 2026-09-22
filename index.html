@@ -25,7 +25,7 @@
   <link rel="stylesheet" href="styles/tokens/colors.css?v=15" />
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
-  <link rel="stylesheet" href="styles/main.css?v=76" />
+  <link rel="stylesheet" href="styles/main.css?v=78" />
 
   <!-- Structured data. Gives crawlers and AI answers facts to quote instead of
        inferring them from prose. Every value here is verifiable on the site. -->
@@ -76,6 +76,13 @@
   <!-- Skip-link: first focusable element, lets keyboard users jump past the
        nav straight to the hero content. -->
   <a class="skip-link" href="#top">Skip to content</a>
+  <!-- Announcement ticker, styled as a market tape. The whole bar links to the
+       application form. The scrolling tape is decorative and hidden from screen
+       readers; the link's own label carries the message once. Omitted on /apply. -->
+  <a class="ticker" href="/apply" aria-label="Analyst applications now open. Apply now.">
+    <span class="ticker__badge" aria-hidden="true"><span class="ticker__live"></span>BTS</span>
+    <span class="ticker__tape" aria-hidden="true"><span class="ticker__track"><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">FICC</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Equities</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Macro</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Quant</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk"><span class="tk__sym">Places</span><span class="tk__val">60</span></span><span class="tk"><span class="tk__sym">Teams</span><span class="tk__val">13</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">FICC</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Equities</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Macro</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Quant</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk"><span class="tk__sym">Places</span><span class="tk__val">60</span></span><span class="tk"><span class="tk__sym">Teams</span><span class="tk__val">13</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">FICC</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Equities</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Macro</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Quant</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk"><span class="tk__sym">Places</span><span class="tk__val">60</span></span><span class="tk"><span class="tk__sym">Teams</span><span class="tk__val">13</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">FICC</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Equities</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Macro</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Quant</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk"><span class="tk__sym">Places</span><span class="tk__val">60</span></span><span class="tk"><span class="tk__sym">Teams</span><span class="tk__val">13</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">FICC</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Equities</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Macro</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Quant</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk"><span class="tk__sym">Places</span><span class="tk__val">60</span></span><span class="tk"><span class="tk__sym">Teams</span><span class="tk__val">13</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">FICC</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Equities</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Macro</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Quant</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk"><span class="tk__sym">Places</span><span class="tk__val">60</span></span><span class="tk"><span class="tk__sym">Teams</span><span class="tk__val">13</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span></span></span>
+  </a>
 
   <!-- =====================================================================
        Animated aurora background
@@ -143,24 +150,12 @@
       <h1 class="hero-start__name">Bristol Trading Society</h1>
       <p class="start__label" id="start-title">New here? Start with one of these</p>
       <div class="start__grid">
-
-          <!-- A div, not a link: the join button is the card's one destination,
-               and a link cannot sit inside another link. -->
-          <div class="start__card">
-            <p class="start__step">Anyone</p>
-            <span class="start__name">Become a member</span>
-            <p class="start__text">
-              Open to any Bristol student, whatever you study. Speaker evenings, workshops,
-              Bloomberg sessions and socials.
-            </p>
-            <a class="btn btn--primary start__join" href="https://www.bristolsu.org.uk/groups/bristol-trading-society-2436" target="_blank" rel="noopener noreferrer">
-              Join now<span class="visually-hidden"> (opens in a new tab)</span>
-              <span class="btn__arrow" aria-hidden="true">&rarr;</span>
-            </a>
-          </div>
-
-          <div class="start__card">
-            <p class="start__step">By application</p>
+          <!-- Cards are divs, not links: each holds more than one destination,
+               and a link cannot sit inside another link. The five children are
+               laid on a shared subgrid (see main.css) so steps, titles, blurbs and
+               buttons line up across all three cards. -->
+          <div class="start__card start__card--flagship">
+            <p class="start__step">Flagship &middot; Now open</p>
             <span class="start__name">The analyst programme</span>
             <p class="start__text">
               Thirteen teams across four divisions. Research an instrument, pitch it, and defend
@@ -173,6 +168,34 @@
             <a class="start__go" href="/analyst-programme">Explore the divisions &rarr;</a>
           </div>
 
+          <div class="start__card">
+            <p class="start__step">Anyone</p>
+            <span class="start__name">Become a member</span>
+            <p class="start__text">
+              Open to any Bristol student, whatever you study. Speaker evenings, workshops,
+              Bloomberg sessions and socials.
+            </p>
+            <a class="btn btn--secondary start__join" href="https://www.bristolsu.org.uk/groups/bristol-trading-society-2436" target="_blank" rel="noopener noreferrer">
+              Join now<span class="visually-hidden"> (opens in a new tab)</span>
+              <span class="btn__arrow" aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+
+          <div class="start__card">
+            <p class="start__step">Stay connected</p>
+            <span class="start__name">Follow the society</span>
+            <p class="start__text">
+              Event dates, deadlines and opportunities as they happen, straight to your phone.
+            </p>
+            <a class="btn btn--secondary start__join" href="https://chat.whatsapp.com/FgHSKA4Y4ww70iYxEz23lk" target="_blank" rel="noopener noreferrer">
+              WhatsApp group<span class="visually-hidden"> (opens in a new tab)</span>
+              <span class="btn__arrow" aria-hidden="true">&rarr;</span>
+            </a>
+            <div class="start__social">
+              <a class="start__chip" href="https://www.instagram.com/bristradingsociety/" target="_blank" rel="noopener noreferrer">Instagram<span class="visually-hidden"> (opens in a new tab)</span></a>
+              <a class="start__chip" href="https://www.linkedin.com/company/bristol-trading-society/" target="_blank" rel="noopener noreferrer">LinkedIn<span class="visually-hidden"> (opens in a new tab)</span></a>
+            </div>
+          </div>
       </div>
     </div>
   </header>
