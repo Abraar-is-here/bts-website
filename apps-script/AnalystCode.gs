@@ -20,6 +20,16 @@ var CONFIG = {
   SHEET_NAME: 'Analyst Applications'
 };
 
+// Division heads notified on every application to their division (their university
+// emails, so the invite reaches whoever holds the role this year — update this list
+// when heads change). Keys must match the <option value="…"> choices in the form.
+var DIVISION_HEADS = {
+  FICC: ['pe25523@bristol.ac.uk', 'qb23621@bristol.ac.uk', 'fx24531@bristol.ac.uk', 'rn25063@bristol.ac.uk'],
+  Equities: ['jb25462@bristol.ac.uk', 'tb25663@bristol.ac.uk', 'no24411@bristol.ac.uk', 'ny24083@bristol.ac.uk'],
+  Macro: ['hm25495@bristol.ac.uk', 'lz25093@bristol.ac.uk'],
+  Quant: ['xt25211@bristol.ac.uk', 'tk24074@bristol.ac.uk']
+};
+
 var HEADERS = ['Submitted', 'First name', 'Last name', 'University email',
   'Personal email', 'Phone', 'Year', 'Course', 'LinkedIn',
   'First choice', 'Why this division', 'CV'];
@@ -59,6 +69,10 @@ function doPost(e) {
 
     // 3) Email the committee (real-time notification).
     notify(data, cvUrl);
+
+    // 3b) Email that division's heads only — e.g. a FICC application goes to the
+    // FICC heads, never to Equities/Macro/Quant.
+    notifyDivisionHeads(data, cvUrl);
 
     // 4) Confirmation email to the applicant.
     confirmApplicant(data);
@@ -106,6 +120,34 @@ function notify(d, cvUrl) {
   var options = {};
   if (CONFIG.CC_EMAILS) options.cc = CONFIG.CC_EMAILS;
   MailApp.sendEmail(CONFIG.COMMITTEE_EMAIL, subject, body, options);
+}
+
+/** Notifies only the heads of the division the applicant chose as first choice. */
+function notifyDivisionHeads(d, cvUrl) {
+  var heads = DIVISION_HEADS[d.choice1];
+  if (!heads || !heads.length) return;   // unrecognised division value; nothing to route
+
+  var subject = 'New ' + d.choice1 + ' analyst application — ' + d.firstName + ' ' + d.lastName;
+  var body = [
+    d.firstName + ' ' + d.lastName,
+    '',
+    'University email: ' + d.uniEmail,
+    'Personal email:   ' + (d.personalEmail || '—'),
+    'Phone:            ' + d.phone,
+    'Year / course:    ' + d.year + ', ' + d.course,
+    'LinkedIn:         ' + (d.linkedin || '—'),
+    '',
+    'First choice: ' + d.choice1,
+    'Why:          ' + (d.why || '—'),
+    'CV:         ' + (cvUrl || '—')
+  ].join('\n');
+
+  MailApp.sendEmail({
+    to: heads.join(','),
+    subject: subject,
+    body: body,
+    name: CONFIG.SENDER_NAME
+  });
 }
 
 function confirmApplicant(d) {

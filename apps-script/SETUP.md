@@ -83,3 +83,11 @@ Sheet and Drive folder and never mix with Division Head or committee application
    Until this is set the form refuses to submit (it never silently drops an application).
 6. Test with a dummy CV: a row appears in the new Sheet, the CV in the folder, and emails go out.
    `?demo=1` on `/apply` walks the success screen without sending anything.
+
+## Division head notifications
+
+Every analyst application also emails that division's heads only (a FICC application
+never reaches Equities/Macro/Quant heads, and vice versa) — see `DIVISION_HEADS` near
+the top of `AnalystCode.gs`. When a head changes, edit that list and redeploy:
+**Deploy ▸ Manage deployments ▸ ✏️ Edit ▸ Version: New version ▸ Deploy** (the `/exec`
+URL stays the same, so nothing on the site needs to change).
