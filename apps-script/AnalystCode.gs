@@ -23,7 +23,7 @@ var CONFIG = {
 // emails, so the invite reaches whoever holds the role this year — update this list
 // when heads change). Keys must match the <option value="…"> choices in the form.
 var DIVISION_HEADS = {
-  FICC: ['pe25523@bristol.ac.uk', 'qb23621@bristol.ac.uk', 'fx24531@bristol.ac.uk', 'rn25063@bristol.ac.uk'],
+  FICC: ['pe25523@bristol.ac.uk', 'yy25427@bristol.ac.uk', 'fx24531@bristol.ac.uk', 'rn25063@bristol.ac.uk'],
   Equities: ['jb25462@bristol.ac.uk', 'tb25663@bristol.ac.uk', 'no24411@bristol.ac.uk', 'ny24083@bristol.ac.uk'],
   Macro: ['hm25495@bristol.ac.uk', 'lz25093@bristol.ac.uk'],
   Quant: ['xt25211@bristol.ac.uk', 'tk24074@bristol.ac.uk']
