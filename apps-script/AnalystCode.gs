@@ -40,10 +40,14 @@ function doPost(e) {
     // Honeypot: real applicants leave this empty; bots fill it. Drop silently.
     if (data.company) return json({ ok: true });
 
-    // Minimal server-side validation (mirrors the client checks).
+    // Minimal server-side validation (mirrors the client checks). The client
+    // already requires a CV before it will submit, but that's only enforced in
+    // the browser — anyone posting to this endpoint directly could skip it, so
+    // it's checked again here, server-side, where it can't be bypassed.
     if (!data.firstName || !data.lastName ||
-        !/^[^@\s]+@bristol\.ac\.uk$/i.test(data.uniEmail || '')) {
-      return json({ ok: false, error: 'Invalid submission' });
+        !/^[^@\s]+@bristol\.ac\.uk$/i.test(data.uniEmail || '') ||
+        !data.cvBase64) {
+      return json({ ok: false, error: 'Invalid submission: CV is required' });
     }
 
     // 1) Save the CV to Drive (named Lastname_Firstname_CV.pdf).
