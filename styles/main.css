@@ -2619,6 +2619,11 @@ body:has(> .ticker) { padding-top: var(--ticker-h); }
   .start__chip:hover { background: rgba(255, 255, 255, 0.1); border-color: #fff; }
 }
 .start__chip:focus-visible { outline: 2px solid var(--accent-bright); outline-offset: 3px; }
+/* 44px minimum tap target on touch/small screens, without changing the
+   40px visual size on desktop. */
+@media (hover: none), (max-width: 768px) {
+  .start__chip { width: 44px; height: 44px; }
+}
 
 /* --- Flagship start card: the analyst programme ------------------------------
    Same treatment as the flagship row on the events page: filled blue with a
