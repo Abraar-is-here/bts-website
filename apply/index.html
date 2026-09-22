@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <base href="/" />
 
-  <title>Analyst applications opening soon &mdash; Bristol Trading Society</title>
-  <meta name="description" content="Analyst applications for the Bristol Trading Society are opening soon." />
+  <title>Apply to the analyst programme &mdash; Bristol Trading Society</title>
+  <meta name="description" content="Apply to the Bristol Trading Society analyst programme: thirteen teams across FICC, Equities, Macro and Quant. Applications are open for 2026/27." />
 
   <link rel="icon" type="image/svg+xml" href="assets/img/bull.svg" />
 
@@ -29,6 +29,9 @@
     .apply__form-section { margin-top:var(--space-5); }
     .form-card .notice { margin:var(--space-5) 0 var(--space-4); }
     .field textarea { resize: vertical; min-height: 120px; line-height: 1.5; }
+    .why-note { display:block; margin-top:6px; font-size:.8125rem; line-height:1.5; color:var(--text-secondary); }
+    .why-count { display:block; margin-top:4px; font-size:.75rem; color:var(--text-secondary); }
+    .why-count.is-over { color:#ff8a8a; font-weight:600; }
     .apply__foot { margin-top:var(--space-6); padding-top:var(--space-4); border-top:1px solid var(--hairline); font-size:.875rem; line-height:1.6; color:var(--text-secondary); }
     .apply__foot a { color:var(--accent-bright); }
   </style>
@@ -71,34 +74,184 @@
 
   <main id="apply" class="section apply page-dark" tabindex="-1">
     <div class="apply__inner">
+
       <header class="apply__head">
         <span class="apply__eyebrow">Analyst programme &middot; 2026/27</span>
-        <h1 class="h2 apply__title">Applications are opening soon</h1>
+        <h1 class="h2 apply__title">Apply to the analyst programme</h1>
         <p class="body apply__sub">
-          We are putting the finishing touches on the analyst application. Thirteen teams across
-          FICC, Equities, Macro and Quant will be looking for new analysts, and this page will
-          open as soon as we are ready.
+          Thirteen teams across FICC, Equities, Macro and Quant. Pick the division you would most
+          like to work in, attach your CV, and we will take it from there. No prior finance
+          experience is required. See <a href="/analyst-programme">what analysts do in each division</a> and read <a href="/selection">how we pick people</a> first if
+          you would like to know what we assess.
         </p>
-        <p class="body apply__sub" style="margin-top:var(--space-3)">
-          In the meantime, see <a href="/analyst-programme">what analysts do in each division</a> and read <a href="/selection">how we pick people</a> so you know what to
-          expect, and become a member to hear about events first.
-        </p>
-        <p style="margin-top:var(--space-5);display:flex;flex-wrap:wrap;gap:var(--space-3)">
+        <p style="margin-top:var(--space-4);display:flex;flex-wrap:wrap;gap:var(--space-3)">
           <a class="btn btn--secondary" href="/analyst-programme">
             Explore the divisions
             <span class="btn__arrow" aria-hidden="true">&rarr;</span>
           </a>
-          <a class="btn btn--primary" href="https://www.bristolsu.org.uk/groups/bristol-trading-society-2436" target="_blank" rel="noopener noreferrer">
-            Become a member<span class="visually-hidden"> (opens in a new tab)</span>
-            <span class="btn__arrow" aria-hidden="true">&rarr;</span>
-          </a>
         </p>
       </header>
+
+      <section class="apply__form-section" aria-label="Application form">
+        <!-- data-endpoint = the deployed ANALYST Apps Script (apps-script/AnalystCode.gs),
+             which writes to the new analyst applications sheet. Empty means the form
+             refuses to submit rather than silently losing an application. -->
+        <form id="applyForm" class="form-card" novalidate enctype="multipart/form-data"
+              data-endpoint="https://script.google.com/macros/s/AKfycby4Zhf4hLdswgBjf3VAp7WEFTdQbyijqhlkhBjZUsKhqLs1VpON7Vlb6oleY7QEfgFWXA/exec"
+              data-role="Analyst">
+
+          <!-- Honeypot: hidden from people, often filled by bots. Real users leave it empty. -->
+          <div aria-hidden="true" style="position:absolute;left:-9999px;" tabindex="-1">
+            <label>Company<input type="text" name="company" tabindex="-1" autocomplete="off" /></label>
+          </div>
+
+          <fieldset class="form-section">
+            <legend class="form-section__title h4">Your details</legend>
+
+            <div class="field-grid">
+              <div class="field" data-field>
+                <label for="firstName">First name <span class="req" aria-hidden="true">*</span></label>
+                <input id="firstName" name="firstName" type="text" autocomplete="given-name" required />
+                <span class="field__error" data-error></span>
+              </div>
+
+              <div class="field" data-field>
+                <label for="lastName">Last name <span class="req" aria-hidden="true">*</span></label>
+                <input id="lastName" name="lastName" type="text" autocomplete="family-name" required />
+                <span class="field__error" data-error></span>
+              </div>
+
+              <div class="field field--full" data-field>
+                <label for="uniEmail">University email <span class="req" aria-hidden="true">*</span></label>
+                <input id="uniEmail" name="uniEmail" type="email" inputmode="email"
+                       autocomplete="email" placeholder="you@bristol.ac.uk" required />
+                <span class="field__error" data-error></span>
+              </div>
+
+              <div class="field" data-field>
+                <label for="personalEmail">Personal email <span class="opt">(optional)</span></label>
+                <input id="personalEmail" name="personalEmail" type="email" inputmode="email" autocomplete="email" />
+                <span class="field__error" data-error></span>
+              </div>
+
+              <div class="field" data-field>
+                <label for="phone">Phone number <span class="req" aria-hidden="true">*</span></label>
+                <input id="phone" name="phone" type="tel" inputmode="tel"
+                       autocomplete="tel" placeholder="+44 …" required />
+                <span class="field__error" data-error></span>
+              </div>
+
+              <div class="field" data-field>
+                <label for="year">Year of study <span class="field__hint">as of Sept 2026</span> <span class="req" aria-hidden="true">*</span></label>
+                <select id="year" name="year" required>
+                  <option value="" disabled selected>Select…</option>
+                  <option>1st year</option>
+                  <option>2nd year</option>
+                  <option>3rd year</option>
+                  <option>4th year</option>
+                  <option>Master's</option>
+                  <option>PhD</option>
+                </select>
+                <span class="field__error" data-error></span>
+              </div>
+
+              <div class="field" data-field>
+                <label for="course">Course <span class="req" aria-hidden="true">*</span></label>
+                <input id="course" name="course" type="text" placeholder="e.g. BSc Economics &amp; Finance" required />
+                <span class="field__error" data-error></span>
+              </div>
+
+              <div class="field field--full" data-field>
+                <label for="linkedin">LinkedIn profile <span class="opt">(optional)</span></label>
+                <input id="linkedin" name="linkedin" type="url" inputmode="url"
+                       placeholder="https://www.linkedin.com/in/…" />
+                <span class="field__error" data-error></span>
+              </div>
+
+              <div class="field field--full" data-field>
+                <label for="choice1">First choice division <span class="req" aria-hidden="true">*</span></label>
+                <select id="choice1" name="choice1" required>
+                  <option value="" disabled selected>Select…</option>
+                  <option value="FICC">FICC</option>
+                  <option value="Equities">Equities</option>
+                  <option value="Macro">Macro</option>
+                  <option value="Quant">Quant</option>
+                </select>
+                <span class="field__error" data-error></span>
+              </div>
+
+              <div class="field field--full" data-field>
+                <label for="why"><span data-why-label>Why have you selected this as your first division?</span> <span class="opt">(optional)</span></label>
+                <textarea id="why" name="why" rows="5" aria-describedby="why-note"
+                          placeholder="What draws you to this division, and any relevant interest or experience."></textarea>
+                <span class="why-note" id="why-note">Maximum 150 words. Answers written or aided by AI will be filtered out.</span>
+                <span class="why-count" data-why-count aria-live="polite">0 / 150 words</span>
+                <span class="field__error" data-error></span>
+              </div>
+
+              <div class="field field--full" data-field>
+                <label for="cv">Resume / CV (PDF) <span class="req" aria-hidden="true">*</span></label>
+                <label class="file-field" for="cv">
+                  <svg class="file-field__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                       stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <path d="M14 2v6h6"></path>
+                  </svg>
+                  <span class="file-field__text">
+                    <span class="file-field__main">Choose a PDF file</span>
+                    <span class="file-field__hint">PDF only · max 5&nbsp;MB</span>
+                    <span class="file-field__name" data-filename hidden></span>
+                  </span>
+                  <input id="cv" name="cv" type="file" accept="application/pdf,.pdf" required />
+                </label>
+                <span class="field__error" data-error></span>
+              </div>
+            </div>
+          </fieldset>
+
+        <div class="notice">
+          <p>
+            Your details and CV are held in the BTS analyst CV book and may be shared with our
+            sponsors and partner firms for recruitment purposes. To be removed, email
+            <a href="mailto:bristol-trading-society@bristol.ac.uk">bristol-trading-society@bristol.ac.uk</a>
+            &mdash; it will not affect your application. See our <a href="/privacy">Privacy Policy</a>.
+          </p>
+        </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn--primary" data-submit>
+              <span data-submit-label>Submit application</span>
+              <span class="btn__arrow" aria-hidden="true">&rarr;</span>
+            </button>
+            <p class="form-status" role="status" aria-live="polite" data-status></p>
+          </div>
+        </form>
+
+        <div id="applyThanks" class="form-card form-thanks" hidden>
+          <svg class="form-thanks__check" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="m9 12 2 2 4-4"></path>
+          </svg>
+          <h2 class="h3 form-thanks__title">Thank you for applying</h2>
+          <p class="body form-thanks__body">
+            We will review your application and be in touch at your university email either way.
+            A confirmation email is on its way — if you don't see it, check your spam folder.
+          </p>
+          <div class="form-thanks__actions">
+            <a class="btn btn--primary" href="/">Back to home</a>
+          </div>
+        </div>
+      </section>
+
+    </div>
+      </section>
+
     </div>
   </main>
 
-
   <script src="js/aurora.js?v=9" defer></script>
+  <script src="js/apply.js?v=3" defer></script>
   <script src="js/transitions.js?v=3" defer></script>
   <script src="js/nav.js?v=1" defer></script>
   <script src="js/cookies.js?v=3" defer></script>
