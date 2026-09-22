@@ -76,7 +76,8 @@ Sheet and Drive folder and never mix with Division Head or committee application
 
 1. Create a new Drive folder (e.g. `Analyst CVs 2026`) and a new Sheet (e.g. `Analyst Applications 2026`).
 2. In the Sheet: **Extensions ▸ Apps Script**, paste all of `AnalystCode.gs`.
-3. Fill `CONFIG`: `CV_FOLDER_ID` (folder ID), `COMMITTEE_EMAIL`, optional `CC_EMAILS`.
+3. Fill `CONFIG`: `CV_FOLDER_ID` (folder ID). No committee email to set — notifications go
+   straight to each division's heads (see `DIVISION_HEADS` below).
    If the editor won't open from the Sheet, make a standalone project and set `SHEET_ID` instead.
 4. **Deploy ▸ New deployment ▸ Web app** — Execute as **Me**, access **Anyone**. Copy the `/exec` URL.
 5. Paste it into `data-endpoint="…"` on the `<form id="applyForm">` in `apply/index.html`.
@@ -86,8 +87,9 @@ Sheet and Drive folder and never mix with Division Head or committee application
 
 ## Division head notifications
 
-Every analyst application also emails that division's heads only (a FICC application
-never reaches Equities/Macro/Quant heads, and vice versa) — see `DIVISION_HEADS` near
-the top of `AnalystCode.gs`. When a head changes, edit that list and redeploy:
-**Deploy ▸ Manage deployments ▸ ✏️ Edit ▸ Version: New version ▸ Deploy** (the `/exec`
-URL stays the same, so nothing on the site needs to change).
+Every analyst application emails that division's heads only (a FICC application never
+reaches Equities/Macro/Quant heads, and vice versa) — there is no shared committee
+inbox copied in, so applications for other divisions never land in a head's inbox.
+See `DIVISION_HEADS` near the top of `AnalystCode.gs`. When a head changes, edit that
+list and redeploy: **Deploy ▸ Manage deployments ▸ ✏️ Edit ▸ Version: New version ▸
+Deploy** (the `/exec` URL stays the same, so nothing on the site needs to change).

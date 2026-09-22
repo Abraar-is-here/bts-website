@@ -2,7 +2,8 @@
  * Bristol Trading Society — Analyst applications backend (separate sheet from Division Head / committee).
  * ---------------------------------------------------------------------------
  * Receives JSON POSTs from apply/index.html, stores the CV in a Drive folder,
- * appends a row to this spreadsheet (your dashboard), and emails the committee.
+ * appends a row to this spreadsheet (your dashboard), and emails that division's
+ * heads only (see DIVISION_HEADS) — no shared committee inbox is copied in.
  *
  * SETUP: see SETUP.md in this folder. Fill in CONFIG below, then deploy as a
  * Web App (Deploy ▸ New deployment ▸ Web app — Execute as: Me, Who has access:
@@ -14,8 +15,6 @@ var CONFIG = {
   // Set to the Sheet ID for a standalone project (getActiveSpreadsheet() is null there).
   SHEET_ID: '',
   CV_FOLDER_ID: '',   // optional; leave empty and a "Analyst CVs" folder is created for you
-  COMMITTEE_EMAIL: 'bristol-trading-society@bristol.ac.uk',
-  CC_EMAILS: '',
   SENDER_NAME: 'Bristol Trading Society',    // display name on confirmation emails
   SHEET_NAME: 'Analyst Applications'
 };
@@ -67,11 +66,9 @@ function doPost(e) {
       cvUrl ? '=HYPERLINK("' + cvUrl + '","Open CV")' : ''
     ]);
 
-    // 3) Email the committee (real-time notification).
-    notify(data, cvUrl);
-
-    // 3b) Email that division's heads only — e.g. a FICC application goes to the
-    // FICC heads, never to Equities/Macro/Quant.
+    // 3) Email that division's heads only (real-time notification) — e.g. a FICC
+    // application goes to the FICC heads, never to Equities/Macro/Quant, and no
+    // shared committee inbox is copied in.
     notifyDivisionHeads(data, cvUrl);
 
     // 4) Confirmation email to the applicant.
@@ -100,26 +97,6 @@ function getSheet() {
   var sheet = ss.getSheetByName(CONFIG.SHEET_NAME) || ss.insertSheet(CONFIG.SHEET_NAME);
   if (sheet.getLastRow() === 0) sheet.appendRow(HEADERS);
   return sheet;
-}
-
-function notify(d, cvUrl) {
-  var subject = 'New analyst application — ' + d.firstName + ' ' + d.lastName;
-  var body = [
-    d.firstName + ' ' + d.lastName,
-    '',
-    'University email: ' + d.uniEmail,
-    'Personal email:   ' + (d.personalEmail || '—'),
-    'Phone:            ' + d.phone,
-    'Year / course:    ' + d.year + ', ' + d.course,
-    'LinkedIn:         ' + (d.linkedin || '—'),
-    '',
-    'First choice: ' + d.choice1,
-    'Why:          ' + (d.why || '—'),
-    'CV:         ' + (cvUrl || '—')
-  ].join('\n');
-  var options = {};
-  if (CONFIG.CC_EMAILS) options.cc = CONFIG.CC_EMAILS;
-  MailApp.sendEmail(CONFIG.COMMITTEE_EMAIL, subject, body, options);
 }
 
 /** Notifies only the heads of the division the applicant chose as first choice. */
