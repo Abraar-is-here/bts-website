@@ -56,6 +56,9 @@ function doPost(e) {
       var dest = cvFolder();
       var file = dest.createFile(blob);
       cvUrl = file.getUrl();
+      // Grants view access on this one file so the Sheet's "Open CV" link works
+      // straight away, instead of the head hitting a "request access" wall.
+      shareCvWithDivisionHeads(file, data.choice1);
     }
 
     // 2) Append a row to the Sheet (the committee's dashboard).
@@ -97,6 +100,21 @@ function getSheet() {
   var sheet = ss.getSheetByName(CONFIG.SHEET_NAME) || ss.insertSheet(CONFIG.SHEET_NAME);
   if (sheet.getLastRow() === 0) sheet.appendRow(HEADERS);
   return sheet;
+}
+
+/** Shares one CV file with only that division's heads (same scope as the email
+ * notification), so they can open it without requesting access. Each grant is
+ * wrapped individually so one bad address doesn't stop the rest going through. */
+function shareCvWithDivisionHeads(file, division) {
+  var heads = DIVISION_HEADS[division];
+  if (!heads || !heads.length) return;
+  heads.forEach(function (email) {
+    try {
+      file.addViewer(email);
+    } catch (err) {
+      console.error('Could not share CV with ' + email + ': ' + err);
+    }
+  });
 }
 
 /** Notifies only the heads of the division the applicant chose as first choice. */
