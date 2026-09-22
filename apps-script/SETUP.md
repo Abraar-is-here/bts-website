@@ -94,10 +94,13 @@ See `DIVISION_HEADS` near the top of `AnalystCode.gs`. When a head changes, edit
 list and redeploy: **Deploy ▸ Manage deployments ▸ ✏️ Edit ▸ Version: New version ▸
 Deploy** (the `/exec` URL stays the same, so nothing on the site needs to change).
 
-The same list also controls **CV access**: each CV is shared with only that division's
-heads the moment it's saved to Drive (`shareCvWithDivisionHeads`), so the "Open CV"
-link in the Sheet works immediately without anyone requesting access. Sharing the Sheet
-itself does **not** grant access to the CV files — they're separate Drive permissions.
-This only applies to CVs saved *after* you deploy this version; any already sitting in
-the Drive folder from earlier applications still need sharing by hand (right-click the
-file in Drive ▸ Share ▸ add the relevant heads).
+The same list also controls **CV access**: each CV is set to "anyone at bristol.ac.uk
+with the link can view" the moment it's saved to Drive (`shareCvWithDivisionHeads`), so
+the "Open CV" link in the Sheet works immediately without anyone requesting access. It
+also tries adding each head as a named viewer directly, but the domain-wide link is the
+one that actually grants access — that step kept silently failing in testing. Sharing
+the Sheet itself does **not** grant access to the CV files — they're separate Drive
+permissions. This only applies to CVs saved *after* you deploy this version; any already
+sitting in the Drive folder from earlier applications still need sharing by hand
+(right-click the file in Drive ▸ Share ▸ change to "Anyone at bristol.ac.uk with the
+link").

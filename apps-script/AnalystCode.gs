@@ -112,6 +112,21 @@ function getSheet() {
 function shareCvWithDivisionHeads(file, division) {
   var heads = DIVISION_HEADS[division];
   if (!heads || !heads.length) return;
+
+  // Primary mechanism: open the file to anyone signed into a bristol.ac.uk
+  // account who has the link (not the public internet — still requires a
+  // Bristol Google login). This doesn't depend on Google correctly granting
+  // named per-person access, which is what kept failing. Only people who
+  // actually get the link (from the Sheet) will ever see it.
+  try {
+    file.setSharing(DriveApp.Access.DOMAIN_WITH_LINK, DriveApp.Permission.VIEW);
+  } catch (err) {
+    console.error('Could not set domain-wide sharing on CV: ' + err);
+  }
+
+  // Belt and braces: also try naming each head directly. Harmless if it fails
+  // (the domain-wide share above already covers access) and may still be
+  // useful evidence in the Executions log if something is blocking it.
   heads.forEach(function (email) {
     try {
       file.addViewer(email);
