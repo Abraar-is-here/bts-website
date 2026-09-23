@@ -94,13 +94,22 @@ See `DIVISION_HEADS` near the top of `AnalystCode.gs`. When a head changes, edit
 list and redeploy: **Deploy ▸ Manage deployments ▸ ✏️ Edit ▸ Version: New version ▸
 Deploy** (the `/exec` URL stays the same, so nothing on the site needs to change).
 
-The same list also controls **CV access**: each CV is set to "anyone at bristol.ac.uk
-with the link can view" the moment it's saved to Drive (`shareCvWithDivisionHeads`), so
-the "Open CV" link in the Sheet works immediately without anyone requesting access. It
-also tries adding each head as a named viewer directly, but the domain-wide link is the
-one that actually grants access — that step kept silently failing in testing. Sharing
-the Sheet itself does **not** grant access to the CV files — they're separate Drive
-permissions. This only applies to CVs saved *after* you deploy this version; any already
-sitting in the Drive folder from earlier applications still need sharing by hand
-(right-click the file in Drive ▸ Share ▸ change to "Anyone at bristol.ac.uk with the
-link").
+The same list also controls **CV access**: each CV is set to "anyone with the link can
+view" the moment it's saved to Drive (`shareCvWithDivisionHeads`), so the "Open CV" link
+in the Sheet opens from any Google account, personal Gmail included, without anyone
+requesting access. The script runs from a personal Gmail, so domain-only sharing
+("anyone at bristol.ac.uk") is not available to it; that is why the earlier version never
+worked. Each head is also added as a named viewer, which only puts the CV under
+"Shared with me"; access doesn't depend on it.
+
+**Mind the trade-off:** the link itself is the key. Links are long and random, and only go
+to the Sheet and the heads' notification emails, but anyone a link is forwarded to can
+read that CV. Don't paste CV links anywhere public.
+
+Sharing the Sheet itself does **not** grant access to the CV files; they're separate
+Drive permissions.
+
+**CVs saved before this version, or any link still asking for access:** open the script
+editor, choose **`fixCvSharing`** in the function dropdown and press **Run**, then check
+**Executions** for the summary. It sets every CV already in the folder to link access and
+skips files that are already right, so it's safe to re-run.

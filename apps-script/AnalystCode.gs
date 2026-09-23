@@ -113,20 +113,21 @@ function shareCvWithDivisionHeads(file, division) {
   var heads = DIVISION_HEADS[division];
   if (!heads || !heads.length) return;
 
-  // Primary mechanism: open the file to anyone signed into a bristol.ac.uk
-  // account who has the link (not the public internet — still requires a
-  // Bristol Google login). This doesn't depend on Google correctly granting
-  // named per-person access, which is what kept failing. Only people who
-  // actually get the link (from the Sheet) will ever see it.
+  // Primary mechanism: anyone with the link can view. Division heads open CVs
+  // from personal Gmail accounts, and this script runs from a personal Gmail,
+  // so domain-only sharing ("anyone at bristol.ac.uk") is impossible here --
+  // it only exists for Workspace accounts, which is why it failed every time.
+  // The link is a long random ID and only ever goes to the Sheet and the
+  // heads' notification email, but anyone it is forwarded to can open it.
   try {
-    file.setSharing(DriveApp.Access.DOMAIN_WITH_LINK, DriveApp.Permission.VIEW);
+    file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
   } catch (err) {
-    console.error('Could not set domain-wide sharing on CV: ' + err);
+    console.error('Could not set link sharing on CV (running as ' +
+      Session.getEffectiveUser().getEmail() + '). The "Open CV" link will ask for access. ' + err);
   }
 
-  // Belt and braces: also try naming each head directly. Harmless if it fails
-  // (the domain-wide share above already covers access) and may still be
-  // useful evidence in the Executions log if something is blocking it.
+  // Also add each head as a named viewer, so the CV shows up under "Shared with
+  // me" in their university Drive. Access does not depend on this.
   heads.forEach(function (email) {
     try {
       file.addViewer(email);
@@ -263,6 +264,38 @@ function confirmApplicant(d) {
 function json(obj) {
   return ContentService.createTextOutput(JSON.stringify(obj))
     .setMimeType(ContentService.MimeType.JSON);
+}
+
+/**
+ * ONE-OFF REPAIR — run from the Apps Script editor: pick `fixCvSharing` in the
+ * function dropdown ▸ Run. Then open Executions (left sidebar) to read the log.
+ *
+ * Sets every CV already in the folder to "anyone with the link can view", the
+ * same access new CVs now get, so the Sheet's "Open CV" links open from any
+ * account, personal Gmail included. Earlier CVs were left owner-only (the old
+ * domain-only share can never succeed from a personal Gmail), which is why
+ * their links asked for access. Safe to re-run; correct files are skipped.
+ */
+function fixCvSharing() {
+  console.log('Running as: ' + Session.getEffectiveUser().getEmail());
+  var files = cvFolder().getFiles();
+  var fixed = 0, already = 0, failed = [];
+  while (files.hasNext()) {
+    var f = files.next();
+    try {
+      if (f.getSharingAccess() === DriveApp.Access.ANYONE_WITH_LINK &&
+          f.getSharingPermission() === DriveApp.Permission.VIEW) { already++; continue; }
+      f.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+      fixed++;
+    } catch (err) {
+      failed.push(f.getName() + ' — ' + err);
+    }
+  }
+  console.log('CV sharing: ' + fixed + ' fixed, ' + already + ' already correct, ' + failed.length + ' failed.');
+  failed.forEach(function (m) { console.error(m); });
+  if (failed.length) {
+    throw new Error(failed.length + ' CV(s) could not be shared; see the log above.');
+  }
 }
 
 /** Returns the CV folder: the configured one, else "Analyst CVs" (created on first use). */
