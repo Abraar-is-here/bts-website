@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="styles/tokens/colors.css?v=15" />
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
-  <link rel="stylesheet" href="styles/main.css?v=81" />
+  <link rel="stylesheet" href="styles/main.css?v=84" />
 
   <style>
     /* =========================================================================
@@ -180,6 +180,30 @@
        than a hairline, and a white CTA -- the one row on the page that should
        be impossible to scroll past. */
     .next-item--flagship { margin-bottom: var(--space-3); }
+    /* Same box as a live row, but it is not a link, so no hover, no pointer and
+       no underline. Brighter border and a solid chip make it read louder than a
+       plain row without pretending to be clickable. */
+    .next-item--event { border-top: 0; padding: 0; margin-top: var(--space-3); }
+    .next-item__card {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3);
+      width: 100%;
+      padding: var(--space-3) var(--space-4);
+      border: 1px solid rgba(56, 189, 248, 0.45);
+      border-radius: var(--radius-sm);
+      background: rgba(56, 189, 248, 0.10);
+    }
+    .next-item--event .next-item__kicker { color: var(--accent-bright); }
+    .next-item--event .next-item__title { font-size: 1.1875rem; }
+    .next-item__chip.next-item__chip--date {
+      border-style: solid;
+      border-color: var(--accent-bright);
+      background: var(--accent-bright);
+      color: var(--c-navy);
+    }
     .next-item--flagship .next-item__link {
       padding: var(--space-4);
       border: 1px solid rgba(56, 189, 248, 0.7);
@@ -656,9 +680,12 @@
   <a class="skip-link" href="/events/#events">Skip to content</a>
   <!-- Announcement ticker, styled as a market tape. The whole bar links to the
        application form. The scrolling tape is decorative and hidden from screen
-       readers; the link's own label carries the message once. Omitted on /apply. -->
+       readers; the link's own label carries the message once. Omitted on /apply.
+       Entries with data-until are removed by js/promo.js once they have passed;
+       both halves carry the same entries, so the loop stays seamless. Repeats
+       are sized so each half still outruns a 2560px screen once they go. -->
   <a class="ticker" href="/apply" aria-label="Analyst applications now open. Apply now.">
-    <span class="ticker__tape" aria-hidden="true"><span class="ticker__track"><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">FICC</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Equities</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Macro</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Quant</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk"><span class="tk__sym">Places</span><span class="tk__val">60</span></span><span class="tk"><span class="tk__sym">Teams</span><span class="tk__val">13</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">FICC</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Equities</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Macro</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Quant</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk"><span class="tk__sym">Places</span><span class="tk__val">60</span></span><span class="tk"><span class="tk__sym">Teams</span><span class="tk__val">13</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">FICC</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Equities</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Macro</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Quant</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk"><span class="tk__sym">Places</span><span class="tk__val">60</span></span><span class="tk"><span class="tk__sym">Teams</span><span class="tk__val">13</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">FICC</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Equities</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Macro</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Quant</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk"><span class="tk__sym">Places</span><span class="tk__val">60</span></span><span class="tk"><span class="tk__sym">Teams</span><span class="tk__val">13</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">FICC</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Equities</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Macro</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Quant</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk"><span class="tk__sym">Places</span><span class="tk__val">60</span></span><span class="tk"><span class="tk__sym">Teams</span><span class="tk__val">13</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">FICC</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Equities</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Macro</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up"><span class="tk__sym">Quant</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk"><span class="tk__sym">Places</span><span class="tk__val">60</span></span><span class="tk"><span class="tk__sym">Teams</span><span class="tk__val">13</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span></span></span>
+    <span class="ticker__tape" aria-hidden="true"><span class="ticker__track"><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up" data-until="2026-09-24T19:00:00+01:00"><span class="tk__sym">Welcome event</span><span class="tk__val">&#9650;&nbsp;THU 18:00</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up" data-until="2026-09-24T19:00:00+01:00"><span class="tk__sym">Welcome event</span><span class="tk__val">&#9650;&nbsp;THU 18:00</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up" data-until="2026-09-24T19:00:00+01:00"><span class="tk__sym">Welcome event</span><span class="tk__val">&#9650;&nbsp;THU 18:00</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up" data-until="2026-09-24T19:00:00+01:00"><span class="tk__sym">Welcome event</span><span class="tk__val">&#9650;&nbsp;THU 18:00</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up" data-until="2026-09-24T19:00:00+01:00"><span class="tk__sym">Welcome event</span><span class="tk__val">&#9650;&nbsp;THU 18:00</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up" data-until="2026-09-24T19:00:00+01:00"><span class="tk__sym">Welcome event</span><span class="tk__val">&#9650;&nbsp;THU 18:00</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up" data-until="2026-09-24T19:00:00+01:00"><span class="tk__sym">Welcome event</span><span class="tk__val">&#9650;&nbsp;THU 18:00</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up" data-until="2026-09-24T19:00:00+01:00"><span class="tk__sym">Welcome event</span><span class="tk__val">&#9650;&nbsp;THU 18:00</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up" data-until="2026-09-24T19:00:00+01:00"><span class="tk__sym">Welcome event</span><span class="tk__val">&#9650;&nbsp;THU 18:00</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up" data-until="2026-09-24T19:00:00+01:00"><span class="tk__sym">Welcome event</span><span class="tk__val">&#9650;&nbsp;THU 18:00</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up" data-until="2026-09-24T19:00:00+01:00"><span class="tk__sym">Welcome event</span><span class="tk__val">&#9650;&nbsp;THU 18:00</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up" data-until="2026-09-24T19:00:00+01:00"><span class="tk__sym">Welcome event</span><span class="tk__val">&#9650;&nbsp;THU 18:00</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up" data-until="2026-09-24T19:00:00+01:00"><span class="tk__sym">Welcome event</span><span class="tk__val">&#9650;&nbsp;THU 18:00</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up" data-until="2026-09-24T19:00:00+01:00"><span class="tk__sym">Welcome event</span><span class="tk__val">&#9650;&nbsp;THU 18:00</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up" data-until="2026-09-24T19:00:00+01:00"><span class="tk__sym">Welcome event</span><span class="tk__val">&#9650;&nbsp;THU 18:00</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up" data-until="2026-09-24T19:00:00+01:00"><span class="tk__sym">Welcome event</span><span class="tk__val">&#9650;&nbsp;THU 18:00</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span></span></span>
   </a>
 
   <div class="aurora" aria-hidden="true">
@@ -719,21 +746,17 @@
               <span class="next-item__chip next-item__chip--apply">Apply now <span class="next-item__arrow" aria-hidden="true">&rarr;</span></span>
             </a>
           </li>
-          <li class="next-item next-item--live">
-            <a class="next-item__link" href="/events/amplifyme/">
+          <!-- A card, not a bare row: nothing to click (free, just turn up), so it
+               is boxed and tinted but carries no link styling. -->
+          <li class="next-item next-item--live next-item--event">
+            <div class="next-item__card">
               <div class="next-item__body">
-                <p class="next-item__title">AmplifyME Pathways launch</p>
-                <p class="next-item__when">Tuesday 22 September 2026, 18:00 &mdash; free for all Bristol students</p>
+                <p class="next-item__kicker">This week</p>
+                <p class="next-item__title">Annual Welcome Event</p>
+                <p class="next-item__when">Thursday 24 September 2026, 18:00&ndash;19:00 &mdash; Pugsley LT, Queen&rsquo;s Building</p>
               </div>
-              <span class="next-item__chip next-item__chip--go">View event <span class="next-item__arrow" aria-hidden="true">&rarr;</span></span>
-            </a>
-          </li>
-          <li class="next-item">
-            <div class="next-item__body">
-              <p class="next-item__title">Annual Welcome Event</p>
-              <p class="next-item__when">Thursday 24 September 2026, 18:00&ndash;19:00</p>
+              <span class="next-item__chip next-item__chip--date">24 Sept</span>
             </div>
-            <span class="next-item__chip">24 Sept</span>
           </li>
         </ul>
       </div>
@@ -1193,6 +1216,7 @@
   <script src="js/aurora.js?v=9" defer></script>
   <script src="js/transitions.js?v=3" defer></script>
   <script src="js/nav.js?v=1" defer></script>
+  <script src="js/promo.js?v=1" defer></script>
   <!-- ===== Site footer ===== -->
   <footer class="site-footer">
     <div class="site-footer__inner">

@@ -2651,3 +2651,63 @@ body:has(> .ticker) { padding-top: var(--ticker-h); }
   .start__card--flagship .start__join:hover { background: #f4f7fb; color: #0a1a3f; }
   .start__card--flagship a.start__go:hover { color: #dbeafe; }
 }
+
+
+/* ===========================================================================
+   Next event promo
+   ---------------------------------------------------------------------------
+   Sits between the hero cards and the partners marquee. The poster is the same
+   4:5 artwork published on Instagram, cropped to a tall panel on wide screens
+   and shown whole on phones. Self-expiring via data-until (js/promo.js).
+   =========================================================================== */
+/* Sits inside the hero, under the cards, so it reads on the aurora rather than
+   on the flat band below. Glass to match the cards beside it. */
+.promo { display: block; margin-top: var(--space-4); }
+.promo__inner {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: var(--space-4);
+  align-items: center;
+  padding: var(--space-4);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  background: var(--glass-fill);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  backdrop-filter: blur(18px) saturate(140%);
+  box-shadow: var(--shadow-pill);
+}
+.promo__poster {
+  width: 100%;
+  height: 100%;
+  max-height: 260px;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+}
+.promo__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.4vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+.promo__meta {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+.promo__venue { font-size: 1rem; color: var(--accent-bright); margin-bottom: 10px; }
+.promo__note { font-size: 0.9375rem; color: var(--text-secondary); }
+
+@media (max-width: 640px) {
+  .promo__inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+    padding: var(--space-3);
+  }
+  /* Whole poster on phones: it is the artwork, not a thumbnail. */
+  .promo__poster { max-height: none; aspect-ratio: 4 / 5; }
+}
