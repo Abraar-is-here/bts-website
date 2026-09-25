@@ -961,6 +961,7 @@ main.page-dark {
 .destinations img[alt="Berenberg"] { height: 64px; }
 .destinations img[alt="Investec"] { height: 28px; }
 .destinations img[alt="BNP Paribas"] { height: 32px; }
+.destinations img[alt="ICE"] { height: 44px; }
 .destinations img[alt="J.P. Morgan"] { height: 30px; }
 .destinations img[alt="Morgan Stanley"] { height: 28px; }
 @media (max-width: 520px) {
