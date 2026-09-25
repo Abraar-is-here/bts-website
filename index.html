@@ -25,7 +25,7 @@
   <link rel="stylesheet" href="styles/tokens/colors.css?v=15" />
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
-  <link rel="stylesheet" href="styles/main.css?v=84" />
+  <link rel="stylesheet" href="styles/main.css?v=85" />
 
   <!-- Structured data. Gives crawlers and AI answers facts to quote instead of
        inferring them from prose. Every value here is verifiable on the site. -->
@@ -299,22 +299,64 @@
   <!-- =====================================================================
        Section 2 — Closing panel (solid deep-navy)
        ===================================================================== -->
-  <section id="closing" class="section panel">
-    <div class="container panel__inner">
-      <h2 class="h1 panel__title">A new year starts in September. Come and find us.</h2>
+  <!-- Closing panel: the proof, then the pathway. The Welcome Event photo shows
+       the demand; the employer logos show where the programme leads. -->
+  <section id="closing" class="section panel closing" aria-labelledby="closing-title">
+    <div class="container closing__inner">
 
-      <!-- Interactive dot-matrix globe (js/globe.js, 2D canvas, no dependencies) -->
-      <div class="globe-wrap">
-        <canvas id="globe-canvas" role="img" tabindex="0"
-                aria-label="Interactive globe of the world. Drag, or focus and use the arrow keys, to rotate it."></canvas>
+      <div class="closing__head">
+        <h2 class="h1 closing__title" id="closing-title">The Welcome Event filled Pugsley.</h2>
+        <div class="closing__side">
+          <p class="closing__lead">
+            Next is the analyst programme: 60 places across 13 teams, where members research
+            a real instrument and defend it in front of people who trade for a living.
+          </p>
+          <div class="closing__actions">
+            <a class="btn btn--primary" href="/apply">
+              Apply to the analyst programme
+              <span class="btn__arrow" aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </div>
       </div>
+
+      <figure class="closing__photo">
+        <img src="assets/img/events/welcome-event-2026-crowd-2400.jpg"
+             srcset="assets/img/events/welcome-event-2026-crowd-1200.jpg 1200w,
+                     assets/img/events/welcome-event-2026-crowd-2400.jpg 2400w"
+             sizes="(min-width: 1280px) 1200px, 100vw"
+             width="2400" height="1350" loading="lazy" decoding="async"
+             alt="Pugsley Lecture Theatre filled to the back rows for the Bristol Trading Society Welcome Event, with a committee member presenting at the front." />
+        <figcaption class="closing__caption">
+          <span class="closing__dot" aria-hidden="true"></span>
+          Welcome Event<span class="closing__venue"> &middot; Pugsley Lecture Theatre</span> &middot; 24.09.2026
+        </figcaption>
+      </figure>
+
+      <div class="closing__firms">
+        <h3 class="closing__firms-title">Where our members end up</h3>
+        <ul class="destinations destinations--on-light">
+          <li><img src="assets/img/alumni-firms/goldman-sachs.webp" alt="Goldman Sachs" loading="lazy" /></li>
+          <li><img src="assets/img/alumni-firms/jp-morgan.png" alt="J.P. Morgan" loading="lazy" /></li>
+          <li><img src="assets/img/alumni-firms/morgan-stanley.png" alt="Morgan Stanley" loading="lazy" /></li>
+          <li><img src="assets/img/alumni-firms/millennium.png" alt="Millennium Management" loading="lazy" /></li>
+          <li><img src="assets/img/alumni-firms/citi.webp" alt="Citi" loading="lazy" /></li>
+          <li><img src="assets/img/alumni-firms/barclays.png" alt="Barclays" loading="lazy" /></li>
+          <li><img src="assets/img/alumni-firms/bnp-paribas.png" alt="BNP Paribas" loading="lazy" /></li>
+          <li><img src="assets/img/alumni-firms/glencore.webp" alt="Glencore" loading="lazy" /></li>
+          <li><img src="assets/img/alumni-firms/standard-chartered.webp" alt="Standard Chartered" loading="lazy" /></li>
+          <li><img src="assets/img/alumni-firms/berenberg.png" alt="Berenberg" loading="lazy" /></li>
+          <li><img src="assets/img/alumni-firms/investec.png" alt="Investec" loading="lazy" /></li>
+          <li><img src="assets/img/alumni-firms/dare.png" alt="Dare Trading" loading="lazy" /></li>
+        </ul>
+        <a class="closing__more" href="/alumni/">See the alumni directory <span aria-hidden="true">&rarr;</span></a>
+      </div>
+
     </div>
   </section>
 
   <!-- Scripts: deferred so they run after the DOM is parsed. -->
 <script src="js/aurora.js?v=9" defer></script>
-  <script src="js/land.js?v=1" defer></script>
-  <script type="module" src="js/cobe-globe.js?v=1"></script>
   <script src="js/transitions.js?v=3" defer></script>
   <script src="js/marquee.js?v=1" defer></script>
   <script src="js/nav.js?v=1" defer></script>

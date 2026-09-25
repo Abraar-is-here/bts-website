@@ -796,58 +796,176 @@ main.page-dark {
   box-shadow: 0 -12px 48px rgba(6, 17, 43, 0.2);
 }
 
-/* Centred vertical stack: heading on top, globe beneath. */
-.panel__inner {
+/* --- Closing panel (home): proof, then pathway -----------------------------
+   Heading and the apply action first, then the Welcome Event photo as the one
+   big image on the page, then where members end up. */
+.closing { align-items: flex-start; }
+.closing__inner {
+  width: 100%;
+  padding-block: var(--space-7) var(--space-6);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
   gap: var(--space-6);
-  width: 100%;
-  padding-block: var(--space-6);
 }
-
-/* Full container width + balanced wrap -> reads on 1–2 lines, never truncates. */
-.panel__title {
-  max-width: 22ch;
-  margin: 0 auto;
+.closing__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  align-items: end;
+  gap: var(--space-4) var(--space-6);
+}
+.closing__title {
+  margin: 0;
+  max-width: 13ch;
+  font-size: clamp(2.1rem, 4.4vw, 4rem);
+  line-height: 1.02;
   color: var(--text-on-light);
+  text-wrap: balance;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
 }
+.closing__lead {
+  margin: 0 0 var(--space-4);
+  max-width: 46ch;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: rgba(10, 26, 63, 0.72);
+}
+.closing__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
 
-/* Globe sits below the heading, centred and square. */
-.globe-wrap {
+/* The photo: a wide rounded window. On browsers with scroll-driven animation
+   it opens from an inset frame to full width as it scrolls into view, and the
+   image settles from a slight zoom — the page's one authored moment. */
+.closing__photo {
   position: relative;
-  width: min(46vw, 460px);
-  aspect-ratio: 1 / 1;
-  min-width: 0;
+  margin: 0;
+  border-radius: 28px;
+  overflow: hidden;
+  aspect-ratio: 21 / 9;
+  background: #d9e1ec;
+  box-shadow: 0 30px 60px -24px rgba(6, 17, 43, 0.45);
 }
-/* Draggable: grab affordance. pan-y lets the user still scroll the page
-   vertically on touch; only horizontal drags are captured for globe rotation. */
-#globe-canvas {
+.closing__photo img {
+  display: block;
   width: 100%;
   height: 100%;
-  display: block;
-  position: relative;
-  z-index: 1;
-  cursor: grab;
-  touch-action: pan-y;
-  border-radius: 50%;          /* keeps the focus ring circular, on-brand */
-  outline: none;
+  object-fit: cover;
+  object-position: 58% 82%;
+  /* --zoom crops further on phones, where the frame cannot get wide enough
+     to trim the ceiling on its own. */
+  --zoom: 1;
+  transform: scale(var(--zoom));
+  transform-origin: 72% 90%;
 }
-#globe-canvas.is-grabbing { cursor: grabbing; }
-#globe-canvas:focus-visible {
-  outline: 2px solid var(--focus-ring);
-  outline-offset: 4px;
-}
-/* Faint cool halo grounding the globe on the light surface. */
-.globe-wrap::before {
-  content: '';
+.closing__caption {
   position: absolute;
-  inset: 6%;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--globe-halo) 0%, transparent 70%);
-  filter: blur(34px);
-  z-index: 0;
+  left: var(--space-3);
+  bottom: var(--space-3);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 16px;
+  border-radius: var(--radius-pill);
+  background: rgba(6, 17, 43, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #f4f7fb;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+}
+.closing__dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.25);
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .closing__photo {
+      animation: closing-open linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 40%;
+    }
+    .closing__photo img {
+      animation: closing-settle linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 55%;
+    }
+  }
+}
+@keyframes closing-open {
+  from { clip-path: inset(6% 8% round 48px); }
+  to   { clip-path: inset(0 0 round 28px); }
+}
+@keyframes closing-settle {
+  from { transform: scale(calc(var(--zoom) * 1.12)); }
+  to   { transform: scale(var(--zoom)); }
+}
+
+.closing__firms-title {
+  margin: 0 0 var(--space-4);
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2.2vw, 1.6rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-on-light);
+}
+.closing__more {
+  display: inline-flex;
+  gap: 6px;
+  margin-top: var(--space-4);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+}
+.closing__more span { transition: transform var(--dur-fast) var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .closing__more:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .closing__more:hover span { transform: translateX(3px); }
+}
+
+@media (max-width: 820px) {
+  .closing__head { grid-template-columns: 1fr; align-items: start; }
+  .closing__photo { aspect-ratio: 5 / 4; border-radius: 22px; }
+  .closing__photo img { --zoom: 1.5; }
+}
+@media (max-width: 520px) {
+  .closing__inner { gap: var(--space-5); padding-block: var(--space-6) var(--space-5); }
+  .closing__actions .btn { width: 100%; justify-content: center; }
+  .closing__caption { left: 10px; bottom: 10px; padding: 7px 12px; font-size: 0.6875rem; }
+  .closing__venue { display: none; }
+}
+
+/* --- Alumni employer logos (home closing panel + prospectus) -------------
+   Monochrome so no brand colour competes; sized by shape, because equal
+   height makes wide wordmarks dominate stacked marks. */
+.destinations {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: var(--space-4) var(--space-5);
+}
+.destinations img {
+  display: block; height: 30px; width: auto; max-width: 170px; object-fit: contain;
+  filter: brightness(0) invert(1); opacity: 0.6;
+}
+.destinations--on-light img { filter: brightness(0); opacity: 0.7; }
+.destinations img[alt="Goldman Sachs"],
+.destinations img[alt="Standard Chartered"] { height: 44px; }
+.destinations img[alt="Citi"] { height: 34px; }
+.destinations img[alt="Barclays"] { height: 24px; }
+.destinations img[alt="Millennium Management"],
+.destinations img[alt="Glencore"] { height: 24px; }
+.destinations img[alt="Dare Trading"] { height: 28px; }
+.destinations img[alt="Berenberg"] { height: 64px; }
+.destinations img[alt="Investec"] { height: 28px; }
+.destinations img[alt="BNP Paribas"] { height: 32px; }
+.destinations img[alt="J.P. Morgan"] { height: 30px; }
+.destinations img[alt="Morgan Stanley"] { height: 28px; }
+@media (max-width: 520px) {
+  .destinations { gap: var(--space-4); }
+  .destinations img { max-width: 130px; }
 }
 
 /* ---------------------------------------------------------------------------
@@ -1369,8 +1487,6 @@ main.page-dark {
    8. Responsive
    --------------------------------------------------------------------------- */
 @media (max-width: 820px) {
-  .panel__inner { gap: var(--space-5); }
-  .globe-wrap { width: min(74vw, 400px); }
   .panel { border-radius: 40px 40px 0 0; margin-top: -40px; }
 }
 

@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="styles/tokens/colors.css?v=15" />
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
-  <link rel="stylesheet" href="styles/main.css?v=84" />
+  <link rel="stylesheet" href="styles/main.css?v=85" />
 
   <style>
     /* -------------------------------------------------------------------------
@@ -515,34 +515,11 @@
       margin: 0 auto var(--space-4);
     }
 
-    /* Alumni destinations: plain name chips, then a link to the full directory. */
-    /* Employer logos, deliberately quieter than the partner wall above: no box,
-       smaller, dimmer, one row. They must not read as sponsors. */
+    /* Alumni employer logos (.destinations) live in styles/main.css, shared with
+       the home page's closing section. */
     .destinations__note {
       margin: 0 0 var(--space-4); font-size: 0.875rem; color: var(--text-secondary);
     }
-    .destinations {
-      list-style: none; margin: 0; padding: 0;
-      display: flex; flex-wrap: wrap; align-items: center;
-      gap: var(--space-4) var(--space-5);
-    }
-    .destinations img {
-      display: block; height: 30px; width: auto; max-width: 170px; object-fit: contain;
-      filter: brightness(0) invert(1); opacity: 0.6;
-    }
-    /* Equal height makes wide wordmarks dominate stacked marks, so size by shape. */
-    .destinations img[alt="Goldman Sachs"],
-    .destinations img[alt="Standard Chartered"] { height: 44px; }
-    .destinations img[alt="Citi"] { height: 34px; }
-    .destinations img[alt="Barclays"] { height: 24px; }
-    .destinations img[alt="Millennium Management"],
-    .destinations img[alt="Glencore"] { height: 24px; }
-    .destinations img[alt="Dare Trading"] { height: 28px; }
-    .destinations img[alt="Berenberg"] { height: 64px; }
-    .destinations img[alt="Investec"] { height: 28px; }
-    .destinations img[alt="BNP Paribas"] { height: 32px; }
-    .destinations img[alt="J.P. Morgan"] { height: 30px; }
-    .destinations img[alt="Morgan Stanley"] { height: 28px; }
     .spon__more {
       display: inline-flex; gap: 6px; margin-top: var(--space-4);
       font-size: 0.9375rem; font-weight: 600; color: var(--accent-bright); text-decoration: none;
