@@ -279,9 +279,17 @@
 
     .deck__dots {
       display: flex;
+      flex-wrap: wrap;
       justify-content: center;
       gap: var(--space-2);
       margin-top: var(--space-4);
+    }
+    /* Four tabs don't fit a 320px phone at full padding; tighten rather than
+       let the row push the page sideways. */
+    @media (max-width: 380px) {
+      .track .track__row dt { white-space: normal; }
+      .deck__dots { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+      .deck__dot { justify-content: center; padding-left: 12px !important; padding-right: 12px !important; }
     }
     /* The bespoke note is a separate idea from the tier switcher, so it needs
        real space rather than sitting on top of the tabs. */
