@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="styles/tokens/colors.css?v=15" />
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
-  <link rel="stylesheet" href="styles/main.css?v=87" />
+  <link rel="stylesheet" href="styles/main.css?v=91" />
 
   <style>
     /* =========================================================================
@@ -58,18 +58,6 @@
     /* Wider track for the flagship, so it reads as breaking the grid. */
     .wrap--wide { max-width: 1360px; }
 
-    /* --- Page head -------------------------------------------------------- */
-    .ev__head { max-width: 66ch; }
-    .ev__kicker {
-      display: block;
-      font-family: var(--font-body);
-      font-size: 0.8125rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent-bright);
-      margin-bottom: var(--space-3);
-    }
     .ev__title {
       font-family: var(--font-display);
       font-size: clamp(2.4rem, 6vw, 4.25rem);
@@ -80,185 +68,227 @@
       text-wrap: balance;
     }
 
-    /* --- "Next up" --------------------------------------------------------
-       The one genuinely dated thing on the page. Keeps the programme feeling
-       live without pretending we have a full calendar locked in. */
-    .next {
-      margin-top: var(--space-5);
+
+
+    /* --- Hero: the title beside a Welcome Event mosaic -------------------
+       Real photographs of real turnout are the page's first proof, so they
+       lead instead of a text-only header. */
+    .ev-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.35fr);
+      gap: clamp(var(--space-4), 4vw, var(--space-6));
+      align-items: end;
+    }
+    .ev-hero .ev__title {
+      margin-bottom: var(--space-3);
+      font-size: clamp(2.3rem, 4.3vw, 3.9rem);
+      overflow-wrap: normal;
+      hyphens: none;
+    }
+    .ev-hero__lead {
+      margin: 0;
+      max-width: 42ch;
+      font-size: 1.0625rem;
+      line-height: 1.65;
+      color: var(--text-secondary);
+    }
+    .mosaic {
+      display: grid;
+      grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+      grid-template-rows: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      aspect-ratio: 16 / 10;
+      margin: 0;
+    }
+    .mosaic__tile {
+      position: relative;
+      margin: 0;
+      border-radius: 18px;
+      overflow: hidden;
+      background: rgba(10, 26, 63, 0.6);
+      box-shadow: 0 24px 48px -28px rgba(0, 0, 0, 0.8);
+    }
+    .mosaic__tile--main { grid-row: 1 / span 2; }
+    .mosaic__tile img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .mosaic__tile--main img { object-position: 60% 70%; }
+    .mosaic__caption {
+      position: absolute;
+      left: 12px;
+      bottom: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 14px;
+      border-radius: var(--radius-pill);
+      background: rgba(6, 17, 43, 0.72);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.04em;
+      color: #f4f7fb;
+    }
+    .mosaic__caption::before {
+      content: '';
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.25);
+    }
+    /* The page's one authored entrance: tiles settle in, staggered, from an
+       already-visible state so nothing is hidden if the animation never runs. */
+    @media (prefers-reduced-motion: no-preference) {
+      .mosaic__tile { animation: tile-in 900ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+      .mosaic__tile:nth-child(2) { animation-delay: 60ms; }
+      .mosaic__tile:nth-child(3) { animation-delay: 120ms; }
+    }
+    /* Reduced motion keeps a short fade, just no movement. */
+    @media (prefers-reduced-motion: reduce) {
+      .mosaic__tile { animation: tile-fade 300ms ease both; }
+      .agenda__action span, .agenda__row { transition: none; }
+    }
+    @keyframes tile-fade { from { opacity: 0.35; } to { opacity: 1; } }
+    @keyframes tile-in {
+      from { opacity: 0.35; transform: translateY(18px) scale(0.985); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    /* --- Up next: a dated agenda, soonest first -------------------------- */
+    .agenda { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--hairline); }
+    .agenda__item { border-bottom: 1px solid var(--hairline); }
+    .agenda__row {
+      display: grid;
+      grid-template-columns: 72px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: var(--space-4);
+      padding: var(--space-3) var(--space-2);
+      margin-inline: calc(var(--space-2) * -1);
+      border-radius: 14px;
+      color: inherit;
+      text-decoration: none;
+      transition: background var(--dur-fast) var(--ease-out),
+                  transform 160ms var(--ease-out);
+    }
+    a.agenda__row:active { transform: scale(0.99); }
+    a.agenda__row:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+    @media (hover: hover) and (pointer: fine) {
+      a.agenda__row:hover { background: rgba(255, 255, 255, 0.04); }
+      a.agenda__row:hover .agenda__action span { transform: translateX(3px); }
+    }
+    .agenda__date {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      gap: var(--space-3);
-      padding: var(--space-4);
-      border: 1px solid rgba(56, 189, 248, 0.28);
-      border-radius: var(--radius-sm);
-      background: rgba(10, 26, 63, 0.55);
-    }
-    .next__flag {
-      display: inline-flex;
       align-items: center;
-      gap: 8px;
-      font-family: var(--font-mono, var(--font-body));
-      font-size: 0.6875rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
+      justify-content: center;
+      width: 72px;
+      height: 72px;
+      border: 1px solid var(--glass-border);
+      border-radius: 14px;
+      background: rgba(10, 26, 63, 0.6);
+      font-family: var(--font-mono);
       text-transform: uppercase;
-      color: var(--accent-bright);
+      line-height: 1;
     }
-    .next__flag::before {
-      content: '';
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.55);
-      animation: pulse 2.4s var(--ease-out) infinite;
-    }
-    @keyframes pulse {
-      0%   { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.5); }
-      70%  { box-shadow: 0 0 0 9px rgba(37, 99, 235, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
-    }
-    /* width, not flex-basis: the parent is a column flex container, where
-       flex-basis would size the height instead. */
-    .next__list { list-style: none; margin: 0; padding: 0; width: 100%; }
-    .next-item {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--space-3);
-      padding: var(--space-3) 0;
-      border-top: 1px solid rgba(56, 189, 248, 0.16);
-    }
-    .next-item:first-child { border-top: 0; padding-top: 0; }
-    .next-item:last-child { padding-bottom: 0; }
-    .next-item__body { flex: 1 1 260px; }
-    .next-item__title {
-      font-size: 1.0625rem;
-      font-weight: 600;
-      line-height: 1.3;
-      margin-bottom: 2px;
-    }
-    .next-item__when { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.45; }
-
-    /* A next-item with a page behind it is boxed, tinted and carries a solid pill,
-       so it reads as a control. Everything else in the list is plain text on a
-       hairline with a dashed chip -- the "nothing to click here" state. The box
-       replaces the hairlines either side of it, hence the two border resets. */
-    .next-item--live { border-top: 0; padding: 0; }
-    .next-item--live + .next-item { border-top: 0; }
-    .next-item__link {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--space-3);
-      width: 100%;
-      padding: var(--space-3) var(--space-4);
-      border: 1px solid rgba(37, 99, 235, 0.55);
-      border-radius: var(--radius-sm);
-      background: rgba(37, 99, 235, 0.14);
-      text-decoration: none;
-      color: inherit;
-      transition: background var(--dur-fast) var(--ease-out),
-                  border-color var(--dur-fast) var(--ease-out);
-    }
-    .next-item__link:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 3px; }
-    /* Two classes on purpose. The base .next-item__chip rule is declared further
-       down at ONE class, so a bare .next-item__chip--go lost to it and rendered
-       with the dashed grey border and grey text of the "Closed" chip -- which is
-       why this row looked no different from the ones that do nothing. */
-    .next-item__chip.next-item__chip--go {
-      border-style: solid;
-      border-color: var(--accent);
-      background: var(--accent);
-      color: #fff;
-    }
-    .next-item__arrow { display: inline-block; transition: transform var(--dur-fast) var(--ease-out); }
-
-    /* Flagship: the analyst intake. Filled rather than tinted, a glow rather
-       than a hairline, and a white CTA -- the one row on the page that should
-       be impossible to scroll past. */
-    .next-item--flagship { margin-bottom: var(--space-3); }
-    /* Same box as a live row, but it is not a link, so no hover, no pointer and
-       no underline. Brighter border and a solid chip make it read louder than a
-       plain row without pretending to be clickable. */
-    .next-item--event { border-top: 0; padding: 0; margin-top: var(--space-3); }
-    .next-item__card {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--space-3);
-      width: 100%;
-      padding: var(--space-3) var(--space-4);
-      border: 1px solid rgba(56, 189, 248, 0.45);
-      border-radius: var(--radius-sm);
-      background: rgba(56, 189, 248, 0.10);
-    }
-    .next-item--event .next-item__kicker { color: var(--accent-bright); }
-    .next-item--event .next-item__title { font-size: 1.1875rem; }
-    .next-item__chip.next-item__chip--date {
-      border-style: solid;
-      border-color: var(--accent-bright);
-      background: var(--accent-bright);
-      color: var(--c-navy);
-    }
-    .next-item--flagship .next-item__link {
-      padding: var(--space-4);
-      border: 1px solid rgba(56, 189, 248, 0.7);
-      background:
-        radial-gradient(ellipse 80% 140% at 100% 0%, rgba(56, 189, 248, 0.32) 0%, transparent 60%),
-        linear-gradient(135deg, #1d4ed8 0%, #2563eb 55%, #1e40af 100%);
-      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.18), 0 18px 48px -12px rgba(37, 99, 235, 0.65);
-    }
-    .next-item__kicker {
-      font-size: 0.6875rem;
-      font-weight: 700;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.82);
-      margin-bottom: 6px;
-    }
-    .next-item--flagship .next-item__title {
+    .agenda__day { font-size: 1.5rem; font-weight: 700; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+    .agenda__day--word { font-size: 0.875rem; letter-spacing: 0.06em; }
+    .agenda__mon { margin-top: 7px; font-size: 0.6875rem; letter-spacing: 0.14em; color: var(--accent-bright); }
+    .agenda__item--now .agenda__date { background: var(--accent); border-color: var(--accent); }
+    .agenda__item--now .agenda__mon { color: #fff; }
+    .agenda__title {
+      display: block;
       font-family: var(--font-display);
-      font-size: clamp(1.375rem, 2.6vw, 1.875rem);
+      font-size: clamp(1.0625rem, 1.8vw, 1.3rem);
       font-weight: 800;
-      letter-spacing: -0.02em;
-      line-height: 1.1;
-      color: #fff;
-      margin-bottom: 6px;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
     }
-    .next-item--flagship .next-item__when { color: rgba(255, 255, 255, 0.85); }
-    .next-item__chip.next-item__chip--apply {
+    .agenda__meta { display: block; margin-top: 4px; font-size: 0.9375rem; line-height: 1.5; color: var(--text-secondary); }
+    .agenda__action {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      min-height: 48px;
-      padding: 12px 26px;
+      gap: 6px;
       font-size: 0.875rem;
-      border: 0;
-      background: #fff;
-      color: #0a1a3f;
-      box-shadow: 0 6px 18px rgba(6, 17, 43, 0.35);
+      font-weight: 600;
+      color: var(--accent-bright);
+      white-space: nowrap;
     }
-    @media (hover: hover) and (pointer: fine) {
-      .next-item__link:hover { background: rgba(37, 99, 235, 0.24); border-color: var(--accent); }
-      .next-item__link:hover .next-item__chip--go { background: var(--accent-hover); border-color: var(--accent-hover); }
-      .next-item__link:hover .next-item__title { text-decoration: underline; text-underline-offset: 3px; }
-      .next-item__link:hover .next-item__arrow { transform: translateX(3px); }
-      .next-item--flagship .next-item__link:hover {
-        border-color: #7dd3fc;
-        background:
-          radial-gradient(ellipse 80% 140% at 100% 0%, rgba(56, 189, 248, 0.42) 0%, transparent 60%),
-          linear-gradient(135deg, #2563eb 0%, #3b82f6 55%, #1d4ed8 100%);
-      }
-      .next-item--flagship .next-item__link:hover .next-item__title { text-decoration: none; }
-      .next-item--flagship .next-item__link:hover .next-item__chip--apply { background: #f4f7fb; }
+    .agenda__action span { transition: transform var(--dur-fast) var(--ease-out); }
+    .agenda__note { margin-top: var(--space-3); font-size: 0.875rem; color: var(--text-secondary); }
+    .agenda__note a { color: var(--accent-bright); }
+
+    /* --- UK Investment Competition (UMushroom) --------------------------- */
+    .comp {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+      gap: clamp(var(--space-4), 4vw, var(--space-6));
+      align-items: start;
+      padding: clamp(20px, 3vw, 40px);
+      border: 1px solid rgba(56, 189, 248, 0.28);
+      border-radius: var(--radius-card);
+      background: linear-gradient(160deg, rgba(37, 99, 235, 0.16), rgba(8, 19, 46, 0.72) 55%);
+      scroll-margin-top: 120px;
     }
-    .next-item__link:active { transform: scale(0.995); }
+    .comp__media { margin: 0; }
+    .comp__media img {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border-radius: 16px;
+    }
+    .comp__media figcaption { margin-top: 10px; font-size: 0.8125rem; color: var(--text-secondary); }
+    .comp__title {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 3vw, 2.3rem);
+      font-weight: 800;
+      line-height: 1.06;
+      letter-spacing: -0.025em;
+      text-wrap: balance;
+      margin: 0 0 6px;
+    }
+    .comp__by { margin: 0 0 var(--space-3); font-size: 0.9375rem; font-weight: 600; color: var(--accent-bright); }
+    .comp__text { margin: 0 0 var(--space-4); color: var(--text-secondary); line-height: 1.65; max-width: 56ch; }
+    .facts {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1px;
+      margin: 0 0 var(--space-4);
+      border-radius: 14px;
+      overflow: hidden;
+      background: var(--hairline);
+    }
+    .facts div { padding: 14px 16px; background: rgba(8, 19, 46, 0.92); }
+    .facts dt { font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 4px; }
+    .facts dd { margin: 0; font-weight: 600; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+    .comp__signup {
+      margin: 0;
+      padding: 14px 16px;
+      border: 1px dashed rgba(141, 162, 196, 0.45);
+      border-radius: 14px;
+      font-size: 0.9375rem;
+      line-height: 1.55;
+      color: var(--text-secondary);
+    }
+    .comp__signup strong { color: var(--text-primary); }
+    .comp__signup a { color: var(--accent-bright); }
+
+    @media (max-width: 900px) {
+      .ev-hero { grid-template-columns: 1fr; align-items: start; }
+      .comp { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .mosaic { aspect-ratio: 4 / 5; grid-template-columns: 1fr 1fr; grid-template-rows: minmax(0, 1.5fr) minmax(0, 1fr); }
+      .mosaic__tile--main { grid-row: auto; grid-column: 1 / span 2; }
+      .agenda__row { grid-template-columns: 60px minmax(0, 1fr); gap: var(--space-3); }
+      .agenda__date { width: 60px; height: 60px; }
+      .agenda__action { grid-column: 2; }
+      .facts { grid-template-columns: 1fr; }
+    }
 
     .term__link { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(56, 189, 248, 0.4); }
+    /* Stretch the tap area over the whole calendar row without moving the text. */
+    .term__list li { position: relative; }
+    .term__link::after { content: ''; position: absolute; inset: 0; }
     .term__link:hover { color: var(--accent-bright); }
 
     /* Underline plus an arrow, both always on: a heading that is a link has to say
@@ -275,38 +305,11 @@
     .row__more { margin-top: var(--space-3); font-size: 0.875rem; font-weight: 600; }
     .row__more a { color: var(--accent-bright); }
 
-    @media (prefers-reduced-motion: reduce) {
-      .next-item__link, .next-item__arrow { transition: none; }
-      .next-item__link:active { transform: none; }
-      .next-item__link:hover .next-item__arrow { transform: none; }
-    }
-    /* An honest placeholder: says "we don't have a date" without pretending
-       to be a button that goes somewhere. */
-    .next-item__chip {
-      flex: none;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text-secondary);
-      padding: 8px 16px;
-      border: 1px dashed rgba(141, 162, 196, 0.4);
-      border-radius: var(--radius-pill);
-    }
 
     /* --- Section headers --------------------------------------------------
        No rules across the page. Size, colour and space carry the hierarchy. */
     .sec { margin-top: var(--space-7); }
     .sec__head { margin-bottom: var(--space-5); max-width: 60ch; }
-    .sec__label {
-      display: block;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--text-secondary);
-      margin-bottom: var(--space-2);
-    }
     /* The display face is wide: at 1.75rem a single long word like
        "Competitions" is wider than a 320px phone's column. */
     @media (max-width: 380px) { .sec__title { font-size: 1.5rem !important; } }
@@ -358,6 +361,9 @@
       font-size: 0.9375rem;
       line-height: 1.4;
     }
+    /* Held already this term: kept for context, visibly done. */
+    .term__past { color: var(--text-secondary); }
+    .term__past .term__when::before { content: 'Held \00b7\00a0'; }
     .term__when {
       flex: none;
       font-size: 0.75rem;
@@ -469,7 +475,7 @@
       gap: 8px;
     }
     .win {
-      font-size: 0.625rem;
+      font-size: 0.6875rem;
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
@@ -726,81 +732,128 @@
 
   <main id="events" class="ev page-dark" tabindex="-1">
 
-    <!-- ===================== Head + credibility + next up ==================== -->
-    <div class="wrap">
-      <header class="ev__head">
-        <span class="ev__kicker">Events</span>
-        <h1 class="ev__title">Where the year happens</h1>
+    <!-- ===================== Hero: title + Welcome Event mosaic ============== -->
+    <div class="wrap wrap--wide">
+      <header class="ev-hero">
+        <div>
+          <h1 class="ev__title">Where the year happens</h1>
+          <p class="ev-hero__lead">
+            Competitions, simulations, speaker evenings and socials, run by students for
+            Bristol students. This year opened on 24 September with a full Pugsley Lecture
+            Theatre.
+          </p>
+        </div>
+        <div class="mosaic" role="group" aria-label="Photos from the 2026 Welcome Event">
+          <figure class="mosaic__tile mosaic__tile--main">
+            <img src="assets/img/events/welcome-event-2026-room-1600.jpg"
+                 srcset="assets/img/events/welcome-event-2026-room-800.jpg 800w, assets/img/events/welcome-event-2026-room-1600.jpg 1600w"
+                 sizes="(min-width: 900px) 45vw, 100vw" width="1600" height="900"
+                 alt="Pugsley Lecture Theatre filled with students for the BTS Welcome Event" />
+            <figcaption class="mosaic__caption">Welcome Event &middot; 24.09.2026</figcaption>
+          </figure>
+          <figure class="mosaic__tile">
+            <img src="assets/img/events/welcome-event-2026-committee-800.jpg" width="800" height="450"
+                 alt="Committee members presenting the divisions at the front of the lecture theatre" />
+          </figure>
+          <figure class="mosaic__tile">
+            <img src="assets/img/events/welcome-event-2026-social-800.jpg" width="800" height="600"
+                 alt="Members talking around a table at the social after the Welcome Event" />
+          </figure>
+        </div>
       </header>
-
-      <div class="next">
-        <span class="next__flag">Next up</span>
-        <ul class="next__list">
-          <!-- The flagship intake, so it outranks every other row: a filled
-               gradient card, display-type title and a solid white CTA, where the
-               AmplifyME row below is only tinted. The whole card is the link. -->
-          <li class="next-item next-item--live next-item--flagship">
-            <a class="next-item__link" href="/apply">
-              <div class="next-item__body">
-                <p class="next-item__kicker">Flagship &middot; Now open</p>
-                <p class="next-item__title">Analyst applications</p>
-                <p class="next-item__when">60 places across FICC, Equities, Macro and Quant.</p>
-              </div>
-              <span class="next-item__chip next-item__chip--apply">Apply now <span class="next-item__arrow" aria-hidden="true">&rarr;</span></span>
-            </a>
-          </li>
-          <!-- A card, not a bare row: nothing to click (free, just turn up), so it
-               is boxed and tinted but carries no link styling. -->
-          <li class="next-item next-item--live next-item--event" data-until="2026-09-24T19:00:00+01:00">
-            <div class="next-item__card">
-              <div class="next-item__body">
-                <p class="next-item__kicker">This week</p>
-                <p class="next-item__title">Annual Welcome Event</p>
-                <p class="next-item__when">Thursday 24 September 2026, 18:00&ndash;19:00 &mdash; Pugsley LT, Queen&rsquo;s Building</p>
-              </div>
-              <span class="next-item__chip next-item__chip--date">24 Sept</span>
-            </div>
-          </li>
-        </ul>
-      </div>
     </div>
 
-    <!-- ============================== The season ============================ -->
-    <section class="sec" aria-labelledby="season-title">
+    <!-- ===================== Up next ========================================= -->
+    <section class="sec" aria-labelledby="next-title">
       <div class="wrap">
         <div class="sec__head">
-          <h2 class="sec__title" id="season-title">Calendar</h2>
+          <h2 class="sec__title" id="next-title">Up next</h2>
         </div>
+        <ol class="agenda">
+          <li class="agenda__item agenda__item--now">
+            <a class="agenda__row" href="/apply">
+              <span class="agenda__date" aria-hidden="true"><span class="agenda__day agenda__day--word">Now</span><span class="agenda__mon">Open</span></span>
+              <span>
+                <span class="agenda__title">Analyst applications</span>
+                <span class="agenda__meta">60 places across FICC, Equities, Macro and Quant, reviewed on a rolling basis.</span>
+              </span>
+              <span class="agenda__action">Apply now <span aria-hidden="true">&rarr;</span></span>
+            </a>
+          </li>
+          <li class="agenda__item" data-until="2026-10-12T23:59:00+01:00">
+            <a class="agenda__row" href="#umushroom">
+              <span class="agenda__date" aria-hidden="true"><span class="agenda__day">12</span><span class="agenda__mon">Oct</span></span>
+              <span>
+                <span class="agenda__title">UK Investment Competition starts</span>
+                <span class="agenda__meta">With UMushroom. A &pound;100,000 virtual portfolio, alone or in a team of up to three.</span>
+              </span>
+              <span class="agenda__action">Details <span aria-hidden="true">&darr;</span></span>
+            </a>
+          </li>
+          <li class="agenda__item">
+            <div class="agenda__row">
+              <span class="agenda__date" aria-hidden="true"><span class="agenda__day agenda__day--word">Every</span><span class="agenda__mon">2 weeks</span></span>
+              <span>
+                <span class="agenda__title">Speaker evenings</span>
+                <span class="agenda__meta">Traders, investors and Bristol alumni. Free for members.</span>
+              </span>
+            </div>
+          </li>
+          <li class="agenda__item">
+            <div class="agenda__row">
+              <span class="agenda__date" aria-hidden="true"><span class="agenda__day agenda__day--word">All</span><span class="agenda__mon">Term</span></span>
+              <span>
+                <span class="agenda__title">Bloomberg Terminal sessions</span>
+                <span class="agenda__meta">Hands-on, open to all, no experience needed.</span>
+              </span>
+            </div>
+          </li>
+        </ol>
+        <p class="agenda__note">
+          Dates for each evening go to the
+          <a href="https://chat.whatsapp.com/FgHSKA4Y4ww70iYxEz23lk" target="_blank" rel="noopener noreferrer">WhatsApp group<span class="visually-hidden"> (opens in a new tab)</span></a>
+          first.
+        </p>
+      </div>
+    </section>
 
-        <div class="season">
-          <div class="term">
-            <p class="term__span">September &ndash; December</p>
-            <ul class="term__list">
-              <li><a class="term__link" href="/apply">Analyst applications open</a> <span class="term__when">22 September</span></li>
-              <li><a class="term__link" href="/events/amplifyme/">AmplifyME Pathways launch</a> <span class="term__when">22 September</span></li>
-              <li>Annual Welcome Event <span class="term__when">24 September</span></li>
-              <li>Bloomberg Terminal sessions <span class="term__when">Throughout</span></li>
-              <li>Mentorship pairings open <span class="term__when">Application season</span></li>
-              <li>Speaker evenings <span class="term__when">Fortnightly</span></li>
-            </ul>
+    <!-- ===================== UK Investment Competition ====================== -->
+    <section class="sec" aria-labelledby="umushroom-title">
+      <div class="wrap wrap--wide">
+        <article class="comp" id="umushroom">
+          <figure class="comp__media">
+            <img src="assets/img/events/welcome-event-2026-umushroom-1600.jpg"
+                 srcset="assets/img/events/welcome-event-2026-umushroom-800.jpg 800w, assets/img/events/welcome-event-2026-umushroom-1600.jpg 1560w"
+                 sizes="(min-width: 900px) 40vw, 100vw" width="1560" height="1170" loading="lazy"
+                 alt="The UK Investment Competition 2026 presented on the lecture theatre screens at the Welcome Event" />
+            <figcaption>Presented at the Welcome Event.</figcaption>
+          </figure>
+          <div>
+            <h2 class="comp__title" id="umushroom-title">UK Investment Competition 2026</h2>
+            <p class="comp__by">With UMushroom</p>
+            <p class="comp__text">
+              Seven weeks against students from universities across the UK. Run a &pound;100,000
+              virtual portfolio on your own or in a team of up to three, scored equally on
+              performance and on what you learn along the way. The top ten at each university go
+              through to an elimination round, and the winners present their strategy to a jury of
+              financial professionals at the Grand Final in London.
+            </p>
+            <dl class="facts">
+              <div><dt>Starts</dt><dd>12 October 2026</dd></div>
+              <div><dt>Performance freeze</dt><dd>20 November 2026</dd></div>
+              <div><dt>Grand Final</dt><dd>1 December 2026, London</dd></div>
+              <div><dt>Entry</dt><dd>&pound;12 per student</dd></div>
+              <div><dt>Team size</dt><dd>1 to 3</dd></div>
+              <div><dt>Prizes</dt><dd>Internships, coaching, vouchers</dd></div>
+            </dl>
+            <p class="comp__signup">
+              <strong>How to enter: to be confirmed.</strong> We&rsquo;ll post sign-up details in the
+              <a href="https://chat.whatsapp.com/FgHSKA4Y4ww70iYxEz23lk" target="_blank" rel="noopener noreferrer">WhatsApp group<span class="visually-hidden"> (opens in a new tab)</span></a>.
+              Questions about the competition itself go to
+              <a href="mailto:hello@umushroom.com">hello@umushroom.com</a>.
+            </p>
           </div>
-          <div class="term">
-            <p class="term__span">January &ndash; March</p>
-            <ul class="term__list">
-              <li>Macro Debate Competition <span class="term__when">Spring</span></li>
-              <li>Division workshops <span class="term__when">Termly</span></li>
-              <li>Industry socials <span class="term__when">By invitation</span></li>
-            </ul>
-          </div>
-          <div class="term">
-            <p class="term__span">April &ndash; June</p>
-            <ul class="term__list">
-              <li>Annual Trading Competition <span class="term__when">Flagship</span></li>
-              <li>Energy Trading Week <span class="term__when">Partner event</span></li>
-              <li>Division head applications <span class="term__when">August</span></li>
-            </ul>
-          </div>
-        </div>
+        </article>
       </div>
     </section>
 
@@ -808,7 +861,6 @@
     <section class="sec" aria-labelledby="comp-title">
       <div class="wrap wrap--wide">
         <div class="sec__head">
-          <span class="sec__label">Flagship</span>
           <h2 class="sec__title" id="comp-title">The Annual Trading Competition</h2>
         </div>
 
@@ -818,21 +870,21 @@
                  alt="A team presenting their Diageo equity pitch to judges in a University of Bristol lecture theatre" />
           </div>
           <div class="feature__body">
-            <h3 class="feature__title">Seven teams. One instrument each. External judges.</h3>
+            <h3 class="feature__title">All 13 teams. One instrument each. External judges.</h3>
             <p>
-              Every division &mdash; equities, commodities, rates and macro &mdash; puts up a team.
-              Each pitches a single instrument and then defends it under questioning from judges
-              drawn from industry.
+              This year every analyst team competes: each runs a mock portfolio, pitches a single
+              instrument and defends it under questioning from judges drawn from industry.
             </p>
             <p>
-              The 2025&ndash;26 edition was won by the US 10-year yield and Diageo teams, from a
-              field spanning Brent crude, copper, Eli Lilly, Novo Nordisk and European defence.
+              Last year&rsquo;s seven-team edition was won by the US 10-year yield and Diageo teams,
+              from a field spanning Brent crude, copper, Eli Lilly, Novo Nordisk and European
+              defence.
             </p>
             <ul class="feature__meta">
-              <li>Annual</li>
-              <li>7 teams</li>
+              <li>April &ndash; June</li>
+              <li>13 teams</li>
               <li>External judges</li>
-              <li>Stock-pitch format</li>
+              <li>Pitch format</li>
             </ul>
           </div>
         </div>
@@ -878,7 +930,6 @@
     <section class="sec" aria-labelledby="run-title">
       <div class="wrap">
         <div class="sec__head">
-          <span class="sec__label">Recurring</span>
           <h2 class="sec__title" id="run-title">Competitions and simulations</h2>
         </div>
 
@@ -905,7 +956,7 @@
                 with it. Our first event sold out; a second followed by demand.
               </p>
               <p class="row__more">
-                <a href="/events/amplifyme/">Next session, 22 September &rarr;</a>
+                <a href="/events/amplifyme/">How the Pathways launch ran &rarr;</a>
               </p>
             </div>
           </article>
@@ -947,7 +998,6 @@
     <section class="sec" aria-labelledby="speakers-title">
       <div class="wrap">
         <div class="sec__head">
-          <span class="sec__label">Speakers</span>
           <h2 class="sec__title" id="speakers-title">People actually doing the work</h2>
           <p class="sec__note">
             Traders, investors, founders and Bristol alumni a few years ahead of our members.
@@ -1086,11 +1136,49 @@
       </div>
     </section>
 
+    <!-- ============================== The season ============================ -->
+    <section class="sec" aria-labelledby="season-title">
+      <div class="wrap">
+        <div class="sec__head">
+          <h2 class="sec__title" id="season-title">The year at a glance</h2>
+        </div>
+
+        <div class="season">
+          <div class="term">
+            <p class="term__span">September &ndash; December</p>
+            <ul class="term__list">
+              <li class="term__past"><a class="term__link" href="/events/amplifyme/">AmplifyME Pathways launch</a> <span class="term__when">22 September</span></li>
+              <li class="term__past">Annual Welcome Event <span class="term__when">24 September</span></li>
+              <li><a class="term__link" href="/apply">Analyst applications</a> <span class="term__when">Open now</span></li>
+              <li><a class="term__link" href="/events/#umushroom">UK Investment Competition</a> <span class="term__when">12 Oct &ndash; 1 Dec</span></li>
+              <li>Bloomberg Terminal sessions <span class="term__when">Throughout</span></li>
+              <li>Mentorship pairings open <span class="term__when">Application season</span></li>
+              <li>Speaker evenings <span class="term__when">Fortnightly</span></li>
+            </ul>
+          </div>
+          <div class="term">
+            <p class="term__span">January &ndash; March</p>
+            <ul class="term__list">
+              <li>Macro Debate Competition <span class="term__when">Spring</span></li>
+              <li>Division workshops <span class="term__when">Termly</span></li>
+              <li>Industry socials <span class="term__when">By invitation</span></li>
+            </ul>
+          </div>
+          <div class="term">
+            <p class="term__span">April &ndash; June</p>
+            <ul class="term__list">
+              <li>Annual Trading Competition <span class="term__when">Flagship</span></li>
+              <li>Energy Trading Week <span class="term__when">Partner event</span></li>
+              <li>Division head applications <span class="term__when">August</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
     <!-- ============================== TIER 3 ================================ -->
     <section class="sec" aria-labelledby="more-title">
       <div class="wrap">
         <div class="sec__head">
-          <span class="sec__label">Also on</span>
           <h2 class="sec__title" id="more-title">Other events</h2>
         </div>
 
@@ -1131,10 +1219,10 @@
             </div>
           </li>
           <li>
-            <img src="assets/img/events/welcome-event.jpg" alt="The annual BTS welcome event introducing the society to new members" />
+            <img src="assets/img/events/welcome-event-2026-audience-800.jpg" alt="Students filling Pugsley Lecture Theatre at the 2026 Welcome Event" loading="lazy" />
             <div>
               <p class="index__title">Annual Welcome Event <small>Every September</small></p>
-              <p class="index__text">Where the year starts &mdash; introducing the society, the divisions and the analyst programme to new members.</p>
+              <p class="index__text">Where the year starts: the society, the divisions and the analyst programme, introduced to new members. This year it filled Pugsley Lecture Theatre.</p>
             </div>
           </li>
           <li>
@@ -1151,9 +1239,13 @@
     <!-- ============================== Close ================================= -->
     <div class="wrap">
       <section class="cta" aria-labelledby="cta-title">
-        <h2 class="cta__title" id="cta-title">This is the year you&rsquo;d be joining</h2>
+        <h2 class="cta__title" id="cta-title">Hear about the next one first</h2>
         <div class="cta__actions">
-          <a class="btn btn--secondary" href="/about">About the society <span class="btn__arrow">&rarr;</span></a>
+          <a class="btn btn--whatsapp" href="https://chat.whatsapp.com/FgHSKA4Y4ww70iYxEz23lk" target="_blank" rel="noopener noreferrer">
+            <svg class="btn__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.017 0C5.376 0 0 5.376 0 12.017c0 2.106.549 4.164 1.593 5.983L0 24l6.163-1.617c1.75.955 3.719 1.457 5.719 1.457h.005c6.641 0 12.017-5.376 12.017-12.016 0-3.211-1.249-6.232-3.517-8.5C18.15 1.25 15.129 0 12.017 0m0 22.007a9.94 9.94 0 0 1-5.063-1.381l-.363-.216-3.759.984.987-3.75-.238-.375a9.939 9.939 0 0 1-1.545-5.32C1.939 6.191 6.191 1.939 12.017 1.939c2.821 0 5.475 1.099 7.478 3.102a10.54 10.54 0 0 1 3.103 7.482c-.001 5.83-4.253 10.084-10.081 10.084"/></svg>
+            Join the WhatsApp group<span class="visually-hidden"> (opens in a new tab)</span>
+          </a>
+          <a class="btn btn--secondary" href="https://www.bristolsu.org.uk/groups/bristol-trading-society-2436" target="_blank" rel="noopener noreferrer">Become a member<span class="visually-hidden"> (opens in a new tab)</span> <span class="btn__arrow" aria-hidden="true">&rarr;</span></a>
         </div>
       </section>
     </div>

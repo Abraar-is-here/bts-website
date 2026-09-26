@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="styles/tokens/colors.css?v=15" />
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
-  <link rel="stylesheet" href="styles/main.css?v=87" />
+  <link rel="stylesheet" href="styles/main.css?v=91" />
 
   <style>
     /* -------------------------------------------------------------------------
@@ -46,15 +46,6 @@
       padding: 0 var(--gutter);
     }
 
-    .abt__kicker {
-      display: block;
-      font-size: 0.8125rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent-bright);
-      margin-bottom: var(--space-3);
-    }
     .abt__title {
       font-family: var(--font-display);
       font-size: clamp(2.3rem, 5.6vw, 3.9rem);
@@ -73,15 +64,6 @@
     }
 
     .abt__sec { margin-top: var(--space-7); }
-    .abt__sec-label {
-      display: block;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--text-secondary);
-      margin-bottom: var(--space-2);
-    }
     .abt__sec-title {
       font-family: var(--font-display);
       font-size: clamp(1.75rem, 3.6vw, 2.5rem);
@@ -222,6 +204,87 @@
     @media (max-width: 520px) {
       .ladder li { grid-template-columns: 44px minmax(0, 1fr); }
     }
+
+    /* --- Hero: the title beside the people doing the work ------------------ */
+    .abt-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+      gap: clamp(var(--space-4), 4vw, var(--space-6));
+      align-items: center;
+    }
+    .abt-hero .abt__title { max-width: 16ch; overflow-wrap: normal; hyphens: none; }
+    .abt-photo { position: relative; margin: 0; border-radius: 22px; overflow: hidden; background: rgba(10, 26, 63, 0.6); box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.85); }
+    .abt-photo img { display: block; width: 100%; height: auto; object-fit: cover; }
+    /* The heads stand small at the front of a big room; zoom onto them. */
+    .abt-hero .abt-photo img { aspect-ratio: 4 / 5; object-position: 50% 50%; transform: scale(1.75); transform-origin: 30% 62%; }
+    .abt-photo figcaption {
+      position: absolute;
+      left: 12px;
+      bottom: 12px;
+      padding: 7px 14px;
+      border-radius: var(--radius-pill);
+      background: rgba(6, 17, 43, 0.72);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.04em;
+      color: #f4f7fb;
+    }
+
+    /* --- Full-width photo break between the story and the structure ------ */
+    .abt-break { margin-top: var(--space-6); }
+    .abt-break img { aspect-ratio: 21 / 9; object-position: 50% 70%; }
+
+    /* --- Mentorship: copy beside a photo ---------------------------------- */
+    .mentor {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+      gap: clamp(var(--space-4), 4vw, var(--space-6));
+      align-items: center;
+    }
+    .mentor p { color: var(--text-secondary); line-height: 1.75; margin-bottom: var(--space-3); max-width: 62ch; }
+    .mentor p:last-child { margin-bottom: 0; }
+    .mentor strong { color: var(--text-primary); font-weight: 600; }
+    .mentor .abt-photo img { aspect-ratio: 4 / 3; }
+
+    /* --- Structure as a pathway on wide screens: the order is the point. -- */
+    @media (min-width: 900px) {
+      .ladder { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-4); }
+      .ladder li { display: block; padding: 0; border-top: 0; position: relative; }
+      .ladder li:last-child { border-bottom: 0; }
+      .ladder li::before {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 52px;
+        height: 52px;
+        margin-bottom: var(--space-3);
+        border: 1px solid var(--glass-border);
+        border-radius: 50%;
+        background: #0b1a3d;
+        font-size: 1.05rem;
+        position: relative;
+        z-index: 1;
+      }
+      .ladder li:first-child::before { background: var(--accent); border-color: var(--accent); color: #fff; }
+      .ladder li:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        top: 26px;
+        left: 60px;
+        right: calc(var(--space-4) * -1 + 8px);
+        height: 1px;
+        background: linear-gradient(90deg, rgba(37, 99, 235, 0.9), rgba(141, 162, 196, 0.25));
+      }
+      .ladder p { font-size: 0.9375rem; }
+    }
+    @media (max-width: 820px) {
+      .abt-hero, .mentor { grid-template-columns: 1fr; }
+      .abt-hero .abt-photo { max-width: 460px; }
+      .abt-hero .abt-photo img { aspect-ratio: 4 / 3; transform: scale(1.45); transform-origin: 30% 78%; }
+      .abt-break img { aspect-ratio: 4 / 3; }
+    }
   </style>
 
   <!-- Structured data. Gives crawlers and AI answers facts to quote instead of
@@ -307,19 +370,26 @@
   <main id="about" class="abt page-dark" tabindex="-1">
     <div class="abt__wrap">
 
-      <header>
-        <span class="abt__kicker">About Us</span>
-        <h1 class="abt__title">A society for people who wanted to do the work, not read about it</h1>
-        <p class="abt__lead">
-          The Bristol Trading Society is the largest markets-focused society at the University of
-          Bristol, built around how markets move, how they are traded, and how the people who trade
-          them actually think. We are run entirely by students, for students.
-        </p>
+      <header class="abt-hero">
+        <div>
+          <h1 class="abt__title">A society for people who wanted to do the work, not read about it</h1>
+          <p class="abt__lead">
+            The Bristol Trading Society is the largest markets-focused society at the University of
+            Bristol, built around how markets move, how they are traded, and how the people who trade
+            them actually think. We are run entirely by students, for students.
+          </p>
+        </div>
+        <figure class="abt-photo">
+          <img src="assets/img/events/welcome-event-2026-ficc-800.jpg"
+               srcset="assets/img/events/welcome-event-2026-ficc-800.jpg 800w, assets/img/events/welcome-event-2026-ficc-1600.jpg 1536w"
+               sizes="(min-width: 820px) 34vw, 100vw" width="800" height="1067"
+               alt="FICC division heads presenting their division on stage at the 2026 Welcome Event" />
+          <figcaption>FICC division heads &middot; Welcome Event 2026</figcaption>
+        </figure>
       </header>
 
       <!-- ===== Origins ===== -->
       <section class="abt__sec" aria-labelledby="origin-title">
-        <span class="abt__sec-label">Since 2017</span>
         <h2 class="abt__sec-title" id="origin-title">How it started</h2>
 
         <div class="abt__story">
@@ -368,11 +438,18 @@
             <span class="reach__l">founded, and student-run every year since</span>
           </div>
         </div>
+
+        <figure class="abt-photo abt-break">
+          <img src="assets/img/events/welcome-event-2026-applause-1600.jpg"
+               srcset="assets/img/events/welcome-event-2026-applause-800.jpg 800w, assets/img/events/welcome-event-2026-applause-1600.jpg 1560w"
+               sizes="(min-width: 1280px) 1200px, 100vw" width="1560" height="1170" loading="lazy"
+               alt="Rows of students in Pugsley Lecture Theatre listening to the committee at the 2026 Welcome Event" />
+          <figcaption>Pugsley Lecture Theatre &middot; 24.09.2026</figcaption>
+        </figure>
       </section>
 
       <!-- ===== Structure ===== -->
       <section class="abt__sec" aria-labelledby="how-title">
-        <span class="abt__sec-label">Structure</span>
         <h2 class="abt__sec-title" id="how-title">How the society works</h2>
 
         <ol class="ladder">
@@ -422,10 +499,9 @@
 
       <!-- ===== Mentorship ===== -->
       <section class="abt__sec" aria-labelledby="mentor-title">
-        <span class="abt__sec-label">Member to member</span>
         <h2 class="abt__sec-title" id="mentor-title">Mentorship</h2>
 
-        <div class="abt__story">
+        <div class="mentor">
           <div>
             <p>
               Breaking into trading or investment banking is mostly an information problem. The
@@ -433,8 +509,6 @@
               assessment actually tests, and how a superday runs &mdash; and that knowledge does not
               appear in any prospectus.
             </p>
-          </div>
-          <div>
             <p>
               So we pair them up. Members who have secured <strong>spring weeks, summer internships,
               off-cycles and graduate roles</strong> mentor members who are just starting out
@@ -447,13 +521,18 @@
               who stop engaging make way for those who will.
             </p>
           </div>
+          <figure class="abt-photo">
+            <img src="assets/img/events/welcome-event-2026-social-800.jpg"
+                 srcset="assets/img/events/welcome-event-2026-social-800.jpg 800w, assets/img/events/welcome-event-2026-social-1600.jpg 1600w"
+                 sizes="(min-width: 820px) 36vw, 100vw" width="800" height="600" loading="lazy"
+                 alt="Members in conversation around a table after the Welcome Event" />
+          </figure>
         </div>
       </section>
 
 
       <!-- ===== Principles ===== -->
       <section class="abt__sec" aria-labelledby="for-title">
-        <span class="abt__sec-label">What we optimise for</span>
         <h2 class="abt__sec-title" id="for-title">Three things we actually care about</h2>
 
         <div class="principles">
@@ -486,7 +565,6 @@
 
       <!-- ===== Onward ===== -->
       <section class="abt__sec" aria-labelledby="next-title">
-        <span class="abt__sec-label">Go deeper</span>
         <h2 class="abt__sec-title" id="next-title">Where to look next</h2>
 
         <div class="onward">
