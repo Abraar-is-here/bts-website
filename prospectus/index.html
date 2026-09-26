@@ -7,7 +7,7 @@
   <base href="/" />
 
   <title>Sponsors &amp; Partners — Bristol Trading Society</title>
-  <meta name="description" content="The firms that partner with the Bristol Trading Society, and what a partnership gives you — access to a selective analyst programme and an 800-strong membership." />
+  <meta name="description" content="Sponsorship prospectus for the Bristol Trading Society: who your firm meets, what partners have run with us, and what each partnership tier includes." />
 
 
   <link rel="icon" type="image/svg+xml" href="assets/img/bull.svg" />
@@ -19,517 +19,585 @@
   <link rel="stylesheet" href="styles/tokens/colors.css?v=15" />
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
-  <link rel="stylesheet" href="styles/main.css?v=91" />
+  <link rel="stylesheet" href="styles/main.css?v=92" />
 
   <style>
     /* -------------------------------------------------------------------------
-       Sponsors page — partner roster + what a partnership provides.
-       Shares the events-page shell (ink scrim over the aurora, glass cards).
+       Sponsorship prospectus. Written for a firm deciding whether the year is
+       worth it: the room first, then who is in it, what partners have done,
+       and what each tier buys. Set straight into the aurora, deepening as the
+       page goes on so the detail sections stay easy to read. It also prints
+       to a clean PDF for circulating internally (see the print block).
        ------------------------------------------------------------------------- */
-    .spon { position: relative; min-height: 100vh; padding: 120px var(--space-4) var(--space-7); }
-    .spon::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      background: radial-gradient(ellipse 95% 70% at 50% 20%,
-                  rgba(6, 17, 43, 0.62) 0%, rgba(6, 17, 43, 0.32) 48%, transparent 78%);
-      pointer-events: none;
-    }
-    .spon__inner {
+    .px {
       position: relative;
-      z-index: 1;
-      width: 100%;
-      max-width: var(--container-max);
-      margin: 0 auto;
+      /* Secondary text here sits straight on the aurora, so it is a lighter
+         tint of the page white rather than slate (which fell to ~4.3:1 over
+         the brighter bands). */
+      --text-secondary: rgba(244, 247, 251, 0.74);
+      padding: 120px var(--gutter) var(--space-6);
+      background: linear-gradient(180deg,
+                  rgba(6, 17, 43, 0.35) 0,
+                  rgba(6, 17, 43, 0.6) 900px,
+                  rgba(6, 17, 43, 0.7) 100%);
     }
+    .px__inner { max-width: var(--container-max); margin: 0 auto; }
+    .px section { margin-top: var(--space-7); }
+    .px :where(h1, h2, h3) { overflow-wrap: normal; hyphens: none; }
 
-    .spon__head { max-width: 62ch; margin-bottom: var(--space-6); }
-    .spon__eyebrow {
-      display: block;
-      font-family: var(--font-body);
-      font-size: 0.8125rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent-bright);
-      margin-bottom: var(--space-3);
-    }
-    .spon__title {
-      font-family: var(--font-display);
-      font-size: clamp(2rem, 5vw, 3.25rem);
-      font-weight: 800;
-      line-height: 1.06;
-      letter-spacing: -0.02em;
-      margin-bottom: var(--space-3);
-      text-wrap: balance;
-    }
-    .spon__lead { color: var(--text-secondary); max-width: 60ch; }
-
-    .spon__section { margin-top: var(--space-7); }
-    .spon__section-title {
-      font-family: var(--font-display);
-      font-size: clamp(1.5rem, 3vw, 2rem);
-      font-weight: 700;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      padding-bottom: var(--space-3);
-      border-bottom: 1px solid var(--hairline);
-      margin-bottom: var(--space-5);
-    }
-
-    /* --- Reach claim --- */
-    .spon__claim {
-      margin-top: var(--space-6);
-      font-family: var(--font-display);
-      font-size: clamp(1.5rem, 3.4vw, 2.125rem);
-      font-weight: 800;
-      line-height: 1.2;
-      letter-spacing: -0.01em;
-      color: var(--text-primary);
-      max-width: 40ch;
-      text-wrap: balance;
-      margin-bottom: var(--space-5);
-    }
-
-    /* --- Tier deck ---------------------------------------------------------
-       One tier fills the width at a time, with arrows to switch. Two tiers
-       side by side made each read as half a thing; full width lets the
-       benefits sit in columns and gives each tier room to feel distinct.
-       Without JS both plans simply stack, so the content is never trapped. */
-    .deck { position: relative; }
-    .deck__viewport { overflow: hidden; border-radius: var(--radius-card); }
-    .deck__track {
-      display: flex;
-      transition: transform 420ms var(--ease-out);
-    }
-    .plan {
-      flex: 0 0 100%;
-      min-width: 0;
-      padding: clamp(var(--space-4), 3.5vw, var(--space-5));
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-card);
-      background: rgba(8, 19, 46, 0.78);
-    }
-
-    /* Three tiers, told apart by a muted metallic accent on the border, badge
-       and bullets. Kept low in saturation so they sit inside the navy palette
-       rather than reading as literal gold, silver and bronze foil. Gold also
-       keeps the corner glow the top tier has always had. */
-    .plan--gold {
-      --tier: #c9a64b;
-      border-color: rgba(201, 166, 75, 0.55);
-      background:
-        radial-gradient(ellipse 70% 100% at 0% 0%, rgba(201, 166, 75, 0.14) 0%, transparent 60%),
-        rgba(8, 19, 46, 0.82);
-    }
-    .plan--silver { --tier: #c0c7d1; border-color: rgba(192, 199, 209, 0.38); }
-    .plan--bronze { --tier: #c8895a; border-color: rgba(200, 137, 90, 0.4); }
-    .plan--bespoke { --tier: var(--accent-bright); border-color: rgba(56, 189, 248, 0.35); }
-
-    .plan__top {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: var(--space-3) var(--space-4);
-      padding-bottom: var(--space-4);
-      margin-bottom: var(--space-5);
-      border-bottom: 1px solid var(--hairline);
-    }
-    .plan__badge {
-      display: inline-block;
-      font-size: 0.6875rem;
-      font-weight: 700;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      padding: 6px 14px;
-      border-radius: var(--radius-pill);
-      margin-bottom: var(--space-3);
-    }
-    /* White on royal, matching every other pill on the site. Was navy on sky,
-       which was the one light-blue fill that stood out as too bright. */
-    /* Gold is filled (navy on gold, ~7:1); Silver and Bronze are outlined, so
-       the top tier still reads first. */
-    .plan--gold .plan__badge { color: #0a1a3f; background: var(--tier); }
-    .plan--silver .plan__badge,
-    .plan--bronze .plan__badge,
-    .plan--bespoke .plan__badge { color: var(--tier); border: 1px solid var(--tier); }
-    .plan__name {
-      font-family: var(--font-display);
-      font-size: clamp(1.75rem, 3.4vw, 2.5rem);
-      font-weight: 800;
-      letter-spacing: -0.025em;
-      line-height: 1.05;
-      margin-bottom: 8px;
-    }
-    .plan__pitch { font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.6; max-width: 46ch; }
-    .plan__cost { text-align: right; flex: none; }
-    .plan__price {
-      font-family: var(--font-display);
-      font-size: clamp(2.25rem, 5vw, 3.25rem);
-      font-weight: 800;
-      letter-spacing: -0.035em;
-      line-height: 1;
-      color: var(--text-primary);
-      font-variant-numeric: tabular-nums;
-    }
-    .plan__term { font-size: 0.8125rem; color: var(--text-secondary); margin-top: 6px; }
-    /* Prices are quoted per firm, so the cost slot carries the enquiry line
-       instead. The address is long, so it is allowed to wrap on small screens. */
-    .plan__quote {
-      max-width: 24ch;
-      font-size: 0.9375rem;
-      line-height: 1.5;
-      color: var(--text-secondary);
-      overflow-wrap: anywhere;
-    }
-    .plan__quote a { color: var(--text-primary); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
-    /* Wherever there is room, keep the address whole rather than breaking it
-       at the hyphen; phones still get the wrap above. */
-    @media (min-width: 640px) {
-      .plan__quote { max-width: none; }
-      .plan__quote a { white-space: nowrap; }
-    }
-    .plan__from {
-      display: block;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--text-secondary);
-      margin-bottom: 4px;
-    }
-
-    /* Benefits in columns, so a full-width tier does not become a long scroll. */
-    .plan__groups {
+    /* Section head: the heading on the left, one supporting line on the right. */
+    .px-head {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
-      gap: var(--space-5) var(--space-4);
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      gap: var(--space-3) var(--space-5);
+      align-items: end;
+      margin-bottom: var(--space-5);
     }
-    .plan__group-title {
-      font-size: 0.6875rem;
-      font-weight: 700;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
+    .px-head h2 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: clamp(1.9rem, 4vw, 3rem);
+      font-weight: 800;
+      line-height: 1.04;
+      letter-spacing: -0.03em;
       color: var(--text-primary);
-      padding-bottom: 10px;
-      margin-bottom: var(--space-3);
-      border-bottom: 2px solid var(--accent);
+      text-wrap: balance;
     }
-    .plan__list { list-style: none; margin: 0; padding: 0; }
-    .plan__list li {
-      position: relative;
-      padding-left: 20px;
-      margin-bottom: 14px;
-      font-size: 0.9375rem;
-      line-height: 1.55;
+    .px-head p {
+      margin: 0;
+      max-width: 46ch;
+      font-size: 1rem;
+      line-height: 1.6;
       color: var(--text-secondary);
     }
-    .plan__list li::before {
-      content: '';
-      position: absolute;
-      left: 2px; top: 8px;
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--accent);
+
+    /* --- Hero ------------------------------------------------------------------ */
+    .px-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+      gap: var(--space-5);
+      align-items: center;
     }
-    .plan--gold .plan__list li::before,
-    .plan--silver .plan__list li::before,
-    .plan--bronze .plan__list li::before,
-    .plan--bespoke .plan__list li::before { background: var(--tier); }
-    /* Headings only: each benefit is its own label now, so it takes the primary
-       colour, and the list flows into columns instead of the old three groups. */
-    .plan__list--flat {
-      columns: 3 220px;
-      column-gap: var(--space-4);
-      margin-top: var(--space-2);
-    }
-    .plan__list--flat li {
-      break-inside: avoid;
+    .px-hero h1 {
+      margin: 0 0 var(--space-4);
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 8.4vw, 6rem);
+      font-weight: 800;
+      line-height: 0.94;
+      letter-spacing: -0.04em;
       color: var(--text-primary);
-      font-weight: 500;
     }
-    .plan__list strong { color: var(--text-primary); font-weight: 600; }
+    .px-hero__lead {
+      margin: 0 0 var(--space-4);
+      max-width: 50ch;
+      font-size: 1.125rem;
+      line-height: 1.6;
+      color: rgba(244, 247, 251, 0.82);
+    }
+    .px-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
+    .px-hero__meta {
+      margin: var(--space-4) 0 0;
+      font-size: 0.875rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+    .px-hero__media { margin: 0; }
+    .px-hero__media img {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      border-radius: var(--radius-card);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.8);
+    }
+    .px-hero__media figcaption {
+      margin-top: var(--space-2);
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+    }
 
-    /* Controls sit outside the card on wide screens, below it when there is
-       no room beside it. */
-    /* Matches the hero slider controls: a translucent chevron sitting off the
-       card, not a button competing with the content. */
-    .deck__arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 2;
-      background: none;
-      border: none;
-      padding: var(--space-3);
-      line-height: 0;
-      color: rgba(255, 255, 255, 0.22);
-      cursor: pointer;
-      transition: color 0.25s ease;
-    }
-    .deck__arrow:hover { color: rgba(255, 255, 255, 0.65); }
-    .deck__arrow svg { display: block; width: 36px; height: 36px; stroke-width: 1.5; }
-    /* Inside the card, sitting in its own padding — as the hero controls do.
-       Hanging them outside pushed past the page gutter and gave the document
-       a horizontal scrollbar. */
-    .deck__arrow--prev { left: 0; }
-    .deck__arrow--next { right: 0; }
-
-    .deck__dots {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: var(--space-2);
-      margin-top: var(--space-4);
-    }
-    /* Four tabs don't fit a 320px phone at full padding; tighten rather than
-       let the row push the page sideways. */
-    @media (max-width: 380px) {
-      .track .track__row dt { white-space: normal; }
-      .deck__dots { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-      .deck__dot { justify-content: center; padding-left: 12px !important; padding-right: 12px !important; }
-    }
-    /* The bespoke note is a separate idea from the tier switcher, so it needs
-       real space rather than sitting on top of the tabs. */
-    .deck__dot {
+    /* A quiet text control for saving the page as a PDF. */
+    .px-print {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      font-family: inherit;
-      font-size: 0.8125rem;
-      font-weight: 600;
-      padding: 8px 18px;
-      border-radius: var(--radius-pill);
-      border: 1px solid var(--glass-border);
-      background: transparent;
-      color: var(--text-secondary);
+      padding: 12px 4px;
+      border: 0;
+      background: none;
+      font: 600 0.9375rem/1 var(--font-body);
+      color: var(--text-primary);
       cursor: pointer;
-      transition: color var(--dur-fast) var(--ease-out),
-                  background var(--dur-fast) var(--ease-out),
-                  border-color var(--dur-fast) var(--ease-out);
+      text-decoration: underline;
+      text-decoration-color: rgba(244, 247, 251, 0.35);
+      text-underline-offset: 5px;
+      transition: text-decoration-color var(--dur-fast) var(--ease-out),
+                  transform var(--dur-fast) var(--ease-out);
     }
-    .deck__dot[aria-selected="true"] {
-      color: var(--c-navy);
-      background: var(--text-primary);
-      border-color: var(--text-primary);
-    }
-
-    @media (max-width: 1100px) {
-      .deck__arrow--prev { left: 8px; }
-      .deck__arrow--next { right: 8px; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .deck__track { transition: none; }
-      .deck__arrow, .deck__dot { transition: none; }
+    .px-print svg { width: 18px; height: 18px; flex: none; }
+    .px-print:active { transform: scale(0.97); }
+    @media (hover: hover) and (pointer: fine) {
+      .px-print:hover { text-decoration-color: var(--accent-bright); }
     }
 
-    /* --- Partner logo wall ------------------------------------------------
-       Every mark rendered the same way. Mixing white plates for dark logos
-       with dark plates for light ones made the grid look like two unrelated
-       sets. Normalising to a single monochrome weight on one surface reads as
-       a considered roster rather than a pile of assets. */
-    .logos {
+    /* --- Partner wall: reuses the home page's sponsor tiles (main.css) ------ */
+    .px-wall .partners__lead { margin-bottom: var(--space-4); }
+    .px-wall__note {
+      margin: var(--space-4) 0 0;
+      max-width: 82ch;
+      font-size: 0.8125rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+
+    /* --- Reach: the selection funnel -----------------------------------------
+       The page's one authored motion. Bars are drawn to scale, so the last one
+       is deliberately small: that is the point. They are full width by default
+       and only collapse when the script arms them below the fold. */
+    .funnel { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--hairline); }
+    .funnel__row {
+      display: grid;
+      grid-template-columns: clamp(9rem, 22vw, 18rem) minmax(0, 1fr);
+      gap: var(--space-4);
+      align-items: center;
+      padding: var(--space-4) 0;
+      border-bottom: 1px solid var(--hairline);
+    }
+    .funnel__n {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800;
+      line-height: 0.9;
+      letter-spacing: -0.04em;
+      color: var(--text-primary);
+      font-variant-numeric: tabular-nums;
+    }
+    .funnel__row--key .funnel__n { color: var(--accent-bright); }
+    .funnel__label {
+      display: block;
+      margin-bottom: 12px;
+      font-size: 1rem;
+      line-height: 1.5;
+      color: rgba(244, 247, 251, 0.86);
+    }
+    .funnel__track {
+      display: block;
+      height: 12px;
+      border-radius: 2px;
+      background: rgba(141, 162, 196, 0.1);
+      overflow: hidden;
+    }
+    .funnel__bar {
+      display: block;
+      height: 100%;
+      width: calc(var(--w) * 100%);
+      min-width: 10px;
+      border-radius: 2px;
+      background: rgba(141, 162, 196, 0.55);
+      clip-path: inset(0 0 0 0);
+      transition: clip-path 1100ms var(--ease-out);
+      transition-delay: calc(var(--i) * 110ms);
+    }
+    .funnel__row:nth-child(2) .funnel__bar { background: var(--accent); }
+    .funnel__row--key .funnel__bar { background: var(--accent-bright); }
+    .funnel.is-armed:not(.is-in) .funnel__bar { clip-path: inset(0 100% 0 0); transition: none; }
+    .funnel__foot {
+      margin: var(--space-4) 0 0;
+      max-width: 62ch;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+    .funnel__foot strong { color: var(--text-primary); font-weight: 600; }
+
+    /* --- Alumni employers: the shared logo set, laid into a hairline grid --- */
+    .px .destinations {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 0;
+      border-top: 1px solid var(--hairline);
+      border-left: 1px solid var(--hairline);
+    }
+    .px .destinations li {
+      display: grid;
+      place-items: center;
+      min-height: 112px;
+      padding: var(--space-3);
+      border-right: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+    }
+    .px .destinations img { max-width: 100%; transition: opacity var(--dur-fast) var(--ease-out); }
+    @media (hover: hover) and (pointer: fine) {
+      .px .destinations li:hover img { opacity: 0.95; }
+    }
+    .px-more {
+      display: inline-flex;
+      gap: 6px;
+      margin-top: var(--space-4);
+      padding: 6px 0;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--accent-bright);
+      text-decoration: none;
+    }
+    .px-more span { transition: transform var(--dur-fast) var(--ease-out); }
+    @media (hover: hover) and (pointer: fine) {
+      .px-more:hover { text-decoration: underline; text-underline-offset: 4px; }
+      .px-more:hover span { transform: translateX(3px); }
+    }
+
+    /* --- Track record: photographed partner evenings --------------------------- */
+    .proof {
       list-style: none;
       margin: 0;
       padding: 0;
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-      gap: 1px;
-      background: var(--hairline);
-      border: 1px solid var(--hairline);
-      border-radius: var(--radius-card);
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-4) var(--space-3);
+    }
+    .proof__shot {
       overflow: hidden;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(6, 17, 43, 0.6);
     }
-    /* Hairline grid: the 1px gap and the container background draw the rules,
-       so there is no per-card border to fight with. */
-    .logos__item {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 110px;
-      padding: 22px 26px;
-      background: rgba(8, 19, 46, 0.72);
+    .proof__shot img {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      transition: transform 300ms var(--ease-out);
     }
-    .logos__item img {
-      max-height: 100%;
-      max-width: 100%;
-      width: auto;
-      object-fit: contain;
-      /* Flatten every mark to a single white weight. */
-      filter: brightness(0) invert(1);
-      opacity: 0.72;
-      transition: opacity var(--dur-fast) var(--ease-out);
-    }
-    .logos__item:hover img { opacity: 1; }
-    /* CFA Institute forbid altering their mark. Theirs is supplied
-       white-on-transparent, so it already reads as white on the dark card and
-       is exempted from the monochrome filter rather than recoloured. */
-    .logos__item--asis img { filter: none; }
-    .logos__note {
-      margin-top: var(--space-4);
-      font-size: 0.8125rem;
-      line-height: 1.6;
-      color: var(--text-secondary);
-      max-width: 82ch;
-    }
-
-    /* --- Partner track record ------------------------------------------------
-       Was unstyled, so it fell back to browser discs indented 40px: the only
-       block off the page gutter. Now the same dot-and-label pattern as the tier
-       lists, with the firm in primary and what they ran in secondary. */
-    /* Track record as a ledger: one row per partner, firm in the display face,
-       what they ran beside it. Rows with hairlines, not bullets or cards. */
-    .track { margin: 0; border-top: 1px solid var(--hairline); }
-    .track__row {
-      display: grid;
-      grid-template-columns: 17rem minmax(0, 1fr);
-      gap: var(--space-2) var(--space-4);
-      align-items: baseline;
-      padding: var(--space-3) 0;
-      border-bottom: 1px solid var(--hairline);
-    }
-    .track dt {
+    .proof__firm {
+      margin: var(--space-3) 0 6px;
       font-family: var(--font-display);
-      font-size: 1.125rem;
+      font-size: 1.25rem;
       font-weight: 800;
       letter-spacing: -0.01em;
       color: var(--text-primary);
+    }
+    .proof__what { margin: 0; font-size: 0.9375rem; line-height: 1.55; color: var(--text-secondary); }
+    @media (hover: hover) and (pointer: fine) {
+      .proof li:hover .proof__shot img { transform: scale(1.04); transition-duration: 600ms; }
+    }
+
+    /* --- Tiers: a comparison, not a carousel ---------------------------------
+       One column per tier on wide screens, with every row aligned across them
+       (subgrid), so a firm can read what changes between tiers at a glance.
+       On phones each tier becomes its own card and drops the rows it lacks. */
+    .tiers {
+      display: grid;
+      grid-template-columns: minmax(9rem, 0.7fr) repeat(3, minmax(0, 1fr));
+      grid-template-rows: auto repeat(7, auto) auto;
+      column-gap: 0;
+    }
+    .tiers__labels,
+    .tier { grid-row: 1 / -1; display: grid; grid-template-rows: subgrid; }
+    .tiers__labels > span {
+      display: flex;
+      align-items: flex-start;
+      padding: var(--space-3) var(--space-3) var(--space-3) 0;
+      border-top: 1px solid var(--hairline);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+    .tiers__labels > span:first-child,
+    .tiers__labels > span:last-child { border-top: 0; }
+
+    .tier {
+      --tier: var(--text-secondary);
+      position: relative;
+      margin: 0;
+      padding: 0 var(--space-4);
+      border-left: 1px solid var(--hairline);
+    }
+    .tier--gold {
+      --tier: #d4b25c;
+      border: 1px solid rgba(212, 178, 92, 0.5);
+      border-radius: 20px;
+      background:
+        radial-gradient(ellipse 120% 40% at 50% 0%, rgba(212, 178, 92, 0.16) 0%, transparent 70%),
+        rgba(8, 19, 46, 0.72);
+      box-shadow: 0 30px 60px -36px rgba(0, 0, 0, 0.8);
+    }
+    .tier--gold + .tier { border-left: 0; }
+    .tier--silver { --tier: #c0c7d1; }
+    .tier--bronze { --tier: #cf9466; }
+
+    .tier__head { padding: var(--space-4) 0 var(--space-3); }
+    .tier__name {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 2.6vw, 2.1rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      color: var(--text-primary);
+    }
+    .tier__name::before {
+      content: '';
+      flex: none;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--tier);
+    }
+    .tier__pitch { margin: 10px 0 0; font-size: 0.875rem; line-height: 1.5; color: var(--text-secondary); }
+
+    .tier__rows { display: contents; }
+    .tier__row {
+      margin: 0;
+      padding: var(--space-3) 0;
+      border-top: 1px solid var(--hairline);
+    }
+    .tier__row dt {
+      position: absolute;
+      width: 1px; height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
       white-space: nowrap;
     }
-    .track dd { margin: 0; font-size: 0.9375rem; line-height: 1.55; color: var(--text-secondary); max-width: 60ch; }
-    @media (max-width: 640px) {
-      .track__row { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+    .tier__row dd { margin: 0; font-size: 0.9375rem; line-height: 1.5; color: var(--text-primary); }
+    .tier__row.is-none dd::before {
+      content: '';
+      display: block;
+      width: 16px;
+      height: 1px;
+      margin-top: 0.75em;
+      background: rgba(141, 162, 196, 0.45);
+    }
+    .tier__foot { padding: var(--space-3) 0 var(--space-4); border-top: 1px solid var(--hairline); }
+    .tier__cta {
+      display: inline-flex;
+      white-space: nowrap;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 22px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--tier);
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-decoration: none;
+      transition: transform var(--dur-fast) var(--ease-out),
+                  background var(--dur-fast) var(--ease-out);
+    }
+    .tier__cta span { transition: transform var(--dur-fast) var(--ease-out); }
+    .tier--gold .tier__cta { background: var(--tier); color: #0a1a3f; }
+    .tier__cta:active { transform: scale(0.97); }
+    @media (hover: hover) and (pointer: fine) {
+      .tier__cta:hover { background: rgba(255, 255, 255, 0.08); }
+      .tier--gold .tier__cta:hover { background: #e0c26f; }
+      .tier__cta:hover span { transform: translateX(3px); }
     }
 
-
-
-
-    @media (prefers-reduced-motion: reduce) {
-      .logos__item img { transition: none; }
+    /* Bespoke sits under the comparison: it has no fixed column of its own. */
+    .bespoke {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr) auto;
+      gap: var(--space-3) var(--space-5);
+      align-items: center;
+      margin-top: var(--space-4);
+      padding: var(--space-4);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 20px;
     }
-
-    /* --- Phones -------------------------------------------------------------
-       Desktop spacing and controls, compressed for a 360-430px screen. */
-    @media (max-width: 640px) {
-      /* Rhythm: 128px between sections and 64px under headings read as empty
-         screens on a phone. */
-      .spon__head { margin-bottom: var(--space-5); }
-      .spon__section { margin-top: var(--space-5); }
-      .spon__section-title { margin-bottom: var(--space-4); }
-      .spon__claim { margin-top: var(--space-5); margin-bottom: var(--space-4); font-size: 1.25rem; }
-
-      /* Tier switcher: tabs above the card so all three tiers are visible
-         before scrolling a long card, sized to a 44px tap target. The arrows
-         sat on top of the bullet text, so the tabs are the only control. */
-      .spon__section--tiers { display: flex; flex-direction: column; }
-      .spon__section--tiers > .spon__section-title { order: -2; }
-      .spon__section--tiers > .deck__dots { order: -1; margin: 0 0 var(--space-3); }
-      .deck__dot { min-height: 44px; padding: 10px 20px; }
-      .deck__arrow { display: none; }
-
-      /* Card: tighter padding and no dead band between pricing and the list. */
-      .plan { padding: 24px; }
-      .plan__top { padding-bottom: var(--space-3); margin-bottom: var(--space-3); }
-      .plan__list--flat { margin-top: 0; }
-      /* Pricing wraps under the name here, so it aligns left with it. */
-      .plan__cost { text-align: left; }
-      /* 44px tap height without moving the text. */
-      .plan__quote a { display: inline-block; padding: 12px 0; margin: -12px 0; }
-
-      /* Logos: two columns instead of nine full-width rows, with marks balanced
-         by shape rather than all capped to the same box. */
-      /* dense backfills the hole the full-width Commodities People tile leaves. */
-      .logos { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-flow: row dense; }
-      .logos__item { height: 88px; padding: 16px 18px; }
-      .logos__item img { max-height: 34px; }
-      .logos__item--square img { max-height: 52px; }
-      .logos__item--wide { grid-column: 1 / -1; }
-      .logos__item--wide img { max-height: 30px; }
-    }
-
-    /* --- Print: the page IS the brochure ----------------------------------
-       Recruiters ask for a PDF to circulate internally. Rather than maintain a
-       separate document that drifts out of date, this prints to one. */
-    @media print {
-      .aurora, .nav, .site-footer, .cookie-bar, .skip-link { display: none !important; }
-      .spon::before { display: none; }
-      .spon { padding: 0; min-height: 0; }
-      body { background: #fff; color: #111; }
-
-      /* A printed page cannot be clicked through, so the deck unrolls: both
-         plans stack and the controls are dropped. */
-      .deck__viewport { overflow: visible; }
-      .deck__track { display: block; transform: none !important; }
-      .deck__arrow, .deck__dots { display: none !important; }
-      .plan { margin-bottom: 20px; break-inside: avoid; }
-
-      .spon__title, .spon__section-title, .spon__claim,
-      .plan__name, .plan__price, .plan__group-title,
-      .plan__list strong, .track strong, .bespoke strong { color: #000 !important; }
-      .body, .spon__lead, .plan__pitch, .plan__term, .plan__list li,
-      .track dd, .logos__note { color: #333 !important; }
-      .track dt { color: #000 !important; }
-      .spon__eyebrow, .plan__badge { color: #555 !important; }
-
-      .plan, .spon__cta {
-        background: #fff !important;
-        border: 1px solid #bbb !important;
-        box-shadow: none !important;
-        break-inside: avoid;
-      }
-      .plan--gold { border-color: #444 !important; }
-      .plan__badge { background: none !important; border: 1px solid #999 !important; }
-      .plan__group-title { border-bottom-color: #999 !important; }
-      .plan__list li::before { background: #555 !important; }
-      .logos { background: none !important; border-color: #ddd !important; }
-      .logos__item { background: #fff !important; border: 1px solid #eee !important; }
-      .logos__item img { filter: none !important; opacity: 1 !important; }
-      /* CFA's white mark is invisible on a white print plate. */
-      .logos__item--asis { background: #0a1a3f !important; }
-      .spon__section { margin-top: 24px; break-inside: avoid; }
-      a { color: #000 !important; text-decoration: underline; }
-    }
-
-    /* --- Closing CTA --- */
-    .spon__cta {
-      margin-top: var(--space-7);
-      padding: clamp(var(--space-4), 4vw, var(--space-6));
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-card);
-      background: rgba(8, 19, 46, 0.8);
-      text-align: center;
-    }
-    .spon__cta h2 {
+    .bespoke h3 {
+      margin: 0 0 6px;
       font-family: var(--font-display);
-      font-size: clamp(1.4rem, 3vw, 2rem);
-      font-weight: 700;
+      font-size: 1.5rem;
+      font-weight: 800;
       letter-spacing: -0.02em;
-      margin-bottom: var(--space-3);
+      color: var(--text-primary);
+    }
+    .bespoke p { margin: 0; font-size: 0.9375rem; line-height: 1.55; color: var(--text-secondary); }
+    .bespoke .tier__cta { --tier: var(--accent-bright); }
+
+    /* --- Closing ---------------------------------------------------------------- */
+    .px-close {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-card);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      isolation: isolate;
+    }
+    .px-close__media {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 60% 50%;
+    }
+    .px-close::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: linear-gradient(90deg,
+                  rgba(6, 17, 43, 0.95) 0%,
+                  rgba(6, 17, 43, 0.86) 45%,
+                  rgba(6, 17, 43, 0.4) 100%);
+    }
+    .px-close__body { max-width: 34rem; padding: clamp(var(--space-4), 6vw, var(--space-6)); }
+    .px-close h2 {
+      margin: 0 0 var(--space-3);
+      font-family: var(--font-display);
+      font-size: clamp(1.9rem, 4vw, 3rem);
+      font-weight: 800;
+      line-height: 1.04;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
       text-wrap: balance;
     }
-    .spon__cta p {
-      color: var(--text-secondary);
-      max-width: 54ch;
-      margin: 0 auto var(--space-4);
+    .px-close p { margin: 0 0 var(--space-4); line-height: 1.6; color: rgba(244, 247, 251, 0.84); }
+    .px-close p a { color: var(--accent-bright); text-underline-offset: 3px; overflow-wrap: anywhere; }
+    .nowrap { white-space: nowrap; }
+    #tiers { scroll-margin-top: 110px; }
+    .tier__cta:focus-visible { border-radius: var(--radius-pill); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .funnel__bar, .proof__shot img, .px-more span, .tier__cta, .tier__cta span, .px-print { transition: none; }
+      .funnel.is-armed:not(.is-in) .funnel__bar { clip-path: none; }
     }
 
-    /* Alumni employer logos (.destinations) live in styles/main.css, shared with
-       the home page's closing section. */
-    .destinations__note {
-      margin: 0 0 var(--space-4); font-size: 0.875rem; color: var(--text-secondary);
+    /* --- Copied confirmation -------------------------------------------------
+       Every email link on the page also copies the address, because many work
+       machines have no mail app to open. This line confirms it. It rises in
+       and leaves faster than it came. */
+    .px-toast {
+      position: fixed;
+      left: 50%;
+      bottom: max(24px, env(safe-area-inset-bottom));
+      z-index: 60;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      max-width: calc(100vw - 32px);
+      padding: 12px 18px;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: var(--radius-pill);
+      background: rgba(6, 17, 43, 0.92);
+      box-shadow: 0 18px 40px -16px rgba(0, 0, 0, 0.7);
+      font-size: 0.875rem;
+      color: var(--text-primary);
+      pointer-events: none;
+      opacity: 0;
+      transform: translate(-50%, 12px);
+      transition: opacity 150ms var(--ease-out), transform 150ms var(--ease-out);
     }
-    .spon__more {
-      display: inline-flex; gap: 6px; margin-top: var(--space-4);
-      font-size: 0.9375rem; font-weight: 600; color: var(--accent-bright); text-decoration: none;
+    .px-toast.is-on {
+      opacity: 1;
+      transform: translate(-50%, 0);
+      transition-duration: 240ms;
     }
-    .spon__more span { transition: transform var(--dur-fast) var(--ease-out); }
-    @media (hover: hover) and (pointer: fine) {
-      .spon__more:hover { text-decoration: underline; text-underline-offset: 3px; }
-      .spon__more:hover span { transform: translateX(3px); }
+    .px-toast svg { width: 16px; height: 16px; flex: none; color: var(--accent-bright); }
+    .px-toast strong { font-weight: 600; overflow-wrap: anywhere; }
+    @media (prefers-reduced-motion: reduce) {
+      .px-toast, .px-toast.is-on { transform: translate(-50%, 0); transition: opacity 150ms linear; }
     }
-    @media (prefers-reduced-motion: reduce) { .spon__more span { transition: none; } }
+    @media print { .px-toast { display: none !important; } }
+
+    /* --- Tablets ------------------------------------------------------------ */
+    @media (max-width: 960px) {
+      .px-hero { grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
+      .px-hero__media img { aspect-ratio: 4 / 3; object-position: 55% 38%; }
+      .proof { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .px .destinations { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .bespoke { grid-template-columns: minmax(0, 1fr); }
+      .bespoke .tier__cta { justify-self: start; }
+    }
+
+    /* Laptop widths: narrower columns, so the quote buttons keep one line. */
+    @media (max-width: 1200px) and (min-width: 861px) {
+      .tier { padding: 0 var(--space-3); }
+      .tier__cta { padding: 12px 16px; font-size: 0.8125rem; }
+    }
+
+    /* The comparison needs about 860px to keep four columns readable. */
+    @media (max-width: 860px) {
+      .tiers { display: flex; flex-direction: column; gap: var(--space-3); }
+      .tiers__labels { display: none; }
+      .tier, .tier--gold + .tier {
+        display: block;
+        padding: 0 var(--space-4);
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        background: rgba(8, 19, 46, 0.6);
+      }
+      .tier--gold { border-color: rgba(212, 178, 92, 0.5); background:
+        radial-gradient(ellipse 120% 30% at 50% 0%, rgba(212, 178, 92, 0.16) 0%, transparent 70%),
+        rgba(8, 19, 46, 0.72); }
+      .tier__row { display: block; }
+      .tier__row.is-none { display: none; }
+      .tier__row dt {
+        position: static;
+        width: auto; height: auto;
+        overflow: visible;
+        clip: auto;
+        margin-bottom: 4px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+      }
+    }
+
+    /* --- Phones ------------------------------------------------------------- */
+    @media (max-width: 640px) {
+      .px { padding-top: 104px; padding-bottom: var(--space-5); }
+      .px section { margin-top: var(--space-6); }
+      .px-head { grid-template-columns: minmax(0, 1fr); margin-bottom: var(--space-4); }
+      .px-hero__lead { font-size: 1rem; }
+      .px-hero .btn { width: 100%; justify-content: center; }
+      .funnel__row { grid-template-columns: minmax(0, 1fr); gap: var(--space-2); padding: var(--space-3) 0; }
+      .proof { gap: var(--space-4) var(--space-3); }
+      .proof__firm { font-size: 1.0625rem; }
+      .proof__what { font-size: 0.875rem; }
+      .tier, .tier--gold + .tier { padding: 0 var(--space-3); }
+      .bespoke { padding: var(--space-3); }
+      .px .destinations li { min-height: 84px; padding: 12px; }
+      .px-close::after { background: linear-gradient(180deg, rgba(6, 17, 43, 0.55) 0%, rgba(6, 17, 43, 0.95) 55%); }
+      .px-close__media { object-position: 50% 80%; }
+      .px-close__body { padding: 180px var(--space-3) var(--space-4); }
+      .px-close .btn--primary { width: 100%; justify-content: center; }
+    }
+
+    /* --- Print: the page is the brochure --------------------------------------
+       Firms ask for a PDF to pass round internally. Rather than maintain a
+       separate document that drifts out of date, this prints to one. */
+    @media print {
+      .aurora, .nav, .ticker, .site-footer, .cookie-bar, .skip-link,
+      .px-actions, .px-print, .px-hero__media, .px-close__media, .px-close::after,
+      .partners__glow, .tier__cta, .bespoke .tier__cta, .px-close .btn { display: none !important; }
+      body { background: #fff !important; color: #111; }
+      .px { padding: 0; background: none; }
+      .px section { margin-top: 28px; }
+      .px-hero { display: block; }
+      .px-hero h1 { font-size: 40pt; margin-bottom: 12px; }
+      .px :is(h1, h2, h3, .funnel__n, .proof__firm, .tier__name, dd) { color: #000 !important; }
+      .px :is(p, .funnel__label, .tiers__labels span, .proof__what, .tier__row dt) { color: #333 !important; }
+      .partners__lead li, .partners__grid, .partners__grid li, .px .destinations, .px .destinations li,
+      .tier, .tier--gold, .bespoke, .px-close, .funnel, .funnel__row,
+      .tier__row, .tier__foot, .tiers__labels span {
+        background: #fff !important; box-shadow: none !important; border-color: #ccc !important;
+        backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+      }
+      .partners__lead img, .partners__grid img, .px .destinations img { filter: brightness(0) !important; opacity: 0.85 !important; }
+      .funnel__track { background: #eee !important; }
+      .funnel__bar { background: #333 !important; clip-path: none !important; }
+      .funnel__row--key .funnel__bar { background: #0a1a3f !important; }
+      .proof__shot img { aspect-ratio: 4 / 3; }
+      .proof li, .funnel, .tier, .bespoke { break-inside: avoid; }
+      .px-close__body { padding: 20px; max-width: none; }
+      a { color: #000 !important; }
+    }
   </style>
 </head>
 <body>
@@ -578,165 +646,113 @@
     </ul>
   </nav>
 
-  <main id="sponsors" class="spon page-dark" tabindex="-1">
-    <div class="spon__inner">
+  <main id="sponsors" class="px page-dark" tabindex="-1">
+    <div class="px__inner">
 
-      <header class="spon__head">
-        <span class="spon__eyebrow">Sponsorship &middot; 2026/27</span>
-        <h1 class="spon__title">Partner with us</h1>
-        <p class="body spon__lead">
-          Our analyst cohort is selected by competitive application, then spends the year producing
-          and defending research. By the time your firm meets them, the filtering is done.
-        </p>
+      <!-- ===== Hero ===== -->
+      <header class="px-hero">
+        <div>
+          <h1>Partner with us</h1>
+          <p class="px-hero__lead">
+            Our analyst cohort is selected by competitive application, then spends the year producing
+            and defending research. By the time your firm meets them, the filtering is done.
+          </p>
+          <div class="px-actions">
+            <a class="btn btn--primary" href="mailto:bristol-trading-society@bristol.ac.uk?subject=Partnering%20with%20BTS">
+              Email us about sponsorship
+              <span class="btn__arrow" aria-hidden="true">&rarr;</span>
+            </a>
+            <a class="btn btn--secondary" href="/prospectus/#tiers">See the tiers</a>
+          </div>
+          <p class="px-hero__meta">
+            Partnerships for 2026/27 run September to June. We reply within two working days.
+            <br />
+            <button class="px-print" type="button" data-print>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="M7 10l5 5 5-5"/><path d="M5 20h14"/></svg>
+              Save this page as a PDF
+            </button>
+          </p>
+        </div>
+        <figure class="px-hero__media">
+          <img src="assets/img/events/welcome-event-2026-sponsors-800.jpg"
+               srcset="assets/img/events/welcome-event-2026-sponsors-800.jpg 800w,
+                       assets/img/events/welcome-event-2026-sponsors-1600.jpg 1600w"
+               sizes="(min-width: 961px) 36vw, 100vw" width="800" height="1067" fetchpriority="high"
+               alt="Our sponsors and partners on the big screen as the committee opens the 2026 Welcome Event" />
+          <figcaption>Our partners on screen at the 2026 Welcome Event.</figcaption>
+        </figure>
       </header>
 
-      <!-- Given its own air rather than stacked under the title, where it was
-           competing with the lead for the same glance. -->
-      <p class="spon__claim">
-        We send more members into industry than any other finance society at Bristol.
-      </p>
-
-      <!-- ===== Tiers ===== -->
-      <section class="spon__section" aria-labelledby="roster-title">
-        <h2 class="spon__section-title" id="roster-title">Firms we work with</h2>
-        <ul class="logos" aria-label="Partner organisations">
-          <li class="logos__item"><img src="assets/img/sponsors/jane-street.png" alt="Jane Street" /></li>
-          <li class="logos__item"><img src="assets/img/sponsors/drw.png" alt="DRW" /></li>
-          <li class="logos__item logos__item--square"><img src="assets/img/sponsors/ice.png" alt="ICE" /></li>
-          <li class="logos__item logos__item--square"><img src="assets/img/sponsors/worldquant.png" alt="WorldQuant" /></li>
-          <li class="logos__item"><img src="assets/img/sponsors/etoro.png" alt="eToro" /></li>
-          <li class="logos__item"><img src="assets/img/sponsors/outlook-energy.svg" alt="Outlook Energy" /></li>
-          <li class="logos__item logos__item--square"><img src="assets/img/sponsors/berenberg.png" alt="Berenberg" /></li>
-          <li class="logos__item"><img src="assets/img/sponsors/hirehuub.png" alt="HireHuub" /></li>
-          <li class="logos__item logos__item--square"><img src="assets/img/sponsors/headstart.png" alt="Headstart" /></li>
-          <li class="logos__item logos__item--wide"><img src="assets/img/sponsors/commodities-people.png" alt="Commodities People" /></li>
-          <li class="logos__item logos__item--asis"><img src="assets/img/sponsors/cfa.png" alt="CFA Institute" /></li>
+      <!-- ===== Current partners ===== -->
+      <section class="px-wall" aria-labelledby="roster-title">
+        <div class="px-head">
+          <h2 id="roster-title">Firms we work with</h2>
+        </div>
+        <h3 class="partners__tier">Sponsors</h3>
+        <ul class="partners__lead">
+          <li><img src="assets/img/sponsors/wall/drw.png" alt="DRW" width="607" height="200" loading="lazy" /></li>
+          <li><img src="assets/img/sponsors/wall/jane-street.png" alt="Jane Street" width="761" height="200" loading="lazy" /></li>
+          <li><img src="assets/img/sponsors/wall/outlook-energy.svg" alt="Outlook Energy" width="148" height="56" loading="lazy" /></li>
         </ul>
-        <p class="logos__note">
+        <h3 class="partners__tier">Partners</h3>
+        <ul class="partners__grid">
+          <li><img src="assets/img/sponsors/wall/ice.png" alt="ICE" width="200" height="200" loading="lazy" /></li>
+          <li><img src="assets/img/sponsors/wall/worldquant.png" alt="WorldQuant" width="200" height="200" loading="lazy" /></li>
+          <li><img src="assets/img/sponsors/wall/berenberg.png" alt="Berenberg" width="245" height="200" loading="lazy" /></li>
+          <li><img src="assets/img/sponsors/wall/etoro.png" alt="eToro" width="647" height="200" loading="lazy" /></li>
+          <li><img src="assets/img/sponsors/wall/cfa.png" alt="CFA Institute" width="501" height="109" loading="lazy" /></li>
+          <li><img src="assets/img/sponsors/wall/commodities-people.png" alt="commoditiespeople" width="2030" height="200" loading="lazy" /></li>
+          <li><img src="assets/img/sponsors/wall/hirehuub.png" alt="HireHuub" width="745" height="198" loading="lazy" /></li>
+          <li><img src="assets/img/sponsors/wall/headstart.png" alt="Headstart" width="205" height="200" loading="lazy" /></li>
+        </ul>
+        <p class="px-wall__note">
           Bristol Trading Society also provides content and learning opportunities for students
           offered by CFA Institute, the global leading association of investment professionals
           &mdash; setting the standard for professional excellence.
         </p>
       </section>
 
-      <section class="spon__section spon__section--tiers" aria-labelledby="tiers-title">
-        <h2 class="spon__section-title" id="tiers-title">Partnership tiers</h2>
-
-        <div class="deck" data-deck>
-          <button class="deck__arrow deck__arrow--prev" type="button" data-prev aria-label="Previous tier">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
-          </button>
-
-          <div class="deck__viewport">
-            <div class="deck__track" data-track>
-
-              <article class="plan plan--gold" id="plan-gold" role="tabpanel" aria-labelledby="dot-gold">
-                <div class="plan__top">
-                  <div>
-                    <span class="plan__badge">Gold</span>
-                    <h3 class="plan__name">Gold Partner</h3>
-                  </div>
-                  <div class="plan__cost">
-                    <span class="plan__from">Pricing</span>
-                    <p class="plan__quote"><a href="mailto:bristol-trading-society@bristol.ac.uk?subject=Gold%20Partner%20quote">Email us</a> for a quote</p>
-                  </div>
-                </div>
-
-                <ul class="plan__list plan__list--flat">
-                  <li>Named sponsor of every flagship event</li>
-                  <li>An exclusive dinner with the analyst cohort, for your firm alone</li>
-                  <li>An insight day at your offices for a group of members we select</li>
-                  <li>Panel talks in Bristol with speakers from your firm</li>
-                  <li>Full CV book access, filtered by division, year or degree</li>
-                  <li>First pick of the calendar</li>
-                  <li>Year-round features in our newsletter and on our socials</li>
-                  <li>Work directly with our divisions on case studies, briefs or research questions set by your team</li>
-                  <li>Roles posted directly to members</li>
-                  <li>Primary logo placement</li>
-                </ul>
-              </article>
-
-              <article class="plan plan--silver" id="plan-silver" role="tabpanel" aria-labelledby="dot-silver">
-                <div class="plan__top">
-                  <div>
-                    <span class="plan__badge">Silver</span>
-                    <h3 class="plan__name">Silver Partner</h3>
-                  </div>
-                  <div class="plan__cost">
-                    <span class="plan__from">Pricing</span>
-                    <p class="plan__quote"><a href="mailto:bristol-trading-society@bristol.ac.uk?subject=Silver%20Partner%20quote">Email us</a> for a quote</p>
-                  </div>
-                </div>
-
-                <ul class="plan__list plan__list--flat">
-                  <li>Logo on event and marketing materials</li>
-                  <li>A speaker event or panel talk in Bristol with people from your firm</li>
-                  <li>A partnership announcement across our socials</li>
-                  <li>A mid-year CV drop</li>
-                  <li>A session run with one division of your choice</li>
-                  <li>Roles posted directly to members</li>
-                </ul>
-              </article>
-
-              <article class="plan plan--bronze" id="plan-bronze" role="tabpanel" aria-labelledby="dot-bronze">
-                <div class="plan__top">
-                  <div>
-                    <span class="plan__badge">Bronze</span>
-                    <h3 class="plan__name">Bronze Partner</h3>
-                  </div>
-                  <div class="plan__cost">
-                    <span class="plan__from">Pricing</span>
-                    <p class="plan__quote"><a href="mailto:bristol-trading-society@bristol.ac.uk?subject=Bronze%20Partner%20quote">Email us</a> for a quote</p>
-                  </div>
-                </div>
-
-                <ul class="plan__list plan__list--flat">
-                  <li>Logo on our website and socials</li>
-                  <li>Promotion of your internships, graduate roles and deadlines to members</li>
-                </ul>
-              </article>
-
-              <article class="plan plan--bespoke" id="plan-bespoke" role="tabpanel" aria-labelledby="dot-bespoke">
-                <div class="plan__top">
-                  <div>
-                    <span class="plan__badge">Bespoke</span>
-                    <h3 class="plan__name">Bespoke Partner</h3>
-                  </div>
-                  <div class="plan__cost">
-                    <span class="plan__from">Pricing</span>
-                    <p class="plan__quote"><a href="mailto:bristol-trading-society@bristol.ac.uk?subject=Bespoke%20partnership">Email us</a> to discuss</p>
-                  </div>
-                </div>
-
-                <ul class="plan__list plan__list--flat">
-                  <li>Built around what your firm needs</li>
-                  <li>Anything from a single event to a multi-year partnership</li>
-                  <li>Shaped around a specific hiring need or division</li>
-                </ul>
-              </article>
-
+      <!-- ===== Reach ===== -->
+      <section aria-labelledby="reach-title">
+        <div class="px-head">
+          <h2 id="reach-title">Who your firm meets</h2>
+          <p>The whole society hears from you. The analysts are the ones who have already been through the filter.</p>
+        </div>
+        <ol class="funnel" data-funnel>
+          <li class="funnel__row" style="--w: 1; --i: 0">
+            <span class="funnel__n">800</span>
+            <div>
+              <span class="funnel__label">members across the University of Bristol</span>
+              <span class="funnel__track" aria-hidden="true"><span class="funnel__bar"></span></span>
             </div>
-          </div>
-
-          <button class="deck__arrow deck__arrow--next" type="button" data-next aria-label="Next tier">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
-          </button>
-        </div>
-
-        <div class="deck__dots" role="tablist" aria-label="Partnership tiers">
-          <button class="deck__dot" type="button" role="tab" id="dot-gold" aria-controls="plan-gold" aria-selected="true">Gold</button>
-          <button class="deck__dot" type="button" role="tab" id="dot-silver" aria-controls="plan-silver" aria-selected="false">Silver</button>
-          <button class="deck__dot" type="button" role="tab" id="dot-bronze" aria-controls="plan-bronze" aria-selected="false">Bronze</button>
-          <button class="deck__dot" type="button" role="tab" id="dot-bespoke" aria-controls="plan-bespoke" aria-selected="false">Bespoke</button>
-        </div>
-
+          </li>
+          <li class="funnel__row" style="--w: 0.5; --i: 1">
+            <span class="funnel__n">400+</span>
+            <div>
+              <span class="funnel__label">applications a year to the analyst programme</span>
+              <span class="funnel__track" aria-hidden="true"><span class="funnel__bar"></span></span>
+            </div>
+          </li>
+          <li class="funnel__row funnel__row--key" style="--w: 0.075; --i: 2">
+            <span class="funnel__n">60</span>
+            <div>
+              <span class="funnel__label">analyst places, across 13 teams in four divisions</span>
+              <span class="funnel__track" aria-hidden="true"><span class="funnel__bar"></span></span>
+            </div>
+          </li>
+        </ol>
+        <p class="funnel__foot">
+          <strong>Fewer than one in six applicants gets a place.</strong>
+          Those who do spend the year researching, pitching and defending their work in front of the room.
+        </p>
       </section>
 
-      <!-- ===== Track record ===== -->
       <!-- ===== Where members go ===== -->
-      <section class="spon__section" aria-labelledby="alumni-title">
-        <h2 class="spon__section-title" id="alumni-title">Where our members end up</h2>
-        <p class="destinations__note">Firms our alumni have joined</p>
+      <section aria-labelledby="alumni-title">
+        <div class="px-head">
+          <h2 id="alumni-title">Where our members end up</h2>
+        </div>
+        <p class="partners__tier">Firms our alumni have joined</p>
         <ul class="destinations">
           <li><img src="assets/img/alumni-firms/goldman-sachs.webp" alt="Goldman Sachs" loading="lazy" /></li>
           <li><img src="assets/img/alumni-firms/jp-morgan.png" alt="J.P. Morgan" loading="lazy" /></li>
@@ -754,55 +770,152 @@
           <li><img src="assets/img/alumni-firms/investec.png" alt="Investec" loading="lazy" /></li>
           <li><img src="assets/img/alumni-firms/dare.png" alt="Dare Trading" loading="lazy" /></li>
         </ul>
-        <a class="spon__more" href="/alumni/">See the alumni directory <span aria-hidden="true">&rarr;</span></a>
+        <a class="px-more" href="/alumni/">See the alumni directory <span aria-hidden="true">&rarr;</span></a>
       </section>
 
-      <section class="spon__section" aria-labelledby="track-title">
-        <h2 class="spon__section-title" id="track-title">What partners have run with us</h2>
-        <dl class="track">
-          <div class="track__row">
-            <dt>DRW</dt>
-            <dd>A closed evening for our analysts and division heads.</dd>
-          </div>
-          <div class="track__row">
-            <dt>SIGMA Financial</dt>
-            <dd>Their CEO spoke to a full lecture theatre on trading and AI tooling.</dd>
-          </div>
-          <div class="track__row">
-            <dt>Standard Chartered</dt>
-            <dd>An evening with their Head of Macro Trading, AME.</dd>
-          </div>
-          <div class="track__row">
-            <dt>AmplifyME</dt>
-            <dd>A live $20m portfolio simulation. Sold out, then ran again by demand.</dd>
-          </div>
-          <div class="track__row">
-            <dt>TP ICAP</dt>
-            <dd>Their Global Head of Compliance Technology on data and liquidity.</dd>
-          </div>
-          <div class="track__row">
-            <dt>WorldQuant</dt>
-            <dd>Competition routes and resources for our Quant division.</dd>
-          </div>
-        </dl>
+      <!-- ===== Track record ===== -->
+      <section aria-labelledby="track-title">
+        <div class="px-head">
+          <h2 id="track-title">What partners have run with us</h2>
+          <p>Closed evenings, speaker nights, simulations and competitions, planned with each firm.</p>
+        </div>
+        <ul class="proof">
+          <li>
+            <div class="proof__shot"><img src="assets/img/events/drw-social.jpg" width="525" height="671" loading="lazy" alt="DRW-branded socks, cards and stickers laid out for members at the DRW evening" /></div>
+            <h3 class="proof__firm">DRW</h3>
+            <p class="proof__what">A closed evening for our analysts and division heads.</p>
+          </li>
+          <li>
+            <div class="proof__shot"><img src="assets/img/events/speaker-sigma.jpg" width="688" height="862" loading="lazy" alt="Andrew Simpson, CEO of SIGMA Financial, speaking to BTS members in a lecture theatre" /></div>
+            <h3 class="proof__firm">SIGMA Financial</h3>
+            <p class="proof__what">Their CEO spoke to a full lecture theatre on trading and AI tooling.</p>
+          </li>
+          <li>
+            <div class="proof__shot"><img src="assets/img/events/speaker-standard-chartered.jpg" width="750" height="696" loading="lazy" style="object-position: 50% 60%" alt="BTS members with Standard Chartered's Head of Macro Trading, AME, on screen" /></div>
+            <h3 class="proof__firm">Standard Chartered</h3>
+            <p class="proof__what">An evening with their Head of Macro Trading, AME.</p>
+          </li>
+          <li>
+            <div class="proof__shot"><img src="assets/img/events/amplifyme-simulator.jpg" width="620" height="828" loading="lazy" alt="A packed lecture theatre during the AmplifyME trading simulation" /></div>
+            <h3 class="proof__firm">AmplifyME</h3>
+            <p class="proof__what">A live $20m portfolio simulation. Sold out, then ran again by demand.</p>
+          </li>
+        </ul>
       </section>
 
+      <!-- ===== Tiers ===== -->
+      <section id="tiers" aria-labelledby="tiers-title">
+        <div class="px-head">
+          <h2 id="tiers-title">Partnership tiers</h2>
+          <p>Every tier is priced per firm. Email us for a quote.</p>
+        </div>
 
+        <div class="tiers">
+          <div class="tiers__labels" aria-hidden="true">
+            <span></span>
+            <span>Brand</span>
+            <span>Events in Bristol</span>
+            <span>The analyst cohort</span>
+            <span>Research</span>
+            <span>CVs</span>
+            <span>Hiring</span>
+            <span>Media</span>
+            <span></span>
+          </div>
 
-      <!-- ===== Partner logos ===== -->
+          <article class="tier tier--gold" aria-labelledby="tier-gold">
+            <div class="tier__head">
+              <h3 class="tier__name" id="tier-gold">Gold</h3>
+              <p class="tier__pitch">The full year, and first call on it.</p>
+            </div>
+            <dl class="tier__rows">
+              <div class="tier__row"><dt>Brand</dt><dd>Named sponsor of every flagship event, with primary logo placement</dd></div>
+              <div class="tier__row"><dt>Events in Bristol</dt><dd>Panel talks with speakers from your firm, and first pick of the calendar</dd></div>
+              <div class="tier__row"><dt>The analyst cohort</dt><dd>An exclusive dinner with the cohort for your firm alone, and an insight day at your offices for members we select</dd></div>
+              <div class="tier__row"><dt>Research</dt><dd>Our divisions work on case studies, briefs or research questions set by your team</dd></div>
+              <div class="tier__row"><dt>CVs</dt><dd>Full CV book access, filtered by division, year or degree</dd></div>
+              <div class="tier__row"><dt>Hiring</dt><dd>Roles posted directly to members</dd></div>
+              <div class="tier__row"><dt>Media</dt><dd>Year-round features in our newsletter and on our socials</dd></div>
+            </dl>
+            <div class="tier__foot">
+              <a class="tier__cta" href="mailto:bristol-trading-society@bristol.ac.uk?subject=Gold%20Partner%20quote">Ask for a Gold quote <span aria-hidden="true">&rarr;</span></a>
+            </div>
+          </article>
 
-      <section class="spon__cta" aria-labelledby="spon-cta-title">
-        <h2 id="spon-cta-title">Starting a partnership</h2>
-        <p>
-          Email us at
-          <a href="mailto:bristol-trading-society@bristol.ac.uk" style="color: var(--accent-bright);">bristol-trading-society@bristol.ac.uk</a>
-          and we will come back to you within two working days. Partnerships run September to June;
-          the earlier a firm commits, the more of the calendar is still open.
-        </p>
-        <a class="btn btn--primary" href="mailto:bristol-trading-society@bristol.ac.uk">
-          Email us about sponsorship
-          <span class="btn__arrow" aria-hidden="true">&rarr;</span>
-        </a>
+          <article class="tier tier--silver" aria-labelledby="tier-silver">
+            <div class="tier__head">
+              <h3 class="tier__name" id="tier-silver">Silver</h3>
+              <p class="tier__pitch">A presence on campus and a line to one division.</p>
+            </div>
+            <dl class="tier__rows">
+              <div class="tier__row"><dt>Brand</dt><dd>Logo on event and marketing materials</dd></div>
+              <div class="tier__row"><dt>Events in Bristol</dt><dd>A speaker event or panel talk with people from your firm</dd></div>
+              <div class="tier__row"><dt>The analyst cohort</dt><dd>A session run with one division of your choice</dd></div>
+              <div class="tier__row is-none"><dt>Research</dt><dd><span class="visually-hidden">Not included</span></dd></div>
+              <div class="tier__row"><dt>CVs</dt><dd>A mid-year CV drop</dd></div>
+              <div class="tier__row"><dt>Hiring</dt><dd>Roles posted directly to members</dd></div>
+              <div class="tier__row"><dt>Media</dt><dd>A partnership announcement across our socials</dd></div>
+            </dl>
+            <div class="tier__foot">
+              <a class="tier__cta" href="mailto:bristol-trading-society@bristol.ac.uk?subject=Silver%20Partner%20quote">Ask for a Silver quote <span aria-hidden="true">&rarr;</span></a>
+            </div>
+          </article>
+
+          <article class="tier tier--bronze" aria-labelledby="tier-bronze">
+            <div class="tier__head">
+              <h3 class="tier__name" id="tier-bronze">Bronze</h3>
+              <p class="tier__pitch">Your name and your roles in front of members.</p>
+            </div>
+            <dl class="tier__rows">
+              <div class="tier__row"><dt>Brand</dt><dd>Logo on our website and socials</dd></div>
+              <div class="tier__row is-none"><dt>Events in Bristol</dt><dd><span class="visually-hidden">Not included</span></dd></div>
+              <div class="tier__row is-none"><dt>The analyst cohort</dt><dd><span class="visually-hidden">Not included</span></dd></div>
+              <div class="tier__row is-none"><dt>Research</dt><dd><span class="visually-hidden">Not included</span></dd></div>
+              <div class="tier__row is-none"><dt>CVs</dt><dd><span class="visually-hidden">Not included</span></dd></div>
+              <div class="tier__row"><dt>Hiring</dt><dd>Promotion of your internships, graduate roles and deadlines to members</dd></div>
+              <div class="tier__row is-none"><dt>Media</dt><dd><span class="visually-hidden">Not included</span></dd></div>
+            </dl>
+            <div class="tier__foot">
+              <a class="tier__cta" href="mailto:bristol-trading-society@bristol.ac.uk?subject=Bronze%20Partner%20quote">Ask for a Bronze quote <span aria-hidden="true">&rarr;</span></a>
+            </div>
+          </article>
+        </div>
+
+        <div class="bespoke">
+          <div>
+            <h3>Bespoke</h3>
+            <p>Built around what your firm needs.</p>
+          </div>
+          <p>Anything from a single event to a multi-year partnership, shaped around a specific hiring need or division.</p>
+          <a class="tier__cta" href="mailto:bristol-trading-society@bristol.ac.uk?subject=Bespoke%20partnership">Email us to discuss <span aria-hidden="true">&rarr;</span></a>
+        </div>
+      </section>
+
+      <!-- ===== Close ===== -->
+      <section class="px-close" aria-labelledby="close-title">
+        <img class="px-close__media" src="assets/img/events/welcome-event-2026-audience-800.jpg"
+             srcset="assets/img/events/welcome-event-2026-audience-800.jpg 800w,
+                     assets/img/events/welcome-event-2026-audience-1600.jpg 1600w"
+             sizes="(min-width: 1240px) 1200px, 100vw" width="800" height="600" loading="lazy" alt="" />
+        <div class="px-close__body">
+          <h2 id="close-title">Starting a partnership</h2>
+          <p>
+            Email us at
+            <a href="mailto:bristol-trading-society@bristol.ac.uk"><span class="nowrap">bristol-trading-society</span>@bristol.ac.uk</a>
+            and we will come back to you within two working days. Partnerships run September to June;
+            the earlier a firm commits, the more of the calendar is still open.
+          </p>
+          <div class="px-actions">
+            <a class="btn btn--primary" href="mailto:bristol-trading-society@bristol.ac.uk?subject=Partnering%20with%20BTS">
+              Email us about sponsorship
+              <span class="btn__arrow" aria-hidden="true">&rarr;</span>
+            </a>
+            <button class="px-print" type="button" data-print>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="M7 10l5 5 5-5"/><path d="M5 20h14"/></svg>
+              Save as PDF
+            </button>
+          </div>
+        </div>
       </section>
 
     </div>
@@ -810,45 +923,58 @@
 
 
   <script>
-    /* Tier deck. Progressive enhancement: without JS the plans stay in the DOM
-       and remain readable, so nothing is trapped behind a control. */
     (function () {
-      var deck = document.querySelector('[data-deck]');
-      if (!deck) return;
-      var track = deck.querySelector('[data-track]');
-      var plans = Array.prototype.slice.call(track.children);
-      var dots  = Array.prototype.slice.call(document.querySelectorAll('.deck__dot'));
-      if (plans.length < 2) return;
-
-      var i = 0;
-      function show(n) {
-        i = (n + plans.length) % plans.length;
-        track.style.transform = 'translateX(' + (-100 * i) + '%)';
-        dots.forEach(function (d, k) { d.setAttribute('aria-selected', String(k === i)); });
-        // Keep off-screen panels out of the tab order, so keyboard users are
-        // not sent into a card they cannot see.
-        plans.forEach(function (pl, k) { pl.inert = (k !== i); });
+      /* Save as PDF: the print stylesheet turns the page into the brochure. */
+      Array.prototype.forEach.call(document.querySelectorAll('[data-print]'), function (b) {
+        b.addEventListener('click', function () { window.print(); });
+      });
+      /* Email links: let the mail app open as normal, and also copy the
+         address, so a visitor with no mail app set up still has it. */
+      if (navigator.clipboard && window.isSecureContext) {
+        var toast = null, hideTimer = 0;
+        var showCopied = function (address) {
+          if (!toast) {
+            toast = document.createElement('p');
+            toast.className = 'px-toast';
+            toast.setAttribute('role', 'status');
+            document.body.appendChild(toast);
+          }
+          toast.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>' +
+            '<span>Copied <strong></strong></span>';
+          toast.querySelector('strong').textContent = address;
+          clearTimeout(hideTimer);
+          // Next frame, so a toast created just now still transitions in.
+          requestAnimationFrame(function () { toast.classList.add('is-on'); });
+          hideTimer = setTimeout(function () { toast.classList.remove('is-on'); }, 3200);
+        };
+        Array.prototype.forEach.call(document.querySelectorAll('.px a[href^="mailto:"]'), function (a) {
+          a.addEventListener('click', function () {
+            var address = decodeURIComponent(a.getAttribute('href').slice(7).split('?')[0]);
+            navigator.clipboard.writeText(address).then(function () { showCopied(address); }, function () {});
+          });
+        });
       }
 
-      deck.querySelector('[data-prev]').addEventListener('click', function () { show(i - 1); });
-      deck.querySelector('[data-next]').addEventListener('click', function () { show(i + 1); });
-      dots.forEach(function (d, k) { d.addEventListener('click', function () { show(k); }); });
 
-      deck.addEventListener('keydown', function (e) {
-        if (e.key === 'ArrowLeft')  { show(i - 1); }
-        if (e.key === 'ArrowRight') { show(i + 1); }
-      });
-
-      // Printing must include every plan, so undo the transform and the inert
-      // flags first, then restore. Otherwise only the visible tier reaches the
-      // PDF, which is the one thing this page exists to produce.
-      window.addEventListener('beforeprint', function () {
-        track.style.transform = 'none';
-        plans.forEach(function (pl) { pl.inert = false; });
-      });
-      window.addEventListener('afterprint', function () { show(i); });
-
-      show(0);
+      /* Selection funnel: the bars draw to scale once the list is on screen.
+         They start full, so without the script (or with reduced motion) the
+         chart is simply there; the script only collapses them while the list
+         is still below the fold, then lets them run out. */
+      var funnel = document.querySelector('[data-funnel]');
+      if (!funnel || !('IntersectionObserver' in window)) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      if (funnel.getBoundingClientRect().top < window.innerHeight) return;
+      funnel.classList.add('is-armed');
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          // One frame after arming, so the collapsed state is painted first.
+          requestAnimationFrame(function () { funnel.classList.add('is-in'); });
+          io.disconnect();
+        });
+      }, { rootMargin: '0px 0px -20% 0px' });
+      io.observe(funnel);
+      window.addEventListener('beforeprint', function () { funnel.classList.add('is-in'); });
     })();
   </script>
 
@@ -856,6 +982,7 @@
   <script src="js/transitions.js?v=3" defer></script>
   <script src="js/nav.js?v=1" defer></script>
   <script src="js/promo.js?v=1" defer></script>
+  <script src="js/spotlight.js?v=2" defer></script>
   <!-- ===== Site footer ===== -->
   <footer class="site-footer">
     <div class="site-footer__inner">

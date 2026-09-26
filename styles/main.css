@@ -35,6 +35,9 @@ a { color: inherit; text-decoration: none; }
 
 img, svg { display: block; max-width: 100%; }
 
+/* Text selection in the palette rather than the browser's default blue. */
+::selection { background: rgba(56, 189, 248, 0.32); color: #fff; }
+
 /* Keyboard focus: a single, high-contrast sky-blue ring on every interactive
    element. :focus-visible keeps it keyboard-only (no ring on mouse click).
    The offset lifts it clear of glass/coloured backgrounds so it never gets
