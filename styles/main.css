@@ -2873,11 +2873,13 @@ body:has(> .ticker) { padding-top: var(--ticker-h); }
   color: #06112b;
   font-family: var(--font-mono);
   font-weight: 700;
+  /* One size across the whole chip: day, time and zone read as a single
+     stamp rather than three ranked fragments. */
+  font-size: 1.125rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   box-shadow: 0 10px 28px -8px rgba(56, 189, 248, 0.65);
 }
-.promo__when-day { font-size: 0.8125rem; letter-spacing: 0.14em; text-transform: uppercase; }
-.promo__when-time { font-size: 1.5rem; letter-spacing: -0.01em; }
-.promo__when-tz { font-size: 0.75rem; letter-spacing: 0.14em; }
 .promo__cta { margin-top: var(--space-4); }
 .promo__title {
   font-family: var(--font-display);
