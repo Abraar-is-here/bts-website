@@ -224,11 +224,10 @@
     .speaker { margin-bottom: var(--space-4); }
     .speaker__photo {
       display: block;
-      /* A circle, like the team page. Square box plus object-fit, with the
-         focal point pulled up the frame so her face sits centred in it rather
-         than her shoulders. */
+      /* A circle, like the team page. The source is a square crop aligned on
+         the face itself -- eyes levelled, head width 44% of the frame, hair top
+         at 13% -- so the box only has to be square. No object-position guess. */
       width: 200px; height: 200px;
-      object-fit: cover; object-position: 50% 14%;
       border-radius: 50%;
       margin-bottom: var(--space-3);
     }
@@ -529,7 +528,7 @@
           <div class="rail">            <div class="speaker">
               <img class="speaker__photo" src="assets/img/events/umushroom/luba-400.jpg"
                    srcset="assets/img/events/umushroom/luba-400.jpg 400w, assets/img/events/umushroom/luba-800.jpg 800w"
-                   sizes="(min-width: 900px) 320px, 100vw" width="400" height="500"
+                   sizes="(min-width: 900px) 200px, 128px" width="400" height="400"
                    alt="Dr. Luba Schoenig" />
               <p class="speaker__name">Dr. Luba Schoenig</p>
               <p class="speaker__role">Founder and CEO, UMushroom</p>
