@@ -163,7 +163,7 @@
          would dwarf everything under it. Sit Luba beside her own name instead. */
       .speaker {
         display: grid;
-        grid-template-columns: 132px minmax(0, 1fr);
+        grid-template-columns: 128px minmax(0, 1fr);
         column-gap: var(--space-3);
         row-gap: 0;
         align-content: start;
@@ -223,12 +223,19 @@
        heights would leave Lehman Brothers three times the width of the rest. */
     .speaker { margin-bottom: var(--space-4); }
     .speaker__photo {
-      display: block; width: 100%;
-      /* Capped: at its natural 4:5 this stood 400px tall and set the rail's
-         height on its own, well past the end of the text beside it. Cropped
-         from the top so her face stays where it was. */
-      height: 240px; object-fit: cover; object-position: 50% 10%;
-      border-radius: var(--radius-sm); margin-bottom: var(--space-3);
+      display: block;
+      /* A circle, like the team page. Square box plus object-fit, with the
+         focal point pulled up the frame so her face sits centred in it rather
+         than her shoulders. */
+      width: 200px; height: 200px;
+      object-fit: cover; object-position: 50% 14%;
+      border-radius: 50%;
+      margin-bottom: var(--space-3);
+    }
+    /* Sized here, after the base rule: the stacked-layout block above is
+       earlier in the file, and a media query carries no extra specificity. */
+    @media (max-width: 900px) {
+      .speaker__photo { width: 128px; height: 128px; }
     }
     .speaker__name {
       font-family: var(--font-display); font-size: 1.25rem; font-weight: 800;
