@@ -285,17 +285,7 @@
       background: var(--glass-fill);
       box-shadow: none;
     }
-    .join-band__go {
-      flex: 0 0 auto;
-      display: flex; flex-direction: column; align-items: center; gap: 10px;
-    }
-    /* The reassurance belongs under the button, not 1,500px away in the rail:
-       this is the moment someone hesitates over an unfamiliar Teams link. */
-    .join-band__note {
-      margin: 0; max-width: 22rem; text-align: center;
-      font-size: 0.8125rem; line-height: 1.4; color: #dbeafe;
-    }
-    .join-band--past .join-band__note { color: var(--text-secondary); }
+    .join-band__go { flex: 0 0 auto; display: flex; }
     .join-band__btn {
       flex: 0 0 auto;
       background: #fff; color: #0a1a3f;
@@ -482,7 +472,6 @@
             Join the call<span class="visually-hidden"> on Microsoft Teams (opens in a new tab)</span>
             <span class="btn__arrow" aria-hidden="true">&rarr;</span>
           </a>
-          <p class="join-band__note">Free &middot; opens in your browser, no account or download</p>
         </div>
       </div>
 
@@ -618,7 +607,6 @@
             Join the call<span class="visually-hidden"> on Microsoft Teams (opens in a new tab)</span>
             <span class="btn__arrow" aria-hidden="true">&rarr;</span>
           </a>
-          <p class="join-band__note">Free &middot; opens in your browser, no account or download</p>
         </div>
       </div>
 
