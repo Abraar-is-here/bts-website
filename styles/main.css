@@ -2855,10 +2855,26 @@ body:has(> .ticker) { padding-top: var(--ticker-h); }
   border-radius: 10px;
   display: block;
 }
-.promo__brand {
-  width: 132px;
-  height: auto;
+/* The two marks, ours first. Their aspect ratios are 3.74 and 3.61, so equal
+   heights leave them the same optical weight without hand-tuning either. */
+.promo__brands {
+  display: flex;
+  align-items: center;
+  gap: 14px;
   margin-bottom: var(--space-3);
+}
+.promo__brand {
+  height: 30px;
+  width: auto;
+}
+/* A dot drawn rather than typed: a middot glyph sits on the text baseline and
+   would not line up with two marks that have no baseline between them. */
+.promo__brand-sep {
+  flex: none;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.45);
 }
 /* The one thing someone scanning the home page needs to take away is when it
    is. A bright chip carries it far better than another line of body copy. */
