@@ -2864,7 +2864,7 @@ body:has(> .ticker) { padding-top: var(--ticker-h); }
   margin-bottom: var(--space-3);
 }
 .promo__brand {
-  height: 30px;
+  height: 26px;
   width: auto;
 }
 /* A dot drawn rather than typed: a middot glyph sits on the text baseline and
