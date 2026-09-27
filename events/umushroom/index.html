@@ -6,7 +6,7 @@
   <base href="/" />
 
   <title>UK Investment Competition 2026 &mdash; Bristol Trading Society</title>
-  <meta name="description" content="Join us online at 18:30 on Tuesday 29 September 2026 with Luba Schkonig, founder and CEO of UMushroom, to hear how you can take part in the UK Investment Competition. Open to everyone, free to join." />
+  <meta name="description" content="Join us online at 6:30 PM on Tuesday 29 September 2026 with Dr. Luba Schoenig, founder and CEO of UMushroom, to hear how you can take part in the UK Investment Competition. Open to everyone, free to join." />
 
   <link rel="icon" type="image/svg+xml" href="assets/img/bull.svg" />
 
@@ -206,10 +206,6 @@
       .speaker__logos { margin-top: 4px; }
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      .rail__media video { display: none; }
-    }
-
     .ev-page__sec { margin-top: var(--space-6); }
     .ev-grid__main > .ev-page__sec:first-child { margin-top: 0; }
     .ev-page__h2 {
@@ -297,22 +293,81 @@
     /* ---- The join button, said twice --------------------------------------
        Once in a band under the lead, where someone arriving from Instagram on
        Tuesday evening will look, and once in the rail beside the facts. */
+    /* Filled and glowing rather than glass, because this is the one thing on
+       the page that has to be impossible to miss, and a white button on blue
+       is the strongest contrast the palette allows. Identical markup top and
+       bottom &mdash; only the margin differs. */
     .join-band {
-      display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3) var(--space-4);
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+      gap: var(--space-4);
       padding: var(--space-4); margin-bottom: var(--space-5);
-      border: 1px solid var(--glass-border); border-radius: var(--radius-sm);
-      background: var(--glass-fill);
-      -webkit-backdrop-filter: blur(18px) saturate(140%);
-              backdrop-filter: blur(18px) saturate(140%);
+      border: 1px solid rgba(56, 189, 248, 0.7); border-radius: var(--radius-sm);
+      background:
+        radial-gradient(ellipse 80% 120% at 100% 0%, rgba(56, 189, 248, 0.32) 0%, transparent 60%),
+        linear-gradient(135deg, #1d4ed8 0%, #2563eb 55%, #1e40af 100%);
+      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.18), 0 22px 56px -14px rgba(37, 99, 235, 0.7);
     }
     .join-band__when {
-      font-size: 1.0625rem; font-weight: 700; color: var(--text-primary); margin: 0;
+      /* Shrinkable, so a long date wraps its own second line instead of
+         shoving the button onto a row of its own. */
+      flex: 1 1 16rem; min-width: 0;
+      margin: 0; color: #fff;
+      font-family: var(--font-display); font-weight: 800;
+      font-size: clamp(1.5rem, 3vw, 2.125rem); line-height: 1.1; letter-spacing: -0.02em;
     }
-    .join-band__sub { font-size: 0.875rem; color: var(--text-secondary); margin: 2px 0 0; }
+    .join-band__when span {
+      display: block; margin-top: 8px;
+      font-family: var(--font-mono); font-weight: 700; letter-spacing: 0.02em;
+      font-size: clamp(1.25rem, 2.2vw, 1.625rem); color: #bfdbfe;
+    }
     .join-band--end { margin: var(--space-6) 0 0; }
-    .join-band .btn { margin-left: auto; }
+    .join-band__btn {
+      flex: 0 0 auto;
+      background: #fff; color: #0a1a3f;
+      font-size: 1.1875rem; padding: 20px 40px; min-height: 68px;
+      box-shadow: 0 12px 32px rgba(6, 17, 43, 0.45);
+    }
+    @media (hover: hover) and (pointer: fine) {
+      /* The shadow has to be restated: .btn--primary:hover paints a blue glow,
+         which on a white pill sitting on a blue card reads as a smudge. */
+      .join-band__btn:hover {
+        background: #f4f7fb; color: #0a1a3f;
+        box-shadow: 0 16px 40px rgba(6, 17, 43, 0.5);
+      }
+    }
     @media (max-width: 560px) {
-      .join-band .btn { margin-left: 0; width: 100%; justify-content: center; }
+      .join-band { padding: var(--space-4); }
+      .join-band__btn { width: 100%; justify-content: center; }
+    }
+
+    /* ---- Their mark in place of the label ---------------------------------- */
+    .ev-page__tag--brand {
+      display: inline-flex; align-items: center; gap: 12px;
+      padding: 9px 18px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--glass-border);
+    }
+    .ev-page__tag--brand img { width: 104px; height: auto; }
+    .ev-page__tag-with { font-size: 0.6875rem; letter-spacing: 0.14em; opacity: 0.8; }
+
+    /* ---- Prize firms -------------------------------------------------------
+       White marks on tiles rather than a bare row: the six wordmarks have very
+       different shapes, and a shared frame is what makes them read as a set. */
+    .prizes {
+      list-style: none; margin: var(--space-4) 0 0; padding: 0;
+      display: grid; gap: var(--space-3);
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+    .prizes li {
+      display: grid; place-items: center;
+      min-height: 96px; padding: var(--space-3);
+      border: 1px solid rgba(56, 189, 248, 0.32);
+      border-radius: var(--radius-sm);
+      background: rgba(37, 99, 235, 0.16);
+    }
+    .prizes img {
+      max-width: 100%; max-height: 42px; width: auto; height: auto;
+      object-fit: contain;
     }
 
     /* ---- Gallery -----------------------------------------------------------
@@ -348,14 +403,14 @@
     "url": "https://bristoltradingsoc.co.uk/events/umushroom/",
     "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
     "eventStatus": "https://schema.org/EventScheduled",
-    "description": "Luba Schkonig, founder and CEO of UMushroom, explains the UK Investment Competition and how to enter. Online, free, and open to everyone.",
+    "description": "Dr. Luba Schoenig, founder and CEO of UMushroom, explains the UK Investment Competition and how to enter. Online, free, and open to everyone.",
     "location": {
       "@type": "VirtualLocation",
       "url": "https://teams.microsoft.com/meet/35513833036945?p=uNft1L1gb5Zi35m3nT"
     },
     "performer": {
       "@type": "Person",
-      "name": "Luba Schkonig",
+      "name": "Dr. Luba Schoenig",
       "jobTitle": "Founder and CEO, UMushroom"
     },
     "organizer": {
@@ -420,10 +475,13 @@
 
       <a class="ev-page__back" href="/events"><span aria-hidden="true">&larr;</span> All events</a>
 
-      <span class="ev-page__tag">With UMushroom</span>
+      <span class="ev-page__tag ev-page__tag--brand">
+        <span class="ev-page__tag-with">With</span>
+        <img src="assets/img/events/umushroom/logo-umushroom.png" alt="UMushroom" width="231" height="64" />
+      </span>
       <h1 class="ev-page__title">UK Investment Competition 2026</h1>
       <p class="ev-page__lead">
-        Join us this Tuesday at 18:30 with Luba Schkonig, founder and CEO of UMushroom,
+        Join us this Tuesday at 6:30 PM with Dr. Luba Schoenig, founder and CEO of UMushroom,
         to hear how you can take part.
       </p>
 
@@ -432,35 +490,18 @@
            JSON-LD above) and once in /events/umushroom/join/. If the meeting
            link changes, those are the only two files to edit. -->
       <div class="join-band">
-        <div>
-          <p class="join-band__when">Tuesday 29 September, 18:30</p>
-          <p class="join-band__sub">Online on Microsoft Teams &middot; free &middot; no sign-up, just click</p>
-        </div>
-        <a class="btn btn--primary " href="https://teams.microsoft.com/meet/35513833036945?p=uNft1L1gb5Zi35m3nT" target="_blank" rel="noopener noreferrer">
-        Join the call<span class="visually-hidden"> on Microsoft Teams (opens in a new tab)</span>
-        <span class="btn__arrow" aria-hidden="true">&rarr;</span>
-      </a>
+        <p class="join-band__when">Tuesday 29 September<span>6:30 PM BST</span></p>
+        <a class="btn btn--primary join-band__btn" href="https://teams.microsoft.com/meet/35513833036945?p=uNft1L1gb5Zi35m3nT" target="_blank" rel="noopener noreferrer">
+          Join the call<span class="visually-hidden"> on Microsoft Teams (opens in a new tab)</span>
+          <span class="btn__arrow" aria-hidden="true">&rarr;</span>
+        </a>
       </div>
 
       <div class="ev-grid">
         <div class="ev-grid__main">
 
-          <section class="ev-page__sec" aria-labelledby="call">
-            <h2 class="ev-page__h2 ev-page__h2--lead" id="call">What the call covers</h2>
-            <p class="ev-page__body">
-              Luba runs through the competition from the top: what you actually do over the
-              seven weeks, how entry and teams work, how the scoring is split, and what the
-              Grand Final in London involves. Questions at the end.
-            </p>
-            <p class="ev-page__body">
-              About forty-five minutes. Nothing to prepare, nothing to read first, and
-              <strong>you do not need to be a member</strong> &mdash; or a Bristol student &mdash;
-              to sit in.
-            </p>
-          </section>
-
           <section class="ev-page__sec" aria-labelledby="comp">
-            <h2 class="ev-page__h2" id="comp">The competition, in short</h2>
+            <h2 class="ev-page__h2 ev-page__h2--lead" id="comp">The competition, in short</h2>
             <p class="ev-page__body">
               Seven weeks against students from universities across the UK. You run a
               &pound;100,000 virtual portfolio, on your own or in a team of up to three, and
@@ -475,18 +516,20 @@
               <li><strong>Entry</strong> &pound;12 per student, in teams of one to three.</li>
               <li><strong>Prizes</strong> internships, coaching and vouchers.</li>
             </ul>
-            <p class="ev-page__note">
-              Full details on the <a href="/events#umushroom">events page</a>.
-              Questions about the competition itself go to <a href="mailto:hello@umushroom.com">hello@umushroom.com</a>.
-            </p>
           </section>
 
-          <section class="ev-page__sec" aria-labelledby="joining">
-            <h2 class="ev-page__h2" id="joining">Joining</h2>
-            <ul class="ev-list">
-              <li>Press <strong>Join the call</strong>. Teams opens in your browser &mdash; no account and no download needed.</li>
-              <li>The room is open from 18:25. Come in muted; there is no need to turn your camera on.</li>
-              <li>Questions in the chat as they occur to you, or out loud at the end.</li>
+          <section class="ev-page__sec" aria-labelledby="prizes">
+            <h2 class="ev-page__h2" id="prizes">Internships on the line</h2>
+            <p class="ev-page__body">
+              The prizes are placements, not prize money. Last year&rsquo;s partner firms:
+            </p>
+            <ul class="prizes">
+              <li><img src="assets/img/events/umushroom/prizes/invesco.png" alt="Invesco" loading="lazy" /></li>
+              <li><img src="assets/img/events/umushroom/prizes/factset.png" alt="FactSet" loading="lazy" /></li>
+              <li><img src="assets/img/events/umushroom/prizes/lgt.png" alt="LGT" loading="lazy" /></li>
+              <li><img src="assets/img/events/umushroom/prizes/volcafe.png" alt="Volcafe" loading="lazy" /></li>
+              <li><img src="assets/img/events/umushroom/prizes/golborne.png" alt="Golborne" loading="lazy" /></li>
+              <li><img src="assets/img/events/umushroom/prizes/excorde.png" alt="Excorde" loading="lazy" /></li>
             </ul>
           </section>
 
@@ -536,32 +579,16 @@
             <p class="ev-page__note">Photographs courtesy of UMushroom.</p>
           </section>
 
-          <div class="join-band join-band--end">
-            <div>
-              <p class="join-band__when">Tuesday 29 September, 18:30</p>
-              <p class="join-band__sub">Online on Microsoft Teams &middot; free &middot; no sign-up, just click</p>
-            </div>
-            <a class="btn btn--primary" href="https://teams.microsoft.com/meet/35513833036945?p=uNft1L1gb5Zi35m3nT" target="_blank" rel="noopener noreferrer">
-              Join the call<span class="visually-hidden"> on Microsoft Teams (opens in a new tab)</span>
-              <span class="btn__arrow" aria-hidden="true">&rarr;</span>
-            </a>
-          </div>
 
         </div>
 
         <aside class="ev-grid__rail">
-          <div class="rail">
-            <div class="partner">
-              <p class="speaker__prev">In partnership with</p>
-              <img src="assets/img/events/umushroom/logo-umushroom.png"
-                   alt="UMushroom" width="231" height="64" />
-            </div>
-            <div class="speaker">
+          <div class="rail">            <div class="speaker">
               <img class="speaker__photo" src="assets/img/events/umushroom/luba-400.jpg"
                    srcset="assets/img/events/umushroom/luba-400.jpg 400w, assets/img/events/umushroom/luba-800.jpg 800w"
                    sizes="(min-width: 900px) 320px, 100vw" width="400" height="500"
-                   alt="Luba Schkonig" />
-              <p class="speaker__name">Luba Schkonig</p>
+                   alt="Dr. Luba Schoenig" />
+              <p class="speaker__name">Dr. Luba Schoenig</p>
               <p class="speaker__role">Founder and CEO, UMushroom</p>
               <p class="speaker__prev">Previously</p>
               <ul class="speaker__logos">
@@ -578,18 +605,7 @@
               </div>
               <div>
                 <dt>Time</dt>
-                <dd>18:30 &ndash; 19:15
-                  <span>UK time &middot; 19:30 in Switzerland</span></dd>
-              </div>
-              <div>
-                <dt>Where</dt>
-                <dd>Online
-                  <span>Microsoft Teams &middot; browser or app</span></dd>
-              </div>
-              <div>
-                <dt>Cost</dt>
-                <dd class="rail__free">Free
-                  <span>Open to everyone &middot; no membership needed</span></dd>
+                <dd class="rail__free">6:30 PM BST</dd>
               </div>
             </dl>
             <a class="btn btn--primary rail__btn" href="https://teams.microsoft.com/meet/35513833036945?p=uNft1L1gb5Zi35m3nT" target="_blank" rel="noopener noreferrer">
@@ -600,6 +616,14 @@
               your browser &mdash; no account, no download.</p>
           </div>
         </aside>
+      </div>
+
+      <div class="join-band join-band--end">
+        <p class="join-band__when">Tuesday 29 September<span>6:30 PM BST</span></p>
+        <a class="btn btn--primary join-band__btn" href="https://teams.microsoft.com/meet/35513833036945?p=uNft1L1gb5Zi35m3nT" target="_blank" rel="noopener noreferrer">
+          Join the call<span class="visually-hidden"> on Microsoft Teams (opens in a new tab)</span>
+          <span class="btn__arrow" aria-hidden="true">&rarr;</span>
+        </a>
       </div>
 
     </div>
