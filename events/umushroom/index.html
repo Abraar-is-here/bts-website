@@ -62,11 +62,15 @@
     }
     .ev-page__title {
       font-family: var(--font-display);
-      font-size: clamp(2.2rem, 5.5vw, 3.4rem);
+      font-size: clamp(2rem, 5.5vw, 3.25rem);
       font-weight: 800; line-height: 1.03; letter-spacing: -0.03em;
       /* ch resolves against this element's own 54px display face, so 20ch came
          out at 1160px and constrained nothing. A rem measure actually binds. */
-      margin: 0 0 var(--space-4); max-width: 32rem; text-wrap: balance;
+      margin: 0 0 var(--space-4); max-width: 40rem; text-wrap: balance;
+      /* A last-resort guard: "Competition" is the longest word here and it set
+         the clamp above, but a longer one later should break rather than bleed
+         into the gutter. */
+      overflow-wrap: break-word;
     }
     .ev-page__lead {
       font-size: 1.125rem; line-height: 1.7;
@@ -74,24 +78,6 @@
     }
 
     /* ---- Facts panel: the answers people actually came for --------------- */
-    .facts {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
-      gap: 1px;
-      margin-top: var(--space-6);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-sm);
-      background: var(--glass-border);
-      overflow: hidden;
-    }
-    .fact { padding: var(--space-4); background: rgba(10, 26, 63, 0.62); }
-    .fact__k {
-      display: block;
-      font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.14em;
-      text-transform: uppercase; color: var(--accent-bright); margin-bottom: 8px;
-    }
-    .fact__v { font-size: 0.9375rem; line-height: 1.5; color: var(--text-primary); font-weight: 600; }
-    .fact__sub { display: block; margin-top: 4px; font-size: 0.8125rem; font-weight: 400; color: var(--text-secondary); }
 
     /* ---- Body ------------------------------------------------------------ */
     /* ---- Two columns: reading measure left, facts rail right --------------
@@ -127,25 +113,6 @@
       max-height: calc(100vh - var(--space-5) * 2);
       overflow-y: auto;
       overscroll-behavior: contain;
-    }
-    /* No container border, no dividers, no coloured banner. The old rail stacked
-       five different treatments in one box, which is what made it look cheap.
-       Now: one image, four typographic rows, one button. */
-    .rail__media { margin: 0 0 var(--space-4); }
-    .rail__media video {
-      display: block;
-      width: 100%;
-      /* Source is 620x828 portrait; cropped to a wide window so the rail clears
-         a laptop viewport. The room is the subject, not the framing. */
-      aspect-ratio: 16 / 10;
-      object-fit: cover;
-      border-radius: var(--radius-sm);
-      background: var(--bg-abyss);
-    }
-    .rail__media figcaption {
-      margin-top: 8px;
-      font-size: 0.75rem;
-      color: var(--text-secondary);
     }
     .rail__facts { margin: 0 0 var(--space-4); }
     .rail__facts > div + div { margin-top: var(--space-3); }
@@ -189,7 +156,7 @@
       .ev-grid { grid-template-columns: minmax(0, 1fr); gap: var(--space-5); }
       .ev-grid__rail { order: -1; }
       .rail { position: static; }
-      .rail__media video { aspect-ratio: 16 / 9; }
+
       /* Stacked, the rail runs the full page width and a full-width portrait
          would dwarf everything under it. Sit Luba beside her own name instead. */
       .speaker {
@@ -245,18 +212,10 @@
     .ev-list strong { color: var(--text-primary); font-weight: 600; }
 
 
-    .ev-page__cta {
-      margin-top: var(--space-6); padding-top: var(--space-4);
-      border-top: 1px solid var(--hairline);
-    }
-    .ev-page__cta p { font-size: 0.9375rem; color: var(--text-secondary); margin: 0 0 var(--space-3); max-width: 44ch; }
 
     @media (max-width: 640px) { .ev-page { padding-top: 96px; } }
 
 
-    .partner { margin-bottom: var(--space-4); }
-    .partner img { width: 130px; height: auto; }
-    .partner .speaker__prev { margin-bottom: 8px; }
 
     /* ---- Speaker card ------------------------------------------------------
        Luba sits at the top of the rail, above the facts: on this page she is
@@ -300,7 +259,12 @@
     .join-band {
       display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
       gap: var(--space-4);
-      padding: var(--space-4); margin-bottom: var(--space-5);
+      /* 24px, not 32: the card held 66px of vertical slack around a 74px row,
+         which read as emptiness rather than air. */
+      padding: 24px var(--space-4);
+      /* It sat flush against the lead above it, because .ev-page__lead has no
+         bottom margin -- the template relied on .ev-grid's own margin-top. */
+      margin: var(--space-5) 0;
       border: 1px solid rgba(56, 189, 248, 0.7); border-radius: var(--radius-sm);
       background:
         radial-gradient(ellipse 80% 120% at 100% 0%, rgba(56, 189, 248, 0.32) 0%, transparent 60%),
@@ -310,7 +274,7 @@
     .join-band__when {
       /* Shrinkable, so a long date wraps its own second line instead of
          shoving the button onto a row of its own. */
-      flex: 1 1 16rem; min-width: 0;
+      flex: 0 1 auto; min-width: 0;
       margin: 0; color: #fff;
       font-family: var(--font-display); font-weight: 800;
       font-size: clamp(1.5rem, 3vw, 2.125rem); line-height: 1.1; letter-spacing: -0.02em;
@@ -321,6 +285,22 @@
       font-size: clamp(1.25rem, 2.2vw, 1.625rem); color: #bfdbfe;
     }
     .join-band--end { margin: var(--space-6) 0 0; }
+    .join-band--past {
+      border-color: var(--glass-border);
+      background: var(--glass-fill);
+      box-shadow: none;
+    }
+    .join-band__go {
+      flex: 0 0 auto;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+    }
+    /* The reassurance belongs under the button, not 1,500px away in the rail:
+       this is the moment someone hesitates over an unfamiliar Teams link. */
+    .join-band__note {
+      margin: 0; max-width: 22rem; text-align: center;
+      font-size: 0.8125rem; line-height: 1.4; color: #dbeafe;
+    }
+    .join-band--past .join-band__note { color: var(--text-secondary); }
     .join-band__btn {
       flex: 0 0 auto;
       background: #fff; color: #0a1a3f;
@@ -336,7 +316,8 @@
       }
     }
     @media (max-width: 560px) {
-      .join-band { padding: var(--space-4); }
+      .join-band { padding: var(--space-4) var(--space-3); }
+      .join-band__go { width: 100%; }
       .join-band__btn { width: 100%; justify-content: center; }
     }
 
@@ -481,20 +462,36 @@
       </span>
       <h1 class="ev-page__title">UK Investment Competition 2026</h1>
       <p class="ev-page__lead">
-        Join us this Tuesday at 6:30 PM with Dr. Luba Schoenig, founder and CEO of UMushroom,
-        to hear how you can take part.
+        Join us on Tuesday 29 September at 6:30 PM with Dr. Luba Schoenig, founder and
+        CEO of UMushroom, to hear how you can take part.
       </p>
 
       <!-- The link people arrive for. The Teams URL appears four times on
            this page (here, the rail, the band under the gallery, and the
            JSON-LD above) and once in /events/umushroom/join/. If the meeting
            link changes, those are the only two files to edit. -->
-      <div class="join-band">
+      <div class="join-band" data-until="2026-09-29T19:30:00+01:00">
         <p class="join-band__when">Tuesday 29 September<span>6:30 PM BST</span></p>
-        <a class="btn btn--primary join-band__btn" href="https://teams.microsoft.com/meet/35513833036945?p=uNft1L1gb5Zi35m3nT" target="_blank" rel="noopener noreferrer">
-          Join the call<span class="visually-hidden"> on Microsoft Teams (opens in a new tab)</span>
-          <span class="btn__arrow" aria-hidden="true">&rarr;</span>
-        </a>
+        <div class="join-band__go">
+          <a class="btn btn--primary join-band__btn" href="https://teams.microsoft.com/meet/35513833036945?p=uNft1L1gb5Zi35m3nT" target="_blank" rel="noopener noreferrer">
+            Join the call<span class="visually-hidden"> on Microsoft Teams (opens in a new tab)</span>
+            <span class="btn__arrow" aria-hidden="true">&rarr;</span>
+          </a>
+          <p class="join-band__note">Free &middot; opens in your browser, no account or download</p>
+        </div>
+      </div>
+
+
+      <!-- Shown by js/promo.js once the call has passed. Starts hidden, so with
+           JS off the page simply keeps the live card rather than showing both. -->
+      <div class="join-band join-band--past" data-after="2026-09-29T19:30:00+01:00" hidden>
+        <p class="join-band__when">This call has happened<span>The competition starts 12 October</span></p>
+        <div class="join-band__go">
+          <a class="btn btn--secondary join-band__btn" href="/events#umushroom">
+            Competition details
+            <span class="btn__arrow" aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
       </div>
 
       <div class="ev-grid">
@@ -503,7 +500,8 @@
           <section class="ev-page__sec" aria-labelledby="comp">
             <h2 class="ev-page__h2 ev-page__h2--lead" id="comp">The competition, in short</h2>
             <p class="ev-page__body">
-              Seven weeks against students from universities across the UK. You run a
+              Seven weeks against students from LSE, Imperial, UCL, Warwick and others
+              across the UK. You run a
               &pound;100,000 virtual portfolio, on your own or in a team of up to three, and
               you are scored equally on how it performs and on what you learn along the way.
               The top ten at each university go through to an elimination round, and the
@@ -608,22 +606,23 @@
                 <dd class="rail__free">6:30 PM BST</dd>
               </div>
             </dl>
-            <a class="btn btn--primary rail__btn" href="https://teams.microsoft.com/meet/35513833036945?p=uNft1L1gb5Zi35m3nT" target="_blank" rel="noopener noreferrer">
-        Join the call<span class="visually-hidden"> on Microsoft Teams (opens in a new tab)</span>
-        <span class="btn__arrow" aria-hidden="true">&rarr;</span>
-      </a>
-            <p class="rail__note">Opens Microsoft Teams. You can join straight from
-              your browser &mdash; no account, no download.</p>
+            <a class="btn btn--primary rail__btn" data-until="2026-09-29T19:30:00+01:00" href="https://teams.microsoft.com/meet/35513833036945?p=uNft1L1gb5Zi35m3nT" target="_blank" rel="noopener noreferrer">
+              Join the call<span class="visually-hidden"> on Microsoft Teams (opens in a new tab)</span>
+              <span class="btn__arrow" aria-hidden="true">&rarr;</span>
+            </a>
           </div>
         </aside>
       </div>
 
-      <div class="join-band join-band--end">
+      <div class="join-band join-band--end" data-until="2026-09-29T19:30:00+01:00">
         <p class="join-band__when">Tuesday 29 September<span>6:30 PM BST</span></p>
-        <a class="btn btn--primary join-band__btn" href="https://teams.microsoft.com/meet/35513833036945?p=uNft1L1gb5Zi35m3nT" target="_blank" rel="noopener noreferrer">
-          Join the call<span class="visually-hidden"> on Microsoft Teams (opens in a new tab)</span>
-          <span class="btn__arrow" aria-hidden="true">&rarr;</span>
-        </a>
+        <div class="join-band__go">
+          <a class="btn btn--primary join-band__btn" href="https://teams.microsoft.com/meet/35513833036945?p=uNft1L1gb5Zi35m3nT" target="_blank" rel="noopener noreferrer">
+            Join the call<span class="visually-hidden"> on Microsoft Teams (opens in a new tab)</span>
+            <span class="btn__arrow" aria-hidden="true">&rarr;</span>
+          </a>
+          <p class="join-band__note">Free &middot; opens in your browser, no account or download</p>
+        </div>
       </div>
 
     </div>
@@ -633,7 +632,7 @@
   <script src="js/aurora.js?v=9" defer></script>
   <script src="js/transitions.js?v=3" defer></script>
   <script src="js/nav.js?v=1" defer></script>
-  <script src="js/promo.js?v=1" defer></script>
+  <script src="js/promo.js?v=2" defer></script>
   <script src="js/cookies.js?v=3" defer></script>
   <script src="js/signup.js?v=1" defer></script>
   <footer class="site-footer">

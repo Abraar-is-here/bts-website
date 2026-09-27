@@ -2839,7 +2839,10 @@ body:has(> .ticker) { padding-top: var(--ticker-h); }
   padding: var(--space-4);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-sm);
-  background: var(--glass-fill);
+  /* Denser than --glass-fill: the aurora runs all the way to sky behind this
+     card, and slate secondary text over that blend measures 2.9:1. At 0.82 it
+     clears AA wherever the shader happens to be. */
+  background: rgba(10, 26, 63, 0.82);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
   backdrop-filter: blur(18px) saturate(140%);
   box-shadow: var(--shadow-pill);
