@@ -174,11 +174,14 @@
     }
 
     .ev-page__sec { margin-top: var(--space-6); }
+    /* Bands that sit outside .ev-grid run the full wrap width. */
+    .ev-page__wrap > .ev-page__sec { margin-top: var(--space-7); }
     .ev-grid__main > .ev-page__sec:first-child { margin-top: 0; }
     .ev-page__h2 {
       font-family: var(--font-display);
-      font-size: clamp(1.5rem, 3vw, 2rem);
-      font-weight: 800; letter-spacing: -0.02em; margin: 0 0 var(--space-3);
+      font-size: clamp(1.625rem, 3vw, 2.25rem);
+      font-weight: 800; line-height: 1.1; letter-spacing: -0.025em;
+      margin: 0 0 var(--space-3); text-wrap: balance;
     }
     .ev-page__body { font-size: 1rem; line-height: 1.7; color: var(--text-secondary); max-width: 34rem; margin: 0; }
     .ev-page__body + .ev-page__body { margin-top: var(--space-3); }
@@ -194,14 +197,6 @@
       width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
     }
 
-    /* The lead section is set a size step larger rather than being labelled.
-       Five sections at one h2 size read as five equal things; the type does the
-       ranking here instead of another uppercase eyebrow. */
-    .ev-page__h2--lead {
-      font-size: clamp(1.9rem, 4.2vw, 2.75rem);
-      max-width: 20ch;
-      text-wrap: balance;
-    }
     .ev-page__note {
       margin: var(--space-3) 0 0;
       font-size: 0.8125rem; color: var(--text-secondary);
@@ -332,35 +327,40 @@
     .ev-page__tag-with { font-size: 0.6875rem; letter-spacing: 0.14em; opacity: 0.8; }
 
     /* ---- Prize firms -------------------------------------------------------
-       White marks on tiles rather than a bare row: the six wordmarks have very
-       different shapes, and a shared frame is what makes them read as a set. */
+       No tiles. Six boxed marks read as a table of logos; the marks alone, set
+       on the page at a generous gap, read as a row of firms. They are sized on
+       the long edge so a stacked mark and a wide wordmark carry equal weight
+       without a frame to equalise them. */
     .prizes {
-      list-style: none; margin: var(--space-4) 0 0; padding: 0;
-      display: grid; gap: var(--space-3);
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      list-style: none; margin: var(--space-5) 0 0; padding: 0;
+      display: flex; flex-wrap: wrap; align-items: center;
+      /* Sized so all six sit on one line at desktop: the marks measure 887px
+         together, which leaves 46px between each inside the 1200px wrap. */
+      gap: clamp(28px, 4vw, 40px) clamp(28px, 3.2vw, 48px);
     }
-    .prizes li {
-      display: grid; place-items: center;
-      min-height: 96px; padding: var(--space-3);
-      border: 1px solid rgba(56, 189, 248, 0.32);
-      border-radius: var(--radius-sm);
-      background: rgba(37, 99, 235, 0.16);
-    }
+    .prizes li { display: flex; align-items: center; }
     .prizes img {
-      max-width: 100%; max-height: 42px; width: auto; height: auto;
+      display: block; width: auto; height: auto;
+      max-height: 44px; max-width: 168px;
       object-fit: contain;
+      opacity: 0.92;
     }
+    /* Excorde is the one stacked mark in the set and needs the extra height to
+       match the wordmarks' optical weight. */
+    .prizes img[alt="Excorde"] { max-height: 62px; }
 
     /* ---- Gallery -----------------------------------------------------------
        Last year's Grand Final. The first frame runs the full width because it
        is the one that shows the scale of the thing; the rest tile beneath. */
     .gal {
       display: grid; gap: var(--space-3);
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       margin: var(--space-4) 0 0;
     }
     .gal figure { margin: 0; }
-    .gal figure:first-child { grid-column: 1 / -1; }
+    /* One frame carries the scale of the room; the rest are supporting. */
+    .gal figure:first-child { grid-column: span 2; grid-row: span 2; }
+    .gal figure:first-child img { aspect-ratio: auto; height: 100%; }
     .gal img {
       /* height:auto matters: the width/height attributes are a presentational
          hint, so without it the frames kept the source's own height and the
@@ -370,6 +370,11 @@
     }
     .gal figcaption {
       font-size: 0.8125rem; color: var(--text-secondary); padding-top: 8px;
+    }
+    @media (max-width: 900px) {
+      .gal { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .gal figure:first-child { grid-column: 1 / -1; grid-row: auto; }
+      .gal figure:first-child img { aspect-ratio: 3 / 2; height: auto; }
     }
     @media (max-width: 560px) { .gal { grid-template-columns: 1fr; } }
   </style>
@@ -498,7 +503,7 @@
         <div class="ev-grid__main">
 
           <section class="ev-page__sec" aria-labelledby="comp">
-            <h2 class="ev-page__h2 ev-page__h2--lead" id="comp">The competition, in short</h2>
+            <h2 class="ev-page__h2" id="comp">The competition, in short</h2>
             <p class="ev-page__body">
               Seven weeks against students from LSE, Imperial, UCL, Warwick and others
               across the UK. You run a
@@ -516,66 +521,7 @@
             </ul>
           </section>
 
-          <section class="ev-page__sec" aria-labelledby="prizes">
-            <h2 class="ev-page__h2" id="prizes">Internships on the line</h2>
-            <p class="ev-page__body">
-              The prizes are placements, not prize money. Last year&rsquo;s partner firms:
-            </p>
-            <ul class="prizes">
-              <li><img src="assets/img/events/umushroom/prizes/invesco.png" alt="Invesco" loading="lazy" /></li>
-              <li><img src="assets/img/events/umushroom/prizes/factset.png" alt="FactSet" loading="lazy" /></li>
-              <li><img src="assets/img/events/umushroom/prizes/lgt.png" alt="LGT" loading="lazy" /></li>
-              <li><img src="assets/img/events/umushroom/prizes/volcafe.png" alt="Volcafe" loading="lazy" /></li>
-              <li><img src="assets/img/events/umushroom/prizes/golborne.png" alt="Golborne" loading="lazy" /></li>
-              <li><img src="assets/img/events/umushroom/prizes/excorde.png" alt="Excorde" loading="lazy" /></li>
-            </ul>
-          </section>
 
-          <section class="ev-page__sec" aria-labelledby="gallery">
-            <h2 class="ev-page__h2" id="gallery">Last year&rsquo;s Grand Final</h2>
-            <p class="ev-page__body">
-              Photographs from the 2025 final in London, where the university winners pitched
-              their strategy to the jury.
-            </p>
-            <div class="gal">
-          <figure>
-            <img src="assets/img/events/umushroom/crowd-800.jpg"
-                 srcset="assets/img/events/umushroom/crowd-800.jpg 800w, assets/img/events/umushroom/crowd-1600.jpg 1600w"
-                 sizes="(min-width: 900px) 45vw, 100vw" width="800" height="533" loading="lazy"
-                 alt="Students watching a presentation from the audience at the UK Investment Competition Grand Final" />
-            <figcaption>The audience at the 2025 Grand Final</figcaption>
-          </figure>
-          <figure>
-            <img src="assets/img/events/umushroom/pitch-800.jpg"
-                 srcset="assets/img/events/umushroom/pitch-800.jpg 800w, assets/img/events/umushroom/pitch-1600.jpg 1600w"
-                 sizes="(min-width: 900px) 45vw, 100vw" width="800" height="533" loading="lazy"
-                 alt="Three students presenting their investment strategy on stage in front of a UK Investment Competition Grand Finale banner" />
-            <figcaption>A finalist team defending their strategy</figcaption>
-          </figure>
-          <figure>
-            <img src="assets/img/events/umushroom/judges-800.jpg"
-                 srcset="assets/img/events/umushroom/judges-800.jpg 800w, assets/img/events/umushroom/judges-1600.jpg 1600w"
-                 sizes="(min-width: 900px) 45vw, 100vw" width="800" height="533" loading="lazy"
-                 alt="Two judges watching a pitch from the front table" />
-            <figcaption>The judging panel</figcaption>
-          </figure>
-          <figure>
-            <img src="assets/img/events/umushroom/speaker-800.jpg"
-                 srcset="assets/img/events/umushroom/speaker-800.jpg 800w, assets/img/events/umushroom/speaker-1600.jpg 1600w"
-                 sizes="(min-width: 900px) 45vw, 100vw" width="800" height="533" loading="lazy"
-                 alt="A speaker presenting market slides to a full room" />
-            <figcaption>A market briefing before the pitches</figcaption>
-          </figure>
-          <figure>
-            <img src="assets/img/events/umushroom/stage-800.jpg"
-                 srcset="assets/img/events/umushroom/stage-800.jpg 800w, assets/img/events/umushroom/stage-1600.jpg 1600w"
-                 sizes="(min-width: 900px) 45vw, 100vw" width="800" height="533" loading="lazy"
-                 alt="Two speakers in conversation on stage under blue lighting" />
-            <figcaption>On stage at the Grand Final</figcaption>
-          </figure>
-            </div>
-            <p class="ev-page__note">Photographs courtesy of UMushroom.</p>
-          </section>
 
 
         </div>
@@ -596,16 +542,6 @@
               </ul>
             </div>
 
-            <dl class="rail__facts">
-              <div>
-                <dt>Date</dt>
-                <dd>Tuesday 29 September 2026</dd>
-              </div>
-              <div>
-                <dt>Time</dt>
-                <dd class="rail__free">6:30 PM BST</dd>
-              </div>
-            </dl>
             <a class="btn btn--primary rail__btn" data-until="2026-09-29T19:30:00+01:00" href="https://teams.microsoft.com/meet/35513833036945?p=uNft1L1gb5Zi35m3nT" target="_blank" rel="noopener noreferrer">
               Join the call<span class="visually-hidden"> on Microsoft Teams (opens in a new tab)</span>
               <span class="btn__arrow" aria-hidden="true">&rarr;</span>
@@ -613,6 +549,67 @@
           </div>
         </aside>
       </div>
+
+      <section class="ev-page__sec" aria-labelledby="prizes">
+        <h2 class="ev-page__h2" id="prizes">Internship prizes</h2>
+        <p class="ev-page__body">
+          Winners from the London Final round win internships at:
+        </p>
+        <ul class="prizes">
+          <li><img src="assets/img/events/umushroom/prizes/invesco.png" alt="Invesco" loading="lazy" /></li>
+          <li><img src="assets/img/events/umushroom/prizes/factset.png" alt="FactSet" loading="lazy" /></li>
+          <li><img src="assets/img/events/umushroom/prizes/lgt.png" alt="LGT" loading="lazy" /></li>
+          <li><img src="assets/img/events/umushroom/prizes/volcafe.png" alt="Volcafe" loading="lazy" /></li>
+          <li><img src="assets/img/events/umushroom/prizes/golborne.png" alt="Golborne" loading="lazy" /></li>
+          <li><img src="assets/img/events/umushroom/prizes/excorde.png" alt="Excorde" loading="lazy" /></li>
+        </ul>
+      </section>
+
+      <section class="ev-page__sec" aria-labelledby="gallery">
+        <h2 class="ev-page__h2" id="gallery">Last year&rsquo;s Grand Final</h2>
+        <p class="ev-page__body">
+          Photographs from the 2025 final in London, where the university winners pitched
+          their strategy to the jury.
+        </p>
+        <div class="gal">
+      <figure>
+        <img src="assets/img/events/umushroom/crowd-800.jpg"
+             srcset="assets/img/events/umushroom/crowd-800.jpg 800w, assets/img/events/umushroom/crowd-1600.jpg 1600w"
+             sizes="(min-width: 900px) 45vw, 100vw" width="800" height="533" loading="lazy"
+             alt="Students watching a presentation from the audience at the UK Investment Competition Grand Final" />
+        <figcaption>The audience at the 2025 Grand Final</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/img/events/umushroom/pitch-800.jpg"
+             srcset="assets/img/events/umushroom/pitch-800.jpg 800w, assets/img/events/umushroom/pitch-1600.jpg 1600w"
+             sizes="(min-width: 900px) 45vw, 100vw" width="800" height="533" loading="lazy"
+             alt="Three students presenting their investment strategy on stage in front of a UK Investment Competition Grand Finale banner" />
+        <figcaption>A finalist team defending their strategy</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/img/events/umushroom/judges-800.jpg"
+             srcset="assets/img/events/umushroom/judges-800.jpg 800w, assets/img/events/umushroom/judges-1600.jpg 1600w"
+             sizes="(min-width: 900px) 45vw, 100vw" width="800" height="533" loading="lazy"
+             alt="Two judges watching a pitch from the front table" />
+        <figcaption>The judging panel</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/img/events/umushroom/speaker-800.jpg"
+             srcset="assets/img/events/umushroom/speaker-800.jpg 800w, assets/img/events/umushroom/speaker-1600.jpg 1600w"
+             sizes="(min-width: 900px) 45vw, 100vw" width="800" height="533" loading="lazy"
+             alt="A speaker presenting market slides to a full room" />
+        <figcaption>A market briefing before the pitches</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/img/events/umushroom/stage-800.jpg"
+             srcset="assets/img/events/umushroom/stage-800.jpg 800w, assets/img/events/umushroom/stage-1600.jpg 1600w"
+             sizes="(min-width: 900px) 45vw, 100vw" width="800" height="533" loading="lazy"
+             alt="Two speakers in conversation on stage under blue lighting" />
+        <figcaption>On stage at the Grand Final</figcaption>
+      </figure>
+        </div>
+        <p class="ev-page__note">Photographs courtesy of UMushroom.</p>
+      </section>
 
       <div class="join-band join-band--end" data-until="2026-09-29T19:30:00+01:00">
         <p class="join-band__when">Tuesday 29 September<span>6:30 PM BST</span></p>
