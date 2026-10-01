@@ -81,7 +81,7 @@
     .px-hero h1 {
       margin: 0 0 var(--space-4);
       font-family: var(--font-display);
-      font-size: clamp(3rem, 8.4vw, 6rem);
+      font-size: clamp(2.75rem, 6.6vw, 5rem);
       font-weight: 800;
       line-height: 0.94;
       letter-spacing: -0.04em;
@@ -210,6 +210,38 @@
       color: var(--text-secondary);
     }
     .funnel__foot strong { color: var(--text-primary); font-weight: 600; }
+
+    /* Reach: the channels a partner appears on, read across like a ledger. */
+    .reach-title {
+      margin: var(--space-6) 0 var(--space-3);
+      font-family: var(--font-display);
+      font-size: clamp(1.25rem, 2.2vw, 1.6rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+    }
+    .reach {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin: 0;
+      border-top: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+    }
+    .reach div { display: flex; flex-direction: column; gap: 6px; padding: var(--space-4) var(--space-4) var(--space-4) 0; }
+    .reach div + div { padding-left: var(--space-4); border-left: 1px solid var(--hairline); }
+    .reach dd {
+      order: -1;
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: clamp(1.9rem, 3.6vw, 2.75rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+      font-variant-numeric: tabular-nums;
+    }
+    .reach dt { font-size: 0.875rem; line-height: 1.45; color: var(--text-secondary); }
+    .reach__note { margin: var(--space-3) 0 0; font-size: 0.9375rem; color: var(--text-secondary); }
 
     /* --- Alumni employers: the shared logo set, laid into a hairline grid --- */
     .px .destinations {
@@ -460,6 +492,7 @@
     .px-close p { margin: 0 0 var(--space-4); line-height: 1.6; color: rgba(244, 247, 251, 0.84); }
     .px-close p a { color: var(--accent-bright); text-underline-offset: 3px; overflow-wrap: anywhere; }
     .nowrap { white-space: nowrap; }
+    .px-close .px-close__who { margin-top: calc(var(--space-4) * -0.5); font-size: 0.9375rem; color: rgba(244, 247, 251, 0.7); }
     #tiers { scroll-margin-top: 110px; }
     .tier__cta:focus-visible { border-radius: var(--radius-pill); }
 
@@ -507,6 +540,9 @@
 
     /* --- Tablets ------------------------------------------------------------ */
     @media (max-width: 960px) {
+      .reach { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .reach div:nth-child(3) { padding-left: 0; border-left: 0; }
+      .reach div:nth-child(n+3) { border-top: 1px solid var(--hairline); }
       .px-hero { grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
       .px-hero__media img { aspect-ratio: 4 / 3; object-position: 55% 38%; }
       .proof { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -581,8 +617,8 @@
       .px section { margin-top: 28px; }
       .px-hero { display: block; }
       .px-hero h1 { font-size: 40pt; margin-bottom: 12px; }
-      .px :is(h1, h2, h3, .funnel__n, .proof__firm, .tier__name, dd) { color: #000 !important; }
-      .px :is(p, .funnel__label, .tiers__labels span, .proof__what, .tier__row dt) { color: #333 !important; }
+      .px :is(h1, h2, h3, .funnel__n, .reach dd, .proof__firm, .tier__name, dd) { color: #000 !important; }
+      .px :is(p, .funnel__label, .reach dt, .tiers__labels span, .proof__what, .tier__row dt) { color: #333 !important; }
       .partners__lead li, .partners__grid, .partners__grid li, .px .destinations, .px .destinations li,
       .tier, .tier--gold, .bespoke, .px-close, .funnel, .funnel__row,
       .tier__row, .tier__foot, .tiers__labels span {
@@ -654,7 +690,8 @@
         <div>
           <h1>Partner with us</h1>
           <p class="px-hero__lead">
-            Our analyst cohort is selected by competitive application, then spends the year producing
+            Bristol Trading Society is the largest finance and trading society at the University
+            of Bristol, running since 2017. Our analyst cohort is selected by competitive application, then spends the year producing
             and defending research. By the time your firm meets them, the filtering is done.
           </p>
           <div class="px-actions">
@@ -745,6 +782,17 @@
           <strong>Fewer than one in six applicants gets a place.</strong>
           Those who do spend the year researching, pitching and defending their work in front of the room.
         </p>
+
+        <!-- Reach figures as supplied by the committee, 1 October 2026. Update them
+             here when they move; each one is a channel partners appear on. -->
+        <h3 class="reach-title">Where they hear from you</h3>
+        <dl class="reach">
+          <div><dt>Instagram followers</dt><dd>1,946</dd></div>
+          <div><dt>LinkedIn followers</dt><dd>1,881</dd></div>
+          <div><dt>Approved members on our mailing list</dt><dd>382</dd></div>
+          <div><dt>Active users on our website</dt><dd>451</dd></div>
+        </dl>
+        <p class="reach__note">Every partnership tier includes promotion across these channels.</p>
       </section>
 
       <!-- ===== Where members go ===== -->
@@ -904,6 +952,9 @@
             <a href="mailto:bristol-trading-society@bristol.ac.uk"><span class="nowrap">bristol-trading-society</span>@bristol.ac.uk</a>
             and we will come back to you within two working days. Partnerships run September to June;
             the earlier a firm commits, the more of the calendar is still open.
+          </p>
+          <p class="px-close__who">
+            Partnerships are handled by our Co-Presidents, Abraar Fazal and Hristiyan Minev.
           </p>
           <div class="px-actions">
             <a class="btn btn--primary" href="mailto:bristol-trading-society@bristol.ac.uk?subject=Partnering%20with%20BTS">

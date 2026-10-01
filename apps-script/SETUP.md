@@ -113,3 +113,48 @@ Drive permissions.
 editor, choose **`fixCvSharing`** in the function dropdown and press **Run**, then check
 **Executions** for the summary. It sets every CV already in the folder to link access and
 skips files that are already right, so it's safe to re-run.
+
+---
+
+# Research and live books (`DeskCode.gs`, the /research page)
+
+The /research page shows two things, both read from Google so nobody edits the website
+to publish:
+
+- **Macro research.** Every PDF in a Drive folder called **BTS Macro Research**, newest
+  first. Publishing a report = dropping the PDF into that folder. Only people with
+  **Editor** access to the folder can do that, and `setup()` gives it to the Macro
+  division heads only. The file name is the title (`Rates outlook, October 2026.pdf`);
+  the Drive **description** (right-click the file ▸ File information ▸ Details ▸
+  Description) becomes the one-line summary.
+- **The books.** One paper-trading book per division, from the four tabs of a Google
+  Sheet. Each tab is protected so only that division's heads can edit it. One row per
+  trade: Opened, Instrument, Google Finance symbol, Side, Size, Entry, Mark, Exit, Closed,
+  Thesis. Open trades are priced live from Google Finance (delayed up to ~20 minutes).
+  For anything Google Finance doesn't price (futures, bonds, options, trades placed on
+  TradingView or IBKR in products it doesn't cover), the head types a **Mark** instead. A
+  trade is closed by filling in **Exit** and **Closed**.
+
+Set up once, signed into the **society's** Google account (~10 minutes):
+
+1. [sheets.google.com](https://sheets.google.com) ▸ **Blank spreadsheet** ▸ name it `BTS Books`.
+2. **Extensions ▸ Apps Script**. Paste the whole of **`DeskCode.gs`**. Save.
+3. Choose **`setup`** in the function dropdown ▸ **Run**. Approve the permissions
+   (Sheets, Drive). It creates the four tabs, the live-price formulas, the per-division
+   protection and the research folder, and shares them with the heads listed at the top
+   of the file.
+4. Open **Executions** (or View ▸ Logs) and read any **TO DO** lines. The usual ones:
+   - A head's `@bristol.ac.uk` address isn't a Google account, so it couldn't be added.
+     Ask them for the Google account they use, share the folder/Sheet with that, and
+     add it under **Data ▸ Protect sheets and ranges**.
+   - Set the research folder's **General access** to **Anyone with the link ▸ Viewer**,
+     so readers can open the reports from the website. (Uploading still needs Editor.)
+5. **Deploy ▸ New deployment ▸ Web app**: Execute as **Me**, Who has access **Anyone**.
+   Copy the `/exec` URL and put it in `data-endpoint` on `<main>` in
+   `research/index.html`.
+
+Changes show on the website within five minutes (the script caches its answer). Run
+**`refreshNow`** from the editor to clear that immediately.
+
+To preview the page's design before any of this exists, open `/research/?demo=1`: it
+fills the page with clearly made-up sample data and never contacts Google.
