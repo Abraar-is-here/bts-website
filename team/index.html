@@ -249,12 +249,12 @@
       width: 100%;
     }
 
-    /* Each division opens with what it actually does, and a way into the
-       full description on the Divisions page (that division opens on arrival). */
+    /* Each division name is also the way into what that division does (the
+       Divisions page opens it on arrival). Kept quiet: a faint arrow that
+       brightens on hover, so the heading still reads as a heading. */
     .div-group__head {
       display: grid;
       justify-items: center;
-      gap: 6px;
       width: 100%;
       max-width: 600px;
       padding-top: var(--space-4);
@@ -266,32 +266,24 @@
       font-size: clamp(1.4rem, 2.6vw, 1.75rem);
       font-weight: 800;
       letter-spacing: -0.02em;
-      color: var(--text-primary);
     }
-    .div-group__what {
-      margin: 0;
-      max-width: 52ch;
-      font-size: 0.9375rem;
-      line-height: 1.55;
-      color: rgba(244, 247, 251, 0.74);
-      text-wrap: balance;
-    }
-    .div-group__more {
+    .div-group__name a {
       display: inline-flex;
-      gap: 6px;
-      margin-top: 4px;
-      padding: 6px 0;
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: var(--accent-bright);
+      align-items: baseline;
+      gap: 0.35em;
+      color: var(--text-primary);
       text-decoration: none;
     }
-    .div-group__more span { transition: transform var(--dur-fast) var(--ease-out); }
-    @media (hover: hover) and (pointer: fine) {
-      .div-group__more:hover { text-decoration: underline; text-underline-offset: 4px; }
-      .div-group__more:hover span { transform: translateX(3px); }
+    .div-group__arrow {
+      font-size: 0.6em;
+      opacity: 0.35;
+      transition: opacity var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
     }
-    @media (prefers-reduced-motion: reduce) { .div-group__more span { transition: none; } }
+    .div-group__name a:focus-visible { border-radius: 6px; }
+    @media (hover: hover) and (pointer: fine) {
+      .div-group__name a:hover .div-group__arrow { opacity: 0.9; transform: translateX(3px); }
+    }
+    @media (prefers-reduced-motion: reduce) { .div-group__arrow { transition: none; } }
 
     /* Suppress lift-only hover on Emily's card (isolated on her own row, 6px jump is jarring) */
     @media (hover: hover) and (pointer: fine) {
@@ -471,9 +463,7 @@
         <!-- Equities -->
         <div class="div-group">
           <div class="div-group__head">
-            <h2 class="div-group__name">Equities</h2>
-            <p class="div-group__what">Fundamental investing: work out what a company is worth and argue for buying or selling it.</p>
-            <a class="div-group__more" href="/analyst-programme/#equities">What the Equities division does <span aria-hidden="true">&rarr;</span></a>
+            <h2 class="div-group__name"><a href="/analyst-programme/#equities">Equities<span class="visually-hidden">: what the division does</span><span class="div-group__arrow" aria-hidden="true">&rarr;</span></a></h2>
           </div>
           <div class="team__tier-cards">
             <a class="team-card" href="https://www.linkedin.com/in/tash-munjanganja-437081232/" target="_blank" rel="noopener noreferrer" aria-label="Tash Munjanganja, Equities Division Head &mdash; LinkedIn profile">
@@ -514,9 +504,7 @@
         <!-- FICC -->
         <div class="div-group">
           <div class="div-group__head">
-            <h2 class="div-group__name">FICC</h2>
-            <p class="div-group__what">Fixed income, currencies and commodities: bonds, interest rates, FX and everything driven by central banks.</p>
-            <a class="div-group__more" href="/analyst-programme/#ficc">What the FICC division does <span aria-hidden="true">&rarr;</span></a>
+            <h2 class="div-group__name"><a href="/analyst-programme/#ficc">FICC<span class="visually-hidden">: what the division does</span><span class="div-group__arrow" aria-hidden="true">&rarr;</span></a></h2>
           </div>
           <div class="team__tier-cards">
             <a class="team-card" href="https://www.linkedin.com/in/anaymistry/" target="_blank" rel="noopener noreferrer" aria-label="Anay Mistry, FICC Division Head &mdash; LinkedIn profile">
@@ -557,9 +545,7 @@
         <!-- Quant -->
         <div class="div-group">
           <div class="div-group__head">
-            <h2 class="div-group__name">Quant</h2>
-            <p class="div-group__what">Systematic trading: use statistics and code to design a strategy and test whether it really works.</p>
-            <a class="div-group__more" href="/analyst-programme/#quant">What the Quant division does <span aria-hidden="true">&rarr;</span></a>
+            <h2 class="div-group__name"><a href="/analyst-programme/#quant">Quant<span class="visually-hidden">: what the division does</span><span class="div-group__arrow" aria-hidden="true">&rarr;</span></a></h2>
           </div>
           <div class="team__tier-cards">
             <a class="team-card" href="https://www.linkedin.com/in/kometh-tauch/" target="_blank" rel="noopener noreferrer" aria-label="Kometh Tauch, Quant Division Head &mdash; LinkedIn profile">
@@ -592,9 +578,7 @@
         <!-- Macro -->
         <div class="div-group">
           <div class="div-group__head">
-            <h2 class="div-group__name">Macro</h2>
-            <p class="div-group__what">Top-down: form a view on where the world economy is heading and express it across asset classes.</p>
-            <a class="div-group__more" href="/analyst-programme/#macro">What the Macro division does <span aria-hidden="true">&rarr;</span></a>
+            <h2 class="div-group__name"><a href="/analyst-programme/#macro">Macro<span class="visually-hidden">: what the division does</span><span class="div-group__arrow" aria-hidden="true">&rarr;</span></a></h2>
           </div>
           <div class="team__tier-cards">
             <a class="team-card" href="https://www.linkedin.com/in/manasvi-kommuri-824066241/" target="_blank" rel="noopener noreferrer" aria-label="Manasvi Kommuri, Macro Division Head &mdash; LinkedIn profile">
