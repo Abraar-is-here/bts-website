@@ -33,8 +33,19 @@ var HEADERS = ['Submitted', 'First name', 'Last name', 'University email',
   'Personal email', 'Phone', 'Year', 'Course', 'LinkedIn',
   'First choice', 'Why this division', 'CV'];
 
+// Applications close at 11:59 PM on Friday 2 October 2026 (UK time). The
+// website removes the form on the second; this is the check that cannot be
+// bypassed. LATE_GRACE_MS lets an upload that was already sending at 11:59 PM
+// finish arriving (a large CV can take a few seconds). Set it to 0 for none.
+var DEADLINE = new Date('2026-10-03T00:00:00+01:00');
+var LATE_GRACE_MS = 60 * 1000;
+
 function doPost(e) {
   try {
+    if (Date.now() > DEADLINE.getTime() + LATE_GRACE_MS) {
+      return json({ ok: false, error: 'Applications have closed' });
+    }
+
     var data = JSON.parse(e.postData.contents);
 
     // Honeypot: real applicants leave this empty; bots fill it. Drop silently.

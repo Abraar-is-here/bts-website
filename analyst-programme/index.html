@@ -17,13 +17,13 @@
   <link rel="stylesheet" href="styles/tokens/colors.css?v=15" />
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
-  <link rel="stylesheet" href="styles/main.css?v=96" />
+  <link rel="stylesheet" href="styles/main.css?v=97" />
 
 
   <style>
     .apply { padding-block-start: 128px; }
     .divs { margin-top:var(--space-6); border-top:1px solid var(--hairline); }
-    .div { border-bottom:1px solid var(--hairline); }
+    .div { border-bottom:1px solid var(--hairline); scroll-margin-top:120px; }
     .div__name { margin:0; font:inherit; }
     .div__btn { display:flex; align-items:center; justify-content:space-between; gap:var(--space-4); width:100%; padding:var(--space-5) 0; background:none; border:0; color:var(--text-primary); text-align:left; cursor:pointer; font:inherit; }
     .div__btn:focus-visible { outline:2px solid var(--accent-bright); outline-offset:4px; border-radius:6px; }
@@ -53,7 +53,6 @@
     .div__cols ul { list-style:none; margin:0; padding:0; }
     .div__cols li { position:relative; padding-left:18px; margin-bottom:10px; font-size:.9375rem; line-height:1.55; color:var(--text-secondary); }
     .div__cols li::before { content:""; position:absolute; left:0; top:.6em; width:5px; height:5px; border-radius:50%; background:var(--accent); }
-    .apply__eyebrow { display:block; font-size:.75rem; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--accent-bright); margin-bottom:var(--space-3); }
     .apply__head { max-width:60ch; }
     /* Same heading treatment as the rest of the site (see .sel__title). */
     .apply__title { font-family:var(--font-display); font-size:clamp(2.2rem,5.5vw,3.4rem); font-weight:800; line-height:1.03; letter-spacing:-0.03em; color:var(--text-primary); text-wrap:balance; margin:0 0 var(--space-4); }
@@ -72,8 +71,8 @@
        Entries with data-until are removed by js/promo.js once they have passed;
        both halves carry the same entries, so the loop stays seamless. Repeats
        are sized so each half still outruns a 2560px screen once they go. -->
-  <a class="ticker" href="/apply" aria-label="Analyst applications now open. Apply now.">
-    <span class="ticker__tape" aria-hidden="true"><span class="ticker__track"><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up" data-until="2026-09-29T19:30:00+01:00"><span class="tk__sym">UK Investment Competition</span><span class="tk__val">&#9650;&nbsp;TUE 18:30</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up" data-until="2026-09-29T19:30:00+01:00"><span class="tk__sym">UK Investment Competition</span><span class="tk__val">&#9650;&nbsp;TUE 18:30</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up" data-until="2026-09-29T19:30:00+01:00"><span class="tk__sym">UK Investment Competition</span><span class="tk__val">&#9650;&nbsp;TUE 18:30</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up" data-until="2026-09-29T19:30:00+01:00"><span class="tk__sym">UK Investment Competition</span><span class="tk__val">&#9650;&nbsp;TUE 18:30</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up" data-until="2026-09-29T19:30:00+01:00"><span class="tk__sym">UK Investment Competition</span><span class="tk__val">&#9650;&nbsp;TUE 18:30</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up" data-until="2026-09-29T19:30:00+01:00"><span class="tk__sym">UK Investment Competition</span><span class="tk__val">&#9650;&nbsp;TUE 18:30</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up" data-until="2026-09-29T19:30:00+01:00"><span class="tk__sym">UK Investment Competition</span><span class="tk__val">&#9650;&nbsp;TUE 18:30</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up" data-until="2026-09-29T19:30:00+01:00"><span class="tk__sym">UK Investment Competition</span><span class="tk__val">&#9650;&nbsp;TUE 18:30</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up" data-until="2026-09-29T19:30:00+01:00"><span class="tk__sym">UK Investment Competition</span><span class="tk__val">&#9650;&nbsp;TUE 18:30</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up" data-until="2026-09-29T19:30:00+01:00"><span class="tk__sym">UK Investment Competition</span><span class="tk__val">&#9650;&nbsp;TUE 18:30</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up" data-until="2026-09-29T19:30:00+01:00"><span class="tk__sym">UK Investment Competition</span><span class="tk__val">&#9650;&nbsp;TUE 18:30</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up" data-until="2026-09-29T19:30:00+01:00"><span class="tk__sym">UK Investment Competition</span><span class="tk__val">&#9650;&nbsp;TUE 18:30</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up" data-until="2026-09-29T19:30:00+01:00"><span class="tk__sym">UK Investment Competition</span><span class="tk__val">&#9650;&nbsp;TUE 18:30</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up" data-until="2026-09-29T19:30:00+01:00"><span class="tk__sym">UK Investment Competition</span><span class="tk__val">&#9650;&nbsp;TUE 18:30</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up" data-until="2026-09-29T19:30:00+01:00"><span class="tk__sym">UK Investment Competition</span><span class="tk__val">&#9650;&nbsp;TUE 18:30</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;OPEN</span></span><span class="tk tk--up" data-until="2026-09-29T19:30:00+01:00"><span class="tk__sym">UK Investment Competition</span><span class="tk__val">&#9650;&nbsp;TUE 18:30</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span></span></span>
+  <a class="ticker" href="/apply" data-until="2026-10-03T00:00:00+01:00" aria-label="Analyst applications close at 11:59 PM on Friday 2 October. Apply now.">
+    <span class="ticker__tape" aria-hidden="true"><span class="ticker__track"><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span></span></span>
   </a>
 
   <div class="aurora" aria-hidden="true">
@@ -113,7 +112,6 @@
     <div class="apply__inner">
 
       <header class="apply__head">
-        <span class="apply__eyebrow">Analyst programme &middot; 2026/27</span>
         <h1 class="h2 apply__title">Divisions</h1>
         <p class="body apply__sub">
           Thirteen teams sit across four divisions. Every analyst researches something real,
@@ -127,7 +125,7 @@
       </header>
 
       <div class="divs" data-accordion>
-        <section class="div">
+        <section class="div" id="equities">
           <h2 class="div__name">
             <button class="div__btn" type="button" id="b-equities" aria-expanded="false" aria-controls="p-equities">
               <span class="div__label"><span class="div__title">Equities</span><span class="div__what">Fundamental investing: work out what a company is worth and argue for buying or selling it.</span></span>
@@ -159,7 +157,7 @@
           </div>
         </section>
 
-        <section class="div">
+        <section class="div" id="ficc">
           <h2 class="div__name">
             <button class="div__btn" type="button" id="b-ficc" aria-expanded="false" aria-controls="p-ficc">
               <span class="div__label"><span class="div__title">FICC</span><span class="div__what">Fixed income, currencies and commodities: bonds, interest rates, FX and everything driven by central banks.</span></span>
@@ -190,7 +188,7 @@
           </div>
         </section>
 
-        <section class="div">
+        <section class="div" id="macro">
           <h2 class="div__name">
             <button class="div__btn" type="button" id="b-macro" aria-expanded="false" aria-controls="p-macro">
               <span class="div__label"><span class="div__title">Macro</span><span class="div__what">Top-down: form a view on where the world economy is heading and express it across asset classes.</span></span>
@@ -223,7 +221,7 @@
           </div>
         </section>
 
-        <section class="div">
+        <section class="div" id="quant">
           <h2 class="div__name">
             <button class="div__btn" type="button" id="b-quant" aria-expanded="false" aria-controls="p-quant">
               <span class="div__label"><span class="div__title">Quant</span><span class="div__what">Systematic trading: use statistics and code to design a strategy and test whether it really works.</span></span>
@@ -257,15 +255,26 @@
 
       </div>
 
-      <section class="roles-cta" aria-labelledby="cta-title">
+      <section class="roles-cta" aria-labelledby="cta-title" data-until="2026-10-03T00:00:00+01:00">
         <h2 class="roles-cta__title" id="cta-title">Ready to apply?</h2>
         <p class="roles-cta__text">
           No prior finance experience is required. Read <a href="/selection">how we pick people</a>
-          to see what we assess. Applications are reviewed on a rolling basis and a division may
-          close early if we fill our places, so apply sooner rather than later.
+          to see what we assess. Applications close at 11:59 PM on Friday 2 October, and a division
+          may close earlier if we fill our places, so apply sooner rather than later.
         </p>
         <a class="btn btn--primary" href="/apply">
           Apply to the analyst programme
+          <span class="btn__arrow" aria-hidden="true">&rarr;</span>
+        </a>
+      </section>
+
+      <section class="roles-cta" aria-labelledby="heads-title" data-after="2026-10-03T00:00:00+01:00" hidden>
+        <h2 class="roles-cta__title" id="heads-title">Who runs each division</h2>
+        <p class="roles-cta__text">
+          Every division is led by its own division heads, who set the research and run the books.
+        </p>
+        <a class="btn btn--primary" href="/team/#division-heads">
+          Meet the division heads
           <span class="btn__arrow" aria-hidden="true">&rarr;</span>
         </a>
       </section>
@@ -292,6 +301,19 @@
           }
         });
       });
+
+      /* Arriving from the Team page (/analyst-programme/#macro) opens that
+         division, so the click lands on the answer rather than a closed list. */
+      function openFromHash() {
+        var id = decodeURIComponent(location.hash.slice(1));
+        var div = id && document.getElementById(id);
+        if (!div || !div.classList.contains('div')) return;
+        var b = div.querySelector('.div__btn');
+        if (b.getAttribute('aria-expanded') !== 'true') b.click();
+        div.scrollIntoView({ block: 'start' });
+      }
+      openFromHash();
+      window.addEventListener('hashchange', openFromHash);
     })();
   </script>
 
@@ -301,7 +323,7 @@
   <script src="js/aurora.js?v=9" defer></script>
   <script src="js/transitions.js?v=3" defer></script>
   <script src="js/nav.js?v=1" defer></script>
-  <script src="js/promo.js?v=2" defer></script>
+  <script src="js/promo.js?v=3" defer></script>
   <script src="js/cookies.js?v=3" defer></script>
   <script src="js/signup.js?v=1" defer></script>
   <footer class="site-footer">

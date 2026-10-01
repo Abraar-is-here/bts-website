@@ -17,12 +17,11 @@
   <link rel="stylesheet" href="styles/tokens/colors.css?v=15" />
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
-  <link rel="stylesheet" href="styles/main.css?v=96" />
+  <link rel="stylesheet" href="styles/main.css?v=97" />
 
 
   <style>
     .apply { padding-block-start: 128px; }
-    .apply__eyebrow { display:block; font-size:.75rem; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--accent-bright); margin-bottom:var(--space-3); }
     .apply__head { max-width:60ch; }
     /* Same heading treatment as the rest of the site (see .sel__title). */
     .apply__title { font-family:var(--font-display); font-size:clamp(2.2rem,5.5vw,3.4rem); font-weight:800; line-height:1.03; letter-spacing:-0.03em; color:var(--text-primary); text-wrap:balance; margin:0 0 var(--space-4); }
@@ -34,6 +33,8 @@
     .why-count.is-over { color:#ff8a8a; font-weight:600; }
     .apply__foot { margin-top:var(--space-6); padding-top:var(--space-4); border-top:1px solid var(--hairline); font-size:.875rem; line-height:1.6; color:var(--text-secondary); }
     .apply__foot a { color:var(--accent-bright); }
+    .apply__deadline { margin-top: var(--space-4); }
+    .apply__closed-actions { margin-top: var(--space-4); display: flex; flex-wrap: wrap; gap: var(--space-3); }
   </style>
 </head>
 <body>
@@ -75,8 +76,11 @@
   <main id="apply" class="section apply page-dark" tabindex="-1">
     <div class="apply__inner">
 
-      <header class="apply__head">
-        <span class="apply__eyebrow">Analyst programme &middot; 2026/27</span>
+      <!-- Open until the deadline, then swapped for the closed notice below, on
+           the second (js/promo.js). The form goes at the same moment; the thank-you
+           panel stays, so someone who submitted at 11:59 PM still sees it. The
+           analyst Apps Script refuses anything that arrives after the deadline. -->
+      <header class="apply__head" data-until="2026-10-03T00:00:00+01:00">
         <h1 class="h2 apply__title">Apply to the analyst programme</h1>
         <p class="body apply__sub">
           Thirteen teams across FICC, Equities, Macro and Quant. Pick the division you would most
@@ -88,6 +92,12 @@
           Applications are reviewed on a rolling basis, so early applicants hear back sooner
           &mdash; and a division may close early if we fill our places before the cycle ends.
         </p>
+        <p class="closes apply__deadline" data-countdown="2026-10-03T00:00:00+01:00">
+          <span class="closes__label" aria-hidden="true">Closes in</span>
+          <span class="closes__clock" data-cd-clock aria-hidden="true"><span class="closes__clock" data-cd-clock aria-hidden="true">Friday 2 October</span>ndash;</span>
+          <span class="closes__when" aria-hidden="true">11:59 PM, Friday 2 October</span>
+          <span class="visually-hidden">Applications close at 11:59 PM on Friday 2 October.</span>
+        </p>
         <p style="margin-top:var(--space-4);display:flex;flex-wrap:wrap;gap:var(--space-3)">
           <a class="btn btn--secondary" href="/analyst-programme">
             Explore the divisions
@@ -96,11 +106,24 @@
         </p>
       </header>
 
+      <header class="apply__head" data-after="2026-10-03T00:00:00+01:00" hidden>
+        <h1 class="h2 apply__title">Analyst applications have closed</h1>
+        <p class="body apply__sub">
+          Applications for the 2026/27 analyst programme closed at 11:59 PM on Friday 2 October.
+          Thank you to everyone who applied. Shortlisted applicants will hear from us by email
+          with interview details.
+        </p>
+        <p class="apply__closed-actions">
+          <a class="btn btn--primary" href="/events">See what&rsquo;s on <span class="btn__arrow" aria-hidden="true">&rarr;</span></a>
+          <a class="btn btn--secondary" href="/team">Meet the division heads</a>
+        </p>
+      </header>
+
       <section class="apply__form-section" aria-label="Application form">
         <!-- data-endpoint = the deployed ANALYST Apps Script (apps-script/AnalystCode.gs),
              which writes to the new analyst applications sheet. Empty means the form
              refuses to submit rather than silently losing an application. -->
-        <form id="applyForm" class="form-card" novalidate enctype="multipart/form-data"
+        <form id="applyForm" class="form-card" data-until="2026-10-03T00:00:00+01:00" data-closes="2026-10-03T00:00:00+01:00" novalidate enctype="multipart/form-data"
               data-endpoint="https://script.google.com/macros/s/AKfycbwSPEfPE8J9IpOvfGJ2mZauwe1CeoGfwCA03Gg3Kcll50GJssAkgk-Pl6i7CDPJouxmhA/exec"
               data-role="Analyst">
 
@@ -249,13 +272,11 @@
       </section>
 
     </div>
-      </section>
-
-    </div>
   </main>
 
   <script src="js/aurora.js?v=9" defer></script>
-  <script src="js/apply.js?v=3" defer></script>
+  <script src="js/promo.js?v=3" defer></script>
+  <script src="js/apply.js?v=4" defer></script>
   <script src="js/transitions.js?v=3" defer></script>
   <script src="js/nav.js?v=1" defer></script>
   <script src="js/cookies.js?v=3" defer></script>

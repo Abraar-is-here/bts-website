@@ -213,10 +213,21 @@
     thanks.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
+  /* The deadline. The form is removed on the second it passes (js/promo.js)
+     and the Apps Script refuses late entries, but the response here is opaque,
+     so a late submit is stopped on this side too rather than thanked. */
+  var CLOSES = Date.parse(form.getAttribute('data-closes') || '');
+  function closed() {
+    var t = window.BTSClock ? window.BTSClock.now() : Date.now();
+    return !isNaN(CLOSES) && t >= CLOSES;
+  }
+  var CLOSED_MSG = 'Applications for this cycle have closed.';
+
   /* --- Submit ------------------------------------------------------------ */
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     setStatus('');
+    if (closed()) { setStatus(CLOSED_MSG, true); return; }
 
     // Honeypot: a real person never fills this; bots do.
     if (form.company && form.company.value) { showThanks(); return; }
@@ -262,6 +273,8 @@
         console.warn('[apply] ENDPOINT is empty — set it (see apps-script/SETUP.md).');
         return;
       }
+
+      if (closed()) { sending(false); setStatus(CLOSED_MSG, true); return; }
 
       // no-cors + text/plain = a "simple" request: it reaches Apps Script
       // (which can read it) without a blocked CORS preflight. The response is

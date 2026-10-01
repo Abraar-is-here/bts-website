@@ -2923,3 +2923,38 @@ body:has(> .ticker) { padding-top: var(--ticker-h); }
   }
   .promo__poster { height: auto; min-height: 0; aspect-ratio: 16 / 10; }
 }
+
+/* ---------------------------------------------------------------------------
+   Deadline countdown (js/promo.js fills [data-cd-clock] each second)
+   ---------------------------------------------------------------------------
+   A status readout, so the clock takes the mono face reserved for live
+   figures, which also stops the row twitching as the seconds change. */
+.closes {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  margin: 0;
+  padding: 10px 18px;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: var(--radius-pill);
+  background: rgba(6, 17, 43, 0.6);
+}
+.closes__label,
+.closes__when { font-size: 0.8125rem; color: rgba(244, 247, 251, 0.78); }
+.closes__label { font-weight: 600; }
+.closes__clock {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+/* Inline variant, inside a card's small label. */
+.closes-inline [data-cd-clock] {
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
