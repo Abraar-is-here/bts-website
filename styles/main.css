@@ -3206,9 +3206,12 @@ body:has(> .ticker) { padding-top: var(--ticker-h); }
   background: linear-gradient(90deg, transparent 80%, rgba(6, 17, 43, 0.6) 100%);
 }
 .headline__body { padding: var(--space-5) var(--space-4) var(--space-4); }
-.headline__brands { display: flex; align-items: center; gap: 14px; margin: 0 0 var(--space-3); }
+.headline__brands { display: flex; align-items: flex-end; gap: 14px; margin: 0 0 var(--space-3); }
 .headline__brand { height: 24px; width: auto; }
-.headline__brand--jpm { height: 22px; filter: brightness(0) invert(1); }
+/* The J.P. Morgan wordmark has a descender ("g"), so it drops by that much to
+   sit on the same baseline as BTS, sized so the capitals match. */
+.headline__brand--jpm { height: 20px; transform: translateY(6px); filter: brightness(0) invert(1); }
+.headline__sep { align-self: center; }
 .headline__sep { flex: none; width: 4px; height: 4px; border-radius: 50%; background: rgba(255, 255, 255, 0.45); }
 .headline__title {
   margin: 0 0 10px;
@@ -3270,3 +3273,33 @@ body:has(> .ticker) { padding-top: var(--ticker-h); }
 .headline__media--fit::after { z-index: 2; }
 .explore__thumb--static { overflow: hidden; background: #1a1838; }
 .explore__thumb--static img { position: relative; z-index: 1; object-fit: contain; }
+/* Explore, refined: a wider feature so its photograph is cropped gently
+   rather than blown up into a tall slice (which is what made it soft), and
+   compact rows beside it. The J.P. Morgan thumbnail fills its frame again,
+   sized so the whole logo still shows. */
+.explore__grid { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); }
+.explore__row { --thumb: 132px; }
+.explore__text { padding-block: 12px; }
+.explore__name { font-size: 1.05rem; }
+.explore__text .explore__btn, .explore__text .explore__soon { margin-top: 8px; padding: 6px 14px; }
+.explore__thumb--static img { object-fit: cover; }
+.explore__thumb--static::before { display: none; }
+@media (max-width: 560px) {
+  .explore__list { grid-auto-rows: auto; }
+  .explore__row { --thumb: 108px; }
+  /* Too narrow to crop the logo safely: show it whole over its blurred frame. */
+  .explore__thumb--static img { object-fit: contain; }
+  .explore__thumb--static::before { display: block; }
+}
+@media (max-width: 900px) { .explore__grid { grid-template-columns: minmax(0, 1fr); } }
+/* J.P. Morgan card: the photograph fills its panel edge to edge. Side by side
+   only where the panel is wide enough to keep the whole logo in the crop;
+   below that the card stacks and the photo shows at its own 16:9, uncropped. */
+.headline__media--fit img { object-fit: cover; }
+.headline__media--fit::before { display: none; }
+@media (max-width: 1327px) {
+  .headline { grid-template-columns: minmax(0, 1fr); }
+  .headline__media { min-height: 0; aspect-ratio: 16 / 9; }
+  .headline__media::after { background: linear-gradient(180deg, transparent 70%, rgba(6, 17, 43, 0.6) 100%); }
+  .headline__body { padding: var(--space-4) var(--space-4) var(--space-4); }
+}
