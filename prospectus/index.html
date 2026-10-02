@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="styles/tokens/colors.css?v=15" />
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
-  <link rel="stylesheet" href="styles/main.css?v=97" />
+  <link rel="stylesheet" href="styles/main.css?v=100" />
 
   <style>
     /* -------------------------------------------------------------------------
@@ -118,29 +118,6 @@
       color: var(--text-secondary);
     }
 
-    /* A quiet text control for saving the page as a PDF. */
-    .px-print {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 4px;
-      border: 0;
-      background: none;
-      font: 600 0.9375rem/1 var(--font-body);
-      color: var(--text-primary);
-      cursor: pointer;
-      text-decoration: underline;
-      text-decoration-color: rgba(244, 247, 251, 0.35);
-      text-underline-offset: 5px;
-      transition: text-decoration-color var(--dur-fast) var(--ease-out),
-                  transform var(--dur-fast) var(--ease-out);
-    }
-    .px-print svg { width: 18px; height: 18px; flex: none; }
-    .px-print:active { transform: scale(0.97); }
-    @media (hover: hover) and (pointer: fine) {
-      .px-print:hover { text-decoration-color: var(--accent-bright); }
-    }
-
     /* --- Partner wall: reuses the home page's sponsor tiles (main.css) ------ */
     .px-wall .partners__lead { margin-bottom: var(--space-4); }
     .px-wall__note {
@@ -158,7 +135,7 @@
     .funnel { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--hairline); }
     .funnel__row {
       display: grid;
-      grid-template-columns: clamp(9rem, 22vw, 18rem) minmax(0, 1fr);
+      grid-template-columns: clamp(10rem, 26vw, 21rem) minmax(0, 1fr);
       gap: var(--space-4);
       align-items: center;
       padding: var(--space-4) 0;
@@ -235,12 +212,29 @@
       font-family: var(--font-display);
       font-size: clamp(1.9rem, 3.6vw, 2.75rem);
       font-weight: 800;
-      line-height: 1;
+      line-height: 1.15;
+      white-space: nowrap;
       letter-spacing: -0.03em;
       color: var(--text-primary);
       font-variant-numeric: tabular-nums;
     }
     .reach dt { font-size: 0.875rem; line-height: 1.45; color: var(--text-secondary); }
+    /* Slot-machine figures: each digit is a reel that spins through two full
+       turns and lands on its value, the reels stopping left to right. The
+       real number stays as the label, so screen readers and print get it plain. */
+    .reel {
+      position: relative; display: inline-block; height: 1.15em; overflow: hidden; vertical-align: top;
+      -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 18%, #000 82%, transparent 100%);
+              mask-image: linear-gradient(180deg, transparent 0, #000 18%, #000 82%, transparent 100%);
+    }
+    .reel__ghost { visibility: hidden; }
+    .reel__strip {
+      position: absolute; top: 0; left: 50%;
+      display: flex; flex-direction: column; align-items: center;
+      transform: translate(-50%, 0);
+      transition: transform var(--spin, 1400ms) cubic-bezier(0.12, 0.8, 0.18, 1);
+    }
+    .reel__strip span { display: block; height: 1.15em; line-height: 1.15; }
     .reach__note { margin: var(--space-3) 0 0; font-size: 0.9375rem; color: var(--text-secondary); }
 
     /* --- Alumni employers: the shared logo set, laid into a hairline grid --- */
@@ -315,96 +309,116 @@
       .proof li:hover .proof__shot img { transform: scale(1.04); transition-duration: 600ms; }
     }
 
-    /* --- Tiers: a comparison, not a carousel ---------------------------------
-       One column per tier on wide screens, with every row aligned across them
-       (subgrid), so a firm can read what changes between tiers at a glance.
-       On phones each tier becomes its own card and drops the rows it lacks. */
-    .tiers {
-      display: grid;
-      grid-template-columns: minmax(9rem, 0.7fr) repeat(3, minmax(0, 1fr));
-      grid-template-rows: auto repeat(7, auto) auto;
-      column-gap: 0;
-    }
-    .tiers__labels,
-    .tier { grid-row: 1 / -1; display: grid; grid-template-rows: subgrid; }
-    .tiers__labels > span {
+    /* --- Tiers: one at a time ---------------------------------------------------
+       A deck, so the section stays short: tabs and arrows above, one tier card
+       below. Every card carries all seven rows, the ones a tier lacks marked
+       "Not included", so the cards are the same height and moving up a tier
+       shows exactly what it adds. Without JS the cards simply stack. */
+    .deck__bar {
       display: flex;
-      align-items: flex-start;
-      padding: var(--space-3) var(--space-3) var(--space-3) 0;
-      border-top: 1px solid var(--hairline);
-      font-size: 0.8125rem;
-      font-weight: 600;
-      color: var(--text-secondary);
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3);
+      margin-bottom: var(--space-3);
     }
-    .tiers__labels > span:first-child,
-    .tiers__labels > span:last-child { border-top: 0; }
+    .deck__tabs { display: flex; gap: var(--space-2); }
+    .deck__tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 20px;
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-pill);
+      background: transparent;
+      font: 600 0.875rem/1 var(--font-body);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out),
+                  border-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+    }
+    .deck__tab::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--tier); }
+    .deck__tab[aria-selected="true"] { color: var(--c-navy); background: var(--text-primary); border-color: var(--text-primary); }
+    .deck__arrows { display: flex; gap: var(--space-2); }
+    .deck__arrow {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--glass-border);
+      border-radius: 50%;
+      background: transparent;
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out),
+                  transform var(--dur-fast) var(--ease-out);
+    }
+    .deck__arrow svg { width: 18px; height: 18px; }
+    .deck__tab:active, .deck__arrow:active { transform: scale(0.96); }
+    .deck__tab:focus-visible, .deck__arrow:focus-visible { border-radius: var(--radius-pill); }
+    @media (hover: hover) and (pointer: fine) {
+      .deck__tab:not([aria-selected="true"]):hover { color: var(--text-primary); border-color: rgba(255, 255, 255, 0.45); }
+      .deck__arrow:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.45); }
+    }
+
+    .deck__viewport { overflow: hidden; border-radius: 20px; }
+    /* Stacked until the script takes over, so nothing is trapped without JS. */
+    .deck__track { display: flex; flex-direction: column; gap: var(--space-3); }
+    .deck:not(.is-live) .deck__bar { display: none; }
+    .deck.is-live .deck__track { flex-direction: row; gap: 0; transition: transform 380ms cubic-bezier(0.77, 0, 0.175, 1); }
+    .deck.is-live .deck__track.is-instant { transition: none; }
 
     .tier {
       --tier: var(--text-secondary);
-      position: relative;
+      --glow: rgba(141, 162, 196, 0.1);
+      flex: 0 0 100%;
+      min-width: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 2fr);
+      gap: var(--space-4) var(--space-5);
       margin: 0;
-      padding: 0 var(--space-4);
-      border-left: 1px solid var(--hairline);
-    }
-    .tier--gold {
-      --tier: #d4b25c;
-      border: 1px solid rgba(212, 178, 92, 0.5);
+      padding: var(--space-5);
+      border: 1px solid var(--tier-line, var(--glass-border));
       border-radius: 20px;
       background:
-        radial-gradient(ellipse 120% 40% at 50% 0%, rgba(212, 178, 92, 0.16) 0%, transparent 70%),
-        rgba(8, 19, 46, 0.72);
-      box-shadow: 0 30px 60px -36px rgba(0, 0, 0, 0.8);
+        radial-gradient(ellipse 60% 90% at 0% 0%, var(--glow) 0%, transparent 70%),
+        rgba(8, 19, 46, 0.74);
     }
-    .tier--gold + .tier { border-left: 0; }
-    .tier--silver { --tier: #c0c7d1; }
-    .tier--bronze { --tier: #cf9466; }
+    .tier--gold { --tier: #d4b25c; --glow: rgba(212, 178, 92, 0.16); --tier-line: rgba(212, 178, 92, 0.5); }
+    .tier--silver { --tier: #c0c7d1; --glow: rgba(192, 199, 209, 0.1); --tier-line: rgba(192, 199, 209, 0.35); }
+    .tier--bronze { --tier: #cf9466; --glow: rgba(207, 148, 102, 0.12); --tier-line: rgba(207, 148, 102, 0.4); }
+    .deck__tab--gold { --tier: #d4b25c; }
+    .deck__tab--silver { --tier: #c0c7d1; }
+    .deck__tab--bronze { --tier: #cf9466; }
 
-    .tier__head { padding: var(--space-4) 0 var(--space-3); }
+    .tier__head { display: flex; flex-direction: column; align-items: flex-start; }
     .tier__name {
       display: flex;
       align-items: center;
       gap: 12px;
       margin: 0;
       font-family: var(--font-display);
-      font-size: clamp(1.6rem, 2.6vw, 2.1rem);
+      font-size: clamp(1.9rem, 3.4vw, 2.6rem);
       font-weight: 800;
       letter-spacing: -0.03em;
       line-height: 1;
       color: var(--text-primary);
     }
-    .tier__name::before {
-      content: '';
-      flex: none;
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: var(--tier);
-    }
-    .tier__pitch { margin: 10px 0 0; font-size: 0.875rem; line-height: 1.5; color: var(--text-secondary); }
+    .tier__name::before { content: ''; flex: none; width: 12px; height: 12px; border-radius: 50%; background: var(--tier); }
+    .tier__pitch { margin: 12px 0 var(--space-4); max-width: 26ch; font-size: 0.9375rem; line-height: 1.55; color: var(--text-secondary); }
+    .tier__head .tier__cta { margin-top: auto; }
 
-    .tier__rows { display: contents; }
-    .tier__row {
+    .tier__rows {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0 var(--space-4);
       margin: 0;
-      padding: var(--space-3) 0;
-      border-top: 1px solid var(--hairline);
+      align-content: start;
     }
-    .tier__row dt {
-      position: absolute;
-      width: 1px; height: 1px;
-      overflow: hidden;
-      clip: rect(0 0 0 0);
-      white-space: nowrap;
-    }
+    .tier__row { margin: 0; padding: 14px 0; border-top: 1px solid var(--hairline); }
+    .tier__row dt { margin-bottom: 4px; font-size: 0.75rem; font-weight: 600; color: var(--text-secondary); }
     .tier__row dd { margin: 0; font-size: 0.9375rem; line-height: 1.5; color: var(--text-primary); }
-    .tier__row.is-none dd::before {
-      content: '';
-      display: block;
-      width: 16px;
-      height: 1px;
-      margin-top: 0.75em;
-      background: rgba(141, 162, 196, 0.45);
-    }
-    .tier__foot { padding: var(--space-3) 0 var(--space-4); border-top: 1px solid var(--hairline); }
+    .tier__row.is-none dd { color: rgba(244, 247, 251, 0.56); }
+
     .tier__cta {
       display: inline-flex;
       white-space: nowrap;
@@ -497,7 +511,8 @@
     .tier__cta:focus-visible { border-radius: var(--radius-pill); }
 
     @media (prefers-reduced-motion: reduce) {
-      .funnel__bar, .proof__shot img, .px-more span, .tier__cta, .tier__cta span, .px-print { transition: none; }
+      .funnel__bar, .proof__shot img, .px-more span, .tier__cta, .tier__cta span,
+      .deck.is-live .deck__track, .deck__tab, .deck__arrow { transition: none; }
       .funnel.is-armed:not(.is-in) .funnel__bar { clip-path: none; }
     }
 
@@ -543,6 +558,14 @@
       .reach { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .reach div:nth-child(3) { padding-left: 0; border-left: 0; }
       .reach div:nth-child(n+3) { border-top: 1px solid var(--hairline); }
+    }
+    @media (max-width: 560px) {
+      .reach div { padding: var(--space-3) var(--space-3) var(--space-3) 0; }
+      .reach div + div { padding-left: var(--space-3); }
+      .reach div:nth-child(3) { padding-left: 0; }
+      .reach dd { font-size: 1.6rem; }
+    }
+    @media (max-width: 960px) {
       .px-hero { grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
       .px-hero__media img { aspect-ratio: 4 / 3; object-position: 55% 38%; }
       .proof { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -551,38 +574,24 @@
       .bespoke .tier__cta { justify-self: start; }
     }
 
-    /* Laptop widths: narrower columns, so the quote buttons keep one line. */
-    @media (max-width: 1200px) and (min-width: 861px) {
-      .tier { padding: 0 var(--space-3); }
-      .tier__cta { padding: 12px 16px; font-size: 0.8125rem; }
-    }
-
-    /* The comparison needs about 860px to keep four columns readable. */
+    /* Tiers on narrower screens: the card stacks, then the rows go single file. */
     @media (max-width: 860px) {
-      .tiers { display: flex; flex-direction: column; gap: var(--space-3); }
-      .tiers__labels { display: none; }
-      .tier, .tier--gold + .tier {
-        display: block;
-        padding: 0 var(--space-4);
-        border: 1px solid var(--glass-border);
-        border-radius: 20px;
-        background: rgba(8, 19, 46, 0.6);
-      }
-      .tier--gold { border-color: rgba(212, 178, 92, 0.5); background:
-        radial-gradient(ellipse 120% 30% at 50% 0%, rgba(212, 178, 92, 0.16) 0%, transparent 70%),
-        rgba(8, 19, 46, 0.72); }
-      .tier__row { display: block; }
-      .tier__row.is-none { display: none; }
-      .tier__row dt {
-        position: static;
-        width: auto; height: auto;
-        overflow: visible;
-        clip: auto;
-        margin-bottom: 4px;
-        font-size: 0.75rem;
-        font-weight: 600;
-        color: var(--text-secondary);
-      }
+      .tier { grid-template-columns: minmax(0, 1fr); gap: var(--space-3); padding: var(--space-4); }
+      .tier__pitch { max-width: none; margin-bottom: var(--space-3); }
+    }
+    @media (max-width: 640px) {
+      .tier__rows { grid-template-columns: minmax(0, 1fr); }
+      .tier { padding: var(--space-4) var(--space-3); }
+      .tier__row { padding: 10px 0; }
+      .tier__row dd { font-size: 0.875rem; }
+      .tier__row.is-none { display: flex; justify-content: space-between; gap: var(--space-2); }
+      .tier__row.is-none dt { margin: 0; }
+    }
+    /* Phones: the tabs take the row and the arrows step aside (swipe instead). */
+    @media (max-width: 480px) {
+      .deck__arrows { display: none; }
+      .deck__tabs { flex: 1; }
+      .deck__tab { flex: 1; justify-content: center; padding: 10px 12px; }
     }
 
     /* --- Phones ------------------------------------------------------------- */
@@ -596,7 +605,6 @@
       .proof { gap: var(--space-4) var(--space-3); }
       .proof__firm { font-size: 1.0625rem; }
       .proof__what { font-size: 0.875rem; }
-      .tier, .tier--gold + .tier { padding: 0 var(--space-3); }
       .bespoke { padding: var(--space-3); }
       .px .destinations li { min-height: 84px; padding: 12px; }
       .px-close::after { background: linear-gradient(180deg, rgba(6, 17, 43, 0.55) 0%, rgba(6, 17, 43, 0.95) 55%); }
@@ -610,7 +618,7 @@
        separate document that drifts out of date, this prints to one. */
     @media print {
       .aurora, .nav, .ticker, .site-footer, .cookie-bar, .skip-link,
-      .px-actions, .px-print, .px-hero__media, .px-close__media, .px-close::after,
+      .px-actions, .px-hero__media, .px-close__media, .px-close::after,
       .partners__glow, .tier__cta, .bespoke .tier__cta, .px-close .btn { display: none !important; }
       body { background: #fff !important; color: #111; }
       .px { padding: 0; background: none; }
@@ -618,10 +626,10 @@
       .px-hero { display: block; }
       .px-hero h1 { font-size: 40pt; margin-bottom: 12px; }
       .px :is(h1, h2, h3, .funnel__n, .reach dd, .proof__firm, .tier__name, dd) { color: #000 !important; }
-      .px :is(p, .funnel__label, .reach dt, .tiers__labels span, .proof__what, .tier__row dt) { color: #333 !important; }
+      .px :is(p, .funnel__label, .reach dt, .proof__what, .tier__row dt) { color: #333 !important; }
       .partners__lead li, .partners__grid, .partners__grid li, .px .destinations, .px .destinations li,
       .tier, .tier--gold, .bespoke, .px-close, .funnel, .funnel__row,
-      .tier__row, .tier__foot, .tiers__labels span {
+      .tier__row {
         background: #fff !important; box-shadow: none !important; border-color: #ccc !important;
         backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
       }
@@ -631,6 +639,12 @@
       .funnel__row--key .funnel__bar { background: #0a1a3f !important; }
       .proof__shot img { aspect-ratio: 4 / 3; }
       .proof li, .funnel, .tier, .bespoke { break-inside: avoid; }
+      .reel__strip { display: none !important; }
+      .reel__ghost { visibility: visible !important; }
+      /* The deck unrolls on paper: every tier, one after another. */
+      .deck__bar { display: none !important; }
+      .deck__viewport { overflow: visible; }
+      .deck .deck__track { flex-direction: column !important; gap: 16px !important; transform: none !important; }
       .px-close__body { padding: 20px; max-width: none; }
       a { color: #000 !important; }
     }
@@ -647,6 +661,9 @@
        are sized so each half still outruns a 2560px screen once they go. -->
   <a class="ticker" href="/apply" data-until="2026-10-03T00:00:00+01:00" aria-label="Analyst applications close at 11:59 PM on Friday 2 October. Apply now.">
     <span class="ticker__tape" aria-hidden="true"><span class="ticker__track"><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span></span></span>
+  </a>
+  <a class="ticker" href="/events/#jpmorgan" hidden data-after="2026-10-03T00:00:00+01:00" data-until="2026-10-08T13:30:00+01:00" aria-label="J.P. Morgan on campus: Wednesday 7 and Thursday 8 October. Register on the events page.">
+    <span class="ticker__tape" aria-hidden="true"><span class="ticker__track"><span class="tk tk--up"><span class="tk__sym">J.P. Morgan on campus</span><span class="tk__val">&#9650;&nbsp;WED 7 &amp; THU 8 OCT</span></span><span class="tk tk--cta"><span class="tk__sym">Register</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">J.P. Morgan on campus</span><span class="tk__val">&#9650;&nbsp;WED 7 &amp; THU 8 OCT</span></span><span class="tk tk--cta"><span class="tk__sym">Register</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">J.P. Morgan on campus</span><span class="tk__val">&#9650;&nbsp;WED 7 &amp; THU 8 OCT</span></span><span class="tk tk--cta"><span class="tk__sym">Register</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">J.P. Morgan on campus</span><span class="tk__val">&#9650;&nbsp;WED 7 &amp; THU 8 OCT</span></span><span class="tk tk--cta"><span class="tk__sym">Register</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">J.P. Morgan on campus</span><span class="tk__val">&#9650;&nbsp;WED 7 &amp; THU 8 OCT</span></span><span class="tk tk--cta"><span class="tk__sym">Register</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">J.P. Morgan on campus</span><span class="tk__val">&#9650;&nbsp;WED 7 &amp; THU 8 OCT</span></span><span class="tk tk--cta"><span class="tk__sym">Register</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">J.P. Morgan on campus</span><span class="tk__val">&#9650;&nbsp;WED 7 &amp; THU 8 OCT</span></span><span class="tk tk--cta"><span class="tk__sym">Register</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">J.P. Morgan on campus</span><span class="tk__val">&#9650;&nbsp;WED 7 &amp; THU 8 OCT</span></span><span class="tk tk--cta"><span class="tk__sym">Register</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">J.P. Morgan on campus</span><span class="tk__val">&#9650;&nbsp;WED 7 &amp; THU 8 OCT</span></span><span class="tk tk--cta"><span class="tk__sym">Register</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">J.P. Morgan on campus</span><span class="tk__val">&#9650;&nbsp;WED 7 &amp; THU 8 OCT</span></span><span class="tk tk--cta"><span class="tk__sym">Register</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">J.P. Morgan on campus</span><span class="tk__val">&#9650;&nbsp;WED 7 &amp; THU 8 OCT</span></span><span class="tk tk--cta"><span class="tk__sym">Register</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">J.P. Morgan on campus</span><span class="tk__val">&#9650;&nbsp;WED 7 &amp; THU 8 OCT</span></span><span class="tk tk--cta"><span class="tk__sym">Register</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">J.P. Morgan on campus</span><span class="tk__val">&#9650;&nbsp;WED 7 &amp; THU 8 OCT</span></span><span class="tk tk--cta"><span class="tk__sym">Register</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">J.P. Morgan on campus</span><span class="tk__val">&#9650;&nbsp;WED 7 &amp; THU 8 OCT</span></span><span class="tk tk--cta"><span class="tk__sym">Register</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">J.P. Morgan on campus</span><span class="tk__val">&#9650;&nbsp;WED 7 &amp; THU 8 OCT</span></span><span class="tk tk--cta"><span class="tk__sym">Register</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">J.P. Morgan on campus</span><span class="tk__val">&#9650;&nbsp;WED 7 &amp; THU 8 OCT</span></span><span class="tk tk--cta"><span class="tk__sym">Register</span><span class="tk__val">&rarr;</span></span></span></span>
   </a>
 
   <div class="aurora" aria-hidden="true">
@@ -675,7 +692,6 @@
           <li><a class="nav__dropdown-link" href="/about" role="menuitem">About Us</a></li>
           <li><a class="nav__dropdown-link" href="/events" role="menuitem">Events</a></li>
           <li><a class="nav__dropdown-link" href="/team" role="menuitem">Team</a></li>
-          <li><a class="nav__dropdown-link" href="/alumni" role="menuitem">Alumni</a></li>
         </ul>
       </li>
       <li><a class="nav__link nav__link--cta" href="https://www.bristolsu.org.uk/groups/bristol-trading-society-2436" target="_blank" rel="noopener noreferrer">Become a member<span class="visually-hidden"> (opens in a new tab)</span></a></li>
@@ -703,11 +719,6 @@
           </div>
           <p class="px-hero__meta">
             Partnerships for 2026/27 run September to June. We reply within two working days.
-            <br />
-            <button class="px-print" type="button" data-print>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="M7 10l5 5 5-5"/><path d="M5 20h14"/></svg>
-              Save this page as a PDF
-            </button>
           </p>
         </div>
         <figure class="px-hero__media">
@@ -753,24 +764,24 @@
       <section aria-labelledby="reach-title">
         <div class="px-head">
           <h2 id="reach-title">Who your firm meets</h2>
-          <p>The whole society hears from you. The analysts are the ones who have already been through the filter.</p>
+          <p>Everyone connected to BTS hears from you. The analysts are the ones who have already been through the filter.</p>
         </div>
         <ol class="funnel" data-funnel>
           <li class="funnel__row" style="--w: 1; --i: 0">
-            <span class="funnel__n">800</span>
+            <span class="funnel__n">4,500+</span>
             <div>
-              <span class="funnel__label">members across the University of Bristol</span>
+              <span class="funnel__label">connected members and followers across our membership, LinkedIn and Instagram</span>
               <span class="funnel__track" aria-hidden="true"><span class="funnel__bar"></span></span>
             </div>
           </li>
-          <li class="funnel__row" style="--w: 0.5; --i: 1">
+          <li class="funnel__row" style="--w: 0.089; --i: 1">
             <span class="funnel__n">400+</span>
             <div>
               <span class="funnel__label">applications a year to the analyst programme</span>
               <span class="funnel__track" aria-hidden="true"><span class="funnel__bar"></span></span>
             </div>
           </li>
-          <li class="funnel__row funnel__row--key" style="--w: 0.075; --i: 2">
+          <li class="funnel__row funnel__row--key" style="--w: 0.0133; --i: 2">
             <span class="funnel__n">60</span>
             <div>
               <span class="funnel__label">analyst places, across 13 teams in four divisions</span>
@@ -783,14 +794,16 @@
           Those who do spend the year researching, pitching and defending their work in front of the room.
         </p>
 
-        <!-- Reach figures as supplied by the committee, 1 October 2026. Update them
-             here when they move; each one is a channel partners appear on. -->
+        <!-- Reach figures from the committee, 1 October 2026 (Instagram 1,946,
+             LinkedIn 1,881, mailing list 382, website 451), rounded down to a
+             clean "+". Update them here when they move. The digits roll into place
+             like a slot machine when the row comes into view (script below). -->
         <h3 class="reach-title">Where they hear from you</h3>
-        <dl class="reach">
-          <div><dt>Instagram followers</dt><dd>1,946</dd></div>
-          <div><dt>LinkedIn followers</dt><dd>1,881</dd></div>
-          <div><dt>Approved members on our mailing list</dt><dd>382</dd></div>
-          <div><dt>Active users on our website</dt><dd>451</dd></div>
+        <dl class="reach" data-reels>
+          <div><dt>Instagram followers</dt><dd>1,900+</dd></div>
+          <div><dt>LinkedIn followers</dt><dd>1,800+</dd></div>
+          <div><dt>Members on our mailing list</dt><dd>380+</dd></div>
+          <div><dt>Active users on our website</dt><dd>450+</dd></div>
         </dl>
         <p class="reach__note">Every partnership tier includes promotion across these channels.</p>
       </section>
@@ -800,7 +813,7 @@
         <div class="px-head">
           <h2 id="alumni-title">Where our members end up</h2>
         </div>
-        <p class="partners__tier">Firms our alumni have joined</p>
+        <p class="partners__tier">A selection of the firms our alumni have joined</p>
         <ul class="destinations">
           <li><img src="assets/img/alumni-firms/goldman-sachs.webp" alt="Goldman Sachs" loading="lazy" /></li>
           <li><img src="assets/img/alumni-firms/jp-morgan.png" alt="J.P. Morgan" loading="lazy" /></li>
@@ -818,7 +831,6 @@
           <li><img src="assets/img/alumni-firms/investec.png" alt="Investec" loading="lazy" /></li>
           <li><img src="assets/img/alumni-firms/dare.png" alt="Dare Trading" loading="lazy" /></li>
         </ul>
-        <a class="px-more" href="/alumni/">See the alumni directory <span aria-hidden="true">&rarr;</span></a>
       </section>
 
       <!-- ===== Track record ===== -->
@@ -844,7 +856,7 @@
             <p class="proof__what">An evening with their Head of Macro Trading, AME.</p>
           </li>
           <li>
-            <div class="proof__shot"><img src="assets/img/events/amplifyme-simulator.jpg" width="620" height="828" loading="lazy" alt="A packed lecture theatre during the AmplifyME trading simulation" /></div>
+            <div class="proof__shot"><img src="assets/img/events/amplifyme-room-800.jpg" srcset="assets/img/events/amplifyme-room-800.jpg 800w, assets/img/events/amplifyme-room-1280.jpg 1280w" sizes="(min-width: 961px) 24vw, 50vw" width="800" height="600" loading="lazy" alt="A full lecture theatre of members on laptops during the AmplifyME trading simulation" /></div>
             <h3 class="proof__firm">AmplifyME</h3>
             <p class="proof__what">A live $20m portfolio simulation. Sold out, then ran again by demand.</p>
           </li>
@@ -858,75 +870,76 @@
           <p>Every tier is priced per firm. Email us for a quote.</p>
         </div>
 
-        <div class="tiers">
-          <div class="tiers__labels" aria-hidden="true">
-            <span></span>
-            <span>Brand</span>
-            <span>Events in Bristol</span>
-            <span>The analyst cohort</span>
-            <span>Research</span>
-            <span>CVs</span>
-            <span>Hiring</span>
-            <span>Media</span>
-            <span></span>
+        <div class="deck" data-deck>
+          <div class="deck__bar">
+            <div class="deck__tabs" role="tablist" aria-label="Partnership tiers">
+              <button class="deck__tab deck__tab--gold" type="button" role="tab" id="tab-gold" aria-controls="tier-gold-panel" aria-selected="true">Gold</button>
+              <button class="deck__tab deck__tab--silver" type="button" role="tab" id="tab-silver" aria-controls="tier-silver-panel" aria-selected="false" tabindex="-1">Silver</button>
+              <button class="deck__tab deck__tab--bronze" type="button" role="tab" id="tab-bronze" aria-controls="tier-bronze-panel" aria-selected="false" tabindex="-1">Bronze</button>
+            </div>
+            <div class="deck__arrows">
+              <button class="deck__arrow" type="button" data-prev aria-label="Previous tier">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+              </button>
+              <button class="deck__arrow" type="button" data-next aria-label="Next tier">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+              </button>
+            </div>
           </div>
 
-          <article class="tier tier--gold" aria-labelledby="tier-gold">
-            <div class="tier__head">
-              <h3 class="tier__name" id="tier-gold">Gold</h3>
-              <p class="tier__pitch">The full year, and first call on it.</p>
-            </div>
-            <dl class="tier__rows">
-              <div class="tier__row"><dt>Brand</dt><dd>Named sponsor of every flagship event, with primary logo placement</dd></div>
-              <div class="tier__row"><dt>Events in Bristol</dt><dd>Panel talks with speakers from your firm, and first pick of the calendar</dd></div>
-              <div class="tier__row"><dt>The analyst cohort</dt><dd>An exclusive dinner with the cohort for your firm alone, and an insight day at your offices for members we select</dd></div>
-              <div class="tier__row"><dt>Research</dt><dd>Our divisions work on case studies, briefs or research questions set by your team</dd></div>
-              <div class="tier__row"><dt>CVs</dt><dd>Full CV book access, filtered by division, year or degree</dd></div>
-              <div class="tier__row"><dt>Hiring</dt><dd>Roles posted directly to members</dd></div>
-              <div class="tier__row"><dt>Media</dt><dd>Year-round features in our newsletter and on our socials</dd></div>
-            </dl>
-            <div class="tier__foot">
-              <a class="tier__cta" href="mailto:bristol-trading-society@bristol.ac.uk?subject=Gold%20Partner%20quote">Ask for a Gold quote <span aria-hidden="true">&rarr;</span></a>
-            </div>
-          </article>
+          <div class="deck__viewport">
+            <div class="deck__track" data-track>
 
-          <article class="tier tier--silver" aria-labelledby="tier-silver">
-            <div class="tier__head">
-              <h3 class="tier__name" id="tier-silver">Silver</h3>
-              <p class="tier__pitch">A presence on campus and a line to one division.</p>
-            </div>
-            <dl class="tier__rows">
-              <div class="tier__row"><dt>Brand</dt><dd>Logo on event and marketing materials</dd></div>
-              <div class="tier__row"><dt>Events in Bristol</dt><dd>A speaker event or panel talk with people from your firm</dd></div>
-              <div class="tier__row"><dt>The analyst cohort</dt><dd>A session run with one division of your choice</dd></div>
-              <div class="tier__row is-none"><dt>Research</dt><dd><span class="visually-hidden">Not included</span></dd></div>
-              <div class="tier__row"><dt>CVs</dt><dd>A mid-year CV drop</dd></div>
-              <div class="tier__row"><dt>Hiring</dt><dd>Roles posted directly to members</dd></div>
-              <div class="tier__row"><dt>Media</dt><dd>A partnership announcement across our socials</dd></div>
-            </dl>
-            <div class="tier__foot">
-              <a class="tier__cta" href="mailto:bristol-trading-society@bristol.ac.uk?subject=Silver%20Partner%20quote">Ask for a Silver quote <span aria-hidden="true">&rarr;</span></a>
-            </div>
-          </article>
+              <article class="tier tier--gold" id="tier-gold-panel" role="tabpanel" aria-labelledby="tab-gold">
+                <div class="tier__head">
+                  <h3 class="tier__name" id="tier-gold">Gold</h3>
+                  <p class="tier__pitch">The full year, and first call on it.</p>
+                </div>
+                <dl class="tier__rows">
+                  <div class="tier__row"><dt>Brand</dt><dd>Named sponsor of every flagship event, with primary logo placement</dd></div>
+                  <div class="tier__row"><dt>Events in Bristol</dt><dd>Panel talks with speakers from your firm, and first pick of the calendar</dd></div>
+                  <div class="tier__row"><dt>The analyst cohort</dt><dd>An exclusive dinner with the cohort for your firm alone, and an insight day at your offices for members we select</dd></div>
+                  <div class="tier__row"><dt>Research</dt><dd>Our divisions work on case studies, briefs or research questions set by your team</dd></div>
+                  <div class="tier__row"><dt>CVs</dt><dd>Full CV book access, filtered by division, year or degree</dd></div>
+                  <div class="tier__row"><dt>Hiring</dt><dd>Roles posted directly to members</dd></div>
+                  <div class="tier__row"><dt>Media</dt><dd>Year-round features in our newsletter and on our socials</dd></div>
+                </dl>
+              </article>
 
-          <article class="tier tier--bronze" aria-labelledby="tier-bronze">
-            <div class="tier__head">
-              <h3 class="tier__name" id="tier-bronze">Bronze</h3>
-              <p class="tier__pitch">Your name and your roles in front of members.</p>
+              <article class="tier tier--silver" id="tier-silver-panel" role="tabpanel" aria-labelledby="tab-silver">
+                <div class="tier__head">
+                  <h3 class="tier__name" id="tier-silver">Silver</h3>
+                  <p class="tier__pitch">A presence on campus and a line to one division.</p>
+                </div>
+                <dl class="tier__rows">
+                  <div class="tier__row"><dt>Brand</dt><dd>Logo on event and marketing materials</dd></div>
+                  <div class="tier__row"><dt>Events in Bristol</dt><dd>A speaker event or panel talk with people from your firm</dd></div>
+                  <div class="tier__row"><dt>The analyst cohort</dt><dd>A session run with one division of your choice</dd></div>
+                  <div class="tier__row is-none"><dt>Research</dt><dd>Not included</dd></div>
+                  <div class="tier__row"><dt>CVs</dt><dd>A mid-year CV drop</dd></div>
+                  <div class="tier__row"><dt>Hiring</dt><dd>Roles posted directly to members</dd></div>
+                  <div class="tier__row"><dt>Media</dt><dd>A partnership announcement across our socials</dd></div>
+                </dl>
+              </article>
+
+              <article class="tier tier--bronze" id="tier-bronze-panel" role="tabpanel" aria-labelledby="tab-bronze">
+                <div class="tier__head">
+                  <h3 class="tier__name" id="tier-bronze">Bronze</h3>
+                  <p class="tier__pitch">Your name and your roles in front of members.</p>
+                </div>
+                <dl class="tier__rows">
+                  <div class="tier__row"><dt>Brand</dt><dd>Logo on our website and socials</dd></div>
+                  <div class="tier__row is-none"><dt>Events in Bristol</dt><dd>Not included</dd></div>
+                  <div class="tier__row is-none"><dt>The analyst cohort</dt><dd>Not included</dd></div>
+                  <div class="tier__row is-none"><dt>Research</dt><dd>Not included</dd></div>
+                  <div class="tier__row is-none"><dt>CVs</dt><dd>Not included</dd></div>
+                  <div class="tier__row"><dt>Hiring</dt><dd>Promotion of your internships, graduate roles and deadlines to members</dd></div>
+                  <div class="tier__row is-none"><dt>Media</dt><dd>Not included</dd></div>
+                </dl>
+              </article>
+
             </div>
-            <dl class="tier__rows">
-              <div class="tier__row"><dt>Brand</dt><dd>Logo on our website and socials</dd></div>
-              <div class="tier__row is-none"><dt>Events in Bristol</dt><dd><span class="visually-hidden">Not included</span></dd></div>
-              <div class="tier__row is-none"><dt>The analyst cohort</dt><dd><span class="visually-hidden">Not included</span></dd></div>
-              <div class="tier__row is-none"><dt>Research</dt><dd><span class="visually-hidden">Not included</span></dd></div>
-              <div class="tier__row is-none"><dt>CVs</dt><dd><span class="visually-hidden">Not included</span></dd></div>
-              <div class="tier__row"><dt>Hiring</dt><dd>Promotion of your internships, graduate roles and deadlines to members</dd></div>
-              <div class="tier__row is-none"><dt>Media</dt><dd><span class="visually-hidden">Not included</span></dd></div>
-            </dl>
-            <div class="tier__foot">
-              <a class="tier__cta" href="mailto:bristol-trading-society@bristol.ac.uk?subject=Bronze%20Partner%20quote">Ask for a Bronze quote <span aria-hidden="true">&rarr;</span></a>
-            </div>
-          </article>
+          </div>
         </div>
 
         <div class="bespoke">
@@ -961,10 +974,6 @@
               Email us about sponsorship
               <span class="btn__arrow" aria-hidden="true">&rarr;</span>
             </a>
-            <button class="px-print" type="button" data-print>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="M7 10l5 5 5-5"/><path d="M5 20h14"/></svg>
-              Save as PDF
-            </button>
           </div>
         </div>
       </section>
@@ -974,11 +983,116 @@
 
 
   <script>
+    /* Reach figures roll in like a slot machine once the row is on screen. */
     (function () {
-      /* Save as PDF: the print stylesheet turns the page into the brochure. */
-      Array.prototype.forEach.call(document.querySelectorAll('[data-print]'), function (b) {
-        b.addEventListener('click', function () { window.print(); });
+      var row = document.querySelector('[data-reels]');
+      if (!row || !('IntersectionObserver' in window)) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var strips = [];
+      Array.prototype.forEach.call(row.querySelectorAll('dd'), function (dd, col) {
+        var text = dd.textContent.trim();
+        dd.textContent = '';
+        var said = document.createElement('span');
+        said.className = 'visually-hidden';
+        said.textContent = text;
+        dd.appendChild(said);
+        var digit = 0;
+        text.split('').forEach(function (ch) {
+          if (!/\d/.test(ch)) {
+            var plain = document.createElement('span');
+            plain.textContent = ch;
+            plain.setAttribute('aria-hidden', 'true');
+            dd.appendChild(plain);
+            return;
+          }
+          var reel = document.createElement('span');
+          reel.className = 'reel';
+          reel.setAttribute('aria-hidden', 'true');
+          var ghost = document.createElement('span');
+          ghost.className = 'reel__ghost';
+          ghost.textContent = ch;
+          var strip = document.createElement('span');
+          strip.className = 'reel__strip';
+          var stops = 20 + Number(ch);
+          for (var n = 0; n <= stops; n++) {
+            var face = document.createElement('span');
+            face.textContent = n % 10;
+            strip.appendChild(face);
+          }
+          strip.style.setProperty('--spin', (1300 + col * 160 + digit * 110) + 'ms');
+          strip._stops = stops;
+          reel.appendChild(ghost);
+          reel.appendChild(strip);
+          dd.appendChild(reel);
+          strips.push(strip);
+          digit++;
+        });
       });
+      var io = new IntersectionObserver(function (entries) {
+        if (!entries[0].isIntersecting) return;
+        io.disconnect();
+        requestAnimationFrame(function () {
+          strips.forEach(function (s) { s.style.transform = 'translate(-50%, -' + (s._stops * 1.15) + 'em)'; });
+        });
+      }, { rootMargin: '0px 0px -15% 0px' });
+      io.observe(row);
+    })();
+
+    (function () {
+      /* Tier deck: tabs, arrows, arrow keys and a swipe all move one card at a
+         time. Off-screen cards are inert, so keyboard focus never lands in a
+         card nobody can see. Printing unrolls every card. */
+      (function () {
+        var deck = document.querySelector('[data-deck]');
+        if (!deck) return;
+        var track = deck.querySelector('[data-track]');
+        var cards = Array.prototype.slice.call(track.children);
+        var tabs = Array.prototype.slice.call(deck.querySelectorAll('[role="tab"]'));
+        var i = 0;
+        deck.classList.add('is-live');
+
+        function show(n, focusTab) {
+          i = (n + cards.length) % cards.length;
+          /* Keyboard moves land at once: animating them only lags the keypress. */
+          if (focusTab) {
+            track.classList.add('is-instant');
+            requestAnimationFrame(function () { requestAnimationFrame(function () { track.classList.remove('is-instant'); }); });
+          }
+          track.style.transform = 'translateX(' + (-100 * i) + '%)';
+          cards.forEach(function (c, k) { c.inert = k !== i; });
+          tabs.forEach(function (t, k) {
+            t.setAttribute('aria-selected', String(k === i));
+            t.tabIndex = k === i ? 0 : -1;
+            if (k === i && focusTab) t.focus();
+          });
+        }
+        tabs.forEach(function (t, k) { t.addEventListener('click', function () { show(k); }); });
+        deck.querySelector('[data-prev]').addEventListener('click', function () { show(i - 1); });
+        deck.querySelector('[data-next]').addEventListener('click', function () { show(i + 1); });
+        deck.querySelector('[role="tablist"]').addEventListener('keydown', function (e) {
+          if (e.key === 'ArrowRight') { e.preventDefault(); show(i + 1, true); }
+          if (e.key === 'ArrowLeft') { e.preventDefault(); show(i - 1, true); }
+        });
+
+        /* Swipe: a short flick is enough, judged on distance or speed. */
+        var x0 = null, t0 = 0;
+        track.addEventListener('touchstart', function (e) {
+          if (e.touches.length !== 1) return;
+          x0 = e.touches[0].clientX; t0 = Date.now();
+        }, { passive: true });
+        track.addEventListener('touchend', function (e) {
+          if (x0 === null) return;
+          var dx = e.changedTouches[0].clientX - x0;
+          var fast = Math.abs(dx) / Math.max(1, Date.now() - t0) > 0.11;
+          if (Math.abs(dx) > 60 || (fast && Math.abs(dx) > 20)) show(i + (dx < 0 ? 1 : -1));
+          x0 = null;
+        });
+
+        window.addEventListener('beforeprint', function () { cards.forEach(function (c) { c.inert = false; }); });
+        window.addEventListener('afterprint', function () { show(i); });
+        show(0);
+      })();
+
       /* Email links: let the mail app open as normal, and also copy the
          address, so a visitor with no mail app set up still has it. */
       if (navigator.clipboard && window.isSecureContext) {
@@ -1058,7 +1172,6 @@
             <li><a href="/about">About Us</a></li>
             <li><a href="/events">Events</a></li>
             <li><a href="/team">Team</a></li>
-            <li><a href="/alumni">Alumni</a></li>
           </ul>
         </div>
 
@@ -1091,18 +1204,14 @@
         <div class="signup__copy">
           <p class="signup__title">Hear when things happen</p>
           <p class="signup__note">
-            Speaker evenings, the analyst intake, and new research as it is published.
-            A few emails a term. No spam, unsubscribe any time.
+            Join the society on the Bristol SU page and you are on our mailing list: speaker
+            evenings, events with firms and the analyst intake.
           </p>
         </div>
-        <form class="signup__form" id="signupForm" novalidate
-              data-endpoint="https://script.google.com/macros/s/AKfycbzE3CBULjhL0M68m9MXIGsGyB_61TegeBTlJMSWm4MATaLG3_ig8ZoIipccSEIcKfxULg/exec">
-          <label class="visually-hidden" for="signupEmail">Email address</label>
-          <input class="signup__input" id="signupEmail" name="email" type="email"
-                 inputmode="email" autocomplete="email" placeholder="you@bristol.ac.uk" required />
-          <button class="signup__btn" type="submit">Subscribe</button>
-          <p class="signup__status" role="status" aria-live="polite"></p>
-        </form>
+        <a class="signup__btn signup__link" href="https://www.bristolsu.org.uk/groups/bristol-trading-society-2436" target="_blank" rel="noopener noreferrer">
+          Join on the SU page<span class="visually-hidden"> (opens in a new tab)</span>
+          <span aria-hidden="true">&nearr;</span>
+        </a>
       </div>
 
       <div class="site-footer__bottom">

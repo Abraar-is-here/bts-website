@@ -20,8 +20,8 @@
 
 html {
   scroll-behavior: smooth;
-  /* Snap between the two full-height sections for a deliberate, sectioned feel. */
-  scroll-snap-type: y proximity;
+  /* No section snapping: pages scroll as one continuous surface, so the hero
+     runs into what follows instead of jumping to it. */
 }
 
 body {
@@ -718,12 +718,12 @@ main.page-dark {
   content: '';
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  height: 240px;
+  height: 420px;
   z-index: 0;
   background: linear-gradient(
     to bottom,
-    transparent          0%,
-    rgba(6, 17, 43, 0.1) 40%,
+    transparent           0%,
+    rgba(6, 17, 43, 0.12) 45%,
     rgba(6, 17, 43, 0.35) 100%
   );
   pointer-events: none;
@@ -1764,10 +1764,10 @@ body.is-leaving {
      keeps the title at 7:1 and the tier labels above 6:1. */
   background: linear-gradient(180deg,
               rgba(6, 17, 43, 0.35) 0%,
-              rgba(6, 17, 43, 0.58) 10%,
-              rgba(6, 17, 43, 0.62) 45%,
+              rgba(6, 17, 43, 0.5) 22%,
+              rgba(6, 17, 43, 0.62) 55%,
               rgba(6, 17, 43, 0.74) 100%);
-  padding: var(--space-6) var(--gutter) calc(var(--space-6) + 64px);
+  padding: var(--space-5) var(--gutter) calc(var(--space-6) + 64px);
   position: relative;
   isolation: isolate;
 }
@@ -2261,7 +2261,7 @@ a.start__go { display: inline-flex; align-items: flex-end; min-height: 44px; }
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: calc(var(--space-6) + 64px) var(--gutter) var(--space-6);
+  padding: calc(var(--space-6) + 64px) var(--gutter) var(--space-5);
 }
 .hero-start {
   position: relative;
@@ -2958,3 +2958,315 @@ body:has(> .ticker) { padding-top: var(--ticker-h); }
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
+
+/* ---------------------------------------------------------------------------
+   Explore BTS (home): one feature event, then a list of the rest
+   ---------------------------------------------------------------------------
+   After Da Vinci's "Explore" band: a two-tone heading, a large photo card,
+   and rows beside it. On a fine pointer a row's photo sweeps out from its
+   thumbnail across the whole row (clip-path, so nothing reflows), the way DV
+   Trading's division cards open. Coming-soon rows sit greyed behind a
+   gradient and are not links. */
+.explore { padding: var(--space-6) var(--gutter); background: rgba(6, 17, 43, 0.62); }
+.explore__inner { max-width: var(--container-max); margin: 0 auto; }
+.explore__title {
+  margin: 0 0 var(--space-5);
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.6vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  color: var(--text-primary);
+}
+.explore__title span { display: block; color: rgba(141, 162, 196, 0.85); text-wrap: balance; }
+
+.explore__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: var(--space-3);
+}
+
+/* Feature card */
+.explore__feature {
+  position: relative;
+  display: block;
+  min-height: 460px;
+  overflow: hidden;
+  border-radius: 20px;
+  color: #fff;
+  text-decoration: none;
+  isolation: isolate;
+}
+.explore__feature img {
+  position: absolute; inset: 0; z-index: -2;
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 700ms var(--ease-out);
+}
+.explore__feature::after {
+  content: ''; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(180deg, rgba(6, 17, 43, 0) 40%, rgba(6, 17, 43, 0.88) 100%);
+}
+.explore__feature-body { position: absolute; left: var(--space-4); bottom: var(--space-4); right: 12rem; }
+.explore__feature .explore__name { font-size: clamp(1.4rem, 2.4vw, 1.9rem); }
+.explore__feature .explore__btn { position: absolute; right: var(--space-4); bottom: var(--space-4); }
+
+.explore__date { display: block; margin-bottom: 4px; font-size: 0.875rem; color: rgba(244, 247, 251, 0.78); }
+.explore__name {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+.explore__btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 9px 18px;
+  border-radius: var(--radius-pill);
+  background: #fff;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #0a1a3f;
+  white-space: nowrap;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+/* Rows */
+.explore__list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); grid-auto-rows: 1fr; }
+.explore__row {
+  --thumb: 168px;
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--thumb) minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-3);
+  height: 100%;
+  min-height: 104px;
+  padding-right: var(--space-3);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  background: rgba(8, 19, 46, 0.6);
+  color: inherit;
+  text-decoration: none;
+  overflow: hidden;
+  isolation: isolate;
+}
+/* The photo covers the whole row but is clipped to the thumbnail slot. */
+.explore__thumb {
+  position: absolute; inset: 0; z-index: -1;
+  clip-path: inset(0 calc(100% - var(--thumb)) 0 0 round 16px);
+  transition: clip-path 300ms cubic-bezier(0.77, 0, 0.175, 1);
+}
+.explore__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.explore__thumb::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(6, 17, 43, 0.15) 0%, rgba(6, 17, 43, 0.85) 60%);
+  opacity: 0;
+  transition: opacity 300ms var(--ease-out);
+}
+.explore__text { grid-column: 2; padding-block: 14px; }
+.explore__text .explore__btn,
+.explore__text .explore__soon { display: inline-flex; margin-top: 10px; padding: 7px 14px; }
+
+@media (hover: hover) and (pointer: fine) {
+  .explore__feature:hover img { transform: scale(1.04); }
+  .explore__feature:hover .explore__btn,
+  a.explore__row:hover .explore__btn { transform: translateX(3px); }
+  a.explore__row:hover .explore__thumb { clip-path: inset(0 0 0 0 round 16px); transition-duration: 520ms; }
+  a.explore__row:hover .explore__thumb::after { opacity: 1; transition-duration: 520ms; }
+}
+.explore__feature:active .explore__btn, a.explore__row:active .explore__btn { transform: scale(0.97); }
+
+/* Coming soon: greyed, a gradient over the photo, no link. */
+.explore__row--soon { border-style: dashed; background: rgba(8, 19, 46, 0.35); }
+.explore__row--soon .explore__thumb img { filter: grayscale(1) brightness(0.55); }
+.explore__row--soon .explore__thumb::before {
+  content: ''; position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(90deg, rgba(141, 162, 196, 0.25), rgba(6, 17, 43, 0.6));
+}
+.explore__row--soon .explore__name { color: rgba(244, 247, 251, 0.62); }
+.explore__row--soon .explore__date { color: rgba(244, 247, 251, 0.55); }
+.explore__soon {
+  padding: 6px 12px;
+  border: 1px solid rgba(141, 162, 196, 0.35);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(244, 247, 251, 0.62);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .explore__feature img, .explore__thumb, .explore__thumb::after, .explore__btn { transition: none; }
+}
+@media (max-width: 900px) {
+  .explore__grid { grid-template-columns: minmax(0, 1fr); }
+  .explore__feature { min-height: 0; aspect-ratio: 4 / 3; }
+}
+@media (max-width: 560px) {
+  .explore { padding-block: var(--space-5); }
+  .explore__title { margin-bottom: var(--space-4); }
+  .explore__row { --thumb: 112px; }
+  .explore__feature-body { right: var(--space-4); bottom: calc(var(--space-4) + 48px); }
+  .explore__feature .explore__btn { left: var(--space-4); right: auto; }
+}
+/* A row photo is sized to the whole row so it can sweep open, which means
+   the thumbnail shows its left edge. Where the subject sits further right,
+   --fx (its x position, as a % of the photo) shifts it into the thumbnail at
+   rest; on hover it slides back as the row opens. */
+.explore__thumb img { transition: transform 300ms cubic-bezier(0.77, 0, 0.175, 1); }
+.explore__thumb[style*="--fx"] img { transform: translateX(calc(var(--thumb) / 2 - var(--fx))); }
+@media (hover: hover) and (pointer: fine) {
+  a.explore__row:hover .explore__thumb img { transform: none; transition-duration: 520ms; }
+}
+.explore__row--soon .explore__thumb img { filter: grayscale(1) brightness(0.72); }
+@media (prefers-reduced-motion: reduce) { .explore__thumb img { transition: none; } }
+/* Explore on phones: a darker fade so the feature title stays legible over
+   a busy photo, a smaller title, and row names that fit on two lines. */
+@media (max-width: 560px) {
+  .explore__title { font-size: 1.85rem; }
+  .explore__feature::after { background: linear-gradient(180deg, rgba(6, 17, 43, 0.05) 15%, rgba(6, 17, 43, 0.92) 100%); }
+  .explore__feature .explore__name { font-size: 1.3rem; }
+  .explore__row { --thumb: 104px; min-height: 0; }
+  .explore__name { font-size: 0.95rem; }
+  .explore__text { padding-block: 12px; }
+  .explore__text .explore__btn, .explore__text .explore__soon { margin-top: 8px; padding: 6px 12px; }
+}
+
+/* ---------------------------------------------------------------------------
+   Home: the Welcome Event section sits on the aurora; Explore BTS is the white
+   panel that rises over it (the Da Vinci lift that used to belong to the
+   closing section). The footer band below continues the same white.
+   --------------------------------------------------------------------------- */
+#closing.closing--dark { padding-block: 0 64px; background: rgba(6, 17, 43, 0.55); }
+.closing--dark .closing__title,
+.closing--dark .closing__firms-title { color: var(--text-primary); }
+.closing--dark .closing__lead { color: rgba(244, 247, 251, 0.8); }
+.closing--dark .closing__photo { background: rgba(8, 19, 46, 0.6); box-shadow: 0 30px 60px -24px rgba(0, 0, 0, 0.6); }
+.closing--dark .closing__more { color: var(--accent-bright); }
+.closing__firms-note { margin: calc(var(--space-3) * -0.5) 0 var(--space-4); font-size: 0.9375rem; color: rgba(244, 247, 251, 0.7); }
+
+.explore.panel {
+  background: var(--c-surface);
+  color: var(--text-on-light);
+  padding-block: var(--space-7) var(--space-6);
+}
+.explore.panel .explore__title { color: var(--text-on-light); }
+.explore.panel .explore__title span { color: rgba(10, 26, 63, 0.45); }
+.explore.panel .explore__row {
+  background: #fff;
+  border-color: rgba(10, 26, 63, 0.1);
+  box-shadow: 0 10px 30px -18px rgba(10, 26, 63, 0.35);
+}
+.explore.panel .explore__row .explore__name { color: var(--text-on-light); transition: color 300ms var(--ease-out); }
+.explore.panel .explore__row .explore__date { color: rgba(10, 26, 63, 0.62); transition: color 300ms var(--ease-out); }
+.explore.panel .explore__row .explore__btn { background: var(--c-navy); color: #fff; }
+/* As the photo sweeps across a row, its words turn white over the navy fade. */
+@media (hover: hover) and (pointer: fine) {
+  .explore.panel a.explore__row:hover .explore__name { color: #fff; }
+  .explore.panel a.explore__row:hover .explore__date { color: rgba(255, 255, 255, 0.85); }
+  .explore.panel a.explore__row:hover .explore__btn { background: #fff; color: var(--c-navy); }
+}
+.explore.panel .explore__row--soon { background: rgba(10, 26, 63, 0.03); border-color: rgba(10, 26, 63, 0.18); box-shadow: none; }
+.explore.panel .explore__row--soon .explore__name { color: rgba(10, 26, 63, 0.55); }
+.explore.panel .explore__row--soon .explore__date { color: rgba(10, 26, 63, 0.5); }
+.explore.panel .explore__soon { border-color: rgba(10, 26, 63, 0.22); color: rgba(10, 26, 63, 0.58); }
+.explore.panel .explore__feature { box-shadow: 0 30px 60px -30px rgba(10, 26, 63, 0.55); }
+@media (max-width: 560px) {
+  .explore.panel { padding-block: var(--space-6) var(--space-5); }
+}
+/* Footer: joining is done on the SU page, which also adds people to the
+   mailing list, so the old email box is now a single button there. */
+.signup__link { display: inline-flex; align-items: center; gap: 8px; align-self: center; white-space: nowrap; text-decoration: none; border-radius: var(--radius-pill); }
+@media (max-width: 640px) { .signup__link { width: 100%; justify-content: center; } }
+
+/* ---------------------------------------------------------------------------
+   Headline event card (home): a partner's event, made after our Instagram
+   graphic. The photograph fills the left; on the right the two marks, the
+   title, and one column per event with its own Register button.
+   --------------------------------------------------------------------------- */
+.headline {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  margin-top: var(--space-4);
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  background: rgba(6, 17, 43, 0.86);
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.7);
+}
+.headline__media { position: relative; min-height: 100%; }
+.headline__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
+.headline__media::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent 80%, rgba(6, 17, 43, 0.6) 100%);
+}
+.headline__body { padding: var(--space-5) var(--space-4) var(--space-4); }
+.headline__brands { display: flex; align-items: center; gap: 14px; margin: 0 0 var(--space-3); }
+.headline__brand { height: 24px; width: auto; }
+.headline__brand--jpm { height: 22px; filter: brightness(0) invert(1); }
+.headline__sep { flex: none; width: 4px; height: 4px; border-radius: 50%; background: rgba(255, 255, 255, 0.45); }
+.headline__title {
+  margin: 0 0 10px;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.2vw, 3rem);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  text-wrap: balance;
+}
+.headline__lead { margin: 0 0 var(--space-4); max-width: 52ch; font-size: 1rem; line-height: 1.55; color: rgba(244, 247, 251, 0.82); }
+.headline__events {
+  list-style: none; margin: 0; padding: var(--space-3) 0 0;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
+  gap: var(--space-4);
+  border-top: 1px solid var(--hairline);
+}
+.headline__events li { display: flex; flex-direction: column; align-items: flex-start; }
+.headline__when { margin: 0 0 6px; font-size: 0.875rem; font-weight: 600; color: var(--accent-bright); }
+.headline__when span { margin-left: 6px; font-weight: 400; color: rgba(244, 247, 251, 0.75); }
+.headline__name { margin: 0 0 6px; font-family: var(--font-display); font-size: 1.15rem; font-weight: 800; line-height: 1.2; letter-spacing: -0.015em; color: var(--text-primary); }
+.headline__note { margin: 0 0 var(--space-3); font-size: 0.875rem; line-height: 1.5; color: rgba(244, 247, 251, 0.72); }
+.headline__cta { margin-top: auto; padding: 12px 22px; }
+
+@media (max-width: 1100px) {
+  .headline { grid-template-columns: minmax(0, 1fr); }
+  .headline__media { min-height: 0; aspect-ratio: 16 / 9; }
+  .headline__media::after { background: linear-gradient(180deg, rgba(10, 26, 63, 0.1) 40%, rgba(6, 17, 43, 0.86) 100%); }
+  .headline__body { padding: var(--space-4) var(--space-3) var(--space-4); }
+}
+@media (max-width: 560px) {
+  .headline__title { font-size: 1.9rem; }
+  .headline__cta { width: 100%; justify-content: center; }
+}
+/* A row whose photo carries a logo: the whole image stays inside the
+   thumbnail (no sweep), so the mark is never cut. */
+.explore__thumb--static { right: auto; width: var(--thumb); clip-path: inset(0 round 16px); }
+.explore__thumb--static img { transform: none !important; }
+.explore__thumb--static::after { display: none; }
+@media (hover: hover) and (pointer: fine) {
+  .explore.panel a.explore__row--static:hover .explore__name { color: var(--text-on-light); }
+  .explore.panel a.explore__row--static:hover .explore__date { color: rgba(10, 26, 63, 0.62); }
+  .explore.panel a.explore__row--static:hover .explore__btn { background: var(--c-navy); color: #fff; }
+  .explore.panel a.explore__row--static:hover .explore__thumb { clip-path: inset(0 round 16px); }
+  .explore.panel a.explore__row--static:hover { border-color: rgba(10, 26, 63, 0.28); }
+}
+/* Logo images: the whole picture sits inside the frame (contain) over a
+   blurred, darkened copy of itself, so the mark is never cropped at any width
+   and the frame never shows empty bars. */
+.headline__media--fit { overflow: hidden; background: #1a1838; }
+.headline__media--fit::before,
+.explore__thumb--static::before {
+  content: ''; position: absolute; inset: -24px;
+  background: var(--bg) center / cover no-repeat;
+  filter: blur(18px) brightness(0.55);
+}
+.headline__media--fit img { object-fit: contain; z-index: 1; }
+.headline__media--fit::after { z-index: 2; }
+.explore__thumb--static { overflow: hidden; background: #1a1838; }
+.explore__thumb--static img { position: relative; z-index: 1; object-fit: contain; }

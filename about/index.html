@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="styles/tokens/colors.css?v=15" />
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
-  <link rel="stylesheet" href="styles/main.css?v=97" />
+  <link rel="stylesheet" href="styles/main.css?v=100" />
 
   <style>
     /* -------------------------------------------------------------------------
@@ -236,17 +236,6 @@
     .abt-break { margin-top: var(--space-6); }
     .abt-break img { aspect-ratio: 21 / 9; object-position: 50% 70%; }
 
-    /* --- Mentorship: copy beside a photo ---------------------------------- */
-    .mentor {
-      display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
-      gap: clamp(var(--space-4), 4vw, var(--space-6));
-      align-items: center;
-    }
-    .mentor p { color: var(--text-secondary); line-height: 1.75; margin-bottom: var(--space-3); max-width: 62ch; }
-    .mentor p:last-child { margin-bottom: 0; }
-    .mentor strong { color: var(--text-primary); font-weight: 600; }
-    .mentor .abt-photo img { aspect-ratio: 4 / 3; }
 
     /* --- Structure as a pathway on wide screens: the order is the point. -- */
     @media (min-width: 900px) {
@@ -280,7 +269,7 @@
       .ladder p { font-size: 0.9375rem; }
     }
     @media (max-width: 820px) {
-      .abt-hero, .mentor { grid-template-columns: 1fr; }
+      .abt-hero { grid-template-columns: 1fr; }
       .abt-hero .abt-photo { max-width: 460px; }
       .abt-hero .abt-photo img { aspect-ratio: 4 / 3; transform: scale(1.45); transform-origin: 30% 78%; }
       .abt-break img { aspect-ratio: 4 / 3; }
@@ -333,6 +322,9 @@
   <a class="ticker" href="/apply" data-until="2026-10-03T00:00:00+01:00" aria-label="Analyst applications close at 11:59 PM on Friday 2 October. Apply now.">
     <span class="ticker__tape" aria-hidden="true"><span class="ticker__track"><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">Analyst applications</span><span class="tk__val">&#9650;&nbsp;CLOSE FRI 23:59</span></span><span class="tk tk--cta"><span class="tk__sym">Apply now</span><span class="tk__val">&rarr;</span></span></span></span>
   </a>
+  <a class="ticker" href="/events/#jpmorgan" hidden data-after="2026-10-03T00:00:00+01:00" data-until="2026-10-08T13:30:00+01:00" aria-label="J.P. Morgan on campus: Wednesday 7 and Thursday 8 October. Register on the events page.">
+    <span class="ticker__tape" aria-hidden="true"><span class="ticker__track"><span class="tk tk--up"><span class="tk__sym">J.P. Morgan on campus</span><span class="tk__val">&#9650;&nbsp;WED 7 &amp; THU 8 OCT</span></span><span class="tk tk--cta"><span class="tk__sym">Register</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">J.P. Morgan on campus</span><span class="tk__val">&#9650;&nbsp;WED 7 &amp; THU 8 OCT</span></span><span class="tk tk--cta"><span class="tk__sym">Register</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">J.P. Morgan on campus</span><span class="tk__val">&#9650;&nbsp;WED 7 &amp; THU 8 OCT</span></span><span class="tk tk--cta"><span class="tk__sym">Register</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">J.P. Morgan on campus</span><span class="tk__val">&#9650;&nbsp;WED 7 &amp; THU 8 OCT</span></span><span class="tk tk--cta"><span class="tk__sym">Register</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">J.P. Morgan on campus</span><span class="tk__val">&#9650;&nbsp;WED 7 &amp; THU 8 OCT</span></span><span class="tk tk--cta"><span class="tk__sym">Register</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">J.P. Morgan on campus</span><span class="tk__val">&#9650;&nbsp;WED 7 &amp; THU 8 OCT</span></span><span class="tk tk--cta"><span class="tk__sym">Register</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">J.P. Morgan on campus</span><span class="tk__val">&#9650;&nbsp;WED 7 &amp; THU 8 OCT</span></span><span class="tk tk--cta"><span class="tk__sym">Register</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">J.P. Morgan on campus</span><span class="tk__val">&#9650;&nbsp;WED 7 &amp; THU 8 OCT</span></span><span class="tk tk--cta"><span class="tk__sym">Register</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">J.P. Morgan on campus</span><span class="tk__val">&#9650;&nbsp;WED 7 &amp; THU 8 OCT</span></span><span class="tk tk--cta"><span class="tk__sym">Register</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">J.P. Morgan on campus</span><span class="tk__val">&#9650;&nbsp;WED 7 &amp; THU 8 OCT</span></span><span class="tk tk--cta"><span class="tk__sym">Register</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">J.P. Morgan on campus</span><span class="tk__val">&#9650;&nbsp;WED 7 &amp; THU 8 OCT</span></span><span class="tk tk--cta"><span class="tk__sym">Register</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">J.P. Morgan on campus</span><span class="tk__val">&#9650;&nbsp;WED 7 &amp; THU 8 OCT</span></span><span class="tk tk--cta"><span class="tk__sym">Register</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">J.P. Morgan on campus</span><span class="tk__val">&#9650;&nbsp;WED 7 &amp; THU 8 OCT</span></span><span class="tk tk--cta"><span class="tk__sym">Register</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">J.P. Morgan on campus</span><span class="tk__val">&#9650;&nbsp;WED 7 &amp; THU 8 OCT</span></span><span class="tk tk--cta"><span class="tk__sym">Register</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">J.P. Morgan on campus</span><span class="tk__val">&#9650;&nbsp;WED 7 &amp; THU 8 OCT</span></span><span class="tk tk--cta"><span class="tk__sym">Register</span><span class="tk__val">&rarr;</span></span><span class="tk tk--up"><span class="tk__sym">J.P. Morgan on campus</span><span class="tk__val">&#9650;&nbsp;WED 7 &amp; THU 8 OCT</span></span><span class="tk tk--cta"><span class="tk__sym">Register</span><span class="tk__val">&rarr;</span></span></span></span>
+  </a>
 
   <div class="aurora" aria-hidden="true">
     <canvas id="aurora-canvas"></canvas>
@@ -360,7 +352,6 @@
           <li><a class="nav__dropdown-link" href="/about" role="menuitem">About Us</a></li>
           <li><a class="nav__dropdown-link" href="/events" role="menuitem">Events</a></li>
           <li><a class="nav__dropdown-link" href="/team" role="menuitem">Team</a></li>
-          <li><a class="nav__dropdown-link" href="/alumni" role="menuitem">Alumni</a></li>
         </ul>
       </li>
       <li><a class="nav__link nav__link--cta" href="https://www.bristolsu.org.uk/groups/bristol-trading-society-2436" target="_blank" rel="noopener noreferrer">Become a member<span class="visually-hidden"> (opens in a new tab)</span></a></li>
@@ -374,9 +365,10 @@
         <div>
           <h1 class="abt__title">A society for people who wanted to do the work, not read about it</h1>
           <p class="abt__lead">
-            The Bristol Trading Society is the largest markets-focused society at the University of
-            Bristol, built around how markets move, how they are traded, and how the people who trade
-            them actually think. We are run entirely by students, for students.
+            The Bristol Trading Society is the largest finance society at the University of Bristol.
+            Our analysts research markets across FICC, Equities, Macro and Quant, and we put members in
+            front of firms hiring in trading, investment banking and asset management. It is run
+            entirely by students, for students.
           </p>
         </div>
         <figure class="abt-photo">
@@ -422,8 +414,8 @@
 
         <div class="reach">
           <div>
-            <span class="reach__n">800</span>
-            <span class="reach__l">members across the University of Bristol</span>
+            <span class="reach__n">4,500+</span>
+            <span class="reach__l">connected members and followers across our membership, LinkedIn and Instagram</span>
           </div>
           <div>
             <span class="reach__n">400+</span>
@@ -497,39 +489,6 @@
         </ol>
       </section>
 
-      <!-- ===== Mentorship ===== -->
-      <section class="abt__sec" aria-labelledby="mentor-title">
-        <h2 class="abt__sec-title" id="mentor-title">Mentorship</h2>
-
-        <div class="mentor">
-          <div>
-            <p>
-              Breaking into trading or investment banking is mostly an information problem. The
-              people a year or two ahead of you know which applications open when, what an online
-              assessment actually tests, and how a superday runs &mdash; and that knowledge does not
-              appear in any prospectus.
-            </p>
-            <p>
-              So we pair them up. Members who have secured <strong>spring weeks, summer internships,
-              off-cycles and graduate roles</strong> mentor members who are just starting out
-              &mdash; on applications, interviews, and what the work is really like.
-            </p>
-            <p>
-              It is student to student and free, but places are limited and allocated by
-              application. We look for members who are serious about the industry and will engage
-              properly with both the programme and the society. Places are not permanent: members
-              who stop engaging make way for those who will.
-            </p>
-          </div>
-          <figure class="abt-photo">
-            <img src="assets/img/events/welcome-event-2026-social-800.jpg"
-                 srcset="assets/img/events/welcome-event-2026-social-800.jpg 800w, assets/img/events/welcome-event-2026-social-1600.jpg 1600w"
-                 sizes="(min-width: 820px) 36vw, 100vw" width="800" height="600" loading="lazy"
-                 alt="Members in conversation around a table after the Welcome Event" />
-          </figure>
-        </div>
-      </section>
-
 
       <!-- ===== Principles ===== -->
       <section class="abt__sec" aria-labelledby="for-title">
@@ -584,11 +543,6 @@
             <span>The committee and division heads running the society this year.</span>
             <em>Meet the team &rarr;</em>
           </a>
-          <a href="/alumni">
-            <strong>Alumni</strong>
-            <span>Where members have gone after Bristol, and what they do now.</span>
-            <em>See the directory &rarr;</em>
-          </a>
         </div>
       </section>
 
@@ -623,7 +577,6 @@
             <li><a href="/about">About Us</a></li>
             <li><a href="/events">Events</a></li>
             <li><a href="/team">Team</a></li>
-            <li><a href="/alumni">Alumni</a></li>
           </ul>
         </div>
 
@@ -656,18 +609,14 @@
         <div class="signup__copy">
           <p class="signup__title">Hear when things happen</p>
           <p class="signup__note">
-            Speaker evenings, the analyst intake, and new research as it is published.
-            A few emails a term. No spam, unsubscribe any time.
+            Join the society on the Bristol SU page and you are on our mailing list: speaker
+            evenings, events with firms and the analyst intake.
           </p>
         </div>
-        <form class="signup__form" id="signupForm" novalidate
-              data-endpoint="https://script.google.com/macros/s/AKfycbzE3CBULjhL0M68m9MXIGsGyB_61TegeBTlJMSWm4MATaLG3_ig8ZoIipccSEIcKfxULg/exec">
-          <label class="visually-hidden" for="signupEmail">Email address</label>
-          <input class="signup__input" id="signupEmail" name="email" type="email"
-                 inputmode="email" autocomplete="email" placeholder="you@bristol.ac.uk" required />
-          <button class="signup__btn" type="submit">Subscribe</button>
-          <p class="signup__status" role="status" aria-live="polite"></p>
-        </form>
+        <a class="signup__btn signup__link" href="https://www.bristolsu.org.uk/groups/bristol-trading-society-2436" target="_blank" rel="noopener noreferrer">
+          Join on the SU page<span class="visually-hidden"> (opens in a new tab)</span>
+          <span aria-hidden="true">&nearr;</span>
+        </a>
       </div>
 
       <div class="site-footer__bottom">
