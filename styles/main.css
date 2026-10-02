@@ -3303,3 +3303,11 @@ body:has(> .ticker) { padding-top: var(--ticker-h); }
   .headline__media::after { background: linear-gradient(180deg, transparent 70%, rgba(6, 17, 43, 0.6) 100%); }
   .headline__body { padding: var(--space-4) var(--space-4) var(--space-4); }
 }
+/* Nav CTA on phones: "Join us" is short, so it keeps a proper pill and a
+   readable size instead of the compact type the longer label once needed. */
+@media (max-width: 640px) {
+  .nav__link--cta { padding-inline: 18px; font-size: 0.875rem; font-weight: 600; }
+}
+@media (max-width: 400px) {
+  .nav__link--cta { padding-inline: 14px; font-size: 0.8125rem; }
+}
