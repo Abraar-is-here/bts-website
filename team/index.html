@@ -201,6 +201,9 @@
       line-height: 1.1;
     }
     .team__tier--presidents .team-card__name { font-size: 1.25rem; }
+    /* First name over surname on every card, so names set as a two-line
+       block and the role lines underneath sit level along each row. */
+    .team-card__name > span { display: block; white-space: nowrap; }
 
     .team-card__role {
       font-family: var(--font-body);
@@ -230,16 +233,32 @@
       width: var(--dh-w);
       text-align: center;
     }
-    .team__tier--division-heads .team-card__name { text-wrap: balance; }
 
-    /* Phones: two per row keeps 13 cards from becoming one long column, and the
-       smaller cell keeps the same shared grid. */
+    /* Phones: two per row keeps 13 cards from becoming one long column. Names
+       scale with the screen so the longest surname (Munjanganja) still fits
+       its cell on one line. */
     @media (max-width: 560px) {
-      .team__tier--division-heads { --dh-w: 144px; --dh-gap: 16px; }
+      .team__tier--division-heads { --dh-w: 148px; --dh-gap: 14px; }
       .team__tier--division-heads .team-card__photo { width: 128px; height: 128px; }
-      .team__tier--division-heads .team-card__name { font-size: 1rem; }
+      .team__tier--division-heads .team-card__name { font-size: clamp(0.75rem, 3.7vw, 0.9375rem); }
     }
 
+    /* Committee: six officers, so a fixed grid instead of the flex row.
+       Every circle sits on one grid rather than being pushed about by name
+       length: three by two on wide screens, two per row on phones. */
+    .team__tier--committee .team__tier-cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 220px));
+      justify-content: center;
+      gap: var(--space-5) clamp(16px, 4vw, 64px);
+    }
+    .team__tier--committee .team-card { text-align: center; }
+    @media (max-width: 560px) {
+      .team__tier--committee .team__tier-cards { grid-template-columns: repeat(2, minmax(0, 160px)); gap: var(--space-4) 14px; }
+      .team__tier--committee .team-card__photo { width: 128px; height: 128px; }
+      .team__tier--committee .team-card__name { font-size: clamp(0.75rem, 3.7vw, 0.9375rem); }
+      .team__tier--committee .team-card__role { font-size: 0.8125rem; }
+    }
     /* Division sub-group inside the tier */
     .div-group {
       display: flex;
@@ -405,7 +424,7 @@
               <svg class="team-card__img" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="180" height="180" fill="#0d2b6b"/><text x="90" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="62" font-weight="700" fill="#38bdf8" letter-spacing="-2">HM</text></svg>
               <div class="team-card__overlay" aria-hidden="true"><svg class="team-card__li-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
             </div>
-            <p class="team-card__name">Hristiyan Minev</p>
+            <p class="team-card__name"><span>Hristiyan</span> <span>Minev</span></p>
           </a>
 
           <a class="team-card" href="https://www.linkedin.com/in/abraar-fazal-0b0948245/" target="_blank" rel="noopener noreferrer" aria-label="Abraar Fazal — LinkedIn profile">
@@ -414,7 +433,7 @@
               <svg class="team-card__img" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="180" height="180" fill="#0d2b6b"/><text x="90" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="62" font-weight="700" fill="#38bdf8" letter-spacing="-2">AF</text></svg>
               <div class="team-card__overlay" aria-hidden="true"><svg class="team-card__li-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
             </div>
-            <p class="team-card__name">Abraar Fazal</p>
+            <p class="team-card__name"><span>Abraar</span> <span>Fazal</span></p>
           </a>
 
         </div>
@@ -431,7 +450,7 @@
               <svg class="team-card__img" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="180" height="180" fill="#0d2b6b"/><text x="90" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="62" font-weight="700" fill="#38bdf8" letter-spacing="-2">RM</text></svg>
               <div class="team-card__overlay" aria-hidden="true"><svg class="team-card__li-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
             </div>
-            <p class="team-card__name">Rezqy Maulana</p>
+            <p class="team-card__name"><span>Rezqy</span> <span>Maulana</span></p>
             <p class="team-card__role">General Secretary</p>
           </a>
 
@@ -441,19 +460,50 @@
               <svg class="team-card__img" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="180" height="180" fill="#0d2b6b"/><text x="90" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="62" font-weight="700" fill="#38bdf8" letter-spacing="-2">TH</text></svg>
               <div class="team-card__overlay" aria-hidden="true"><svg class="team-card__li-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
             </div>
-            <p class="team-card__name">Tom Hoad</p>
+            <p class="team-card__name"><span>Tom</span> <span>Hoad</span></p>
             <p class="team-card__role">Treasurer</p>
           </a>
 
-          <a class="team-card team-card--no-lift" href="https://www.linkedin.com/in/emily-chiaia-miller-006469313/" target="_blank" rel="noopener noreferrer" aria-label="Emily Chiaia-Miller, DEI Officer — LinkedIn profile">
+          <a class="team-card" href="https://www.linkedin.com/in/emily-chiaia-miller-006469313/" target="_blank" rel="noopener noreferrer" aria-label="Emily Chiaia-Miller, DEI Officer — LinkedIn profile">
             <div class="team-card__photo">
               <img class="team-card__img" src="assets/img/team/emily-chiaia-miller.jpg" alt="Emily Chiaia-Miller" onerror="this.style.display='none'" />
               <svg class="team-card__img" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="180" height="180" fill="#0d2b6b"/><text x="90" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="62" font-weight="700" fill="#38bdf8" letter-spacing="-2">EC</text></svg>
               <div class="team-card__overlay" aria-hidden="true"><svg class="team-card__li-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
             </div>
-            <p class="team-card__name">Emily Chiaia-Miller</p>
+            <p class="team-card__name"><span>Emily</span> <span>Chiaia-Miller</span></p>
             <p class="team-card__role">DEI Officer</p>
           </a>
+
+          <a class="team-card" href="https://www.linkedin.com/in/sebastian-fioravante-722894233/" target="_blank" rel="noopener noreferrer" aria-label="Sebastian Fioravante, Ops &amp; Outreach — LinkedIn profile">
+            <div class="team-card__photo">
+              <img class="team-card__img" src="assets/img/team/sebastian-fioravante.jpg" alt="Sebastian Fioravante" onerror="this.style.display='none'" />
+              <svg class="team-card__img" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="180" height="180" fill="#0d2b6b"/><text x="90" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="62" font-weight="700" fill="#38bdf8" letter-spacing="-2">RM</text></svg>
+              <div class="team-card__overlay" aria-hidden="true"><svg class="team-card__li-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
+            </div>
+            <p class="team-card__name"><span>Sebastian</span> <span>Fioravante</span></p>
+            <p class="team-card__role">Ops &amp; Outreach</p>
+          </a>
+
+          <a class="team-card" href="https://www.linkedin.com/in/dinah-aria-lyndon-615264358/" target="_blank" rel="noopener noreferrer" aria-label="Dinah Lyndon, Media &amp; Marketing Officer — LinkedIn profile">
+            <div class="team-card__photo">
+              <img class="team-card__img" src="assets/img/team/dinah-lyndon.jpg" alt="Dinah Lyndon" onerror="this.style.display='none'" />
+              <svg class="team-card__img" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="180" height="180" fill="#0d2b6b"/><text x="90" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="62" font-weight="700" fill="#38bdf8" letter-spacing="-2">RM</text></svg>
+              <div class="team-card__overlay" aria-hidden="true"><svg class="team-card__li-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
+            </div>
+            <p class="team-card__name"><span>Dinah</span> <span>Lyndon</span></p>
+            <p class="team-card__role">Media &amp; Marketing Officer</p>
+          </a>
+
+          <a class="team-card" href="https://www.linkedin.com/in/adityanarayan193/" target="_blank" rel="noopener noreferrer" aria-label="Adi Narayan, Media &amp; Marketing Officer — LinkedIn profile">
+            <div class="team-card__photo">
+              <img class="team-card__img" src="assets/img/team/adi-narayan.jpg" alt="Adi Narayan" onerror="this.style.display='none'" />
+              <svg class="team-card__img" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="180" height="180" fill="#0d2b6b"/><text x="90" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="62" font-weight="700" fill="#38bdf8" letter-spacing="-2">RM</text></svg>
+              <div class="team-card__overlay" aria-hidden="true"><svg class="team-card__li-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
+            </div>
+            <p class="team-card__name"><span>Adi</span> <span>Narayan</span></p>
+            <p class="team-card__role">Media &amp; Marketing Officer</p>
+          </a>
+
 
         </div>
       </div>
@@ -474,7 +524,7 @@
                 <svg class="team-card__img" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="180" height="180" fill="#0d2b6b"/><text x="90" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="62" font-weight="700" fill="#38bdf8" letter-spacing="-2">TM</text></svg>
                 <div class="team-card__overlay" aria-hidden="true"><svg class="team-card__li-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
               </div>
-              <p class="team-card__name">Tash Munjanganja</p>
+              <p class="team-card__name"><span>Tash</span> <span>Munjanganja</span></p>
             </a>
             <a class="team-card" href="https://www.linkedin.com/in/toluwani-ayetan-287a29262/" target="_blank" rel="noopener noreferrer" aria-label="Tolu Ayetan, Equities Division Head &mdash; LinkedIn profile">
               <div class="team-card__photo">
@@ -482,7 +532,7 @@
                 <svg class="team-card__img" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="180" height="180" fill="#0d2b6b"/><text x="90" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="62" font-weight="700" fill="#38bdf8" letter-spacing="-2">TA</text></svg>
                 <div class="team-card__overlay" aria-hidden="true"><svg class="team-card__li-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
               </div>
-              <p class="team-card__name">Tolu Ayetan</p>
+              <p class="team-card__name"><span>Tolu</span> <span>Ayetan</span></p>
             </a>
             <a class="team-card" href="https://www.linkedin.com/in/ibrahim-ali3/" target="_blank" rel="noopener noreferrer" aria-label="Ibrahim Ali, Equities Division Head &mdash; LinkedIn profile">
               <div class="team-card__photo">
@@ -490,7 +540,7 @@
                 <svg class="team-card__img" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="180" height="180" fill="#0d2b6b"/><text x="90" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="62" font-weight="700" fill="#38bdf8" letter-spacing="-2">IA</text></svg>
                 <div class="team-card__overlay" aria-hidden="true"><svg class="team-card__li-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
               </div>
-              <p class="team-card__name">Ibrahim Ali</p>
+              <p class="team-card__name"><span>Ibrahim</span> <span>Ali</span></p>
             </a>
             <a class="team-card" href="https://www.linkedin.com/in/tomhoad1/" target="_blank" rel="noopener noreferrer" aria-label="Tom Hoad, Equities Division Head &mdash; LinkedIn profile">
               <div class="team-card__photo">
@@ -498,7 +548,7 @@
                 <svg class="team-card__img" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="180" height="180" fill="#0d2b6b"/><text x="90" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="62" font-weight="700" fill="#38bdf8" letter-spacing="-2">TH</text></svg>
                 <div class="team-card__overlay" aria-hidden="true"><svg class="team-card__li-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
               </div>
-              <p class="team-card__name">Tom Hoad</p>
+              <p class="team-card__name"><span>Tom</span> <span>Hoad</span></p>
             </a>
           </div>
         </div>
@@ -515,7 +565,7 @@
                 <svg class="team-card__img" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="180" height="180" fill="#0d2b6b"/><text x="90" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="62" font-weight="700" fill="#38bdf8" letter-spacing="-2">AM</text></svg>
                 <div class="team-card__overlay" aria-hidden="true"><svg class="team-card__li-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
               </div>
-              <p class="team-card__name">Anay Mistry</p>
+              <p class="team-card__name"><span>Anay</span> <span>Mistry</span></p>
             </a>
             <a class="team-card" href="https://www.linkedin.com/in/valeriy-sinko-51b954266/" target="_blank" rel="noopener noreferrer" aria-label="Val Sinko, FICC Division Head &mdash; LinkedIn profile">
               <div class="team-card__photo">
@@ -523,7 +573,7 @@
                 <svg class="team-card__img" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="180" height="180" fill="#0d2b6b"/><text x="90" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="62" font-weight="700" fill="#38bdf8" letter-spacing="-2">VS</text></svg>
                 <div class="team-card__overlay" aria-hidden="true"><svg class="team-card__li-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
               </div>
-              <p class="team-card__name">Val Sinko</p>
+              <p class="team-card__name"><span>Val</span> <span>Sinko</span></p>
             </a>
             <a class="team-card" href="https://www.linkedin.com/in/manolo-kidel-5877242a0/" target="_blank" rel="noopener noreferrer" aria-label="Manolo Kidel, FICC Division Head &mdash; LinkedIn profile">
               <div class="team-card__photo">
@@ -531,7 +581,7 @@
                 <svg class="team-card__img" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="180" height="180" fill="#0d2b6b"/><text x="90" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="62" font-weight="700" fill="#38bdf8" letter-spacing="-2">MK</text></svg>
                 <div class="team-card__overlay" aria-hidden="true"><svg class="team-card__li-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
               </div>
-              <p class="team-card__name">Manolo Kidel</p>
+              <p class="team-card__name"><span>Manolo</span> <span>Kidel</span></p>
             </a>
             <a class="team-card" href="https://www.linkedin.com/in/aledvonoppell/" target="_blank" rel="noopener noreferrer" aria-label="Aled von Oppell, FICC Division Head &mdash; LinkedIn profile">
               <div class="team-card__photo">
@@ -539,7 +589,7 @@
                 <svg class="team-card__img" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="180" height="180" fill="#0d2b6b"/><text x="90" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="62" font-weight="700" fill="#38bdf8" letter-spacing="-2">AO</text></svg>
                 <div class="team-card__overlay" aria-hidden="true"><svg class="team-card__li-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
               </div>
-              <p class="team-card__name">Aled von Oppell</p>
+              <p class="team-card__name"><span>Aled</span> <span>von Oppell</span></p>
             </a>
           </div>
         </div>
@@ -556,7 +606,7 @@
                 <svg class="team-card__img" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="180" height="180" fill="#0d2b6b"/><text x="90" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="62" font-weight="700" fill="#38bdf8" letter-spacing="-2">KT</text></svg>
                 <div class="team-card__overlay" aria-hidden="true"><svg class="team-card__li-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
               </div>
-              <p class="team-card__name">Kometh Tauch</p>
+              <p class="team-card__name"><span>Kometh</span> <span>Tauch</span></p>
             </a>
             <a class="team-card" href="https://www.linkedin.com/in/aditya-verma-27av/" target="_blank" rel="noopener noreferrer" aria-label="Aditya Verma, Quant Division Head &mdash; LinkedIn profile">
               <div class="team-card__photo">
@@ -564,7 +614,7 @@
                 <svg class="team-card__img" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="180" height="180" fill="#0d2b6b"/><text x="90" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="62" font-weight="700" fill="#38bdf8" letter-spacing="-2">AV</text></svg>
                 <div class="team-card__overlay" aria-hidden="true"><svg class="team-card__li-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
               </div>
-              <p class="team-card__name">Aditya Verma</p>
+              <p class="team-card__name"><span>Aditya</span> <span>Verma</span></p>
             </a>
             <a class="team-card" href="https://www.linkedin.com/in/willlbarry/" target="_blank" rel="noopener noreferrer" aria-label="Will Barry, Quant Division Head &mdash; LinkedIn profile">
               <div class="team-card__photo">
@@ -572,7 +622,7 @@
                 <svg class="team-card__img" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="180" height="180" fill="#0d2b6b"/><text x="90" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="62" font-weight="700" fill="#38bdf8" letter-spacing="-2">WB</text></svg>
                 <div class="team-card__overlay" aria-hidden="true"><svg class="team-card__li-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
               </div>
-              <p class="team-card__name">Will Barry</p>
+              <p class="team-card__name"><span>Will</span> <span>Barry</span></p>
             </a>
           </div>
         </div>
@@ -589,7 +639,7 @@
                 <svg class="team-card__img" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="180" height="180" fill="#0d2b6b"/><text x="90" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="62" font-weight="700" fill="#38bdf8" letter-spacing="-2">MK</text></svg>
                 <div class="team-card__overlay" aria-hidden="true"><svg class="team-card__li-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
               </div>
-              <p class="team-card__name">Manasvi Kommuri</p>
+              <p class="team-card__name"><span>Manasvi</span> <span>Kommuri</span></p>
             </a>
             <a class="team-card" href="https://www.linkedin.com/in/lenny-tucker-3b0324282/" target="_blank" rel="noopener noreferrer" aria-label="Lenny Tucker, Macro Division Head &mdash; LinkedIn profile">
               <div class="team-card__photo">
@@ -597,7 +647,7 @@
                 <svg class="team-card__img" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="180" height="180" fill="#0d2b6b"/><text x="90" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="62" font-weight="700" fill="#38bdf8" letter-spacing="-2">LT</text></svg>
                 <div class="team-card__overlay" aria-hidden="true"><svg class="team-card__li-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
               </div>
-              <p class="team-card__name">Lenny Tucker</p>
+              <p class="team-card__name"><span>Lenny</span> <span>Tucker</span></p>
             </a>
           </div>
         </div>
