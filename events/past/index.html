@@ -97,6 +97,9 @@
     .log__date { font-variant-numeric: tabular-nums; color: var(--text-secondary); line-height: 1.2; }
     .log__day { display: block; font-family: var(--font-display); font-size: 1.75rem; font-weight: 800; letter-spacing: -0.02em; color: var(--text-primary); }
     .log__mon { display: block; margin-top: 2px; font-size: 0.8125rem; font-weight: 600; }
+    /* Seasons and month ranges are words, not numbers: a size down so they
+       stay inside the date column. */
+    .log__day--word { font-size: 1.05rem; line-height: 1.25; letter-spacing: -0.01em; }
     .log__tag { display: block; margin-top: 6px; font-size: 0.8125rem; font-weight: 600; color: var(--accent-bright); }
     .log__title { display: block; font-family: var(--font-display); font-size: clamp(1.15rem, 2vw, 1.45rem); font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; color: var(--text-primary); }
     .log__text { display: block; margin-top: 8px; max-width: 62ch; font-size: 0.9375rem; line-height: 1.6; color: var(--text-secondary); }
@@ -294,7 +297,7 @@
         <ol class="log">
           <li class="log__item">
             <a class="log__row" href="/events/#comp-title">
-              <span class="log__date"><span class="log__day">Apr</span><span class="log__mon">to Jun 2026</span></span>
+              <span class="log__date"><span class="log__day log__day--word">Apr &ndash; Jun</span><span class="log__mon">2026</span></span>
               <span>
                 <span class="log__title">Annual Trading Competition</span>
                 <span class="log__tag">Seven teams &middot; external judges</span>
@@ -306,7 +309,7 @@
           </li>
           <li class="log__item">
             <div class="log__row">
-              <span class="log__date"><span class="log__day">Spring</span><span class="log__mon">2026</span></span>
+              <span class="log__date"><span class="log__day log__day--word">Spring</span><span class="log__mon">2026</span></span>
               <span>
                 <span class="log__title">Macro Debate Competition</span>
                 <span class="log__tag">Annual</span>

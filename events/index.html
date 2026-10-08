@@ -27,8 +27,8 @@
        Deliberately NOT one card grid repeated. The page runs a weight ladder:
 
          tier 1  .feature   the annual competition — image-led, full-bleed
-         tier 2  .row       three recurring events — alternating wide rows
-         tier 3  .index     supporting events — a compact hairline list
+         tier 2  .row       the recurring events — alternating wide rows
+         then    .past-teaser  one way into the archive at /events/past/
 
        Each tier gets a different *treatment*, not just a different size, so the
        hierarchy survives even when you're skimming at speed.
@@ -544,130 +544,37 @@
     }
     .row__text { color: var(--text-secondary); line-height: 1.65; }
 
-    /* --- Speakers : featured three ----------------------------------------
-       Portrait-led, so the most senior names read at a glance instead of
-       being flattened into an eleven-up circle grid. */
-    .headliners {
+    /* --- Past events: one way into the archive ------------------------------ */
+    .past-teaser {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
       gap: var(--space-4);
-    }
-    .headliner {
-      display: flex;
-      flex-direction: column;
+      align-items: center;
+      padding: var(--space-4);
+      border: 1px solid var(--hairline);
       border-radius: var(--radius-card);
-      overflow: hidden;
-      background: var(--card-fill);
-      border: 1px solid var(--glass-border);
+      background: rgba(8, 19, 46, 0.55);
+      color: inherit;
+      text-decoration: none;
+      transition: border-color var(--dur-fast) var(--ease-out), transform 160ms var(--ease-out);
     }
-    .headliner img {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      object-fit: cover;
-      object-position: 50% 28%;
-      display: block;
-    }
-    .headliner__body { padding: var(--space-3) var(--space-3) var(--space-4); }
-    .headliner__name {
-      font-family: var(--font-display);
-      font-size: 1.25rem;
-      font-weight: 800;
-      letter-spacing: -0.015em;
-      line-height: 1.15;
-      margin-bottom: 4px;
-    }
-    .headliner__role { font-size: 0.875rem; color: var(--accent-bright); line-height: 1.4; margin-bottom: 10px; }
-    .headliner__note { font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.55; }
-
-    /* --- Speakers : filterable roster -------------------------------------- */
-    .filters {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-2);
-      /* The removed hint paragraph used to supply this gap; the chips need it
-         themselves so they don't crowd the featured speaker cards above. */
-      margin: var(--space-5) 0 var(--space-4);
-    }
-    .filter {
-      font-family: inherit;
-      font-size: 0.8125rem;
-      font-weight: 500;
-      color: var(--text-secondary);
-      background: transparent;
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-pill);
-      padding: 8px 18px;
-      min-height: 44px;
-      cursor: pointer;
-      transition: color var(--dur-fast) var(--ease-out),
-                  border-color var(--dur-fast) var(--ease-out),
-                  background var(--dur-fast) var(--ease-out),
-                  transform var(--dur-fast) var(--ease-out);
-    }
-    .filter:active { transform: scale(0.96); }
+    .past-teaser:active { transform: scale(0.99); }
+    .past-teaser__imgs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+    .past-teaser__imgs img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 12px; }
+    .past-teaser__title { display: block; font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; color: var(--text-primary); }
+    .past-teaser__text { display: block; margin-top: var(--space-2); max-width: 46ch; font-size: 1.0625rem; line-height: 1.55; color: var(--text-secondary); }
+    .past-teaser__go { display: inline-block; margin-top: var(--space-3); font-weight: 600; color: var(--accent-bright); }
+    .past-teaser__go span { display: inline-block; transition: transform var(--dur-fast) var(--ease-out); }
     @media (hover: hover) and (pointer: fine) {
-      .filter:hover { color: var(--text-primary); border-color: rgba(141, 162, 196, 0.5); }
+      .past-teaser:hover { border-color: rgba(255, 255, 255, 0.3); }
+      .past-teaser:hover .past-teaser__go span { transform: translateX(4px); }
     }
-    .filter[aria-pressed="true"] {
-      color: var(--c-navy);
-      background: var(--text-primary);
-      border-color: var(--text-primary);
+    @media (max-width: 720px) {
+      .past-teaser { grid-template-columns: minmax(0, 1fr); padding: var(--space-3); }
     }
-
-    .roster {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
-      gap: 0 var(--space-4);
+    @media (prefers-reduced-motion: reduce) {
+      .past-teaser, .past-teaser__go span { transition: none; }
     }
-    .roster li {
-      display: flex;
-      align-items: center;
-      gap: var(--space-3);
-      padding: var(--space-3) 0;
-      border-top: 1px solid var(--hairline);
-    }
-    .roster li[hidden] { display: none; }
-    .roster img {
-      width: 52px; height: 52px;
-      flex: none;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-    .roster__name { font-size: 0.9375rem; font-weight: 600; line-height: 1.3; }
-    .roster__role { font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.4; }
-    .roster__empty { color: var(--text-secondary); padding: var(--space-4) 0; }
-
-    /* --- TIER 3 : supporting index ----------------------------------------
-       These are evidence, not headliners. A list, so they stop competing with
-       the flagship for attention. */
-    .index { list-style: none; margin: 0; padding: 0; }
-    .index li {
-      display: grid;
-      grid-template-columns: 152px minmax(0, 1fr);
-      gap: var(--space-4);
-      align-items: center;
-      padding: var(--space-4) 0;
-      border-top: 1px solid var(--hairline);
-    }
-    .index li:last-child { border-bottom: 1px solid var(--hairline); }
-    .index img {
-      width: 152px;
-      aspect-ratio: 3 / 2;
-      object-fit: cover;
-      border-radius: 10px;
-      display: block;
-    }
-    .index__title { font-size: 1.25rem; font-weight: 700; line-height: 1.3; margin-bottom: 5px; }
-    .index__title small {
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--accent-bright);
-      margin-left: 10px;
-      vertical-align: 1px;
-    }
-    .index__text { font-size: 1.0625rem; color: var(--text-secondary); line-height: 1.55; max-width: 78ch; }
 
     /* --- Closing CTA ------------------------------------------------------- */
     .cta {
@@ -695,15 +602,10 @@
       .row { grid-template-columns: minmax(0, 1fr); }
       .row:nth-child(even) .row__media { order: 0; }
     }
-    @media (max-width: 520px) {
-      .index li { grid-template-columns: 96px minmax(0, 1fr); }
-      .index img { width: 96px; }
-    }
 
     @media (prefers-reduced-motion: reduce) {
       .next__flag::before { animation: none; }
       .rail { scroll-snap-type: none; }
-      .filter { transition: none; }
     }
   </style>
 </head>
@@ -1005,35 +907,7 @@
         <div class="sec__head">
           <h2 class="sec__title" id="run-title">Competitions and simulations</h2>
         </div>
-
         <div class="rows">
-
-          <article class="row">
-            <div class="row__media">
-              <!-- Muted inline loop so the turnout reads instantly; the poster
-                   covers reduced-motion and slow connections. -->
-              <video autoplay muted loop playsinline preload="metadata"
-                     poster="assets/img/events/amplifyme-simulator.jpg"
-                     aria-label="A full lecture theatre of students at the AmplifyME trading simulator event">
-                <source src="assets/img/events/amplifyme-simulator.mp4" type="video/mp4" />
-              </video>
-            </div>
-            <div>
-              <span class="row__tag">With AmplifyME</span>
-              <h3 class="row__title">
-                <a class="row__link" href="/events/amplifyme/">AmplifyME Pathways launch</a>
-              </h3>
-              <p class="row__text">
-                A live portfolio-management simulation. Members manage $20m of capital through a
-                compressed year of market moves, news and research, and are ranked on what they do
-                with it. Our first event sold out; a second followed by demand.
-              </p>
-              <p class="row__more">
-                <a href="/events/amplifyme/">How the Pathways launch ran &rarr;</a>
-              </p>
-            </div>
-          </article>
-
           <article class="row">
             <div class="row__media">
               <img src="assets/img/events/macro-debate.jpg" alt="Members taking part in the annual BTS macro debate competition" />
@@ -1067,148 +941,6 @@
       </div>
     </section>
 
-    <!-- ============================== Speakers ============================== -->
-    <section class="sec" aria-labelledby="speakers-title">
-      <div class="wrap">
-        <div class="sec__head">
-          <h2 class="sec__title" id="speakers-title">People actually doing the work</h2>
-          <p class="sec__note">
-            Traders, investors, founders and Bristol alumni a few years ahead of our members.
-            Filter by where they sit in the market.
-          </p>
-        </div>
-
-        <div class="headliners">
-
-          <article class="headliner">
-            <img src="assets/img/speakers/shahryar-naghshbandi.jpg" alt="Shahryar Naghshbandi" />
-            <div class="headliner__body">
-              <h3 class="headliner__name">Shahryar Naghshbandi</h3>
-              <p class="headliner__role">Head of Macro Trading, AME &mdash; Standard Chartered</p>
-              <p class="headliner__note">
-                An evening on how the trading industry actually works, and the advice he&rsquo;d give
-                anyone trying to enter it. The discussion ran well past the scheduled finish.
-              </p>
-            </div>
-          </article>
-
-          <article class="headliner">
-            <img src="assets/img/speakers/rich-mcdonald.jpg" alt="Rich McDonald" />
-            <div class="headliner__body">
-              <h3 class="headliner__name">Rich McDonald</h3>
-              <p class="headliner__role">Hedge fund manager; ex-Director, Credit Suisse</p>
-              <p class="headliner__note">
-                Ran an interactive trading and options masterclass with our members, built around
-                live trading games rather than slides.
-              </p>
-            </div>
-          </article>
-
-          <article class="headliner">
-            <img src="assets/img/speakers/andrew-simpson.jpg" alt="Andrew Simpson" />
-            <div class="headliner__body">
-              <h3 class="headliner__name">Andrew Simpson</h3>
-              <p class="headliner__role">Chief Executive, SIGMA Financial</p>
-              <p class="headliner__note">
-                Spoke to a full theatre on trading and on integrating sophisticated AI tooling into
-                the space, as part of an ongoing partnership with SIGMA.
-              </p>
-            </div>
-          </article>
-
-        </div>
-
-        <div class="filters" role="group" aria-label="Filter speakers">
-          <button class="filter" type="button" data-filter="all" aria-pressed="true">All speakers</button>
-          <button class="filter" type="button" data-filter="sellside" aria-pressed="false">Sell-side</button>
-          <button class="filter" type="button" data-filter="buyside" aria-pressed="false">Buy-side</button>
-          <button class="filter" type="button" data-filter="fintech" aria-pressed="false">Fintech</button>
-          <button class="filter" type="button" data-filter="alumni" aria-pressed="false">Bristol alumni</button>
-        </div>
-
-        <ul class="roster" id="roster">
-          <li data-tags="buyside alumni">
-            <img src="assets/img/speakers/pratik-popat.jpg" alt="" />
-            <div>
-              <p class="roster__name">Pratik Popat</p>
-              <p class="roster__role">Founder of BTS &middot; Venture and growth investor, Simplyhealth; previously Barclays</p>
-            </div>
-          </li>
-          <li data-tags="sellside">
-            <img src="assets/img/speakers/shahryar-naghshbandi.jpg" alt="" />
-            <div>
-              <p class="roster__name">Shahryar Naghshbandi</p>
-              <p class="roster__role">Head of Macro Trading, AME &mdash; Standard Chartered</p>
-            </div>
-          </li>
-          <li data-tags="fintech">
-            <img src="assets/img/speakers/andrew-simpson.jpg" alt="" />
-            <div>
-              <p class="roster__name">Andrew Simpson</p>
-              <p class="roster__role">Chief Executive, SIGMA Financial</p>
-            </div>
-          </li>
-          <li data-tags="buyside alumni">
-            <img src="assets/img/speakers/nick-votier.jpg" alt="" />
-            <div>
-              <p class="roster__name">Nick Votier, CFA</p>
-              <p class="roster__role">Vice President, Ares Wealth Management Solutions; nine years at HSBC</p>
-            </div>
-          </li>
-          <li data-tags="fintech sellside">
-            <img src="assets/img/speakers/eren-erman.jpg" alt="" />
-            <div>
-              <p class="roster__name">Eren Erman</p>
-              <p class="roster__role">Global Head of Compliance Technology, TP ICAP</p>
-            </div>
-          </li>
-          <li data-tags="buyside sellside">
-            <img src="assets/img/speakers/rich-mcdonald.jpg" alt="" />
-            <div>
-              <p class="roster__name">Rich McDonald</p>
-              <p class="roster__role">Hedge fund manager; ex-Director, Credit Suisse</p>
-            </div>
-          </li>
-          <li data-tags="buyside alumni">
-            <img src="assets/img/speakers/sally-tam.jpg" alt="" />
-            <div>
-              <p class="roster__name">Sally Tam</p>
-              <p class="roster__role">Investment Executive, LDC &middot; on her route into private equity</p>
-            </div>
-          </li>
-          <li data-tags="sellside alumni">
-            <img src="assets/img/speakers/viktoria-leins.jpg" alt="" />
-            <div>
-              <p class="roster__name">Viktoria Leins</p>
-              <p class="roster__role">Data Science IB Analyst, Citi &middot; on breaking into investment banking</p>
-            </div>
-          </li>
-          <li data-tags="buyside">
-            <img src="assets/img/speakers/simon-warren.jpg" alt="" />
-            <div>
-              <p class="roster__name">Simon Warren</p>
-              <p class="roster__role">Retired Head of Global Investments; former Director, Society of Technical Analysts</p>
-            </div>
-          </li>
-          <li data-tags="fintech">
-            <img src="assets/img/speakers/matt-cheung.jpg" alt="" />
-            <div>
-              <p class="roster__name">Matt Cheung</p>
-              <p class="roster__role">CEO and Founder, Work in Fintech</p>
-            </div>
-          </li>
-          <li data-tags="fintech alumni">
-            <img src="assets/img/speakers/chloe-hollobon.jpg" alt="" />
-            <div>
-              <p class="roster__name">Chloe Hollobon</p>
-              <p class="roster__role">Analyst, Work in Fintech</p>
-            </div>
-          </li>
-        </ul>
-        <p class="roster__empty" id="roster-empty" hidden>No speakers in that category yet.</p>
-      </div>
-    </section>
-
     <!-- ============================== The season ============================ -->
     <section class="sec" aria-labelledby="season-title">
       <div class="wrap">
@@ -1224,7 +956,7 @@
               <li class="term__past">Annual Welcome Event <span class="term__when">24 September</span></li>
               <li data-until="2026-10-03T00:00:00+01:00"><a class="term__link" href="/apply">Analyst applications</a> <span class="term__when">Close 2 October</span></li>
               <li class="term__past" data-after="2026-10-03T00:00:00+01:00" hidden>Analyst applications <span class="term__when">Closed 2 October</span></li>
-              <li><a class="term__link" href="/events/#jpmorgan">J.P. Morgan on campus</a> <span class="term__when">7 &ndash; 8 October</span></li>
+              <li class="term__past"><a class="term__link" href="/events/past/">J.P. Morgan on campus</a> <span class="term__when">7 &ndash; 8 October</span></li>
               <li><a class="term__link" href="/events/#umushroom">UK Investment Competition</a> <span class="term__when">12 Oct &ndash; 1 Dec</span></li>
               <li>Bloomberg Terminal sessions <span class="term__when">Throughout</span></li>
               <li>Speaker evenings <span class="term__when">Fortnightly</span></li>
@@ -1249,66 +981,24 @@
         </div>
       </div>
     </section>
-    <!-- ============================== TIER 3 ================================ -->
-    <section class="sec" aria-labelledby="more-title">
+    <!-- ============================== Past events =========================== -->
+    <section class="sec" aria-labelledby="past-title">
       <div class="wrap">
-        <div class="sec__head">
-          <h2 class="sec__title" id="more-title">Other events</h2>
-        </div>
-
-        <ul class="index">
-          <li>
-            <img src="assets/img/events/drw-social.jpg" alt="BTS analysts and division heads at the DRW social" />
-            <div>
-              <p class="index__title">DRW Social <small>DRW</small></p>
-              <p class="index__text">An invite-only evening with DRW for our analysts and division heads.</p>
-            </div>
-          </li>
-          <li>
-            <img src="assets/img/events/energy-trading-week.jpg" alt="BTS members attending Energy Trading Week" />
-            <div>
-              <p class="index__title">Energy Trading Week <small>Partner event</small></p>
-              <p class="index__text">Our commodities partner invites BTS members to their annual industry event, putting members in the room with practising energy traders.</p>
-            </div>
-          </li>
-          <li>
-            <img src="assets/img/events/lse-aic.jpg" alt="BTS members representing the society at the LSE AIC" />
-            <div>
-              <p class="index__title">LSE Alternative Investments Conference <small>External</small></p>
-              <p class="index__text">BTS representing Bristol among the UK&rsquo;s alternative investment societies.</p>
-            </div>
-          </li>
-          <li>
-            <img src="assets/img/events/speaker-standard-chartered.jpg" alt="BTS members at the Standard Chartered evening" />
-            <div>
-              <p class="index__title">An evening with Standard Chartered <small>Standard Chartered</small></p>
-              <p class="index__text">Our members after Shahryar&rsquo;s session on the trading industry.</p>
-            </div>
-          </li>
-          <li>
-            <img src="assets/img/events/speaker-sigma.jpg" alt="Andrew Simpson, CEO of SIGMA Financial, speaking to BTS members" />
-            <div>
-              <p class="index__title">A full theatre for SIGMA <small>SIGMA Financial</small></p>
-              <p class="index__text">Andrew Simpson on trading and AI tooling, part of an ongoing partnership.</p>
-            </div>
-          </li>
-          <li>
-            <img src="assets/img/events/welcome-event-2026-audience-800.jpg" alt="Students filling Pugsley Lecture Theatre at the 2026 Welcome Event" loading="lazy" />
-            <div>
-              <p class="index__title">Annual Welcome Event <small>Every September</small></p>
-              <p class="index__text">Where the year starts: the society, the divisions and the analyst programme, introduced to new members. This year it filled Pugsley Lecture Theatre.</p>
-            </div>
-          </li>
-          <li>
-            <img src="assets/img/events/member-workshop.jpg" alt="Members at a BTS-hosted workshop" />
-            <div>
-              <p class="index__title">Member Workshops <small>Termly</small></p>
-              <p class="index__text">Practical sessions run by BTS, building the groundwork the divisions then apply to live markets.</p>
-            </div>
-          </li>
-        </ul>
+        <a class="past-teaser" href="/events/past/">
+          <span class="past-teaser__imgs" aria-hidden="true">
+            <img src="assets/img/events/speaker-standard-chartered.jpg" alt="" loading="lazy" />
+            <img src="assets/img/events/drw-social.jpg" alt="" loading="lazy" />
+            <img src="assets/img/events/lse-aic.jpg" alt="" loading="lazy" />
+          </span>
+          <span class="past-teaser__body">
+            <span class="past-teaser__title" id="past-title">Everything we&rsquo;ve run</span>
+            <span class="past-teaser__text">Firm evenings, competitions, partner events and every speaker we&rsquo;ve hosted, year by year.</span>
+            <span class="past-teaser__go">See past events <span aria-hidden="true">&rarr;</span></span>
+          </span>
+        </a>
       </div>
     </section>
+
 
     <!-- ============================== Close ================================= -->
     <div class="wrap">
@@ -1327,18 +1017,6 @@
   </main>
 
   <script>
-    /* Reduced motion: hold the poster frame rather than looping the clip.
-       autoplay/loop are markup attributes, so this has to be done in JS. */
-    (function () {
-      if (!window.matchMedia) return;
-      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      document.querySelectorAll('.row__media video').forEach(function (v) {
-        v.removeAttribute('autoplay');
-        v.loop = false;
-        v.pause();
-      });
-    })();
-
     /* Rail nav buttons. Progressive enhancement: without JS the strip is
        still fully scrollable by touch/trackpad/drag, buttons just no-op. */
     (function () {
@@ -1353,32 +1031,6 @@
       }
       prev.addEventListener('click', function () { scrollByCard(-1); });
       next.addEventListener('click', function () { scrollByCard(1); });
-    })();
-
-    /* Speaker roster filter. Progressive enhancement: without JS every speaker
-       is already in the DOM and visible, and the buttons simply do nothing. */
-    (function () {
-      var buttons = Array.prototype.slice.call(document.querySelectorAll('.filter'));
-      var items = Array.prototype.slice.call(document.querySelectorAll('#roster li'));
-      var empty = document.getElementById('roster-empty');
-      if (!buttons.length || !items.length) return;
-
-      buttons.forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          var want = btn.dataset.filter;
-          buttons.forEach(function (b) {
-            b.setAttribute('aria-pressed', String(b === btn));
-          });
-          var shown = 0;
-          items.forEach(function (li) {
-            var match = want === 'all' ||
-                        (' ' + li.dataset.tags + ' ').indexOf(' ' + want + ' ') > -1;
-            li.hidden = !match;
-            if (match) shown++;
-          });
-          if (empty) empty.hidden = shown > 0;
-        });
-      });
     })();
   </script>
 
