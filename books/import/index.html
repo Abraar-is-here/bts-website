@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- noindex until the Apps Script is deployed and the first report is up;
-       remove this line and add the page to the nav at the same time. -->
+  <!-- A tool for division heads, never indexed or linked from the nav.
+       Reached from /books/import/ only. -->
   <meta name="robots" content="noindex" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <base href="/" />
 
-  <title>Macro research — Bristol Trading Society</title>
-  <meta name="description" content="Macro research from the Bristol Trading Society, published as our Macro division writes it." />
+  <title>Publish your book — Bristol Trading Society</title>
+  <meta name="description" content="For BTS division heads: turn an IBKR Flex Query export into your published book." />
 
   <link rel="icon" type="image/svg+xml" href="assets/img/bull.svg" />
 
@@ -21,123 +21,12 @@
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
   <link rel="stylesheet" href="styles/main.css?v=103" />
-
-  <style>
-    /* -------------------------------------------------------------------------
-       Macro research, read live from Google (see apps-script/DeskCode.gs):
-       reports from a Drive folder only the Macro heads can upload to. The
-       page renders whatever is there, so publishing never means editing the
-       site. The trading books have their own page, /books/.
-       ------------------------------------------------------------------------- */
-    .rs {
-      --text-secondary: rgba(244, 247, 251, 0.74);
-      --up: #4ade80;
-      --down: #f87171;
-      position: relative;
-      padding: 120px var(--gutter) var(--space-6);
-      background: linear-gradient(180deg, rgba(6, 17, 43, 0.35) 0, rgba(6, 17, 43, 0.62) 700px, rgba(6, 17, 43, 0.72) 100%);
-    }
-    .rs__inner { max-width: var(--container-max); margin: 0 auto; }
-    .rs h1 {
-      margin: 0 0 var(--space-3);
-      font-family: var(--font-display);
-      font-size: clamp(2.6rem, 7vw, 5rem);
-      font-weight: 800;
-      line-height: 0.96;
-      letter-spacing: -0.04em;
-      color: var(--text-primary);
-    }
-    .rs__lead { margin: 0; max-width: 58ch; font-size: 1.125rem; line-height: 1.6; color: rgba(244, 247, 251, 0.84); }
-    .rs__lead a { color: var(--accent-bright); text-decoration: underline; text-decoration-color: rgba(56, 189, 248, 0.45); text-underline-offset: 4px; }
-    .rs__demo {
-      margin: var(--space-4) 0 0;
-      display: inline-block;
-      padding: 8px 14px;
-      border: 1px dashed rgba(251, 191, 36, 0.6);
-      border-radius: var(--radius-pill);
-      font-size: 0.8125rem;
-      color: #fcd34d;
-    }
-
-    .rs section { margin-top: var(--space-7); }
-    .rs-head {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: var(--space-2) var(--space-4);
-      padding-bottom: var(--space-3);
-      margin-bottom: var(--space-4);
-      border-bottom: 1px solid var(--hairline);
-    }
-    .rs-head h2 {
-      margin: 0;
-      font-family: var(--font-display);
-      font-size: clamp(1.75rem, 3.6vw, 2.5rem);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      line-height: 1.05;
-      color: var(--text-primary);
-    }
-    .rs-head p { margin: 0; font-size: 0.9375rem; color: var(--text-secondary); }
-    .rs-stamp { font-family: var(--font-mono); font-size: 0.8125rem; color: var(--text-secondary); font-variant-numeric: tabular-nums; }
-
-    /* --- Reports: a dated ledger, newest first -------------------------------- */
-    .reports { list-style: none; margin: 0; padding: 0; }
-    .report a {
-      display: grid;
-      grid-template-columns: 9rem minmax(0, 1fr) auto;
-      gap: var(--space-2) var(--space-4);
-      align-items: baseline;
-      padding: var(--space-4) 0;
-      border-bottom: 1px solid var(--hairline);
-      color: inherit;
-      text-decoration: none;
-    }
-    .report__date { font-family: var(--font-mono); font-size: 0.8125rem; color: var(--text-secondary); font-variant-numeric: tabular-nums; }
-    .report__title {
-      display: block;
-      font-family: var(--font-display);
-      font-size: clamp(1.15rem, 2vw, 1.5rem);
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      line-height: 1.2;
-      color: var(--text-primary);
-    }
-    .report__summary { display: block; margin-top: 6px; max-width: 70ch; font-size: 0.9375rem; line-height: 1.55; color: var(--text-secondary); }
-    .report__go { font-size: 0.875rem; font-weight: 600; color: var(--accent-bright); white-space: nowrap; }
-    .report__go span { display: inline-block; transition: transform var(--dur-fast) var(--ease-out); }
-    /* The newest report leads, a size up. */
-    .report:first-child .report__title { font-size: clamp(1.5rem, 3vw, 2.1rem); }
-    @media (hover: hover) and (pointer: fine) {
-      .report a:hover .report__title { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 5px; text-decoration-color: rgba(56, 189, 248, 0.6); }
-      .report a:hover .report__go span { transform: translate(2px, -2px); }
-    }
-
-    .rs-empty { margin: 0; padding: var(--space-4) 0; color: var(--text-secondary); border-bottom: 1px solid var(--hairline); }
-    .rs-error { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
-    .rs-error button { padding: 8px 16px; border: 1px solid var(--glass-border); border-radius: var(--radius-pill); background: none; font: 600 0.875rem/1 var(--font-body); color: var(--text-primary); cursor: pointer; }
-
-    /* Loading: plain placeholder bars in the shape of what is coming. */
-    .skel { display: block; height: 14px; margin: 22px 0; border-radius: 4px; background: rgba(141, 162, 196, 0.14); }
-    .skel:nth-child(2n) { width: 70%; }
-    .skel:nth-child(3n) { width: 45%; }
-
-    @media (prefers-reduced-motion: reduce) {
-      .report__go span { transition: none; }
-    }
-
-    @media (max-width: 720px) {
-      .rs { padding-top: 104px; }
-      .rs section { margin-top: var(--space-6); }
-      .report a { grid-template-columns: minmax(0, 1fr); gap: 6px; }
-      .report__go { justify-self: start; margin-top: 4px; }
-    }
-  </style>
+  <link rel="stylesheet" href="styles/books.css?v=3" />
+  <link rel="stylesheet" href="styles/books-import.css?v=1" />
 </head>
 <body>
 
-  <a class="skip-link" href="/research/#research">Skip to content</a>
+  <a class="skip-link" href="/books/import/#import">Skip to content</a>
   <!-- Announcement ticker, styled as a market tape. The whole bar links to the
        application form. The scrolling tape is decorative and hidden from screen
        readers; the link's own label carries the message once. Omitted on /apply.
@@ -183,114 +72,112 @@
     </ul>
   </nav>
 
-  <!-- data-endpoint: the deployed apps-script/DeskCode.gs web app (/exec URL).
-       Empty means not deployed yet: the page shows its empty state. -->
-  <main id="research" class="rs page-dark" tabindex="-1" data-endpoint="">
-    <div class="rs__inner">
 
-      <header>
-        <h1>Macro research</h1>
-        <p class="rs__lead">
-          Reports from our Macro division, published as they are written. For the trading books
-          each division runs, see <a href="/books/">the books</a>.
-        </p>
-        <p class="rs__demo" data-demo-note hidden>Preview with made-up sample reports. Not real research.</p>
+  <main id="import" class="bk page-dark" tabindex="-1">
+    <div class="bk__inner bki">
+
+      <header class="bk-pagehead">
+        <div>
+          <h1>Publish your book</h1>
+          <p class="bk__lead">
+            For division heads. Export your IBKR statement, drop it below, check what it shows, then
+            send the file it gives you to the web team. Your export stays on this computer: nothing is
+            uploaded until you send it.
+          </p>
+        </div>
+        <p class="bk__stamp"><a href="/books/">See the books <span aria-hidden="true">&rarr;</span></a></p>
       </header>
 
-      <section aria-labelledby="reports-title">
-        <div class="rs-head">
-          <h2 id="reports-title">Reports</h2>
-          <p>Newest first</p>
+      <ol class="bki-steps">
+        <li class="bki-step">
+          <details class="bki-setup" data-setup>
+            <summary>
+              <span class="bki-step__n" aria-hidden="true">1</span>
+              <span><strong>Set up the export</strong> <span class="bki-muted">Once, about five minutes.</span></span>
+            </summary>
+            <div class="bki-setup__body">
+              <ol class="bki-howto">
+                <li>Log in to the <strong>IBKR Portal</strong> with your paper account (the one your book trades in).</li>
+                <li>Go to <strong>Performance &amp; Reports &rsaquo; Flex Queries</strong>. Under <strong>Activity Flex Query</strong>, press <strong>+</strong> to create one. Call it <code>BTS books</code>.</li>
+                <li>
+                  Tick these sections. In each one, choose <strong>Select All</strong> for the fields, then <strong>Save</strong>:
+                  <ul>
+                    <li><strong>Net Asset Value (NAV) in Base</strong>: the daily value of the account. Returns, Sharpe and drawdown come from this.</li>
+                    <li><strong>Open Positions</strong>: options <strong>Summary</strong>.</li>
+                    <li><strong>Trades</strong>: options <strong>Execution</strong>. This brings each fill with IBKR&rsquo;s realised P&amp;L and its Order Reference.</li>
+                    <li><strong>Cash Transactions</strong>: options <strong>Deposits &amp; Withdrawals</strong>, so a reset or top-up isn&rsquo;t counted as a return.</li>
+                  </ul>
+                  Leave <strong>Account Information</strong> unticked: the books don&rsquo;t need your name or address.
+                </li>
+                <li>Under <strong>Delivery Configuration</strong>: Format <strong>XML</strong>, Period <strong>Last 30 Calendar Days</strong>.</li>
+                <li>Under <strong>General Configuration</strong>: Date Format <strong>yyyyMMdd</strong>, Time Format <strong>HHmmss</strong>, Date/Time Separator <strong>; (semi-colon)</strong>. Leave the rest as it is, then <strong>Continue</strong> and <strong>Create</strong>.</li>
+              </ol>
+              <div class="bki-callout">
+                <p><strong>Credit your analysts.</strong> When an analyst places an order, they type their initials in the order ticket&rsquo;s <strong>Order Ref</strong> field (in TWS it is on the order ticket&rsquo;s Misc tab). IBKR carries it through to the export, and the trade log shows who made each trade.</p>
+              </div>
+            </div>
+          </details>
+        </li>
+
+        <li class="bki-step bki-step--static">
+          <span class="bki-step__n" aria-hidden="true">2</span>
+          <p><strong>Every Friday after the close</strong>, run it: Flex Queries &rsaquo; <code>BTS books</code> &rsaquo; the run arrow &rsaquo; XML &rsaquo; Run, and download the file. <span class="bki-muted">IBKR keeps only about 45 days of statements for paper accounts, so never leave more than four weeks between exports.</span></p>
+        </li>
+
+        <li class="bki-step bki-step--static">
+          <span class="bki-step__n" aria-hidden="true">3</span>
+          <div class="bki-form">
+            <p><strong>Choose your book and drop the file here.</strong> The published history is loaded and your export is added to it.</p>
+            <label class="bki-label" for="book">Your book</label>
+            <select id="book" class="bki-select" data-book></select>
+            <label class="bki-drop" data-drop>
+              <input type="file" accept=".xml,.csv,text/xml,text/csv" multiple data-file />
+              <span class="bki-drop__title">Drop your IBKR export here</span>
+              <span class="bki-drop__sub">or choose the file &middot; XML or CSV</span>
+            </label>
+            <button class="bki-link" type="button" data-sample>No export yet? Try it with a sample file</button>
+            <div class="bki-status" data-status role="status" aria-live="polite"></div>
+          </div>
+        </li>
+      </ol>
+
+      <section class="bki-result" data-result hidden aria-labelledby="result-title">
+        <div class="bki-result__head">
+          <h2 id="result-title">Check it</h2>
+          <dl class="bki-summary" data-summary></dl>
         </div>
-        <div data-reports aria-live="polite">
-          <span class="visually-hidden">Loading reports</span><span class="skel"></span><span class="skel"></span><span class="skel"></span>
+        <ul class="bki-warnings" data-warnings></ul>
+        <div class="bk-panel bki-preview" data-preview></div>
+
+        <section class="bki-notes" aria-labelledby="notes-title">
+          <div class="bk-sec__head">
+            <h3 id="notes-title">Trade notes</h3>
+            <p>Optional. Who made the trade and the idea behind it, in a line. Shown in the trade log under the instrument.</p>
+          </div>
+          <div data-notes></div>
+        </section>
+
+        <div class="bki-send">
+          <div>
+            <h3>Send it</h3>
+            <p>Download the file, then email it to the web team, or upload it to the site&rsquo;s <code>books/data</code> folder on GitHub if you have access. Your book updates on the site within a few minutes.</p>
+          </div>
+          <div class="bki-send__actions">
+            <p class="bki-sent" data-sent role="status" aria-live="polite"></p>
+            <button class="bki-btn" type="button" data-download>Download</button>
+            <a class="bki-btn bki-btn--ghost" data-github href="https://github.com/Abraar-is-here/bts-website/upload/main/books/data" target="_blank" rel="noopener noreferrer">Upload on GitHub<span class="visually-hidden"> (opens in a new tab)</span> <span aria-hidden="true">&nearr;</span></a>
+          </div>
         </div>
       </section>
 
     </div>
   </main>
 
-  <script>
-    (function () {
-      'use strict';
+  <script src="js/books-flex.js?v=4" defer></script>
+  <script src="js/books-core.js?v=2" defer></script>
+  <script src="js/books-ui.js?v=6" defer></script>
+  <script src="js/books-import.js?v=1" defer></script>
 
-      var main = document.getElementById('research');
-      var reportsEl = main.querySelector('[data-reports]');
-      var ENDPOINT = (main.getAttribute('data-endpoint') || '').trim();
-      var DEMO = new URLSearchParams(location.search).get('demo') === '1';
-
-      function el(tag, cls, text) {
-        var n = document.createElement(tag);
-        if (cls) n.className = cls;
-        if (text != null) n.textContent = text;
-        return n;
-      }
-      function fmtDate(iso) {
-        if (!iso) return '';
-        var d = new Date(iso.length === 10 ? iso + 'T12:00:00' : iso);
-        return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
-      }
-
-      function renderReports(list) {
-        reportsEl.textContent = '';
-        if (!list.length) {
-          reportsEl.appendChild(el('p', 'rs-empty', 'The first Macro report is on its way.'));
-          return;
-        }
-        var ul = el('ul', 'reports');
-        list.forEach(function (r) {
-          var li = el('li', 'report');
-          var a = el('a');
-          a.href = r.url;
-          a.target = '_blank';
-          a.rel = 'noopener noreferrer';
-          var date = el('time', 'report__date', fmtDate(r.date));
-          date.dateTime = r.date.slice(0, 10);
-          var body = el('span');
-          body.appendChild(el('span', 'report__title', r.title));
-          if (r.summary) body.appendChild(el('span', 'report__summary', r.summary));
-          var go = el('span', 'report__go');
-          go.appendChild(document.createTextNode('Read the report '));
-          var arrow = el('span', null, '↗');
-          arrow.setAttribute('aria-hidden', 'true');
-          go.appendChild(arrow);
-          go.appendChild(el('span', 'visually-hidden', ' (PDF, opens in a new tab)'));
-          a.appendChild(date); a.appendChild(body); a.appendChild(go);
-          li.appendChild(a);
-          ul.appendChild(li);
-        });
-        reportsEl.appendChild(ul);
-      }
-
-      function fail() {
-        reportsEl.textContent = '';
-        var p = el('p', 'rs-empty rs-error');
-        p.appendChild(document.createTextNode('Couldn’t load the latest research.'));
-        var b = el('button', null, 'Try again');
-        b.type = 'button';
-        b.addEventListener('click', load);
-        p.appendChild(b);
-        reportsEl.appendChild(p);
-      }
-
-      function load() {
-        if (DEMO) { main.querySelector('[data-demo-note]').hidden = false; renderReports(SAMPLE); return; }
-        if (!ENDPOINT) { renderReports([]); return; }
-        fetch(ENDPOINT, { cache: 'no-store' })
-          .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
-          .then(function (data) { renderReports(data.research || []); })
-          .catch(fail);
-      }
-
-      /* Preview only (?demo=1): invented reports in the real shape. */
-      var SAMPLE = [
-        { title: 'Sample: Rates outlook into year end', summary: 'Placeholder summary. The Drive description of each PDF appears here.', date: '2026-10-20T10:00:00Z', url: '#' },
-        { title: 'Sample: What a softer dollar means for UK exporters', summary: 'Placeholder summary for a second report.', date: '2026-10-06T10:00:00Z', url: '#' }
-      ];
-
-      load();
-    })();
-  </script>
   <script src="js/aurora.js?v=9" defer></script>
   <script src="js/transitions.js?v=3" defer></script>
   <script src="js/nav.js?v=1" defer></script>

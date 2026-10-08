@@ -1,5 +1,5 @@
 /**
- * Bristol Trading Society — Research and live books (the /research page)
+ * Bristol Trading Society — Macro research (the /research page)
  * ---------------------------------------------------------------------------
  * The website reads this script; nobody posts to it. It serves two things as
  * JSON:
@@ -14,6 +14,9 @@
  *             edit it. Live prices come from Google Finance (delayed up to
  *             ~20 minutes); anything Google Finance does not price (futures,
  *             bonds, options) is marked by hand in the "Mark" column.
+ *             No longer read by the site: the trading books moved to /books/,
+ *             published from IBKR statements (see books/README.md). The
+ *             Sheet tabs setup() creates can be ignored.
  *
  * Access control is Google's own sharing, so there are no passwords here and
  * nothing on the website can write to the Sheet or the folder.

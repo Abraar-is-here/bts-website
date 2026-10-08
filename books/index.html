@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- noindex until the Apps Script is deployed and the first report is up;
-       remove this line and add the page to the nav at the same time. -->
+  <!-- noindex until the first real export is published; remove this line and
+       add /books/ to the nav and sitemap at the same time. -->
   <meta name="robots" content="noindex" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <base href="/" />
 
-  <title>Macro research — Bristol Trading Society</title>
-  <meta name="description" content="Macro research from the Bristol Trading Society, published as our Macro division writes it." />
+  <title>The books — Bristol Trading Society</title>
+  <meta name="description" content="The Bristol Trading Society's paper-trading books at Interactive Brokers: returns, risk, positions and every trade, desk by desk." />
 
   <link rel="icon" type="image/svg+xml" href="assets/img/bull.svg" />
 
@@ -21,123 +21,11 @@
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
   <link rel="stylesheet" href="styles/main.css?v=103" />
-
-  <style>
-    /* -------------------------------------------------------------------------
-       Macro research, read live from Google (see apps-script/DeskCode.gs):
-       reports from a Drive folder only the Macro heads can upload to. The
-       page renders whatever is there, so publishing never means editing the
-       site. The trading books have their own page, /books/.
-       ------------------------------------------------------------------------- */
-    .rs {
-      --text-secondary: rgba(244, 247, 251, 0.74);
-      --up: #4ade80;
-      --down: #f87171;
-      position: relative;
-      padding: 120px var(--gutter) var(--space-6);
-      background: linear-gradient(180deg, rgba(6, 17, 43, 0.35) 0, rgba(6, 17, 43, 0.62) 700px, rgba(6, 17, 43, 0.72) 100%);
-    }
-    .rs__inner { max-width: var(--container-max); margin: 0 auto; }
-    .rs h1 {
-      margin: 0 0 var(--space-3);
-      font-family: var(--font-display);
-      font-size: clamp(2.6rem, 7vw, 5rem);
-      font-weight: 800;
-      line-height: 0.96;
-      letter-spacing: -0.04em;
-      color: var(--text-primary);
-    }
-    .rs__lead { margin: 0; max-width: 58ch; font-size: 1.125rem; line-height: 1.6; color: rgba(244, 247, 251, 0.84); }
-    .rs__lead a { color: var(--accent-bright); text-decoration: underline; text-decoration-color: rgba(56, 189, 248, 0.45); text-underline-offset: 4px; }
-    .rs__demo {
-      margin: var(--space-4) 0 0;
-      display: inline-block;
-      padding: 8px 14px;
-      border: 1px dashed rgba(251, 191, 36, 0.6);
-      border-radius: var(--radius-pill);
-      font-size: 0.8125rem;
-      color: #fcd34d;
-    }
-
-    .rs section { margin-top: var(--space-7); }
-    .rs-head {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: var(--space-2) var(--space-4);
-      padding-bottom: var(--space-3);
-      margin-bottom: var(--space-4);
-      border-bottom: 1px solid var(--hairline);
-    }
-    .rs-head h2 {
-      margin: 0;
-      font-family: var(--font-display);
-      font-size: clamp(1.75rem, 3.6vw, 2.5rem);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      line-height: 1.05;
-      color: var(--text-primary);
-    }
-    .rs-head p { margin: 0; font-size: 0.9375rem; color: var(--text-secondary); }
-    .rs-stamp { font-family: var(--font-mono); font-size: 0.8125rem; color: var(--text-secondary); font-variant-numeric: tabular-nums; }
-
-    /* --- Reports: a dated ledger, newest first -------------------------------- */
-    .reports { list-style: none; margin: 0; padding: 0; }
-    .report a {
-      display: grid;
-      grid-template-columns: 9rem minmax(0, 1fr) auto;
-      gap: var(--space-2) var(--space-4);
-      align-items: baseline;
-      padding: var(--space-4) 0;
-      border-bottom: 1px solid var(--hairline);
-      color: inherit;
-      text-decoration: none;
-    }
-    .report__date { font-family: var(--font-mono); font-size: 0.8125rem; color: var(--text-secondary); font-variant-numeric: tabular-nums; }
-    .report__title {
-      display: block;
-      font-family: var(--font-display);
-      font-size: clamp(1.15rem, 2vw, 1.5rem);
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      line-height: 1.2;
-      color: var(--text-primary);
-    }
-    .report__summary { display: block; margin-top: 6px; max-width: 70ch; font-size: 0.9375rem; line-height: 1.55; color: var(--text-secondary); }
-    .report__go { font-size: 0.875rem; font-weight: 600; color: var(--accent-bright); white-space: nowrap; }
-    .report__go span { display: inline-block; transition: transform var(--dur-fast) var(--ease-out); }
-    /* The newest report leads, a size up. */
-    .report:first-child .report__title { font-size: clamp(1.5rem, 3vw, 2.1rem); }
-    @media (hover: hover) and (pointer: fine) {
-      .report a:hover .report__title { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 5px; text-decoration-color: rgba(56, 189, 248, 0.6); }
-      .report a:hover .report__go span { transform: translate(2px, -2px); }
-    }
-
-    .rs-empty { margin: 0; padding: var(--space-4) 0; color: var(--text-secondary); border-bottom: 1px solid var(--hairline); }
-    .rs-error { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
-    .rs-error button { padding: 8px 16px; border: 1px solid var(--glass-border); border-radius: var(--radius-pill); background: none; font: 600 0.875rem/1 var(--font-body); color: var(--text-primary); cursor: pointer; }
-
-    /* Loading: plain placeholder bars in the shape of what is coming. */
-    .skel { display: block; height: 14px; margin: 22px 0; border-radius: 4px; background: rgba(141, 162, 196, 0.14); }
-    .skel:nth-child(2n) { width: 70%; }
-    .skel:nth-child(3n) { width: 45%; }
-
-    @media (prefers-reduced-motion: reduce) {
-      .report__go span { transition: none; }
-    }
-
-    @media (max-width: 720px) {
-      .rs { padding-top: 104px; }
-      .rs section { margin-top: var(--space-6); }
-      .report a { grid-template-columns: minmax(0, 1fr); gap: 6px; }
-      .report__go { justify-self: start; margin-top: 4px; }
-    }
-  </style>
+  <link rel="stylesheet" href="styles/books.css?v=3" />
 </head>
 <body>
 
-  <a class="skip-link" href="/research/#research">Skip to content</a>
+  <a class="skip-link" href="/books/#books">Skip to content</a>
   <!-- Announcement ticker, styled as a market tape. The whole bar links to the
        application form. The scrolling tape is decorative and hidden from screen
        readers; the link's own label carries the message once. Omitted on /apply.
@@ -183,114 +71,71 @@
     </ul>
   </nav>
 
-  <!-- data-endpoint: the deployed apps-script/DeskCode.gs web app (/exec URL).
-       Empty means not deployed yet: the page shows its empty state. -->
-  <main id="research" class="rs page-dark" tabindex="-1" data-endpoint="">
-    <div class="rs__inner">
 
-      <header>
-        <h1>Macro research</h1>
-        <p class="rs__lead">
-          Reports from our Macro division, published as they are written. For the trading books
-          each division runs, see <a href="/books/">the books</a>.
-        </p>
-        <p class="rs__demo" data-demo-note hidden>Preview with made-up sample reports. Not real research.</p>
+  <main id="books" class="bk page-dark" tabindex="-1">
+    <div class="bk__inner">
+
+      <header class="bk-pagehead">
+        <div>
+          <h1>The books</h1>
+          <p class="bk__lead">
+            Every division head runs a paper-trading book at Interactive Brokers with their
+            analysts. The figures here come straight from IBKR&rsquo;s own statements: returns,
+            risk, positions and every trade, worked out the way a fund reports them.
+          </p>
+          <p class="bk__demo" data-demo hidden>Sample data: invented trades that show the format. Not real results.</p>
+        </div>
+        <p class="bk__stamp" data-stamp></p>
       </header>
 
-      <section aria-labelledby="reports-title">
-        <div class="rs-head">
-          <h2 id="reports-title">Reports</h2>
-          <p>Newest first</p>
+      <div class="bk-desks" data-desks>
+        <div class="bk-loading" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+        <span class="visually-hidden">Loading the books</span>
+      </div>
+
+      <section class="bk-panel" id="desk-panel" role="tabpanel" data-panel hidden></section>
+
+      <section class="bk-method" id="method" aria-labelledby="method-title">
+        <div class="bk-method__intro">
+          <h2 id="method-title">How the numbers are worked out</h2>
+          <p>
+            Each head exports their account&rsquo;s statement from Interactive Brokers (a Flex Query)
+            and it is published here unchanged. Every figure on this page is then calculated in your
+            browser from that file, by the rules below, so anyone can check them.
+          </p>
+          <p>
+            Paper trading: simulated accounts with no real money, so there is no slippage or market
+            impact beyond what IBKR&rsquo;s simulator applies. Prices are IBKR&rsquo;s closing marks,
+            not live. Nothing here is investment advice.
+          </p>
         </div>
-        <div data-reports aria-live="polite">
-          <span class="visually-hidden">Loading reports</span><span class="skel"></span><span class="skel"></span><span class="skel"></span>
-        </div>
+        <dl class="bk-gloss">
+          <div id="g-return"><dt>Return since inception</dt><dd>Each day&rsquo;s change in net asset value (NAV), less any deposit that day, divided by the day before&rsquo;s NAV, then chained: <code>(1&nbsp;+&nbsp;r&#8321;)(1&nbsp;+&nbsp;r&#8322;)&hellip;&nbsp;&minus;&nbsp;1</code>. A time-weighted return, so topping up an account never counts as performance.</dd></div>
+          <div id="g-pnl"><dt>Profit and loss</dt><dd>The change in NAV over the period, less deposits, in the book&rsquo;s base currency. It is after IBKR&rsquo;s commissions.</dd></div>
+          <div id="g-annualised"><dt>Annualised return</dt><dd>The return scaled to a year of 252 trading days. Shown once a book has six months of history; before that it exaggerates.</dd></div>
+          <div id="g-days"><dt>Best day, worst day, days up</dt><dd>The largest one-day gain and loss, and the share of trading days that ended higher than they started.</dd></div>
+          <div id="g-sharpe"><dt>Sharpe ratio</dt><dd>Average daily return divided by the standard deviation of daily returns, times &radic;252. The risk-free rate is taken as zero. Shown after 20 trading days: fewer than that and it is mostly noise.</dd></div>
+          <div id="g-sortino"><dt>Sortino ratio</dt><dd>Like Sharpe, but only falls count as risk: average daily return over the downside deviation, times &radic;252.</dd></div>
+          <div id="g-vol"><dt>Volatility</dt><dd>The standard deviation of daily returns, annualised by &radic;252.</dd></div>
+          <div id="g-drawdown"><dt>Drawdown</dt><dd>How far the book is below the highest value it has reached. Max drawdown is the deepest fall from a high; the longest drawdown counts trading days spent below a previous high.</dd></div>
+          <div id="g-trades"><dt>Closed trades and fills</dt><dd>A trade runs from the fill that opens a position to the fill that takes it back to zero, however many fills there are in between. A fill is one execution at IBKR.</dd></div>
+          <div id="g-winrate"><dt>Win rate</dt><dd>The share of closed trades that made money after commissions.</dd></div>
+          <div id="g-pf"><dt>Profit factor</dt><dd>Total profit on winning trades divided by total loss on losing ones. Above 1 means the book makes money on its closed trades.</dd></div>
+          <div id="g-expectancy"><dt>Expectancy</dt><dd>The average profit or loss per closed trade: what a typical trade has been worth.</dd></div>
+          <div id="g-payoff"><dt>Average win and loss</dt><dd>The average profit on winning trades and loss on losing ones. Read with the win rate: a low win rate can still pay if the wins are much larger.</dd></div>
+          <div id="g-hold"><dt>Average hold</dt><dd>Calendar days from a trade&rsquo;s first fill to its last.</dd></div>
+          <div id="g-exposure"><dt>Exposure</dt><dd>Position value as a share of capital, with futures at their full contract value. Gross adds longs and shorts together; net subtracts the shorts.</dd></div>
+          <div id="g-pnl-trade"><dt>Trade P&amp;L</dt><dd>IBKR&rsquo;s first-in, first-out realised P&amp;L, which includes commissions on both legs. IBKR gives none for currency conversions, so for FX it is worked out here the same way.</dd></div>
+        </dl>
       </section>
 
     </div>
   </main>
 
-  <script>
-    (function () {
-      'use strict';
+  <script src="js/books-core.js?v=2" defer></script>
+  <script src="js/books-ui.js?v=6" defer></script>
+  <script src="js/books-page.js?v=4" defer></script>
 
-      var main = document.getElementById('research');
-      var reportsEl = main.querySelector('[data-reports]');
-      var ENDPOINT = (main.getAttribute('data-endpoint') || '').trim();
-      var DEMO = new URLSearchParams(location.search).get('demo') === '1';
-
-      function el(tag, cls, text) {
-        var n = document.createElement(tag);
-        if (cls) n.className = cls;
-        if (text != null) n.textContent = text;
-        return n;
-      }
-      function fmtDate(iso) {
-        if (!iso) return '';
-        var d = new Date(iso.length === 10 ? iso + 'T12:00:00' : iso);
-        return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
-      }
-
-      function renderReports(list) {
-        reportsEl.textContent = '';
-        if (!list.length) {
-          reportsEl.appendChild(el('p', 'rs-empty', 'The first Macro report is on its way.'));
-          return;
-        }
-        var ul = el('ul', 'reports');
-        list.forEach(function (r) {
-          var li = el('li', 'report');
-          var a = el('a');
-          a.href = r.url;
-          a.target = '_blank';
-          a.rel = 'noopener noreferrer';
-          var date = el('time', 'report__date', fmtDate(r.date));
-          date.dateTime = r.date.slice(0, 10);
-          var body = el('span');
-          body.appendChild(el('span', 'report__title', r.title));
-          if (r.summary) body.appendChild(el('span', 'report__summary', r.summary));
-          var go = el('span', 'report__go');
-          go.appendChild(document.createTextNode('Read the report '));
-          var arrow = el('span', null, '↗');
-          arrow.setAttribute('aria-hidden', 'true');
-          go.appendChild(arrow);
-          go.appendChild(el('span', 'visually-hidden', ' (PDF, opens in a new tab)'));
-          a.appendChild(date); a.appendChild(body); a.appendChild(go);
-          li.appendChild(a);
-          ul.appendChild(li);
-        });
-        reportsEl.appendChild(ul);
-      }
-
-      function fail() {
-        reportsEl.textContent = '';
-        var p = el('p', 'rs-empty rs-error');
-        p.appendChild(document.createTextNode('Couldn’t load the latest research.'));
-        var b = el('button', null, 'Try again');
-        b.type = 'button';
-        b.addEventListener('click', load);
-        p.appendChild(b);
-        reportsEl.appendChild(p);
-      }
-
-      function load() {
-        if (DEMO) { main.querySelector('[data-demo-note]').hidden = false; renderReports(SAMPLE); return; }
-        if (!ENDPOINT) { renderReports([]); return; }
-        fetch(ENDPOINT, { cache: 'no-store' })
-          .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
-          .then(function (data) { renderReports(data.research || []); })
-          .catch(fail);
-      }
-
-      /* Preview only (?demo=1): invented reports in the real shape. */
-      var SAMPLE = [
-        { title: 'Sample: Rates outlook into year end', summary: 'Placeholder summary. The Drive description of each PDF appears here.', date: '2026-10-20T10:00:00Z', url: '#' },
-        { title: 'Sample: What a softer dollar means for UK exporters', summary: 'Placeholder summary for a second report.', date: '2026-10-06T10:00:00Z', url: '#' }
-      ];
-
-      load();
-    })();
-  </script>
   <script src="js/aurora.js?v=9" defer></script>
   <script src="js/transitions.js?v=3" defer></script>
   <script src="js/nav.js?v=1" defer></script>

@@ -127,7 +127,9 @@ to publish:
   division heads only. The file name is the title (`Rates outlook, October 2026.pdf`);
   the Drive **description** (right-click the file ▸ File information ▸ Details ▸
   Description) becomes the one-line summary.
-- **The books.** One paper-trading book per division, from the four tabs of a Google
+- **The books (retired).** The site no longer reads these: the trading books moved to
+  `/books/`, published from IBKR statements (see `books/README.md`). Kept for reference:
+  one paper-trading book per division, from the four tabs of a Google
   Sheet. Each tab is protected so only that division's heads can edit it. One row per
   trade: Opened, Instrument, Google Finance symbol, Side, Size, Entry, Mark, Exit, Closed,
   Thesis. Open trades are priced live from Google Finance (delayed up to ~20 minutes).

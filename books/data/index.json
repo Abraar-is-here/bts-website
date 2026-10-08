@@ -1,0 +1,22 @@
+{
+  "note": "Which books exist and whose they are. Each book's data lives in books/data/<id>.json, written by /books/import/. A book with no file yet shows as 'not trading yet'.",
+  "desks": [
+    { "id": "equities", "name": "Equities", "books": [
+      { "id": "eq-tash", "head": "Tash Munjanganja" },
+      { "id": "eq-tolu", "head": "Tolu Ayetan" },
+      { "id": "eq-ibrahim", "head": "Ibrahim Ali" },
+      { "id": "eq-tom", "head": "Tom Hoad" }
+    ] },
+    { "id": "ficc", "name": "FICC", "books": [
+      { "id": "ficc-anay", "head": "Anay Mistry" },
+      { "id": "ficc-val", "head": "Val Sinko" },
+      { "id": "ficc-manolo", "head": "Manolo Kidel" },
+      { "id": "ficc-aled", "head": "Aled von Oppell" }
+    ] },
+    { "id": "macro", "name": "Macro", "books": [
+      { "id": "macro-manasvi", "head": "Manasvi Kommuri" },
+      { "id": "macro-lenny", "head": "Lenny Tucker" }
+    ] },
+    { "id": "quant", "name": "Quant", "status": "Book structure being decided", "books": [] }
+  ]
+}
