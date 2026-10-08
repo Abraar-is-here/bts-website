@@ -15,8 +15,13 @@
     ] },
     { "id": "macro", "name": "Macro", "books": [
       { "id": "macro-manasvi", "head": "Manasvi Kommuri" },
-      { "id": "macro-lenny", "head": "Lenny Tucker" }
+      { "id": "macro-lenny", "head": "Lenny Tucker" },
+      { "id": "macro-emily", "head": "Emily Chiaia-Miller" }
     ] },
-    { "id": "quant", "name": "Quant", "status": "Book structure being decided", "books": [] }
+    { "id": "quant", "name": "Quant", "books": [
+      { "id": "quant-kometh", "head": "Kometh Tauch" },
+      { "id": "quant-aditya", "head": "Aditya Verma" },
+      { "id": "quant-will", "head": "Will Barry" }
+    ] }
   ]
 }

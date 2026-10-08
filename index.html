@@ -32,7 +32,7 @@
   <link rel="stylesheet" href="styles/tokens/colors.css?v=15" />
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
-  <link rel="stylesheet" href="styles/main.css?v=103" />
+  <link rel="stylesheet" href="styles/main.css?v=111" />
 
   <!-- Structured data. Gives crawlers and AI answers facts to quote instead of
        inferring them from prose. Every value here is verifiable on the site. -->
@@ -171,7 +171,7 @@
             <p class="start__step" data-after="2026-10-03T00:00:00+01:00" hidden>Flagship &middot; 2026/27 intake closed</p>
             <span class="start__name">The analyst programme</span>
             <p class="start__text">
-              Thirteen teams across four divisions. Research an instrument, pitch it, and defend
+              Fourteen teams across four divisions. Research an instrument, pitch it, and defend
               it in front of people who do it for a living.
             </p>
             <a class="btn btn--primary start__join" href="/apply" data-until="2026-10-03T00:00:00+01:00">
@@ -323,16 +323,71 @@
 
       <h3 class="partners__tier">Partners</h3>
       <ul class="partners__grid">
-        <li><img src="assets/img/sponsors/wall/berenberg.png" alt="Berenberg" width="245" height="200" loading="lazy" /></li>
-        <li><img src="assets/img/sponsors/wall/cfa.png" alt="CFA Institute" width="501" height="109" loading="lazy" /></li>
-        <li><img src="assets/img/sponsors/wall/commodities-people.png" alt="commoditiespeople" width="2030" height="200" loading="lazy" /></li>
-        <li><img src="assets/img/sponsors/wall/etoro.png" alt="eToro" width="647" height="200" loading="lazy" /></li>
-        <li><img src="assets/img/sponsors/wall/headstart.png" alt="Headstart" width="205" height="200" loading="lazy" /></li>
-        <li><img src="assets/img/sponsors/wall/ice.png" alt="ICE" width="200" height="200" loading="lazy" /></li>
-        <li><img src="assets/img/sponsors/wall/hirehuub.png" alt="HireHuub" width="745" height="198" loading="lazy" /></li>
+        <li><img src="assets/img/sponsors/wall/jp-morgan-chase.png" alt="JPMorgan Chase &amp; Co." width="1000" height="287" loading="lazy" /></li>
         <li><img src="assets/img/sponsors/wall/worldquant.png" alt="WorldQuant" width="200" height="200" loading="lazy" /></li>
+        <li><img src="assets/img/sponsors/wall/berenberg.png" alt="Berenberg" width="245" height="200" loading="lazy" /></li>
+        <li><img src="assets/img/sponsors/wall/ice.png" alt="ICE" width="200" height="200" loading="lazy" /></li>
+        <li><img src="assets/img/sponsors/wall/cfa.png" alt="CFA Institute" width="501" height="109" loading="lazy" /></li>
+        <li><img src="assets/img/sponsors/wall/etoro.png" alt="eToro" width="647" height="200" loading="lazy" /></li>
       </ul>
+
+      <div class="partners__also">
+        <h3 class="partners__also-title">Also working with</h3>
+        <ul class="partners__also-list">
+          <li><img src="assets/img/sponsors/wall/commodities-people.png" alt="commoditiespeople" width="2030" height="200" loading="lazy" /></li>
+          <li><img src="assets/img/sponsors/wall/headstart.png" alt="Headstart" width="205" height="200" loading="lazy" /></li>
+          <li><img src="assets/img/sponsors/wall/hirehuub.png" alt="HireHuub" width="745" height="198" loading="lazy" /></li>
+        </ul>
+      </div>
     </div>
+  </section>
+
+  <!-- =====================================================================
+       The creed: one line, typed out as you scroll, then again in Chinese
+       (by far the largest international group at Bristol), French,
+       Brazilian Portuguese, Russian and Italian. The stage pins while the page
+       scrolls past it; js/creed.js maps scroll to how much of the line is
+       written. Without JS, or with reduced motion, it is a plain statement.
+       Translations want a check by a native speaker before this goes live.
+       ===================================================================== -->
+  <section class="creed" data-creed aria-labelledby="creed-title">
+    <div class="creed__stage">
+      <h2 class="creed__title" id="creed-title">
+        <span class="visually-hidden">Ambition is everywhere. Access is not.</span>
+        <span class="creed__line" data-creed-line aria-hidden="true">Ambition is everywhere. Access is&nbsp;not.</span>
+      </h2>
+      <ul class="creed__langs" data-creed-langs hidden>
+        <li lang="en">Ambition is everywhere. Access is&nbsp;not.</li>
+        <li lang="zh-Hans">抱负无处不在，机会却不然。</li>
+        <li lang="fr">L’ambition est partout. L’accès, non.</li>
+        <li lang="pt-BR">A ambição está em todo lugar. O acesso, não.</li>
+        <li lang="ru">Амбиции есть везде. Возможности&nbsp;— нет.</li>
+        <li lang="it">L’ambizione è ovunque. L’accesso, no.</li>
+        <li lang="en">Ambition is everywhere. Access is&nbsp;not.</li>
+      </ul>
+
+      <div class="creed__foot">
+        <dl class="creed__stats">
+          <div><dt>connected members and followers</dt><dd>4,500+</dd></div>
+          <div><dt>analysts across 14 desks in four divisions</dt><dd>80</dd></div>
+        </dl>
+        <a class="creed__join" href="https://www.bristolsu.org.uk/groups/bristol-trading-society-2436" target="_blank" rel="noopener noreferrer">
+          Join us<span class="visually-hidden"> on the Bristol SU page (opens in a new tab)</span>
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- What we believe: the creed, said plainly. -->
+  <section class="beliefs" aria-labelledby="beliefs-title">
+    <h2 class="beliefs__title" id="beliefs-title">What we believe <svg viewBox="0 0 120 12" width="120" height="12" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true" focusable="false"><path d="M0 6h118M112 1l6 5-6 5"/></svg></h2>
+    <ul class="beliefs__list">
+      <li>Do the work, then defend it</li>
+      <li>Process over outcome</li>
+      <li>Every market is a classroom</li>
+      <li>Access should be earned, not inherited</li>
+    </ul>
   </section>
 
   <!-- =====================================================================
@@ -352,7 +407,7 @@
             Applications close at 11:59 PM on Friday 2 October.
           </p>
           <p class="closing__lead" data-after="2026-10-03T00:00:00+01:00" hidden>
-            Next is the analyst programme: 60 analysts across 13 teams, researching real
+            Next is the analyst programme: 80 analysts across 14 teams, researching real
             instruments and defending them in front of people who trade for a living.
           </p>
           <div class="closing__actions">
@@ -475,6 +530,7 @@
           </li>
         </ul>
       </div>
+      <p class="explore__all"><a href="/events/past/">Everything we&rsquo;ve run <span aria-hidden="true">&rarr;</span></a></p>
     </div>
   </section>
 
@@ -484,6 +540,7 @@
   <script src="js/nav.js?v=1" defer></script>
   <script src="js/promo.js?v=3" defer></script>
   <script src="js/spotlight.js?v=2" defer></script>
+  <script src="js/creed.js?v=4" defer></script>
   <!-- ===== Site footer ===== -->
   <footer class="site-footer site-footer--light">
     <div class="site-footer__inner">
