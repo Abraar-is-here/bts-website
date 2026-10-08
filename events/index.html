@@ -594,7 +594,11 @@
       margin-bottom: var(--space-3);
       text-wrap: balance;
     }
-    .cta__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); justify-content: center; }
+    .cta__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); justify-content: center; }
+    /* The pair reads as one choice: same height, same width, side by side. */
+    .cta__actions .btn { margin-top: 0; min-width: 300px; justify-content: center; white-space: nowrap; }
+    .cta__actions .btn--whatsapp { border: 1.5px solid transparent; }
+    @media (max-width: 560px) { .cta__actions .btn { width: 100%; min-width: 0; padding-inline: 20px; } }
 
     /* --- Responsive -------------------------------------------------------- */
     @media (max-width: 900px) {
