@@ -13,6 +13,20 @@
 (function () {
   'use strict';
 
+  // The "Scroll" cue under the sponsors wall: it shows as it comes into
+  // view, then fades on its own after a moment rather than staying put.
+  var scrollCue = document.querySelector('[data-scroll-cue]');
+  if (scrollCue && 'IntersectionObserver' in window) {
+    var cueTimer = 0;
+    scrollCue.hidden = false;
+    new IntersectionObserver(function (entries) {
+      if (!entries[0].isIntersecting) return;
+      clearTimeout(cueTimer);
+      scrollCue.classList.add('is-on');
+      cueTimer = setTimeout(function () { scrollCue.classList.remove('is-on'); }, 1600);
+    }, { threshold: 1 }).observe(scrollCue);
+  }
+
   var section = document.querySelector('[data-creed]');
   if (!section) return;
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -34,42 +48,57 @@
   });
 
   var TYPE = 0.72;   // share of each language's stretch spent writing
-  var EASE = 0.12;   // share of the remaining gap the text catches up each frame
+  var EASE = 0.085;  // share of the remaining gap the text catches up each frame
   section.style.setProperty('--creed-steps', langs.length);
   section.classList.add('is-live');
 
-  var shown = { i: -1, k: -1 }, active = false, raf = 0;
+  // The line is the written part plus one letter fading in.
+  line.textContent = '';
+  var solidNode = document.createTextNode('');
+  var ink = document.createElement('span');
+  ink.className = 'creed__ink';
+  line.appendChild(solidNode);
+  line.appendChild(ink);
+
+
+  var shown = { i: -1, k: -1, f: -1 }, active = false, raf = 0;
   var target = 0, cur = 0;
 
   function clamp(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
 
-  // Where the scroll says the writing should be, from 0 to 1. It starts just
-  // before the stage pins.
+  // Where the scroll says the writing should be, from 0 to 1. It starts while
+  // the section is still sliding in, so the stage is never empty for long.
   function measure() {
     var rect = section.getBoundingClientRect();
     var vh = window.innerHeight;
     var travel = section.offsetHeight - vh;
-    target = clamp((vh * 0.1 - rect.top) / (travel + vh * 0.1));
+    target = clamp((vh * 0.45 - rect.top) / (travel + vh * 0.45));
   }
 
   function draw(p) {
     var n = langs.length;
     var pos = p * n;
     var i = Math.min(n - 1, Math.floor(pos));
-    var u = pos - i;
+    var u = i === n - 1 && p >= 0.999 ? 1 : pos - i;
     var L = langs[i];
-    var k = Math.round(clamp(u / TYPE) * L.chars.length);
-    if (i === n - 1 && p >= 0.999) k = L.chars.length;
+    var w = clamp(u / TYPE);
+    var kf = w * L.chars.length;
+    var k = Math.min(L.chars.length, Math.floor(kf));
+    var f = k < L.chars.length ? Math.round((kf - k) * 50) / 50 : 0;
 
     if (i !== shown.i) {
       line.setAttribute('lang', L.lang);
       line.setAttribute('dir', L.dir);
     }
     if (i !== shown.i || k !== shown.k) {
-      line.textContent = L.chars.slice(0, k).join('');
+      solidNode.data = L.chars.slice(0, k).join('');
+      ink.textContent = k < L.chars.length ? L.chars[k] : '';
+      // No caret on an empty line: it appears with the first whole letter.
       line.classList.toggle('is-typing', k > 0 && k < L.chars.length);
-      shown.i = i; shown.k = k;
     }
+    if (i !== shown.i || k !== shown.k || f !== shown.f) ink.style.opacity = f;
+    shown.i = i; shown.k = k; shown.f = f;
+
   }
 
   // The text eases toward the scroll position rather than jumping to it, so

@@ -959,12 +959,28 @@ main.page-dark {
    height makes wide wordmarks dominate stacked marks. */
 .destinations {
   list-style: none; margin: 0; padding: 0;
-  display: flex; flex-wrap: wrap; align-items: center;
-  gap: var(--space-4) var(--space-5);
+  /* A hairline grid of equal cells, five across: the same look as the
+     partners wall, so every logo sits centred in a cell of its own. */
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+.destinations li {
+  display: grid;
+  place-items: center;
+  min-height: 112px;
+  padding: var(--space-3);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 .destinations img {
-  display: block; height: 30px; width: auto; max-width: 170px; object-fit: contain;
-  filter: brightness(0) invert(1); opacity: 0.6;
+  display: block; height: 30px; width: auto; max-width: 100%; object-fit: contain;
+  filter: brightness(0) invert(1); opacity: 0.72;
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .destinations li:hover img { opacity: 1; }
 }
 .destinations--on-light img { filter: brightness(0); opacity: 0.7; }
 .destinations img[alt="Goldman Sachs"],
@@ -974,7 +990,7 @@ main.page-dark {
 .destinations img[alt="Millennium Management"],
 .destinations img[alt="Glencore"] { height: 24px; }
 .destinations img[alt="Dare Trading"] { height: 28px; }
-.destinations img[alt="Berenberg"] { height: 64px; }
+.destinations img[alt="Berenberg"] { height: 54px; }
 .destinations img[alt="Investec"] { height: 28px; }
 .destinations img[alt="BNP Paribas"] { height: 32px; }
 .destinations img[alt="ICE"] { height: 44px; }
@@ -982,9 +998,10 @@ main.page-dark {
 .destinations img[alt="HSBC"] { height: 32px; }
 .destinations img[alt="J.P. Morgan"] { height: 30px; }
 .destinations img[alt="Morgan Stanley"] { height: 28px; }
-@media (max-width: 520px) {
-  .destinations { gap: var(--space-4); }
-  .destinations img { max-width: 130px; }
+@media (max-width: 720px) {
+  .destinations { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .destinations li { min-height: 84px; padding: 12px; }
+  .destinations img { transform: scale(0.82); }
 }
 
 /* ---------------------------------------------------------------------------
@@ -3364,10 +3381,10 @@ body:has(> .ticker) { padding-top: var(--ticker-h); }
 .creed__stage {
   position: relative;
   display: grid;
-  grid-template-rows: 1fr auto;
+  grid-template-rows: minmax(0, 1fr) auto;
   min-height: 100vh;
   min-height: 100svh;
-  padding: clamp(120px, 16vh, 168px) var(--gutter) clamp(40px, 8vh, 88px);
+  padding: clamp(112px, 15vh, 160px) var(--gutter) clamp(32px, 6vh, 72px);
   overflow: hidden;
 }
 .creed.is-live .creed__stage { position: sticky; top: 0; height: 100vh; height: 100svh; }
@@ -3382,16 +3399,21 @@ body:has(> .ticker) { padding-top: var(--ticker-h); }
 }
 .creed__line {
   display: block;
-  max-width: 15ch;
-  min-height: 2.1em;
+  max-width: 17ch;
   font-family: var(--font-display);
-  font-size: clamp(2.6rem, 7.4vw, 7rem);
+  /* Capped by height as well as width, so the longest language still fits
+     in three lines and never pushes the stats down a short screen. */
+  font-size: clamp(2.1rem, min(5.6vw, 8.4vh), 5.4rem);
   font-weight: 800;
   line-height: 1.04;
   letter-spacing: -0.035em;
   color: var(--text-primary);
-  text-wrap: balance;
+  /* No text-wrap: balance here: it re-wraps lines as letters arrive, which
+     makes whole words jump while the line is being written. */
 }
+/* The next letter fades in as you scroll towards it, so writing reads as a
+   continuous stroke rather than letters popping in. */
+.creed__ink { opacity: var(--ink, 0); }
 /* Scripts Syne doesn't draw (Chinese, Cyrillic) fall back to
    the system's own face, a weight down so they sit at the same visual weight as Syne 800. */
 .creed__line:lang(zh-Hans), .creed__line:lang(ru) {
@@ -3401,7 +3423,10 @@ body:has(> .ticker) { padding-top: var(--ticker-h); }
   line-height: 1.22;
   max-width: 13em;
 }
-.creed__line:lang(zh-Hans) { max-width: 9em; }
+.creed__line:lang(zh-Hans) { max-width: 10em; }
+
+@media (max-width: 560px) {
+}
 /* The caret only shows while a line is still being written. */
 .creed__line.is-typing::after {
   content: '';
@@ -3499,4 +3524,45 @@ body:has(> .ticker) { padding-top: var(--ticker-h); }
 @media (hover: hover) and (pointer: fine) {
   .explore__all a:hover { text-decoration: underline; text-underline-offset: 4px; }
   .explore__all a:hover span { transform: translateX(3px); }
+}
+
+/* Scroll cue under the sponsors wall: shows as it comes into view, then
+   fades away on its own after a moment (js/creed.js). */
+.scroll-cue {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin: var(--space-5) auto 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(244, 247, 251, 0.7);
+  opacity: 0;
+  transition: opacity 700ms var(--ease-out);
+  pointer-events: none;
+}
+.scroll-cue.is-on { opacity: 1; transition-duration: 300ms; }
+.scroll-cue i {
+  position: relative;
+  display: block;
+  width: 1px;
+  height: 48px;
+  overflow: hidden;
+  background: rgba(244, 247, 251, 0.18);
+}
+.scroll-cue i::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: -40%;
+  width: 1px;
+  height: 40%;
+  background: var(--accent-bright);
+  animation: scroll-cue 1.4s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+@keyframes scroll-cue { to { transform: translateY(350%); } }
+@media (prefers-reduced-motion: reduce) {
+  .scroll-cue i::after { animation: none; top: 0; }
 }
