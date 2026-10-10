@@ -3266,6 +3266,20 @@ body:has(> .ticker) { padding-top: var(--ticker-h); }
 /* The J.P. Morgan wordmark has a descender ("g"), so it drops by that much to
    sit on the same baseline as BTS, sized so the capitals match. */
 .headline__brand--jpm { height: 20px; transform: translateY(6px); filter: brightness(0) invert(1); }
+/* Oliver Wyman: a wordmark with a "y" descender (19% of the image height), so it
+   drops by that much to share a baseline with BTS. The file is dark navy on
+   transparent, so it is flattened to white like the other marks. */
+.headline__brand--ow { height: 22px; transform: translateY(4px); filter: brightness(0) invert(1); }
+/* On a phone the two marks together are wider than the card's inner width
+   (311px against 271px at 375), so the wordmark shrinks, and below that they
+   wrap onto two lines with the divider dot dropped. */
+@media (max-width: 480px) {
+  .headline__brands { flex-wrap: wrap; row-gap: 10px; }
+  .headline__brand--ow { height: 17px; transform: translateY(3px); }
+}
+@media (max-width: 371px) {
+  .headline__sep { display: none; }
+}
 .headline__sep { align-self: center; }
 .headline__sep { flex: none; width: 4px; height: 4px; border-radius: 50%; background: rgba(255, 255, 255, 0.45); }
 .headline__title {
