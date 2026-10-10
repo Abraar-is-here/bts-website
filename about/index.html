@@ -275,7 +275,7 @@
       --p: 1;
       position: relative;
       display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
+      grid-template-columns: repeat(6, minmax(0, 1fr));
       margin-bottom: var(--space-4);
       touch-action: pan-y;
       user-select: none;
@@ -284,8 +284,8 @@
     .tl__line, .tl__fill {
       position: absolute;
       top: 7px;
-      left: 10%;
-      width: 80%;
+      left: calc(100% / 12);
+      width: calc(100% * 5 / 6);
       height: 2px;
       border-radius: 1px;
     }
@@ -382,7 +382,7 @@
        and the type drops a step; nothing wraps. */
     @media (max-width: 480px) {
       .tl__rail { margin-inline: calc(var(--gutter) * -0.9); }
-      .tl__tab { font-size: 0.6875rem; letter-spacing: -0.04em; white-space: nowrap; padding-inline: 0; }
+      .tl__tab { font-size: 0.75rem; letter-spacing: -0.03em; white-space: nowrap; padding-inline: 0; }
     }
     @media (max-width: 380px) {
       .tl__tab { font-size: 0.625rem; }
@@ -529,53 +529,62 @@
       <section class="abt__sec tl" data-timeline aria-labelledby="origin-title">
         <h2 class="abt__sec-title" id="origin-title">How it started, and where it is now</h2>
 
-        <div class="tl__rail" role="tablist" aria-label="Society history, from 2017 to now">
+                <div class="tl__rail" role="tablist" aria-label="Society history, from 2017 to now">
           <span class="tl__line" aria-hidden="true"></span>
           <span class="tl__fill" aria-hidden="true"></span>
           <button class="tl__tab" role="tab" id="tl-t0" aria-controls="tl-p0" type="button">2017</button>
-          <button class="tl__tab" role="tab" id="tl-t1" aria-controls="tl-p1" type="button">Shifts</button>
-          <button class="tl__tab" role="tab" id="tl-t2" aria-controls="tl-p2" type="button">Earlier</button>
-          <button class="tl__tab" role="tab" id="tl-t3" aria-controls="tl-p3" type="button">2025&ndash;26</button>
-          <button class="tl__tab" role="tab" id="tl-t4" aria-controls="tl-p4" type="button">Now</button>
+          <button class="tl__tab" role="tab" id="tl-t1" aria-controls="tl-p1" type="button">22/23</button>
+          <button class="tl__tab" role="tab" id="tl-t2" aria-controls="tl-p2" type="button">23/24</button>
+          <button class="tl__tab" role="tab" id="tl-t3" aria-controls="tl-p3" type="button">24/25</button>
+          <button class="tl__tab" role="tab" id="tl-t4" aria-controls="tl-p4" type="button">25/26</button>
+          <button class="tl__tab" role="tab" id="tl-t5" aria-controls="tl-p5" type="button">26/27</button>
         </div>
 
         <div class="tl__panel" role="tabpanel" id="tl-p0" aria-labelledby="tl-t0">
           <div><p class="tl__when">2017</p><p class="tl__what">Founded</p></div>
           <div class="tl__body">
-            <p><strong>Pratik Popat</strong>, then a Bristol student, founded BTS. It has been run by students every year since, and the whole committee turns over as each cohort graduates.</p>
-            <ul class="tl__chips"><li>Came back as a speaker: founder of BTS, investor at Simplyhealth</li></ul>
+            <p><strong>Pratik Popat</strong>, then a Bristol student, founded BTS. It has been run by students every year since, and the whole committee turns over as each cohort graduates. The divisions have been rebuilt several times: <strong>cryptocurrency</strong> and <strong>derivatives</strong> both ran as standalone divisions.</p>
+            <ul class="tl__chips"><li>Founder came back as a speaker</li><li>Student-run since day one</li></ul>
           </div>
         </div>
 
         <div class="tl__panel" role="tabpanel" id="tl-p1" aria-labelledby="tl-t1">
-          <div><p class="tl__when">Rebuilt</p><p class="tl__what">Over the years</p></div>
+          <div><p class="tl__when">2022&ndash;23</p><p class="tl__what">First year on the archive</p></div>
           <div class="tl__body">
-            <p>The divisions follow what members want to work on. <strong>Cryptocurrency</strong> and <strong>derivatives</strong> have both run as standalone divisions, and the line-up has been rebuilt several times as markets shifted.</p>
-            <ul class="tl__chips"><li>Now: FICC</li><li>Equities</li><li>Macro</li><li>Quant</li></ul>
+            <p>Speakers from <strong>Standard Chartered</strong>, <strong>SIGMA Financial</strong> and <strong>EFG</strong>, a <strong>J.P. Morgan</strong> networking event in London, the AmplifyME x <strong>Morgan Stanley</strong> accelerator, and the <strong>Bristol SU Gold Award</strong>.</p>
+            <ul class="tl__chips"><li>Standard Chartered</li><li>SIGMA Financial</li><li>EFG</li><li>J.P. Morgan</li><li>Morgan Stanley</li><li>LSE AIC conference</li><li>Gold Award</li></ul>
           </div>
         </div>
 
         <div class="tl__panel" role="tabpanel" id="tl-p2" aria-labelledby="tl-t2">
-          <div><p class="tl__when">Earlier</p><p class="tl__what">Evenings and partners</p></div>
+          <div><p class="tl__when">2023&ndash;24</p><p class="tl__what">Quant arrives</p></div>
           <div class="tl__body">
-            <p>Firms and practitioners came to Bristol, and BTS went to them: an evening with <strong>Standard Chartered</strong>, a full theatre for <strong>SIGMA Financial</strong>, an invite-only <strong>DRW</strong> social, and Bloomberg Terminal sessions open to everyone.</p>
-            <ul class="tl__chips"><li>Standard Chartered</li><li>SIGMA Financial</li><li>DRW</li><li>Energy Trading Week</li><li>LSE Alternative Investments Conference</li><li>Citi</li><li>TP ICAP</li><li>Ares</li><li>LDC</li><li>Work in Fintech</li></ul>
+            <p>The <strong>Quant division</strong> arrived. AmplifyME ran its finance accelerator with <strong>Morgan Stanley</strong> and <strong>UBS</strong>, <strong>Ares</strong> spoke, and analysts began publishing written research.</p>
+            <ul class="tl__chips"><li>Quant division</li><li>AmplifyME</li><li>Morgan Stanley</li><li>UBS</li><li>Ares</li><li>Big Finance Dinner</li></ul>
           </div>
         </div>
 
         <div class="tl__panel" role="tabpanel" id="tl-p3" aria-labelledby="tl-t3">
-          <div><p class="tl__when">2025&ndash;26</p><p class="tl__what">Last year</p></div>
+          <div><p class="tl__when">2024&ndash;25</p><p class="tl__what">Firms in London</p></div>
           <div class="tl__body">
-            <p>The <strong>Annual Trading Competition</strong>: seven analyst teams each ran a mock portfolio and pitched one instrument to external judges. The US 10-year yield and Diageo teams won. Then the <strong>Macro Debate</strong>, on whether Argentina should free-float its currency.</p>
-            <ul class="tl__chips"><li>7 teams</li><li>External judges</li><li>Brent, copper, Eli Lilly, Novo Nordisk, European defence</li></ul>
+            <p>An evening with <strong>Standard Chartered</strong>&rsquo;s CEO, <strong>LDC</strong>, <strong>TP ICAP</strong> and <strong>BRG</strong> in a single week, a <strong>Jane Street</strong> Estimathon, <strong>J.P. Morgan</strong> on campus, and <strong>Glencore</strong> across the year.</p>
+            <ul class="tl__chips"><li>Standard Chartered</li><li>LDC</li><li>TP ICAP</li><li>BRG</li><li>Jane Street</li><li>J.P. Morgan</li><li>Glencore</li><li>Robinhood</li></ul>
           </div>
         </div>
 
         <div class="tl__panel" role="tabpanel" id="tl-p4" aria-labelledby="tl-t4">
-          <div><p class="tl__when">Now</p><p class="tl__what">Autumn 2026</p></div>
+          <div><p class="tl__when">2025&ndash;26</p><p class="tl__what">Partners join</p></div>
           <div class="tl__body">
-            <p>The Welcome Event filled <strong>Pugsley Lecture Theatre</strong>. The AmplifyME simulation sold out its first session and added a second. <strong>J.P. Morgan</strong> ran a brunch and an evening panel on campus, <strong>Oliver Wyman</strong> comes on 21 October, and the <strong>UK Investment Competition</strong> with UMushroom runs to 1 December.</p>
-            <ul class="tl__chips"><li>J.P. Morgan</li><li>Oliver Wyman</li><li>AmplifyME</li><li>UMushroom</li></ul>
+            <p>Sponsors and partners arrived: <strong>Outlook Energy</strong>, <strong>eToro</strong>, <strong>WorldQuant</strong>, <strong>Berenberg</strong>, <strong>Headstart</strong> and <strong>HireHuub</strong>, with <strong>DRW</strong> presenting to members. The Annual Trading Competition ran with seven teams and external judges.</p>
+            <ul class="tl__chips"><li>Outlook Energy</li><li>eToro</li><li>WorldQuant</li><li>Berenberg</li><li>DRW</li><li>Seven teams</li><li>Macro Debate</li></ul>
+          </div>
+        </div>
+
+        <div class="tl__panel" role="tabpanel" id="tl-p5" aria-labelledby="tl-t5">
+          <div><p class="tl__when">Now</p><p class="tl__what">2026&ndash;27: the step up</p></div>
+          <div class="tl__body">
+            <p>The year BTS stepped up. <strong>Jane Street</strong> became an official sponsor, with <strong>DRW</strong> and <strong>Outlook Energy</strong>: three sponsors and nine partners, the biggest line-up yet. <strong>J.P. Morgan</strong> came to campus, <strong>Oliver Wyman</strong> follows on 21 October, and a full website was live before term began.</p>
+            <ul class="tl__chips"><li>3 sponsors</li><li>9 partners</li><li>J.P. Morgan</li><li>Oliver Wyman</li><li>Website live before term</li></ul>
           </div>
         </div>
 

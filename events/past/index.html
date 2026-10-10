@@ -82,6 +82,12 @@
     .year__label h2 span { white-space: nowrap; }
     .year__label p { margin: 10px 0 0; max-width: 26ch; font-size: 0.9375rem; line-height: 1.5; color: var(--text-secondary); }
 
+    /* The archive years: a flat two-column list, firm first. */
+    .ev { list-style: none; margin: 0 0 var(--space-4); padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 var(--space-4); }
+    .ev li { padding: var(--space-3) 0; border-bottom: 1px solid var(--hairline); }
+    .ev b { display: block; font-weight: 700; color: var(--text-primary); }
+    .ev span { display: block; margin-top: 4px; font-size: 0.875rem; line-height: 1.5; color: var(--text-secondary); }
+    @media (max-width: 720px) { .ev { grid-template-columns: minmax(0, 1fr); } }
     .log { list-style: none; margin: 0; padding: 0; }
     .log__item { border-bottom: 1px solid var(--hairline); }
     .log__item:first-child { border-top: 0; }
@@ -208,7 +214,10 @@
         <ul class="pe__jump" aria-label="Jump to a year">
           <li><a href="/events/past/#y2026">2026&ndash;27</a></li>
           <li><a href="/events/past/#y2025">2025&ndash;26</a></li>
-          <li><a href="/events/past/#earlier">Earlier years</a></li>
+          <li><a href="/events/past/#y2024">2024&ndash;25</a></li>
+          <li><a href="/events/past/#y2023">2023&ndash;24</a></li>
+          <li><a href="/events/past/#y2022">2022&ndash;23</a></li>
+          <li><a href="/events/past/#earlier">Before and across</a></li>
         </ul>
       </header>
 
@@ -218,6 +227,7 @@
           <h2 id="y2026-title"><span>2026&ndash;27</span></h2>
           <p>The year so far. Each event lands here once it finishes.</p>
         </div>
+        <div class="year__body">
         <ol class="log">
           <li class="log__item" hidden data-after="2026-12-01T23:59:00+00:00">
             <a class="log__row" href="/events/umushroom/">
@@ -289,6 +299,16 @@
             </a>
           </li>
         </ol>
+        <div>
+          <h3>Also this year</h3>
+          <ul class="ev">
+            <li><b>Jane Street</b><span>Welcomed as an official sponsor of BTS.</span></li>
+            <li><b>Applications</b><span>Analyst programme applications closed on 2 October; division head applications opened.</span></li>
+            <li><b>Website</b><span>A full website, live before the start of term.</span></li>
+            <li><b>Information evenings</b><span>Looking to break into high finance, and the UK Investment Competition info session with Dr Luba Schoenig of UMushroom.</span></li>
+          </ul>
+        </div>
+        </div>
       </section>
 
       <!-- ===================== 2025–26 ===================================== -->
@@ -297,6 +317,7 @@
           <h2 id="y2025-title"><span>2025&ndash;26</span></h2>
           <p>Last year&rsquo;s flagships.</p>
         </div>
+        <div class="year__body">
         <ol class="log">
           <li class="log__item">
             <a class="log__row" href="/events/#comp-title">
@@ -322,13 +343,133 @@
             </div>
           </li>
         </ol>
+        <div>
+          <h3>Partnerships</h3>
+          <ul class="ev">
+            <li><b>Outlook Energy</b><span>Announced as a BTS sponsor: an energy trading firm specialising in power.</span></li>
+            <li><b>eToro</b><span>Partnership announced, then the Investing 101 event on 3 March.</span></li>
+            <li><b>WorldQuant</b><span>Partnership announced, then an evening on the International Quant Championship.</span></li>
+            <li><b>Berenberg</b><span>Partnership announced, with its sales and trading internship programme opened to members.</span></li>
+            <li><b>Headstart and HireHuub</b><span>Partners for early careers: Headstart&rsquo;s eight-week start-up internships, and HireHuub&rsquo;s sessions on landing an internship.</span></li>
+            <li><b>DRW</b><span>Discover DRW: its early-careers trading programme, opened to members.</span></li>
+          </ul>
+          <h3>Events</h3>
+          <ul class="ev">
+            <li><b>AmplifyME x UBS and Morgan Stanley: trading simulation</b><span>Give it a go. 7 October, Chemistry Lecture Theatre 1.</span></li>
+            <li><b>Simon Warren: how to build wealth</b><span>Former Director, Society of Technical Analysts.</span></li>
+            <li><b>How to work in fintech</b><span>Work in Fintech, 3 December, Bristol Arts Complex.</span></li>
+            <li><b>Finance Simulations launch</b><span>AmplifyME Pathways relaunched on 26 January in the Physics Building.</span></li>
+            <li><b>Citi: a call with an investment banking analyst</b><span>On a career in investment banking, followed by a Q&amp;A, online.</span></li>
+            <li><b>VegaPoint Capital</b><span>A speaker event on options trading.</span></li>
+            <li><b>Ares</b><span>Nick Votier, CFA, returned for a speaker event.</span></li>
+            <li><b>BDO careers event</b><span>On careers in accountancy, tax, audit and advisory.</span></li>
+            <li><b>Women in Finance conference</b><span>In Nottingham on 29 and 30 January, with a BTS discount code.</span></li>
+            <li><b>Trade Pitch Competition</b><span>Analyst teams pitch head-to-head, followed by drinks at the White Bear.</span></li>
+          </ul>
+          <h3>Society</h3>
+          <ul class="ev">
+            <li><b>Christmas Social</b><span>4 December at the Kings Arms.</span></li>
+            <li><b>Casino Royale night</b><span>A casino social on 3 February.</span></li>
+            <li><b>BTS x BIF summer social</b><span>With the Bristol Investment Fund, at the end of the year.</span></li>
+            <li><b>Analyst programme 2025&ndash;26</b><span>Applications closed on 14 October.</span></li>
+          </ul>
+        </div>
+        </div>
+      </section>
+
+      <!-- ===================== 2024-25 ===================================== -->
+      <section class="year" id="y2024" aria-labelledby="y2024-title">
+        <div class="year__label">
+          <h2 id="y2024-title"><span>2024&ndash;25</span></h2>
+          <p>Firm evenings in London, and a Jane Street night.</p>
+        </div>
+        <div>
+          <h3>Firms and speakers</h3>
+          <ul class="ev">
+            <li><b>Standard Chartered: Bill Winters</b><span>An exclusive evening with the CEO at the bank&rsquo;s London office, 11 November.</span></li>
+            <li><b>Standard Chartered: Bader Al Sarraf</b><span>BTS&rsquo;s own former president, now a research analyst at the bank, on Zoom in November.</span></li>
+            <li><b>LDC: Sally Tam</b><span>Investment Executive, on private equity. 13 November.</span></li>
+            <li><b>TP ICAP: Eren Erman</b><span>Global Head of Compliance Technology, 15 November.</span></li>
+            <li><b>BRG</b><span>A future professionals evening at BRG&rsquo;s London office on a career in economic and financial consulting, 14 November.</span></li>
+            <li><b>Jane Street: Estimathon Night</b><span>An estimation game with Jane Street, 19 November, Merchant Venturers Building.</span></li>
+            <li><b>J.P. Morgan: Kickstart your career in sales, trading and research</b><span>Two days on campus in October: insider insight from J.P. Morgan and networking with recruiters.</span></li>
+            <li><b>Glencore</b><span>A commodities working evening, the Women in Trading Insight Day and the industrial placement applications.</span></li>
+            <li><b>Robinhood speaker event</b><span>Speakers from Robinhood on content, risk and operations.</span></li>
+            <li><b>Rich McDonald: trading masterclass</b><span>An interactive trading and options masterclass.</span></li>
+            <li><b>Pratik Popat</b><span>The founder of BTS on Zoom, 8 October.</span></li>
+          </ul>
+          <h3>Society</h3>
+          <ul class="ev">
+            <li><b>Welcome Event</b><span>Wills Memorial Building on 18 September, with Glencore and AmplifyME.</span></li>
+            <li><b>Analyst programme 2024&ndash;25</b><span>Applications closed on 3 October.</span></li>
+            <li><b>Movember</b><span>The society fundraised for the Movember charity.</span></li>
+            <li><b>Coffee mornings and socials</b><span>A weekly coffee morning in the Senate House, a James Bond night and the AGM in the spring.</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ===================== 2023-24 ===================================== -->
+      <section class="year" id="y2023" aria-labelledby="y2023-title">
+        <div class="year__label">
+          <h2 id="y2023-title"><span>2023&ndash;24</span></h2>
+          <p>The Quant division arrives, and analysts start publishing.</p>
+        </div>
+        <div>
+          <h3>Firms and speakers</h3>
+          <ul class="ev">
+            <li><b>AmplifyME Finance Accelerator Simulation</b><span>In partnership with Morgan Stanley and UBS. Launch event on 12 October in Pugsley Lecture Theatre.</span></li>
+            <li><b>Nick Votier, CFA: Ares</b><span>Vice President, Ares Wealth Management Solutions, on wealth and asset management. March, Queen&rsquo;s Building.</span></li>
+            <li><b>Special guest panel</b><span>An ask-me-anything panel of professionals from the City, at Wills Memorial Building on 17 November.</span></li>
+            <li><b>Big Finance Dinner</b><span>A three-course dinner with industry guests on 11 December.</span></li>
+          </ul>
+          <h3>Society</h3>
+          <ul class="ev">
+            <li><b>Intro to BTS freshers event</b><span>A short presentation on the society and the analyst programme, then drinks, on 28 September.</span></li>
+            <li><b>Quant division</b><span>A new division building algorithmic strategies, announced with a Quantitative Finance Fund.</span></li>
+            <li><b>Bloomberg Terminal sessions</b><span>Give-it-a-go sessions in the Bloomberg room on Priory Road.</span></li>
+            <li><b>Research publications</b><span>Written guides from analysts, including discounted cash flow modelling, sustainability-linked derivatives, convertible bonds and a pitch book.</span></li>
+            <li><b>Analyst programme</b><span>Applications opened for 2023&ndash;24, then reopened in February.</span></li>
+            <li><b>Division head applications</b><span>Open from June, for the following year&rsquo;s division heads.</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ===================== 2022-23 ===================================== -->
+      <section class="year" id="y2022" aria-labelledby="y2022-title">
+        <div class="year__label">
+          <h2 id="y2022-title"><span>2022&ndash;23</span></h2>
+          <p>The earliest year on our archive: partnerships, speakers and a Gold Award.</p>
+        </div>
+        <div>
+          <h3>Firms and speakers</h3>
+          <ul class="ev">
+            <li><b>J.P. Morgan: Summer Analyst Networking Event</b><span>Held at J.P. Morgan&rsquo;s London office, for applicants to the summer analyst programme.</span></li>
+            <li><b>Standard Chartered: Shahryar Naghshbandi</b><span>Head of Macro Trading, on how the trading industry works. 24 November, Pugsley Lecture Theatre.</span></li>
+            <li><b>Standard Chartered: Eric Robertson</b><span>Global Head of Research and Chief Strategist, in February, plus a markets call with a Standard Chartered markets head.</span></li>
+            <li><b>SIGMA Financial</b><span>Partnership announced, then Andrew Simpson, Chief Executive, in Pugsley Lecture Theatre on 15 November.</span></li>
+            <li><b>AmplifyME x Morgan Stanley Finance Accelerator</b><span>A simulation run with Bristol Investment Fund, with Mark Teeger, Global Head of ALM at Morgan Stanley, as guest speaker.</span></li>
+            <li><b>Amplify Trading market call</b><span>Anthony Cheung, Chief Content and Culture Officer, on 30 November.</span></li>
+            <li><b>Kujira</b><span>Dan Tanaka, BD Lead at the blockchain network Kujira, on 3 November.</span></li>
+            <li><b>EFG Asset Management</b><span>Dr Daniel Murray, CEO of EFG Asset Management and Deputy CIO of EFG International, by video link in March.</span></li>
+            <li><b>LSE SU Alternative Investments Conference</b><span>BTS at the two-day conference in London, 23 and 24 January.</span></li>
+          </ul>
+          <h3>Society</h3>
+          <ul class="ev">
+            <li><b>Welcome Fair and Welcome Event</b><span>A stall at the Bristol SU Welcome Fair, then the Welcome Event in Queen&rsquo;s Building on 6 October.</span></li>
+            <li><b>Society Awards 2023</b><span>BTS won the Bristol SU Gold Award in the Group Accreditation Scheme for 2022/23.</span></li>
+            <li><b>Weekly market reports</b><span>A weekly written report and daily central-bank cards: Fed, BoE, BoJ, SNB, RBA and ECB decisions as they happened.</span></li>
+            <li><b>Workshops</b><span>A LinkedIn and CV workshop, and Bloomberg Terminal give-it-a-go sessions.</span></li>
+            <li><b>Socials</b><span>Society social at the Berkeley, the England v France quarter-final, a movie night, the first Term 2 social, a bake sale for the Turkey and Syria earthquake appeal, and the Finance Gala formal dinner on 5 May.</span></li>
+            <li><b>Equality, diversity and inclusion report</b><span>A published report on equality, diversity and inclusion in the society, for 2022/23.</span></li>
+          </ul>
+        </div>
       </section>
 
       <!-- ===================== Earlier ====================================== -->
       <section class="year" id="earlier" aria-labelledby="earlier-title">
         <div class="year__label">
-          <h2 id="earlier-title">Earlier years</h2>
-          <p>The evenings, partner events and speakers that built the society, since 2017.</p>
+          <h2 id="earlier-title">Before and across</h2>
+          <p>Evenings, partners and speakers from across the years, since 2017.</p>
         </div>
         <div>
           <h3>Evenings and partner events</h3>
