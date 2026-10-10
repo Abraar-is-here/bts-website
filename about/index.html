@@ -6,7 +6,7 @@
   <base href="/" />
 
   <title>About Us — Bristol Trading Society</title>
-  <meta name="description" content="The Bristol Trading Society is the largest finance society at the University of Bristol, founded in 2017. Events with J.P. Morgan, Standard Chartered, DRW and Oliver Wyman." />
+  <meta name="description" content="The fastest-growing finance society at the University of Bristol, founded in 2017. Sponsored by DRW and Jane Street, with events from J.P. Morgan, Standard Chartered and Oliver Wyman." />
 
 
   <link rel="icon" type="image/svg+xml" href="assets/img/bull.svg" />
@@ -268,6 +268,129 @@
       }
       .ladder p { font-size: 0.9375rem; }
     }
+
+    /* The timeline. A rail of five stops; the line fills to the chosen one and the
+       stage below changes. Without JS every stage is simply shown, in order. */
+    .tl__rail {
+      --p: 1;
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      margin-bottom: var(--space-4);
+      touch-action: pan-y;
+      user-select: none;
+    }
+    .tl:not(.is-js) .tl__rail { display: none; }
+    .tl__line, .tl__fill {
+      position: absolute;
+      top: 7px;
+      left: 10%;
+      width: 80%;
+      height: 2px;
+      border-radius: 1px;
+    }
+    .tl__line { background: var(--hairline); }
+    .tl__fill {
+      background: var(--accent-bright);
+      transform: scaleX(var(--p));
+      transform-origin: left center;
+      transition: transform 260ms var(--ease-out);
+    }
+    .tl__tab {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      min-height: 44px;
+      padding: 0 2px 6px;
+      background: none;
+      border: 0;
+      color: var(--text-secondary);
+      font-family: var(--font-display);
+      font-size: clamp(0.8125rem, 2.2vw, 1.125rem);
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      cursor: pointer;
+      transition: color 160ms ease;
+    }
+    .tl__tab::before {
+      content: '';
+      width: 16px;
+      height: 16px;
+      box-sizing: border-box;
+      border-radius: 50%;
+      border: 2px solid var(--hairline);
+      background: var(--c-navy-abyss, #06112b);
+      transition: background-color 160ms ease, border-color 160ms ease, transform 200ms var(--ease-out);
+    }
+    .tl__tab.is-passed::before { border-color: var(--accent-bright); }
+    .tl__tab[aria-selected="true"] { color: var(--text-primary); }
+    .tl__tab[aria-selected="true"]::before {
+      border-color: var(--accent-bright);
+      background: var(--accent-bright);
+      transform: scale(1.2);
+    }
+    .tl__tab:focus-visible { outline: 2px solid var(--accent-bright); outline-offset: 4px; border-radius: 6px; }
+    @media (hover: hover) and (pointer: fine) {
+      .tl__tab:hover { color: var(--text-primary); }
+    }
+    .tl__panel {
+      display: grid;
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      gap: var(--space-3) var(--space-5);
+      align-items: start;
+      padding: var(--space-4) 0;
+      border-top: 1px solid var(--hairline);
+    }
+    .tl.is-js .tl__panel { animation: tl-in 240ms var(--ease-out); }
+    .tl__panel[hidden] { display: none; }
+    .tl__when {
+      font-family: var(--font-display);
+      font-size: clamp(2.6rem, 7vw, 5rem);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      color: var(--text-primary);
+    }
+    .tl__what {
+      margin-top: 12px;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-bright);
+    }
+    .tl__body p { color: var(--text-secondary); line-height: 1.7; max-width: 52ch; }
+    .tl__body strong { color: var(--text-primary); font-weight: 600; }
+    .tl__chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: var(--space-3); padding: 0; list-style: none; }
+    .tl__chips li {
+      padding: 7px 12px;
+      border: 1px solid var(--hairline);
+      border-radius: 999px;
+      font-size: 0.875rem;
+      line-height: 1.3;
+      color: var(--text-primary);
+    }
+    @keyframes tl-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+    @media (max-width: 720px) {
+      .tl__panel { grid-template-columns: 1fr; }
+      .tl__tab { gap: 10px; }
+    }
+    /* Five labels share the width, so on a phone the rail takes the gutters too
+       and the type drops a step; nothing wraps. */
+    @media (max-width: 480px) {
+      .tl__rail { margin-inline: calc(var(--gutter) * -0.9); }
+      .tl__tab { font-size: 0.6875rem; letter-spacing: -0.04em; white-space: nowrap; padding-inline: 0; }
+    }
+    @media (max-width: 380px) {
+      .tl__tab { font-size: 0.625rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .tl__fill, .tl__tab::before { transition: none; }
+      .tl.is-js .tl__panel { animation: none; }
+    }
     @media (max-width: 820px) {
       .abt-hero { grid-template-columns: 1fr; }
       .abt-hero .abt-photo { max-width: 460px; }
@@ -288,7 +411,12 @@
     "url": "https://bristoltradingsoc.co.uk/",
     "logo": "https://bristoltradingsoc.co.uk/assets/img/bull.svg",
     "foundingDate": "2017",
-    "description": "The largest finance and trading society at the University of Bristol. Student-run, covering equities, FICC, macro and quantitative trading through an analyst programme, speaker events and Bloomberg Terminal sessions. Has run events with J.P. Morgan, Standard Chartered, DRW, Oliver Wyman and Citi.",
+    "sponsor": [
+      {"@type": "Organization", "name": "DRW"},
+      {"@type": "Organization", "name": "Jane Street"},
+      {"@type": "Organization", "name": "Outlook Energy"}
+    ],
+    "description": "The largest and fastest-growing finance and trading society at the University of Bristol. Student-run, covering equities, FICC, macro and quantitative trading through an analyst programme, speaker events and Bloomberg Terminal sessions. Sponsored by DRW, Jane Street and Outlook Energy. Partners include JPMorgan Chase & Co., WorldQuant, Berenberg, ICE, CFA Institute and eToro. Has run events with J.P. Morgan, Standard Chartered, DRW, Oliver Wyman and Citi.",
     "email": "bristol-trading-society@bristol.ac.uk",
     "address": {
       "@type": "PostalAddress",
@@ -380,7 +508,8 @@
         <div>
           <h1 class="abt__title">A society for people who wanted to do the work, not read about it</h1>
           <p class="abt__lead">
-            The Bristol Trading Society is the largest finance society at the University of Bristol.
+            The Bristol Trading Society is the fastest-growing finance society at the University of
+            Bristol: over 400 applications for 80 analyst places, and 4,500+ members and followers.
             Our analysts research markets across FICC, Equities, Macro and Quant, and we put members in
             front of firms hiring in trading, investment banking and asset management. It is run
             entirely by students, for students. We have run events with J.P. Morgan, Standard
@@ -397,34 +526,56 @@
       </header>
 
       <!-- ===== Origins ===== -->
-      <section class="abt__sec" aria-labelledby="origin-title">
-        <h2 class="abt__sec-title" id="origin-title">How it started</h2>
+      <section class="abt__sec tl" data-timeline aria-labelledby="origin-title">
+        <h2 class="abt__sec-title" id="origin-title">How it started, and where it is now</h2>
 
-        <div class="abt__story">
-          <div>
-            <p>
-              BTS was founded in <strong>2017</strong> by <strong>Pratik Popat</strong>, then a
-              Bristol student. It has been run by students every year since, with the whole committee
-              turning over as each cohort graduates.
-            </p>
-            <p>
-              The divisions have not stayed still. The line-up has been rebuilt several times as
-              markets and member interest shifted &mdash; <strong>cryptocurrency</strong> and
-              <strong>derivatives</strong> have both run as standalone divisions in past years. What
-              gets researched is decided by what members actually want to work on, not by a fixed
-              structure inherited from whoever ran it last.
-            </p>
+        <div class="tl__rail" role="tablist" aria-label="Society history, from 2017 to now">
+          <span class="tl__line" aria-hidden="true"></span>
+          <span class="tl__fill" aria-hidden="true"></span>
+          <button class="tl__tab" role="tab" id="tl-t0" aria-controls="tl-p0" type="button">2017</button>
+          <button class="tl__tab" role="tab" id="tl-t1" aria-controls="tl-p1" type="button">Shifts</button>
+          <button class="tl__tab" role="tab" id="tl-t2" aria-controls="tl-p2" type="button">Earlier</button>
+          <button class="tl__tab" role="tab" id="tl-t3" aria-controls="tl-p3" type="button">2025&ndash;26</button>
+          <button class="tl__tab" role="tab" id="tl-t4" aria-controls="tl-p4" type="button">Now</button>
+        </div>
+
+        <div class="tl__panel" role="tabpanel" id="tl-p0" aria-labelledby="tl-t0">
+          <div><p class="tl__when">2017</p><p class="tl__what">Founded</p></div>
+          <div class="tl__body">
+            <p><strong>Pratik Popat</strong>, then a Bristol student, founded BTS. It has been run by students every year since, and the whole committee turns over as each cohort graduates.</p>
+            <ul class="tl__chips"><li>Came back as a speaker: founder of BTS, investor at Simplyhealth</li></ul>
           </div>
-          <div>
-            <p>
-              Today it runs four &mdash; <strong>FICC, Equities, Macro and Quant</strong> &mdash; split across
-              fourteen teams, each with its own research agenda and division head.
-            </p>
-            <p>
-              The analyst programme has become the hardest part of the society to get into. It now
-              draws <strong>over 400 applications</strong> a year, and this year took 80 analysts &mdash;
-              and it is the reason firms recruit from the cohort directly.
-            </p>
+        </div>
+
+        <div class="tl__panel" role="tabpanel" id="tl-p1" aria-labelledby="tl-t1">
+          <div><p class="tl__when">Rebuilt</p><p class="tl__what">Over the years</p></div>
+          <div class="tl__body">
+            <p>The divisions follow what members want to work on. <strong>Cryptocurrency</strong> and <strong>derivatives</strong> have both run as standalone divisions, and the line-up has been rebuilt several times as markets shifted.</p>
+            <ul class="tl__chips"><li>Now: FICC</li><li>Equities</li><li>Macro</li><li>Quant</li></ul>
+          </div>
+        </div>
+
+        <div class="tl__panel" role="tabpanel" id="tl-p2" aria-labelledby="tl-t2">
+          <div><p class="tl__when">Earlier</p><p class="tl__what">Evenings and partners</p></div>
+          <div class="tl__body">
+            <p>Firms and practitioners came to Bristol, and BTS went to them: an evening with <strong>Standard Chartered</strong>, a full theatre for <strong>SIGMA Financial</strong>, an invite-only <strong>DRW</strong> social, and Bloomberg Terminal sessions open to everyone.</p>
+            <ul class="tl__chips"><li>Standard Chartered</li><li>SIGMA Financial</li><li>DRW</li><li>Energy Trading Week</li><li>LSE Alternative Investments Conference</li><li>Citi</li><li>TP ICAP</li><li>Ares</li><li>LDC</li><li>Work in Fintech</li></ul>
+          </div>
+        </div>
+
+        <div class="tl__panel" role="tabpanel" id="tl-p3" aria-labelledby="tl-t3">
+          <div><p class="tl__when">2025&ndash;26</p><p class="tl__what">Last year</p></div>
+          <div class="tl__body">
+            <p>The <strong>Annual Trading Competition</strong>: seven analyst teams each ran a mock portfolio and pitched one instrument to external judges. The US 10-year yield and Diageo teams won. Then the <strong>Macro Debate</strong>, on whether Argentina should free-float its currency.</p>
+            <ul class="tl__chips"><li>7 teams</li><li>External judges</li><li>Brent, copper, Eli Lilly, Novo Nordisk, European defence</li></ul>
+          </div>
+        </div>
+
+        <div class="tl__panel" role="tabpanel" id="tl-p4" aria-labelledby="tl-t4">
+          <div><p class="tl__when">Now</p><p class="tl__what">Autumn 2026</p></div>
+          <div class="tl__body">
+            <p>The Welcome Event filled <strong>Pugsley Lecture Theatre</strong>. The AmplifyME simulation sold out its first session and added a second. <strong>J.P. Morgan</strong> ran a brunch and an evening panel on campus, <strong>Oliver Wyman</strong> comes on 21 October, and the <strong>UK Investment Competition</strong> with UMushroom runs to 1 December.</p>
+            <ul class="tl__chips"><li>J.P. Morgan</li><li>Oliver Wyman</li><li>AmplifyME</li><li>UMushroom</li></ul>
           </div>
         </div>
 
@@ -454,33 +605,6 @@
                alt="Rows of students in Pugsley Lecture Theatre listening to the committee at the 2026 Welcome Event" />
           <figcaption>Pugsley Lecture Theatre &middot; 24.09.2026</figcaption>
         </figure>
-      </section>
-
-      <!-- ===== Questions people ask ===== -->
-      <section class="abt__sec" aria-labelledby="faq-title">
-        <h2 class="abt__sec-title" id="faq-title">Common questions</h2>
-        <ol class="ladder">
-          <li>
-            <div>
-              <h3>What is the largest finance society in Bristol?</h3>
-              <p>
-                The Bristol Trading Society, founded in 2017 and run by students at the University of
-                Bristol. Open to any student, it covers FICC, Equities, Macro and Quant through an
-                analyst programme, speaker events and Bloomberg Terminal sessions.
-              </p>
-            </div>
-          </li>
-          <li>
-            <div>
-              <h3>Which firms has the Bristol Trading Society worked with?</h3>
-              <p>
-                J.P. Morgan (a networking brunch, a markets workshop and an evening panel on
-                campus), Standard Chartered, DRW, Oliver Wyman, and speakers from Citi. The full
-                list is on the <a href="/events/past/">past events</a> page.
-              </p>
-            </div>
-          </li>
-        </ol>
       </section>
 
       <!-- ===== Structure ===== -->
@@ -596,6 +720,7 @@
   <script src="js/transitions.js?v=3" defer></script>
   <script src="js/nav.js?v=1" defer></script>
   <script src="js/promo.js?v=3" defer></script>
+  <script src="js/timeline.js?v=1" defer></script>
   <!-- ===== Site footer ===== -->
   <footer class="site-footer">
     <div class="site-footer__inner">
