@@ -3451,7 +3451,8 @@ body:has(> .ticker) { padding-top: var(--ticker-h); }
   position: relative;
   z-index: 1;
 }
-.creed__stats { display: flex; gap: clamp(32px, 7vw, 120px); margin: 0; }
+.creed__stats { display: flex; flex-wrap: wrap; gap: var(--space-3) clamp(32px, 7vw, 120px); margin: 0; }
+.creed__stats dt { max-width: 22ch; }
 .creed__stats div { display: flex; flex-direction: column-reverse; }
 .creed__stats dd { margin: 0; font-size: clamp(2.2rem, 3.6vw, 3rem); font-weight: 600; line-height: 1; letter-spacing: -0.03em; color: var(--text-primary); }
 .creed__stats dt { margin-top: 8px; max-width: 22ch; font-size: 1rem; line-height: 1.35; color: rgba(244, 247, 251, 0.82); }
