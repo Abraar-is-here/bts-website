@@ -3567,3 +3567,98 @@ body:has(> .ticker) { padding-top: var(--ticker-h); }
 @media (prefers-reduced-motion: reduce) {
   .scroll-cue i::after { animation: none; top: 0; }
 }
+
+/* =============================================================================
+   Upcoming events carousel (home). One event per slide on a scroll-snap
+   track, so a swipe works without JS; js/event-carousel.js adds the timer,
+   arrows and dots. The active dot fills over the 10 seconds before it moves.
+   ============================================================================= */
+.evc { margin-top: var(--space-5); }
+.evc__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+.evc__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+.evc__controls { display: flex; align-items: center; gap: 12px; }
+.evc.is-single .evc__controls { display: none; }
+.evc__arrow {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--glass-border);
+  background: rgba(6, 17, 43, 0.6);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: border-color 160ms ease, transform 160ms var(--ease-out);
+}
+.evc__arrow:active { transform: scale(0.94); }
+@media (hover: hover) and (pointer: fine) {
+  .evc__arrow:hover { border-color: rgba(255, 255, 255, 0.5); }
+}
+.evc__arrow:focus-visible, .evc__dot:focus-visible { outline: 2px solid var(--accent-bright); outline-offset: 3px; }
+.evc__dots { display: flex; align-items: center; gap: 4px; }
+.evc__dot {
+  position: relative;
+  width: 22px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  transition: width 260ms var(--ease-out);
+}
+.evc__dot::before, .evc__fill {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 20px;
+  height: 4px;
+  border-radius: 2px;
+}
+.evc__dot::before { background: rgba(244, 247, 251, 0.25); }
+.evc__dot.is-active { width: 52px; }
+.evc__fill {
+  background: var(--accent-bright);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+.evc__dot.is-active .evc__fill { transform: scaleX(1); }
+.evc.is-playing .evc__dot.is-active .evc__fill { animation: evc-fill 10s linear both; }
+@keyframes evc-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+.evc__track {
+  display: flex;
+  align-items: stretch;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+  border-radius: var(--radius-sm);
+}
+.evc__track::-webkit-scrollbar { display: none; }
+.evc__slide {
+  flex: 0 0 100%;
+  min-width: 0;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  display: flex;
+}
+.evc__slide > .headline,
+.evc__slide > .promo { flex: 1; margin-top: 0; }
+.evc__slide > .promo > .promo__inner { height: 100%; }
+@media (prefers-reduced-motion: reduce) {
+  .evc__dot, .evc__arrow { transition: none; }
+}
