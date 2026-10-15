@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Link-only: for the analyst cohort. Not indexed, not in the sitemap,
+       not linked from anywhere on the site. -->
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <base href="/" />
+
+  <title>Futures First, Swansea — Bristol Trading Society</title>
+  <meta name="description" content="Analyst cohort sign-up: an in-person visit to Futures First in Swansea." />
+
+  <link rel="icon" type="image/svg+xml" href="assets/img/bull.svg" />
+
+  <link rel="preload" href="assets/fonts/syne-800.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/fonts/dm-sans-400.woff2" as="font" type="font/woff2" crossorigin />
+
+  <link rel="stylesheet" href="styles/tokens/fonts.css?v=7" />
+  <link rel="stylesheet" href="styles/tokens/colors.css?v=15" />
+  <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
+  <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
+  <link rel="stylesheet" href="styles/main.css?v=128" />
+  <style>
+    /* -------------------------------------------------------------------------
+       Futures First, Swansea: a link-only sign-up for the analyst cohort.
+       One reading column: the details first, then the form below them.
+       Sign-ups post to apps-script/VisitCode.gs (data-endpoint on the form).
+       ------------------------------------------------------------------------- */
+    .vs {
+      --text-secondary: rgba(244, 247, 251, 0.74);
+      position: relative;
+      padding: 132px var(--gutter) var(--space-7);
+      background: linear-gradient(180deg, rgba(6, 17, 43, 0.3) 0, rgba(6, 17, 43, 0.62) 640px, rgba(6, 17, 43, 0.74) 100%);
+    }
+    .vs__inner { max-width: 720px; margin: 0 auto; }
+    .vs__head { margin-bottom: var(--space-5); }
+    .vs h1 {
+      margin: 0 0 var(--space-3);
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800;
+      line-height: 0.96;
+      letter-spacing: -0.04em;
+      color: var(--text-primary);
+    }
+    .vs__lead { margin: 0; font-size: 1.125rem; line-height: 1.6; color: rgba(244, 247, 251, 0.86); }
+    .vs__private {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: var(--space-4) 0 0;
+      padding: 9px 16px;
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      border-radius: var(--radius-pill);
+      background: rgba(56, 189, 248, 0.08);
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .vs__private svg { flex: none; color: var(--accent-bright); }
+
+    /* The details read as one column, the same width as the form below:
+       a label-and-value table for the facts, then plain sections with one
+       heading style and one list style. */
+    .vs__facts { margin: 0; border-top: 1px solid rgba(244, 247, 251, 0.3); }
+    .vs__facts div {
+      display: grid;
+      grid-template-columns: 8.5rem minmax(0, 1fr);
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--hairline);
+    }
+    .vs__facts dt { font-size: 0.9375rem; font-weight: 600; color: var(--text-secondary); }
+    .vs__facts dd { margin: 0; font-size: 1.0625rem; line-height: 1.5; color: var(--text-primary); }
+    .vs__note { display: block; margin-top: 2px; font-size: 0.875rem; color: var(--text-secondary); }
+
+    .vs__block { margin-top: var(--space-5); }
+    .vs__block h3 {
+      margin: 0 0 var(--space-2);
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.015em;
+      color: var(--text-primary);
+    }
+    .vs__block p { margin: var(--space-2) 0 0; font-size: 1.0625rem; line-height: 1.65; color: var(--text-secondary); }
+    .vs__block h3 + p { margin-top: 0; }
+    .vs__block p + .vs__list { margin-top: var(--space-2); }
+    .vs__block strong { color: var(--text-primary); font-weight: 700; }
+    .vs__block a { color: var(--accent-bright); font-weight: 600; text-underline-offset: 4px; }
+    .vs__list { margin: 0; padding: 0; list-style: none; }
+    .vs__list li { position: relative; padding: 5px 0 5px 20px; font-size: 1.0625rem; line-height: 1.55; color: var(--text-primary); }
+    .vs__list li::before { content: ''; position: absolute; left: 2px; top: 15px; width: 6px; height: 6px; border-radius: 50%; background: var(--accent-bright); }
+    .vs__list b { font-weight: 700; }
+    .vs__small { font-size: 0.9375rem !important; }
+
+    /* Registration: below the details, one centred column. */
+    .vs__register {
+      display: grid;
+      justify-items: center;
+      margin-top: var(--space-6);
+      padding-top: var(--space-5);
+      border-top: 1px solid var(--hairline);
+    }
+    .vs__register > * { width: 100%; max-width: 720px; }
+    .vs__deadline {
+      margin: 0 0 var(--space-3);
+      text-align: center;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .vs__clock { color: var(--accent-bright); font-variant-numeric: tabular-nums; }
+    .vs .form-card h2 {
+      margin: 0 0 var(--space-4);
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 2.4vw, 1.75rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+    }
+    .vs__closed { text-align: center; }
+    .vs__closed p { margin: 0 auto; max-width: 46ch; line-height: 1.6; color: var(--text-secondary); }
+
+    /* Consent: a real checkbox, drawn to match the fields. */
+    .check { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 12px; align-items: start; cursor: pointer; }
+    .check input {
+      appearance: none;
+      width: 22px;
+      height: 22px;
+      margin: 1px 0 0;
+      border: 1.5px solid var(--field-border);
+      border-radius: 6px;
+      background: var(--field-bg);
+      position: relative;
+      cursor: pointer;
+      transition: background-color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+    }
+    /* The tick is placed, not centred by grid: a rotated L sits visually low
+       and right when centred, so it is nudged up and left to look centred. */
+    .check input::after {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 2px;
+      width: 6px;
+      height: 11px;
+      border-right: 2px solid var(--c-navy);
+      border-bottom: 2px solid var(--c-navy);
+      transform: rotate(45deg) scale(0);
+      transition: transform 140ms var(--ease-out);
+    }
+    /* The shared .field input styles (padding, size) must not reach the box. */
+    .vs .field .check input { box-sizing: border-box; width: 22px; height: 22px; min-height: 0; padding: 0; font-size: 0; }
+    .vs .field .check input:checked { background: var(--accent-bright); border-color: var(--accent-bright); }
+    .check input:checked::after { transform: rotate(45deg) scale(1); }
+    .check input:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+    .check span { font-size: 0.9375rem; line-height: 1.5; color: var(--text-primary); }
+    .field.is-invalid .check input { border-color: var(--danger); }
+    .vs__hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .check input, .check input::after { transition: none; }
+    }
+    @media (max-width: 720px) {
+      .vs { padding-top: 112px; }
+      .vs__facts div { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+      .vs .field-grid { grid-template-columns: minmax(0, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <a class="skip-link" href="/visits/futures-first/#visit">Skip to content</a>
+
+  <div class="aurora" aria-hidden="true">
+    <canvas id="aurora-canvas"></canvas>
+    <div class="aurora-fallback">
+      <span class="b1"></span><span class="b2"></span><span class="b3"></span>
+      <span class="b4"></span><span class="b5"></span><span class="b6"></span>
+      <span class="sheen"></span>
+    </div>
+  </div>
+
+  <nav class="nav" aria-label="Primary">
+    <a class="logo" href="/" aria-label="Bristol Trading Society — home">
+      <img class="logo__lockup" src="assets/img/bts-logo-white.png" alt="" width="1127" height="301" />
+    </a>
+    <ul class="nav__links">
+      <li class="nav__mobile">
+        <button class="nav__menu-btn" aria-expanded="false" aria-haspopup="true">
+          Menu
+          <svg class="nav__chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+            <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <ul class="nav__dropdown" role="menu">
+          <li><a class="nav__dropdown-link" href="/" role="menuitem">Home</a></li>
+          <li><a class="nav__dropdown-link" href="/about" role="menuitem">About Us</a></li>
+          <li><a class="nav__dropdown-link" href="/events" role="menuitem">Events</a></li>
+          <li><a class="nav__dropdown-link" href="/team" role="menuitem">Team</a></li>
+        </ul>
+      </li>
+      <li><a class="nav__link nav__link--cta" href="https://www.bristolsu.org.uk/groups/bristol-trading-society-2436" target="_blank" rel="noopener noreferrer" aria-label="Join us: become a member on the Bristol SU page (opens in a new tab)">Join us</a></li>
+    </ul>
+  </nav>
+
+  <!-- data-endpoint: the deployed apps-script/DeskCode.gs web app (/exec URL).
+       Empty means not deployed yet: the page shows its empty state. -->
+
+  <main id="visit" class="vs page-dark" tabindex="-1">
+    <div class="vs__inner">
+
+      <header class="vs__head">
+        <h1>Futures First, Swansea</h1>
+        <p class="vs__lead">
+          An in-person visit to Futures First&rsquo;s Swansea trading floor on Thursday 22 October,
+          for the 2026/27 analyst cohort. Read the details, then register your interest at the
+          end of the page: places are limited, and we&rsquo;ll email you if you&rsquo;re selected.
+        </p>
+        <p class="vs__private">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+          For BTS analysts only. Please don&rsquo;t share this link.
+        </p>
+      </header>
+
+      <!-- ===== The details: read first ===== -->
+      <section class="vs__info" aria-labelledby="details-title">
+        <h2 class="visually-hidden" id="details-title">The details</h2>
+        <dl class="vs__facts">
+          <div><dt>When</dt><dd>Thursday 22 October, around 11:30 AM to 3:30 PM<span class="vs__note">Final timings to be confirmed</span></dd></div>
+          <div><dt>Where</dt><dd>Futures First, 71/72 The Kingsway, 2nd Floor, Swansea SA1 5JE</dd></div>
+          <div><dt>Places</dt><dd>Limited, confirmed by email</dd></div>
+          <div><dt>Register by</dt><dd>Tuesday 20 October, 11:59 PM</dd></div>
+        </dl>
+
+        <div class="vs__block">
+          <h3>The visit</h3>
+          <ul class="vs__list">
+            <li>An introduction to Futures First and the markets it trades</li>
+            <li>A tour of the trading floor</li>
+            <li>Meeting and networking with traders and recent graduates</li>
+            <li>Hands-on time on their trading simulators</li>
+            <li>Food and refreshments</li>
+          </ul>
+          <p>
+            It&rsquo;s a rare chance to see a trading firm from the inside, and it could lead to a
+            Spring Insight or Summer Internship, so we hope you&rsquo;ll make the effort to come.
+          </p>
+        </div>
+
+        <div class="vs__block">
+          <h3>Getting there</h3>
+          <p>
+            <strong>Getting there and back is your own responsibility</strong>, and travel costs
+            aren&rsquo;t covered or reimbursed.
+          </p>
+          <ul class="vs__list">
+            <li><b>Train:</b> GWR from Bristol Temple Meads to Swansea, about 2 hours direct.</li>
+            <li><b>Coach:</b> FlixBus from Bristol Bus &amp; Coach Station, about 2 hours 50 minutes, from around &pound;8.</li>
+            <li>Either way, the office is a 15-minute walk from the station.</li>
+          </ul>
+          <p class="vs__small">Fares and times change, so check before you book.</p>
+        </div>
+
+        <div class="vs__block">
+          <h3>About Futures First</h3>
+          <p>
+            In its own words, &ldquo;a technology-enabled services firm operating in the domain
+            of global derivatives markets&rdquo;, analysing futures and options across asset
+            classes on exchanges around the world. Swansea is one of its offices, alongside
+            London, Montr&eacute;al, Warsaw and Dubai.
+          </p>
+          <p><a href="https://futuresfirst.com/" target="_blank" rel="noopener noreferrer">futuresfirst.com<span class="visually-hidden"> (opens in a new tab)</span> <span aria-hidden="true">&nearr;</span></a></p>
+        </div>
+      </section>
+
+      <!-- ===== Registration: after the details =====
+           data-endpoint on the form = the deployed apps-script/VisitCode.gs
+           web app. The form removes itself at the deadline (js/promo.js) and
+           the closed note takes its place; the script refuses late sign-ups too. -->
+      <section class="vs__register" id="register" aria-labelledby="register-title">
+        <p class="vs__deadline" data-until="2026-10-21T00:00:00+01:00">
+          Sign-ups close Tuesday 20 October, 11:59 PM
+          <span class="vs__clock" data-countdown="2026-10-21T00:00:00+01:00" data-cd-minutes>&middot; <span data-cd-clock></span> left</span>
+        </p>
+        <form id="visitForm" class="form-card" novalidate data-until="2026-10-21T00:00:00+01:00" data-closes="2026-10-21T00:00:00+01:00" data-endpoint="https://script.google.com/macros/s/AKfycby-K83oCxwAquoBgJD4BqAPExeRlKGVpAQVCcIN5XvRryPZ_mXd8z6Ji2Q6Y1K8SKBaYg/exec">
+          <h2 id="register-title">Register your interest</h2>
+  
+          <div class="field-grid">
+            <div class="field" data-field>
+              <label for="firstName">First name <span class="req" aria-hidden="true">*</span></label>
+              <input id="firstName" name="firstName" type="text" autocomplete="given-name" required />
+              <span class="field__error" data-error></span>
+            </div>
+            <div class="field" data-field>
+              <label for="lastName">Last name <span class="req" aria-hidden="true">*</span></label>
+              <input id="lastName" name="lastName" type="text" autocomplete="family-name" required />
+              <span class="field__error" data-error></span>
+            </div>
+            <div class="field field--full" data-field>
+              <label for="uniEmail">University email <span class="req" aria-hidden="true">*</span></label>
+              <input id="uniEmail" name="uniEmail" type="email" inputmode="email" autocomplete="email" placeholder="you@bristol.ac.uk" required />
+              <span class="field__error" data-error></span>
+            </div>
+            <div class="field field--full" data-field>
+              <label for="division">Your division <span class="req" aria-hidden="true">*</span></label>
+              <select id="division" name="division" required>
+                <option value="">Choose your division</option>
+                <option value="FICC">FICC</option>
+                <option value="Equities">Equities</option>
+                <option value="Macro">Macro</option>
+                <option value="Quant">Quant</option>
+              </select>
+              <span class="field__error" data-error></span>
+            </div>
+            <div class="field field--full" data-field>
+              <label for="dietary">Dietary requirements <span class="opt">(optional)</span></label>
+              <input id="dietary" name="dietary" type="text" placeholder="e.g. vegetarian, nut allergy" />
+            </div>
+            <div class="field field--full" data-field>
+              <label for="access">Access needs <span class="opt">(optional)</span></label>
+              <textarea id="access" name="access" rows="3" placeholder="Anything that would make the day easier for you"></textarea>
+            </div>
+            <div class="field field--full" data-field>
+              <label class="check" for="consent">
+                <input id="consent" name="consent" type="checkbox" required />
+                <span>I&rsquo;m on the 2026/27 analyst programme, and I&rsquo;m happy for my name to be shared with Futures First for building access.</span>
+              </label>
+              <span class="field__error" data-error></span>
+            </div>
+          </div>
+  
+          <!-- Honeypot: hidden from people, filled in by bots. -->
+          <div class="vs__hp" aria-hidden="true">
+            <label for="company">Company</label>
+            <input id="company" name="company" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+  
+          <div class="form-actions">
+            <button type="submit" class="btn btn--primary" data-submit>
+              Register interest <span class="btn__arrow" aria-hidden="true">&rarr;</span>
+            </button>
+            <p class="form-status" role="status" aria-live="polite" data-status></p>
+          </div>
+        </form>
+  
+        <div id="visitThanks" class="form-card form-thanks" hidden tabindex="-1">
+          <svg class="form-thanks__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m7.5 12.5 3 3 6-6"/></svg>
+          <h2 class="h3 form-thanks__title">You&rsquo;re on the list</h2>
+          <p class="body form-thanks__body">
+            If you&rsquo;re selected, we&rsquo;ll email <strong data-thanks-email>you</strong> to confirm
+            your place, with the final timings for Thursday 22 October.
+          </p>
+        </div>
+
+        <div class="form-card vs__closed" data-after="2026-10-21T00:00:00+01:00" hidden>
+          <h2>Sign-ups have closed</h2>
+          <p>They closed on Tuesday 20 October at 11:59 PM. If you registered and are selected, we&rsquo;ll email you.</p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <script src="js/visit.js?v=3" defer></script>
+
+  <script src="js/aurora.js?v=9" defer></script>
+  <script src="js/transitions.js?v=3" defer></script>
+  <script src="js/nav.js?v=1" defer></script>
+  <script src="js/promo.js?v=4" defer></script>
+  <!-- ===== Site footer ===== -->
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+
+      <div class="site-footer__top">
+        <div>
+          <a class="site-footer__brand-mark" href="/" aria-label="Bristol Trading Society — home">
+            <svg viewBox="0 0 93 78" fill="currentColor" aria-hidden="true" focusable="false">
+              <path fill-rule="evenodd" d="M65.13 6.00 L66.50 5.88 L66.88 6.25 L66.88 10.50 L71.88 15.25 L71.88 16.50 L72.88 17.25 L72.88 24.50 L70.88 26.25 L70.88 27.50 L66.88 31.25 L66.88 32.50 L67.88 33.25 L67.88 34.50 L69.88 36.25 L69.88 37.50 L70.88 38.25 L70.88 39.50 L71.88 40.25 L71.88 41.50 L72.88 42.25 L72.88 43.50 L73.88 44.25 L73.88 45.50 L75.88 47.25 L75.88 48.50 L76.88 49.25 L76.88 50.50 L77.88 51.25 L77.88 52.50 L78.88 53.25 L78.88 54.50 L80.88 56.25 L80.88 57.50 L81.88 58.25 L81.88 59.50 L82.88 60.25 L82.88 61.50 L83.88 62.25 L83.88 63.50 L84.88 64.25 L84.88 65.50 L86.88 67.25 L86.88 68.50 L87.88 69.25 L87.88 71.50 L87.50 71.88 L81.25 71.88 L80.88 71.50 L80.88 68.25 L79.88 67.50 L79.88 64.25 L78.88 63.50 L78.88 62.25 L78.50 61.88 L77.25 61.88 L76.50 60.88 L72.25 60.88 L71.25 59.88 L70.88 60.25 L70.88 62.50 L69.50 63.88 L68.25 63.88 L65.88 61.50 L65.88 60.25 L63.50 57.88 L62.00 57.88 L61.88 60.50 L62.88 61.25 L62.88 63.50 L63.88 64.25 L63.88 65.50 L64.88 66.25 L64.88 68.50 L65.88 69.25 L65.88 72.50 L65.50 72.88 L58.25 72.88 L56.88 71.25 L57.88 70.50 L57.88 68.25 L58.88 67.50 L58.88 65.25 L57.88 64.50 L57.88 63.25 L56.50 61.88 L55.25 61.88 L53.88 60.50 L53.88 58.25 L52.88 57.50 L52.88 54.25 L51.88 53.50 L51.88 52.25 L50.88 51.50 L50.88 50.25 L48.50 47.88 L47.88 48.25 L47.88 52.50 L48.88 53.25 L48.88 55.50 L49.88 56.25 L49.88 57.50 L50.88 58.25 L50.88 60.50 L51.88 61.25 L51.88 63.50 L51.50 63.88 L50.25 63.88 L49.50 64.88 L44.25 64.88 L43.50 63.88 L42.25 63.88 L36.50 57.88 L34.25 57.88 L32.50 59.88 L31.25 59.88 L29.50 61.88 L28.25 61.88 L27.50 62.88 L26.25 62.88 L24.50 64.88 L23.25 64.88 L22.50 65.88 L20.25 65.88 L19.50 66.88 L16.25 66.88 L15.88 67.25 L15.88 69.50 L14.88 70.25 L14.88 71.50 L13.50 72.88 L10.25 72.88 L8.88 71.50 L10.88 69.50 L10.88 68.25 L12.88 66.50 L12.88 65.25 L14.25 63.88 L15.50 63.88 L16.25 62.88 L18.50 62.88 L20.88 60.50 L20.88 59.25 L21.88 58.25 L21.50 57.88 L20.25 57.88 L19.50 58.88 L17.25 58.88 L16.50 59.88 L10.25 59.88 L9.50 58.88 L8.25 58.88 L5.88 56.50 L5.88 53.25 L7.88 51.50 L7.88 50.25 L14.88 43.50 L14.88 42.25 L15.88 41.50 L15.50 40.88 L13.25 40.88 L12.50 41.88 L8.25 41.88 L7.50 40.88 L6.25 40.88 L5.88 40.50 L5.88 39.25 L7.25 37.88 L8.50 37.88 L9.25 36.88 L10.50 36.88 L11.25 35.88 L14.50 35.88 L15.25 36.88 L16.50 36.88 L16.88 37.25 L16.88 38.50 L17.88 39.25 L17.88 41.50 L16.88 42.25 L16.88 44.50 L13.88 47.25 L13.88 48.50 L9.88 52.25 L9.88 55.50 L11.25 56.88 L13.50 56.88 L14.25 55.88 L16.50 55.88 L18.25 53.88 L19.50 53.88 L19.88 53.50 L19.88 52.25 L22.25 49.88 L23.50 49.88 L25.25 47.88 L26.50 47.88 L27.25 46.88 L30.50 46.88 L31.50 47.88 L31.88 47.50 L31.88 44.25 L32.88 43.50 L32.88 41.25 L33.88 40.50 L33.88 39.25 L38.25 34.88 L39.50 34.88 L40.25 33.88 L41.50 33.88 L42.25 32.88 L44.50 32.88 L44.88 32.50 L44.50 31.88 L43.25 31.88 L42.50 30.88 L41.25 30.88 L36.88 26.50 L36.88 20.25 L40.50 16.88 L40.88 17.50 L39.88 18.00 L39.88 22.50 L42.25 24.88 L43.50 24.88 L44.25 25.88 L48.50 25.88 L50.25 23.88 L54.50 23.88 L55.50 24.88 L56.25 23.88 L57.50 23.88 L58.25 22.88 L60.50 22.88 L61.25 23.88 L63.50 23.88 L65.88 21.50 L65.88 20.25 L66.88 19.50 L66.88 16.25 L65.88 15.50 L65.88 14.25 L63.88 12.50 L63.88 8.25 L64.88 7.50 L65.00 6.13 Z M58.13 31.00 L60.50 30.88 L60.88 31.25 L60.50 31.88 L59.25 31.88 L58.88 32.25 L59.88 33.50 L59.50 33.88 L58.25 33.88 L57.50 35.88 L56.88 35.50 L56.88 33.25 L57.88 32.50 L58.00 31.13 Z M51.13 39.00 L56.50 38.88 L56.88 39.25 L56.88 42.50 L56.50 42.88 L55.88 42.50 L55.88 40.25 L55.50 39.88 L51.00 39.88 L51.00 39.13 Z M50.13 40.00 L50.75 39.88 L50.88 40.50 L51.88 41.25 L51.88 42.50 L51.25 42.88 L49.88 41.50 L50.00 40.13 Z M71.13 53.00 L71.88 53.25 L71.88 56.50 L71.50 56.88 L70.88 56.50 L71.00 53.13 Z M61.13 57.00 L61.50 56.88 L61.88 57.75 L61.25 57.88 L61.00 57.13 Z M34.13 63.00 L36.50 62.88 L39.88 66.25 L39.88 67.50 L39.50 67.88 L38.25 67.88 L37.50 68.88 L34.25 68.88 L33.88 69.25 L33.88 70.50 L31.50 72.88 L29.25 72.88 L27.88 71.50 L27.88 70.25 L30.88 67.50 L30.88 64.25 L31.25 63.88 L33.50 63.88 L34.00 63.13 Z"></path>
+            </svg>
+            <span class="site-footer__wordmark">Bristol Trading Society</span>
+          </a>
+          <p class="site-footer__blurb">
+            <strong>Do the work. Then defend it.</strong>
+            Student-run markets and trading society at the University of Bristol, since 2017.
+          </p>
+        </div>
+
+        <div>
+          <p class="site-footer__col-title">Society</p>
+          <ul class="site-footer__list">
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/events">Events</a></li>
+            <li><a href="/team">Team</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="site-footer__col-title">Get involved</p>
+          <ul class="site-footer__list">
+            <li><a href="/contact">Contact us</a></li>
+            <li><a href="https://www.linkedin.com/company/bristol-trading-society/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+            <li><a href="https://www.instagram.com/bristradingsociety/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+            <li><a href="https://chat.whatsapp.com/JhXGjAMrDjqEm4DTKpukrZ" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="site-footer__col-title">Find us</p>
+          <div class="site-footer__contact">
+            <address>
+              12 Priory Road Complex<br />
+              Clifton, Bristol<br />
+              BS8 1TU
+            </address>
+            <a href="mailto:bristol-trading-society@bristol.ac.uk">bristol-trading-society@bristol.ac.uk</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mailing list. Deliberately in the footer rather than the page body:
+           it should be findable from anywhere and interrupt nothing. -->
+      <div class="signup">
+        <div class="signup__copy">
+          <p class="signup__title">Hear when things happen</p>
+          <p class="signup__note">
+            Join the society on the Bristol SU page and you are on our mailing list: speaker
+            evenings, events with firms and the analyst intake.
+          </p>
+        </div>
+        <a class="signup__btn signup__link" href="https://www.bristolsu.org.uk/groups/bristol-trading-society-2436" target="_blank" rel="noopener noreferrer">
+          Join on the SU page<span class="visually-hidden"> (opens in a new tab)</span>
+          <span aria-hidden="true">&nearr;</span>
+        </a>
+      </div>
+
+      <div class="site-footer__bottom">
+        <p>&copy; 2026 Bristol Trading Society &middot; University of Bristol</p>
+        <p class="site-footer__legal">
+          <a href="/privacy">Privacy Policy</a>
+        </p>
+      </div>
+
+    </div>
+  </footer>
+
+  <script src="js/cookies.js?v=3" defer></script>
+  <script src="js/signup.js?v=1" defer></script>
+</body>
+</html>

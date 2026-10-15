@@ -160,3 +160,33 @@ Changes show on the website within five minutes (the script caches its answer). 
 
 To preview the page's design before any of this exists, open `/research/?demo=1`: it
 fills the page with clearly made-up sample data and never contacts Google.
+
+# Firm visit sign-ups (`VisitCode.gs`, link-only pages under /visits/)
+
+Each firm visit gets a link-only page (the first is `/visits/futures-first/`). Analysts
+register their interest; the committee confirms places by email. Every sign-up becomes a
+row in a Sheet, one tab per visit, and the analyst gets an automatic "your interest is in"
+email. Signing up twice updates the same row instead of adding a second.
+
+Set up once, signed into the **society's** Google account (~5 minutes):
+
+1. Open the BTS visits Sheet (its ID is already in `CONFIG.SHEET_ID`).
+2. **Extensions ▸ Apps Script**. Paste the whole of **`VisitCode.gs`**. Save.
+   Optionally put committee emails in `NOTIFY` to be told about each sign-up.
+   Choose **`setup`** in the function dropdown ▸ **Run** and approve the permissions: it
+   creates the visit's tab with its headers.
+3. **Deploy ▸ New deployment ▸ Web app**: Execute as **Me**, Who has access **Anyone**.
+   Approve the permissions (Sheets, sending email).
+4. Copy the `/exec` URL into `data-endpoint` on the form (`<form id="visitForm" …>`) in
+   `visits/futures-first/index.html`.
+
+Running the visit: the **Status** column starts as `Interested`. Change it to `Confirmed`,
+`Waitlist` or `Declined` as you allocate places; a repeat sign-up keeps whatever you set.
+To close sign-ups at a set time, add the visit to `CLOSES`, and remove the form from the
+page then too.
+
+Until the URL is in, the form tells people sign-ups aren't open yet rather than pretending
+to send. `/visits/futures-first/?demo=1` walks through to the thank-you without sending.
+
+The page is `noindex, nofollow` and nothing on the site links to it: share the link with
+the analyst cohort directly.

@@ -9,6 +9,8 @@
                                  replaced the thing that expired)
      data-countdown="<ISO time>" a live countdown; writes "1d 04h 12m 09s" into
                                  its [data-cd-clock] child, or its own text
+                                 (add data-cd-minutes to stop at minutes:
+                                 "1d 04h 13m", rounded up)
 
      Elements change on the second, including on a page that was left open,
      not just on the next load. With JS off everything shows as written, so the
@@ -25,7 +27,7 @@
 
   function times (attr) {
     return Array.prototype.map.call(document.querySelectorAll('[' + attr + ']'), function (el) {
-      return { el: el, at: Date.parse(el.getAttribute(attr)) }
+      return { el: el, at: Date.parse(el.getAttribute(attr)), minutes: el.hasAttribute('data-cd-minutes') }
     }).filter(function (item) { return !isNaN(item.at) })
   }
 
@@ -38,8 +40,10 @@
   function render (item, t) {
     var out = item.el.querySelector('[data-cd-clock]') || item.el
     var left = Math.max(0, Math.ceil((item.at - t) / 1000))
+    if (item.minutes) left = Math.ceil(left / 60) * 60
     var d = Math.floor(left / 86400)
-    var text = pad(Math.floor(left / 3600) % 24) + 'h ' + pad(Math.floor(left / 60) % 60) + 'm ' + pad(left % 60) + 's'
+    var text = pad(Math.floor(left / 3600) % 24) + 'h ' + pad(Math.floor(left / 60) % 60) + 'm' +
+      (item.minutes ? '' : ' ' + pad(left % 60) + 's')
     out.textContent = (d > 0 ? d + 'd ' : '') + text
   }
 
