@@ -823,7 +823,7 @@ main.page-dark {
 }
 .closing__head {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
   align-items: end;
   gap: var(--space-4) var(--space-6);
 }
@@ -3662,4 +3662,97 @@ body:has(> .ticker) { padding-top: var(--ticker-h); }
 .evc__slide > .promo > .promo__inner { height: 100%; }
 @media (prefers-reduced-motion: reduce) {
   .evc__dot, .evc__arrow { transition: none; }
+}
+
+/* ---------------------------------------------------------------------------
+   Panel lineup (home carousel): a speakers' lineup on the dark card. The
+   title and lead across the top, the six panellists in one row with the
+   firms they have worked at as white marks, then the date, room and ticket
+   button in a strip along the bottom. Three to a row on tablets and phones.
+   --------------------------------------------------------------------------- */
+.evc__slide > .lineup { flex: 1; margin-top: 0; }
+.lineup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-5) var(--space-5) var(--space-4);
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  background: rgba(6, 17, 43, 0.86);
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.7);
+}
+.lineup__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: var(--space-3) var(--space-5);
+  align-items: end;
+}
+.lineup__brands { margin: 0 0 var(--space-3); }
+.lineup__brands .cobrand__logo--bts { --h: 22px; }
+.lineup__brands .cobrand__logo--uob { --h: 34px; }
+.lineup__kicker { margin: 0 0 var(--space-1); color: var(--accent-bright); }
+.lineup__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 3vw, 2.35rem);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  text-wrap: balance;
+}
+.lineup__lead { margin: 0; max-width: 54ch; font-size: 1rem; line-height: 1.55; color: rgba(244, 247, 251, 0.82); }
+
+.lineup__people {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+.lineup__people li { display: flex; flex-direction: column; align-items: center; min-width: 0; text-align: center; }
+.lineup__photo { display: block; width: 100%; height: auto; aspect-ratio: 410 / 351; object-fit: cover; border-radius: 12px; }
+.lineup__name { margin-top: 12px; font-size: 0.9375rem; font-weight: 700; line-height: 1.25; color: var(--text-primary); text-wrap: balance; }
+/* Each mark's height (--h) comes from its proportions, so a square mark and a
+   long wordmark carry the same visual weight. */
+.lineup__firms {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 9px 12px;
+}
+.lineup__logo { display: block; width: auto; height: var(--h, 15px); max-width: 100%; opacity: 0.88; }
+
+.lineup__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3) var(--space-4);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--hairline);
+}
+.lineup__when { margin: 0 0 4px; font-size: 0.9375rem; font-weight: 600; color: var(--accent-bright); }
+.lineup__when span { margin-left: 6px; font-weight: 400; color: rgba(244, 247, 251, 0.82); }
+.lineup__note { margin: 0; font-size: 0.875rem; line-height: 1.5; color: rgba(244, 247, 251, 0.72); }
+.lineup__cta { flex: none; padding: 12px 22px; }
+
+@media (max-width: 1000px) {
+  .lineup__head { grid-template-columns: minmax(0, 1fr); }
+  .lineup__people { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: var(--space-4); }
+}
+@media (max-width: 640px) {
+  .lineup { padding: var(--space-4) var(--space-3); }
+  .lineup__brands .cobrand__logo--bts { --h: 19px; }
+  .lineup__brands .cobrand__logo--uob { --h: 26px; }
+  .lineup__people { gap: var(--space-4) var(--space-2); }
+  .lineup__name { font-size: 0.8125rem; }
+  .lineup__firms { gap: 7px 8px; }
+  .lineup__logo { height: calc(var(--h, 15px) * 0.8); }
+  .lineup__foot { flex-direction: column; align-items: stretch; }
+  .lineup__when span { display: block; margin: 2px 0 0; }
+  .lineup__cta { justify-content: center; }
 }
