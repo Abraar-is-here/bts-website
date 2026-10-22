@@ -341,15 +341,8 @@ body:has(> .ticker:not([hidden])) .bk { --bk-stick: calc(92px + var(--ticker-h))
 .bk-error button { padding: 9px 16px; border: 1px solid var(--glass-border); border-radius: var(--radius-pill); background: none; font: 600 0.875rem/1 var(--font-body); color: var(--text-primary); cursor: pointer; }
 
 /* --- Method and glossary ---------------------------------------------------------- */
-.bk-method { margin-top: var(--space-7); display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr); gap: var(--space-4) var(--space-5); }
-.bk-method h2 { margin: 0; font-family: var(--font-display); font-size: clamp(1.75rem, 3.4vw, 2.4rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; color: var(--text-primary); }
-.bk-method__intro p { margin: var(--space-3) 0 0; max-width: 46ch; font-size: 0.9375rem; line-height: 1.6; color: var(--text-secondary); }
-.bk-gloss { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 var(--space-4); }
-.bk-gloss div { padding: 16px 0; border-top: 1px solid var(--hairline); scroll-margin-top: 150px; }
 .bk-gloss div:target { animation: bk-flash 1.6s var(--ease-out); }
 @keyframes bk-flash { 0% { background: rgba(56, 189, 248, 0.16); } 100% { background: transparent; } }
-.bk-gloss dt { margin-bottom: 6px; font-weight: 600; color: var(--text-primary); }
-.bk-gloss dd { margin: 0; font-size: 0.875rem; line-height: 1.6; color: var(--text-secondary); }
 .bk-gloss code { font-family: var(--font-mono); font-size: 0.8125rem; color: rgba(244, 247, 251, 0.86); }
 .bk-small { margin: var(--space-4) 0 0; max-width: 90ch; font-size: 0.8125rem; line-height: 1.6; color: var(--text-muted); }
 
@@ -368,7 +361,6 @@ body:has(> .ticker:not([hidden])) .bk { --bk-stick: calc(92px + var(--ticker-h))
   .bk-figs { grid-template-columns: minmax(0, 1fr); }
   .bk-figs__col + .bk-figs__col { margin-top: var(--space-4); }
   .bk-exp { grid-template-columns: minmax(0, 1fr); }
-  .bk-method { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 720px) {
   .bk { padding-top: 104px; }
@@ -389,7 +381,6 @@ body:has(> .ticker:not([hidden])) .bk { --bk-stick: calc(92px + var(--ticker-h))
   .bk-exp__figs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .bk-assets li { grid-template-columns: 5.5rem minmax(0, 1fr); }
   .bk-assets__val { grid-column: 1 / -1; text-align: left; margin-top: -2px; }
-  .bk-gloss { grid-template-columns: minmax(0, 1fr); }
   /* Long tables scroll sideways inside their box with the instrument pinned. */
   .bk-table tbody th, .bk-table thead th:first-child { position: sticky; left: 0; z-index: 1; background: #0a1838; box-shadow: 8px 0 12px -10px rgba(0, 0, 0, 0.6); }
 }
@@ -465,4 +456,81 @@ body:has(> .ticker:not([hidden])) .bk { --bk-stick: calc(92px + var(--ticker-h))
   .bk-clock:nth-child(odd) { padding-left: 0; border-left: 0; }
   .bk-clock:nth-child(4) { padding-left: 12px; border-left: 1px solid var(--hairline); }
   .bk-clock:nth-child(n+3) { border-top: 1px solid var(--hairline); }
+}
+
+/* --- The Floor: link to the method page --------------------------------------- */
+.bk__method { margin: var(--space-3) 0 0; font-size: 0.9375rem; }
+.bk__method a { color: var(--accent-bright); font-weight: 600; text-decoration: none; }
+.bk__method a span { display: inline-block; transition: transform var(--dur-fast) var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .bk__method a:hover { text-decoration: underline; text-underline-offset: 4px; }
+  .bk__method a:hover span { transform: translateX(3px); }
+}
+
+/* --- How the numbers are worked out (/books/method/) --------------------------
+   A reference page: a contents rail that stays in view on wide screens, and the
+   definitions grouped as The Floor's key figures are (Returns, Risk, Trading,
+   Positions), each one a term beside its definition. */
+.bkm__head { max-width: 760px; margin-bottom: var(--space-6); }
+.bkm__back { margin: 0 0 var(--space-3); font-size: 0.875rem; }
+.bkm__back a { color: var(--text-secondary); text-decoration: none; }
+@media (hover: hover) and (pointer: fine) { .bkm__back a:hover { color: var(--text-primary); } }
+.bkm h1 { font-size: clamp(2.2rem, 4.6vw, 3.4rem); }
+.bkm__note {
+  margin: var(--space-4) 0 0;
+  padding: 14px 18px;
+  max-width: 68ch;
+  border-left: 2px solid var(--accent-bright);
+  background: rgba(56, 189, 248, 0.06);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+.bkm__body { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: var(--space-6); align-items: start; }
+.bkm__toc { position: sticky; top: 130px; }
+.bkm__toc p { margin: 0 0 var(--space-2); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+.bkm__toc ol { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--hairline); }
+.bkm__toc a {
+  display: block;
+  margin-left: -1px;
+  padding: 7px 0 7px 16px;
+  border-left: 2px solid transparent;
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+}
+.bkm__toc a[aria-current] { color: var(--text-primary); border-left-color: var(--accent-bright); }
+@media (hover: hover) and (pointer: fine) { .bkm__toc a:hover { color: var(--text-primary); } }
+.bkm__groups { max-width: 880px; }
+.bkm__group { scroll-margin-top: 130px; }
+.bkm__group + .bkm__group { margin-top: var(--space-6); }
+.bkm__grouphead { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px var(--space-3); margin-bottom: var(--space-2); }
+.bkm__grouphead h2 { margin: 0; font-family: var(--font-display); font-size: clamp(1.4rem, 2.4vw, 1.75rem); font-weight: 800; letter-spacing: -0.02em; color: var(--text-primary); }
+.bkm__grouphead p { margin: 0; font-size: 0.9375rem; color: var(--text-secondary); }
+.bk-gloss { margin: 0; border-bottom: 1px solid var(--hairline); }
+.bk-gloss div {
+  display: grid;
+  grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+  gap: 6px var(--space-4);
+  padding: 18px 0;
+  border-top: 1px solid var(--hairline);
+  scroll-margin-top: 130px;
+}
+.bk-gloss dt { font-weight: 600; line-height: 1.5; color: var(--text-primary); }
+.bk-gloss dd { margin: 0; max-width: 62ch; font-size: 0.9375rem; line-height: 1.65; color: var(--text-secondary); }
+
+@media (max-width: 900px) {
+  .bkm__body { grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
+  /* The rail becomes a row of jump links above the definitions. */
+  .bkm__toc { position: static; }
+  .bkm__toc ol { display: flex; flex-wrap: wrap; gap: 8px; border-left: 0; }
+  .bkm__toc a { margin: 0; padding: 8px 14px; border: 1px solid var(--hairline); border-radius: var(--radius-pill); font-size: 0.875rem; }
+  .bkm__toc a[aria-current] { border-color: var(--accent-bright); }
+}
+@media (max-width: 640px) {
+  .bk-gloss div { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bk__method a span, .bkm__toc a { transition: none; }
 }

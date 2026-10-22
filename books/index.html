@@ -21,7 +21,7 @@
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
   <link rel="stylesheet" href="styles/main.css?v=134" />
-  <link rel="stylesheet" href="styles/books.css?v=4" />
+  <link rel="stylesheet" href="styles/books.css?v=7" />
 </head>
 <body>
 
@@ -94,6 +94,7 @@
             analysts. The figures here come straight from IBKR&rsquo;s own statements: returns,
             risk, positions and every trade, worked out the way a fund reports them.
           </p>
+          <p class="bk__method"><a href="/books/method/">How the numbers are worked out <span aria-hidden="true">&rarr;</span></a></p>
           <p class="bk__demo" data-demo hidden>Sample data: invented trades that show the format. Not real results.</p>
         </div>
         <p class="bk__stamp" data-stamp></p>
@@ -106,45 +107,11 @@
 
       <section class="bk-panel" id="desk-panel" role="tabpanel" data-panel hidden></section>
 
-      <section class="bk-method" id="method" aria-labelledby="method-title">
-        <div class="bk-method__intro">
-          <h2 id="method-title">How the numbers are worked out</h2>
-          <p>
-            Each head exports their account&rsquo;s statement from Interactive Brokers (a Flex Query)
-            and it is published here unchanged. Every figure on this page is then calculated in your
-            browser from that file, by the rules below, so anyone can check them.
-          </p>
-          <p>
-            Paper trading: simulated accounts with no real money, so there is no slippage or market
-            impact beyond what IBKR&rsquo;s simulator applies. Prices are IBKR&rsquo;s closing marks,
-            not live. Nothing here is investment advice.
-          </p>
-        </div>
-        <dl class="bk-gloss">
-          <div id="g-return"><dt>Return since inception</dt><dd>Each day&rsquo;s change in net asset value (NAV), less any deposit that day, divided by the day before&rsquo;s NAV, then chained: <code>(1&nbsp;+&nbsp;r&#8321;)(1&nbsp;+&nbsp;r&#8322;)&hellip;&nbsp;&minus;&nbsp;1</code>. A time-weighted return, so topping up an account never counts as performance.</dd></div>
-          <div id="g-pnl"><dt>Profit and loss</dt><dd>The change in NAV over the period, less deposits, in the book&rsquo;s base currency. It is after IBKR&rsquo;s commissions.</dd></div>
-          <div id="g-annualised"><dt>Annualised return</dt><dd>The return scaled to a year of 252 trading days. Shown once a book has six months of history; before that it exaggerates.</dd></div>
-          <div id="g-days"><dt>Best day, worst day, days up</dt><dd>The largest one-day gain and loss, and the share of trading days that ended higher than they started.</dd></div>
-          <div id="g-sharpe"><dt>Sharpe ratio</dt><dd>Average daily return divided by the standard deviation of daily returns, times &radic;252. The risk-free rate is taken as zero. Shown after 20 trading days: fewer than that and it is mostly noise.</dd></div>
-          <div id="g-sortino"><dt>Sortino ratio</dt><dd>Like Sharpe, but only falls count as risk: average daily return over the downside deviation, times &radic;252.</dd></div>
-          <div id="g-vol"><dt>Volatility</dt><dd>The standard deviation of daily returns, annualised by &radic;252.</dd></div>
-          <div id="g-drawdown"><dt>Drawdown</dt><dd>How far the book is below the highest value it has reached. Max drawdown is the deepest fall from a high; the longest drawdown counts trading days spent below a previous high.</dd></div>
-          <div id="g-trades"><dt>Closed trades and fills</dt><dd>A trade runs from the fill that opens a position to the fill that takes it back to zero, however many fills there are in between. A fill is one execution at IBKR.</dd></div>
-          <div id="g-winrate"><dt>Win rate</dt><dd>The share of closed trades that made money after commissions.</dd></div>
-          <div id="g-pf"><dt>Profit factor</dt><dd>Total profit on winning trades divided by total loss on losing ones. Above 1 means the book makes money on its closed trades.</dd></div>
-          <div id="g-expectancy"><dt>Expectancy</dt><dd>The average profit or loss per closed trade: what a typical trade has been worth.</dd></div>
-          <div id="g-payoff"><dt>Average win and loss</dt><dd>The average profit on winning trades and loss on losing ones. Read with the win rate: a low win rate can still pay if the wins are much larger.</dd></div>
-          <div id="g-hold"><dt>Average hold</dt><dd>Calendar days from a trade&rsquo;s first fill to its last.</dd></div>
-          <div id="g-exposure"><dt>Exposure</dt><dd>Position value as a share of capital, with futures at their full contract value. Gross adds longs and shorts together; net subtracts the shorts.</dd></div>
-          <div id="g-pnl-trade"><dt>Trade P&amp;L</dt><dd>IBKR&rsquo;s first-in, first-out realised P&amp;L, which includes commissions on both legs. IBKR gives none for currency conversions, so for FX it is worked out here the same way.</dd></div>
-        </dl>
-      </section>
-
     </div>
   </main>
 
   <script src="js/books-core.js?v=3" defer></script>
-  <script src="js/books-ui.js?v=7" defer></script>
+  <script src="js/books-ui.js?v=8" defer></script>
   <script src="js/books-live.js?v=2" defer></script>
   <script src="js/books-page.js?v=6" defer></script>
   <script src="js/market-clocks.js?v=1" defer></script>

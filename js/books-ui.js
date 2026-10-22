@@ -531,7 +531,7 @@
         var row = el('div', 'bk-fig');
         var dt = el('dt');
         var a = el('a', null, f[0]);
-        a.href = '/books/#' + f[2];
+        a.href = '/books/method/#' + f[2];
         dt.appendChild(a);
         row.appendChild(dt);
         row.appendChild(el('dd', f[3] || '', f[1]));
@@ -714,7 +714,7 @@
       top.appendChild(chartBox);
       scopeHost.appendChild(top);
 
-      var s1 = section(scopeHost, 'Key figures', label ? 'For ' + label + '. Every figure is defined at the foot of the page.' : 'Every figure is defined at the foot of the page.');
+      var s1 = section(scopeHost, 'Key figures', (label ? 'For ' + label + '. ' : '') + 'Each name links to how it is worked out.');
       s1.appendChild(figures(scope, cur));
 
       var s2 = section(scopeHost, 'Monthly returns', 'Compounded from daily returns.');
