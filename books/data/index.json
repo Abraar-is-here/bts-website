@@ -2,7 +2,7 @@
   "note": "Which books exist and whose they are. Each book's data lives in books/data/<id>.json, written by /books/import/. A book with no file yet shows as 'not trading yet'.",
   "live": {
     "note": "Live marks on open positions (js/books-live.js). endpoint: the deployed apps-script/QuotesCode.gs /exec URL; empty turns live marks off. yahoo: symbol overrides, IBKR symbol -> Yahoo ticker, for anything mapped wrongly.",
-    "endpoint": "",
+    "endpoint": "https://script.google.com/macros/s/AKfycbzGNl9dMcuvSXZA9CSHBk8cBsYesmNzypF8ZMcwL2SWdg_fUaW1k2brBtjo8JiIDlml2Q/exec",
     "yahoo": {}
   },
   "desks": [
