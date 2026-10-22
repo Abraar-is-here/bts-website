@@ -15,7 +15,7 @@
   var panel = main.querySelector('[data-panel]');
   var stampEl = main.querySelector('[data-stamp]');
   var DEMO = new URLSearchParams(location.search).get('demo') === '1';
-  var desks = [], current = -1, currentBook = 'all';
+  var desks = [], current = -1, currentBook = 'all', manifest = null;
 
   function getJSON(url) {
     return fetch(url, { cache: 'no-cache' }).then(function (r) {
@@ -33,15 +33,23 @@
     });
   }
 
+  // Exports are run after a close, so the sample is marked to the last weekday before today.
+  function lastClose() {
+    var d = new Date();
+    do { d.setUTCDate(d.getUTCDate() - 1); } while (d.getUTCDay() === 0 || d.getUTCDay() === 6);
+    return d.toISOString().slice(0, 10);
+  }
+
   function demoBook(desk, b, i) {
     var X = window.BooksFlex;
-    var xml = X.sampleFlex({ desk: desk.id, seed: b.id, account: 'DU' + (5100000 + i * 7919), analysts: ['Analyst A', 'Analyst B', 'Analyst C'] });
+    var xml = X.sampleFlex({ desk: desk.id, seed: b.id, end: lastClose(), account: 'DU' + (5100000 + i * 7919), analysts: ['Analyst A', 'Analyst B', 'Analyst C'] });
     return X.merge(X.parse(xml), null, { id: b.id, currency: 'USD' }).book;
   }
 
   function load() {
-    var ready = DEMO ? loadScript('js/books-flex.js?v=4') : Promise.resolve();
-    return ready.then(function () { return getJSON('books/data/index.json'); }).then(function (manifest) {
+    var ready = DEMO ? loadScript('js/books-flex.js?v=5') : Promise.resolve();
+    return ready.then(function () { return getJSON('books/data/index.json'); }).then(function (m) {
+      manifest = m;
       if (!manifest || !manifest.desks) throw new Error('No manifest');
       var n = 0;
       return Promise.all(manifest.desks.map(function (d) {
@@ -136,7 +144,11 @@
 
   function start() {
     if (DEMO) main.querySelector('[data-demo]').hidden = false;
-    load().then(function (d) { desks = d; current = -1; render(); }).catch(function (e) { console.error(e); fail(); });
+    load().then(function (d) {
+      desks = d; current = -1; render();
+      // Live marks on the open positions while markets trade (js/books-live.js).
+      if (window.BooksLive) window.BooksLive.start(desks, manifest);
+    }).catch(function (e) { console.error(e); fail(); });
   }
 
   window.addEventListener('hashchange', function () {

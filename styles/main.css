@@ -361,6 +361,21 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
   .nav__dropdown-link:hover { background: var(--hover-tint); }
 }
 
+/* "The Floor": a green dot while London or New York is trading (js/nav.js). */
+.nav__live {
+  display: none;
+  width: 6px;
+  height: 6px;
+  margin: 0 0 2px 7px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.18);
+  vertical-align: middle;
+}
+.nav__floor.is-live .nav__live { display: inline-block; animation: nav-live 2.4s ease-in-out infinite; }
+@keyframes nav-live { 50% { opacity: 0.45; } }
+@media (prefers-reduced-motion: reduce) { .nav__floor.is-live .nav__live { animation: none; } }
+
 /* Dropdown is wider on desktop for comfort */
 @media (min-width: 769px) {
   .nav__dropdown { min-width: 180px; }

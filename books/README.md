@@ -64,6 +64,19 @@ IBKR's documentation suggests some Flex Web Service features aren't available on
 accounts, so test it first: log into a paper account, go to Settings and look for
 **Flex Web Service**. If it's there, generate a token and try it.
 
-**Live prices aren't shown on purpose.** IBKR's market data is licensed for the account
-holder's own use; republishing it on a public site isn't allowed under a non-professional
-subscription. The books use IBKR's end-of-day closing marks from the statement instead.
+## Live marks
+
+While markets are open, `js/books-live.js` moves each open position on from its IBKR close
+with Yahoo Finance prices, fetched through `apps-script/QuotesCode.gs` (set-up in
+`apps-script/SETUP.md`). Its URL goes in `"live" › "endpoint"` in `books/data/index.json`;
+empty turns live marks off and the page shows IBKR's closing marks only.
+
+Each position moves by Yahoo's own change since the IBKR statement date
+(live mark = IBKR mark × Yahoo now ÷ Yahoo close on that date), so pence against pounds or a
+continuous future against the contract held cancel out. P&L moves at the statement's exchange
+rates. Anything Yahoo can't price keeps its IBKR mark; wrong tickers can be fixed with
+`"live" › "yahoo"` overrides. IBKR's own market data is never republished: Yahoo's prices are
+used instead, and some exchanges are delayed by up to 15 minutes.
+
+The clock strip at the top (`js/market-clocks.js`) shows six exchanges' local time and
+session. It doesn't know exchange holidays.

@@ -405,3 +405,64 @@ body:has(> .ticker:not([hidden])) .bk { --bk-stick: calc(92px + var(--ticker-h))
 /* Bigger, invisible hit areas on the small pills; their look is unchanged. */
 .bk-chip, .bk-booklink { position: relative; }
 .bk-chip::before, .bk-booklink::before { content: ''; position: absolute; inset: -6px -2px; }
+
+/* --- Market clocks ------------------------------------------------------------
+   A terminal-style strip above the page head: six exchanges west to east,
+   local time to the second, and whether each is in session. Green means open,
+   amber a lunch break, grey closed; the words always say it too. */
+.bk-clocks {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  margin: 0 0 var(--space-5);
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+}
+.bk-clock { padding: 14px 16px 14px 0; min-width: 0; }
+.bk-clock + .bk-clock { padding-left: 16px; border-left: 1px solid var(--hairline); }
+.bk-clock__city { display: flex; align-items: baseline; gap: 8px; margin: 0; font-size: 0.8125rem; font-weight: 600; color: var(--text-primary); }
+.bk-clock__ex { font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+.bk-clock__time {
+  margin: 6px 0 4px;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: clamp(1.15rem, 1.7vw, 1.5rem);
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+}
+.bk-clock__status { display: flex; align-items: center; gap: 7px; margin: 0; font-size: 0.75rem; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bk-clock__dot { flex: none; width: 7px; height: 7px; border-radius: 50%; background: rgba(244, 247, 251, 0.3); }
+.bk-clock.is-open .bk-clock__dot { background: var(--bk-up); box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.16); }
+.bk-clock.is-lunch .bk-clock__dot { background: #fbbf24; }
+.bk-clock.is-open .bk-clock__status { color: var(--text-primary); }
+
+/* --- Live marks (js/books-live.js) -------------------------------------------
+   The Live and Today columns only appear once live prices have arrived. */
+.bk-col-live { display: none; }
+.has-live .bk-col-live { display: table-cell; }
+.bk-live-on::before {
+  content: '';
+  display: inline-block;
+  width: 6px; height: 6px;
+  margin: 0 7px 2px 0;
+  border-radius: 50%;
+  background: var(--bk-up);
+  vertical-align: middle;
+}
+.bk-desk__live { display: block; margin-top: 4px; font-size: 0.8125rem; color: var(--text-secondary); font-variant-numeric: tabular-nums; }
+.bk-desk__live strong { font-weight: 700; }
+.bk-live-note { flex-basis: 100%; }
+
+@media (max-width: 1080px) {
+  .bk-clocks { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .bk-clock:nth-child(4) { padding-left: 0; border-left: 0; }
+  .bk-clock:nth-child(n+4) { border-top: 1px solid var(--hairline); }
+}
+@media (max-width: 480px) {
+  .bk-clocks { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .bk-clock { padding: 12px 12px 12px 0; }
+  .bk-clock + .bk-clock { padding-left: 12px; }
+  .bk-clock:nth-child(odd) { padding-left: 0; border-left: 0; }
+  .bk-clock:nth-child(4) { padding-left: 12px; border-left: 1px solid var(--hairline); }
+  .bk-clock:nth-child(n+3) { border-top: 1px solid var(--hairline); }
+}

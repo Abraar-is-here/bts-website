@@ -1,5 +1,10 @@
 {
   "note": "Which books exist and whose they are. Each book's data lives in books/data/<id>.json, written by /books/import/. A book with no file yet shows as 'not trading yet'.",
+  "live": {
+    "note": "Live marks on open positions (js/books-live.js). endpoint: the deployed apps-script/QuotesCode.gs /exec URL; empty turns live marks off. yahoo: symbol overrides, IBKR symbol -> Yahoo ticker, for anything mapped wrongly.",
+    "endpoint": "",
+    "yahoo": {}
+  },
   "desks": [
     { "id": "equities", "name": "Equities", "books": [
       { "id": "eq-tash", "head": "Tash Munjanganja" },

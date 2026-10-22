@@ -243,6 +243,7 @@
       var trip = openBy[p.book + '|' + p.key];
       return {
         book: p.book, symbol: p.symbol, description: p.description, asset: p.asset, currency: p.currency,
+        exchange: p.exchange || '', fx: fx, multiplier: p.multiplier || 1, date: p.date || '',
         side: p.quantity > 0 ? 'Long' : 'Short', quantity: p.quantity, mark: p.mark, cost: p.cost,
         value: value * fx,
         unrealized: p.unrealized != null ? p.unrealized * fx : null,

@@ -381,13 +381,13 @@
     var t = el('table', 'bk-table' + (opts.cls ? ' ' + opts.cls : ''));
     if (opts.caption) t.appendChild(el('caption', 'visually-hidden', opts.caption));
     var thead = el('thead'), hr = el('tr');
-    cols.forEach(function (c) { var th = el('th', c.num ? 'num' : '', c.label); th.scope = 'col'; hr.appendChild(th); });
+    cols.forEach(function (c) { var th = el('th', (c.num ? 'num' : '') + (c.col ? ' ' + c.col : ''), c.label); th.scope = 'col'; hr.appendChild(th); });
     thead.appendChild(hr); t.appendChild(thead);
     var tb = el('tbody');
     rows.forEach(function (r) {
       var tr = el('tr');
       cols.forEach(function (c, i) {
-        var cell = el(i === 0 ? 'th' : 'td', c.num ? 'num' : '');
+        var cell = el(i === 0 ? 'th' : 'td', (c.num ? 'num' : '') + (c.col ? ' ' + c.col : ''));
         if (i === 0) cell.scope = 'row';
         var v = c.cell(r);
         if (v instanceof Node) cell.appendChild(v); else cell.textContent = v == null ? '–' : v;
@@ -420,6 +420,13 @@
     return s.toLowerCase().replace(/\b([a-z])/g, function (m) { return m.toUpperCase(); }).replace(/\b(Plc|Etf|Sa|Ag|Nv|Llc|Adr|Us|Uk)\b/g, function (m) { return m.toUpperCase(); }).replace(/\b(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)(\d\d)\b/g, function (m) { return m.toUpperCase(); }).replace(/\bS&p\b/g, 'S&P');
   }
   function sideTag(s) { return el('span', 'bk-side bk-side--' + s.toLowerCase(), s); }
+  // A cell js/books-live.js fills in and keeps current while markets are open.
+  function liveCell(r, kind, text) {
+    var s = el('span', null, text == null ? '–' : text);
+    s.setAttribute('data-lk', r.book + '|' + r.key);
+    s.setAttribute('data-lv', kind);
+    return s;
+  }
   function bookKey(color, name) {
     var f = el('span', 'bk-bookname');
     var k = el('span', 'bk-swatch'); k.style.background = color;
@@ -451,6 +458,10 @@
         var ret = el('span', 'bk-desk__ret ' + F.upDown(d.perf.total), F.pct(d.perf.total));
         b.appendChild(ret);
         b.appendChild(el('span', 'bk-desk__since', 'since ' + F.day(d.start)));
+        var lv = el('span', 'bk-desk__live');
+        lv.setAttribute('data-lv-desk', d.id);
+        lv.hidden = true;
+        b.appendChild(lv);
         var sp = el('span', 'bk-desk__spark');
         b.appendChild(sp);
         spark(sp, d.perf.cum);
@@ -712,6 +723,7 @@
       var exp = id === 'all' ? desk.exposure : scope.exposure;
       var asOf = id === 'all' ? desk.asOf : scope.asOf;
       var s3 = section(scopeHost, 'Open positions', exp.rows.length ? 'Marked at IBKR’s closing prices on ' + F.day(asOf, true) + '. Exposure is position value as a share of capital.' : 'No open positions on ' + F.day(asOf, true) + '.');
+      if (exp.rows.length) { var ln = el('p', 'bk-live-note'); ln.setAttribute('data-lv-note', ''); ln.hidden = true; s3.querySelector('.bk-sec__head').appendChild(ln); }
       if (exp.rows.length) {
         s3.appendChild(exposureBlock(exp));
         var pcols = [
@@ -724,8 +736,10 @@
           { label: 'Quantity', num: true, cell: function (r) { return F.qty(r.quantity); } },
           { label: 'Cost', num: true, cell: function (r) { return F.price(r.cost); } },
           { label: 'Mark', num: true, cell: function (r) { return F.price(r.mark); } },
+          { label: 'Live', num: true, col: 'bk-col-live', cell: function (r) { return liveCell(r, 'px'); } },
+          { label: 'Today', num: true, col: 'bk-col-live', cell: function (r) { return liveCell(r, 'day'); } },
           { label: '% of capital', num: true, cell: function (r) { return F.pct(Math.abs(r.pctNav), 1, false); } },
-          { label: 'Unrealised P&L', num: true, cell: function (r) { return F.money(r.unrealized, cur, { signed: true }); }, cls: function (r) { return F.upDown(r.unrealized); } }
+          { label: 'Unrealised P&L', num: true, cell: function (r) { return liveCell(r, 'upl', F.money(r.unrealized, cur, { signed: true })); }, cls: function (r) { return F.upDown(r.unrealized); } }
         ]);
         s3.appendChild(table(pcols, exp.rows, { caption: 'Open positions' }));
       }

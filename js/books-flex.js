@@ -145,6 +145,7 @@
       fx: fx == null ? 1 : fx,
       quantity: q,
       multiplier: num(r.multiplier) || 1,
+      exchange: str(r.listingexchange),
       mark: num(r.markprice),
       value: num(r.positionvalue),
       cost: num(r.costbasisprice != null ? r.costbasisprice : r.openprice),
@@ -241,7 +242,7 @@
     'quantity', 'datetime', 'tradedate', 'reportdate', 'buysell', 'ibcommission', 'fifopnlrealized', 'opencloseindicator',
     'markprice', 'position', 'positionvalue', 'fifopnlunrealized', 'total', 'cash', 'stock', 'currency', 'currencyprimary',
     'conid', 'multiplier', 'levelofdetail', 'type', 'amount', 'fxratetobase', 'orderreference', 'transactionid', 'percentofnav',
-    'costbasisprice', 'side', 'startingvalue', 'endingvalue'];
+    'costbasisprice', 'side', 'startingvalue', 'endingvalue', 'listingexchange'];
 
   function isHeader(row) {
     var hits = 0;
@@ -501,7 +502,7 @@
       var fx = FX[u[3]] || 1;
       var val = p.q * px[i] * u[4];
       var navLast = Number(/total="([\d.-]+)"/.exec(navXml[navXml.length - 1])[1]);
-      posXml.push('<OpenPosition accountId="' + opts.account + '" currency="' + u[3] + '" fxRateToBase="' + fx + '" assetCategory="' + u[0] + '" symbol="' + esc(u[1]) + '" description="' + esc(u[2]) + '" conid="' + conid(u[1]) + '" multiplier="' + u[4] + '" reportDate="' + end.replace(/-/g, '') + '" position="' + p.q + '" markPrice="' + f(px[i], 5) + '" positionValue="' + f(val, 2) + '" costBasisPrice="' + f(p.entry, 5) + '" fifoPnlUnrealized="' + f((px[i] - p.entry) * p.q * u[4], 2) + '" percentOfNAV="' + f(Math.abs(val * fx) / navLast * 100, 2) + '" side="' + (p.q > 0 ? 'Long' : 'Short') + '" levelOfDetail="SUMMARY" />');
+      posXml.push('<OpenPosition accountId="' + opts.account + '" currency="' + u[3] + '" fxRateToBase="' + fx + '" assetCategory="' + u[0] + '" symbol="' + esc(u[1]) + '" description="' + esc(u[2]) + '" listingExchange="' + (u[0] === 'STK' ? (u[3] === 'GBP' ? 'LSE' : 'NASDAQ') : u[0] === 'FUT' ? (u[3] === 'EUR' ? 'EUREX' : 'CME') : '') + '" conid="' + conid(u[1]) + '" multiplier="' + u[4] + '" reportDate="' + end.replace(/-/g, '') + '" position="' + p.q + '" markPrice="' + f(px[i], 5) + '" positionValue="' + f(val, 2) + '" costBasisPrice="' + f(p.entry, 5) + '" fifoPnlUnrealized="' + f((px[i] - p.entry) * p.q * u[4], 2) + '" percentOfNAV="' + f(Math.abs(val * fx) / navLast * 100, 2) + '" side="' + (p.q > 0 ? 'Long' : 'Short') + '" levelOfDetail="SUMMARY" />');
     });
 
     function conid(sym) { var h = 0; for (var k = 0; k < sym.length; k++) h = (h * 131 + sym.charCodeAt(k)) % 900000000; return 100000000 + h; }

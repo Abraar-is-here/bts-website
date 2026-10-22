@@ -190,3 +190,26 @@ to send. `/visits/futures-first/?demo=1` walks through to the thank-you without 
 
 The page is `noindex, nofollow` and nothing on the site links to it: share the link with
 the analyst cohort directly.
+
+# Live prices for the books (`QuotesCode.gs`)
+
+`/books/` moves each open position on from its IBKR close with live Yahoo Finance prices while
+markets are open. Browsers can't ask Yahoo directly, so this small relay does it.
+
+1. Go to **script.google.com › New project**, name it `BTS quotes`, and paste in
+   `QuotesCode.gs` (replacing what's there).
+2. Choose **test** in the function menu and press **Run**. Allow the permissions it asks for,
+   then open **Execution log**: it should list prices for AAPL, VOD.L and EURUSD=X. If it says no
+   prices came back, Yahoo is refusing Google's servers; stop here and tell the web team.
+3. **Deploy › New deployment › Web app**: Execute as **Me**, Who has access **Anyone**. Copy
+   the `/exec` URL.
+4. Open `<exec URL>?s=AAPL` in a browser: you should see `"ok":true` and a price.
+5. Paste the URL into `"live" › "endpoint"` in `books/data/index.json` and publish.
+
+Nothing else is needed: no keys, no Sheet. Each symbol is cached for a minute, so Yahoo sees at
+most one request per symbol per minute however many people have the page open.
+
+If a position is priced wrongly (an unusual ticker or exchange), add an override to
+`"live" › "yahoo"` in the same file, IBKR symbol to Yahoo ticker, e.g. `"BRK B": "BRK-B"`.
+Futures use Yahoo's continuous front month (`ES=F`), options and bonds aren't priced, and
+anything that can't be priced keeps its IBKR close.
