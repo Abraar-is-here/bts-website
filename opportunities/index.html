@@ -153,6 +153,11 @@
     .op__note { margin: var(--space-4) 0 0; font-size: 0.9375rem; line-height: 1.6; color: var(--text-secondary); }
     .op__note a { color: var(--accent-bright); }
 
+    .op-empty { padding: var(--space-5); border: 1px solid var(--glass-border); border-radius: var(--radius-sm); background: rgba(6, 17, 43, 0.86); }
+    .op-empty h2 { margin: 0 0 var(--space-2); font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800; letter-spacing: -0.025em; color: var(--text-primary); }
+    .op-empty p { margin: 0; max-width: 60ch; line-height: 1.7; color: var(--text-secondary); }
+    .op-empty a { color: var(--accent-bright); }
+    .op-role[hidden], .op-firm[hidden] { display: none; }
     @media (max-width: 860px) {
       .op-firm__media { aspect-ratio: 16 / 9; }
       .op-firm__body { grid-template-columns: minmax(0, 1fr); padding: var(--space-4) var(--space-3); }
@@ -193,6 +198,7 @@
           <li><a class="nav__dropdown-link" href="/events" role="menuitem">Events</a></li>
           <li><a class="nav__dropdown-link nav__floor" href="/books/" role="menuitem">The Floor<span class="nav__live" aria-hidden="true"></span></a></li>
           <li><a class="nav__dropdown-link" href="/team" role="menuitem">Team</a></li>
+          <li data-opps hidden><a class="nav__dropdown-link" href="/opportunities/" role="menuitem">Opportunities</a></li>
         </ul>
       </li>
       <li><a class="nav__link nav__link--cta" href="https://www.bristolsu.org.uk/groups/bristol-trading-society-2436" target="_blank" rel="noopener noreferrer" aria-label="Join us: become a member on the Bristol SU page (opens in a new tab)">Join us</a></li>
@@ -211,8 +217,16 @@
         </p>
       </header>
 
+      <!-- Shown by js/opportunities.js when no role is open. -->
+      <div class="op-empty" data-opps-empty hidden>
+        <h2>No open roles right now</h2>
+        <p>Roles from our sponsors and partners appear here as they open. Join the society on the
+          <a href="https://www.bristolsu.org.uk/groups/bristol-trading-society-2436" target="_blank" rel="noopener noreferrer">Bristol SU page<span class="visually-hidden"> (opens in a new tab)</span></a>
+          or the <a href="https://chat.whatsapp.com/JhXGjAMrDjqEm4DTKpukrZ" target="_blank" rel="noopener noreferrer">WhatsApp group<span class="visually-hidden"> (opens in a new tab)</span></a> to hear first.</p>
+      </div>
+
       <!-- ===== ICE ===== -->
-      <section class="op-firm" id="ice" aria-labelledby="ice-title">
+      <section class="op-firm" id="ice" aria-labelledby="ice-title" data-opps-firm>
         <div class="op-firm__media">
           <img src="assets/img/opportunities/ice/nyse-floor.webp" width="1261" height="720"
                alt="The trading floor of the New York Stock Exchange, owned by ICE, with ICE and NYSE displays" />
@@ -237,31 +251,31 @@
           <div>
             <h3 class="op-roles__title">Open roles</h3>
             <ul class="op-roles">
-              <li class="op-role">
+              <li class="op-role" data-role-url="https://careers.ice.com/jobs/14093?lang=en-us">
                 <span><span class="op-role__title">Risk Analyst Intern</span><span class="op-role__meta">Model, Credit and Enterprise Risk: model validation and credit review &middot; London</span></span>
                 <a class="op-role__apply" href="https://careers.ice.com/jobs/14093?lang=en-us" target="_blank" rel="noopener noreferrer">Apply<span class="visually-hidden"> for Risk Analyst Intern at ICE (opens in a new tab)</span> <span aria-hidden="true">&nearr;</span></a>
               </li>
-              <li class="op-role">
+              <li class="op-role" data-role-url="https://careers.ice.com/jobs/14095?lang=en-us">
                 <span><span class="op-role__title">Risk Analyst Intern</span><span class="op-role__meta">Evaluating risk models and frameworks &middot; London</span></span>
                 <a class="op-role__apply" href="https://careers.ice.com/jobs/14095?lang=en-us" target="_blank" rel="noopener noreferrer">Apply<span class="visually-hidden"> for Risk Analyst Intern at ICE (opens in a new tab)</span> <span aria-hidden="true">&nearr;</span></a>
               </li>
-              <li class="op-role">
+              <li class="op-role" data-role-url="https://careers.ice.com/jobs/14099?lang=en-us">
                 <span><span class="op-role__title">Risk Analyst Intern</span><span class="op-role__meta">Insights across operational, credit and market risk &middot; London</span></span>
                 <a class="op-role__apply" href="https://careers.ice.com/jobs/14099?lang=en-us" target="_blank" rel="noopener noreferrer">Apply<span class="visually-hidden"> for Risk Analyst Intern at ICE (opens in a new tab)</span> <span aria-hidden="true">&nearr;</span></a>
               </li>
-              <li class="op-role">
+              <li class="op-role" data-role-url="https://careers.ice.com/jobs/14094?lang=en-us">
                 <span><span class="op-role__title">Market Regulation Intern</span><span class="op-role__meta">Reviewing surveillance alerts and writing investigation reports &middot; London</span></span>
                 <a class="op-role__apply" href="https://careers.ice.com/jobs/14094?lang=en-us" target="_blank" rel="noopener noreferrer">Apply<span class="visually-hidden"> for Market Regulation Intern at ICE (opens in a new tab)</span> <span aria-hidden="true">&nearr;</span></a>
               </li>
-              <li class="op-role">
+              <li class="op-role" data-role-url="https://careers.ice.com/jobs/14096?lang=en-us">
                 <span><span class="op-role__title">Market Regulation Intern</span><span class="op-role__meta">A second Market Regulation listing, same team &middot; London</span></span>
                 <a class="op-role__apply" href="https://careers.ice.com/jobs/14096?lang=en-us" target="_blank" rel="noopener noreferrer">Apply<span class="visually-hidden"> for Market Regulation Intern at ICE (opens in a new tab)</span> <span aria-hidden="true">&nearr;</span></a>
               </li>
-              <li class="op-role">
+              <li class="op-role" data-role-url="https://careers.ice.com/jobs/14091?lang=en-us">
                 <span><span class="op-role__title">Operations &amp; Development Intern</span><span class="op-role__meta">Benchmark production, platform testing and customer onboarding at ICE Benchmark Administration &middot; London</span></span>
                 <a class="op-role__apply" href="https://careers.ice.com/jobs/14091?lang=en-us" target="_blank" rel="noopener noreferrer">Apply<span class="visually-hidden"> for Operations &amp; Development Intern at ICE (opens in a new tab)</span> <span aria-hidden="true">&nearr;</span></a>
               </li>
-              <li class="op-role">
+              <li class="op-role" data-role-url="https://careers.ice.com/jobs/14092?lang=en-us">
                 <span><span class="op-role__title">Cybersecurity Engineering Intern</span><span class="op-role__meta">Information security &middot; London</span></span>
                 <a class="op-role__apply" href="https://careers.ice.com/jobs/14092?lang=en-us" target="_blank" rel="noopener noreferrer">Apply<span class="visually-hidden"> for Cybersecurity Engineering Intern at ICE (opens in a new tab)</span> <span aria-hidden="true">&nearr;</span></a>
               </li>
@@ -306,6 +320,7 @@
             <li><a href="/about">About Us</a></li>
             <li><a href="/events">Events</a></li>
             <li><a href="/team">Team</a></li>
+              <li data-opps hidden><a href="/opportunities/">Opportunities</a></li>
           </ul>
         </div>
 
@@ -359,5 +374,6 @@
   </footer>
 
   <script src="js/cookies.js?v=3" defer></script>
+  <script src="js/opportunities.js?v=1" defer></script>
 </body>
 </html>

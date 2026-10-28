@@ -1,0 +1,12 @@
+{
+  "note": "Open roles from sponsors and partners. scripts/check_opportunities.py runs daily (.github/workflows/check-opportunities.yml) and sets open to false when a listing returns 404. To add a role, add an entry here and a matching row on /opportunities/. To close one by hand, set open to false.",
+  "roles": [
+    {"firm": "ICE", "title": "Risk Analyst Intern", "url": "https://careers.ice.com/jobs/14093?lang=en-us", "open": true},
+    {"firm": "ICE", "title": "Risk Analyst Intern", "url": "https://careers.ice.com/jobs/14095?lang=en-us", "open": true},
+    {"firm": "ICE", "title": "Risk Analyst Intern", "url": "https://careers.ice.com/jobs/14099?lang=en-us", "open": true},
+    {"firm": "ICE", "title": "Market Regulation Intern", "url": "https://careers.ice.com/jobs/14094?lang=en-us", "open": true},
+    {"firm": "ICE", "title": "Market Regulation Intern", "url": "https://careers.ice.com/jobs/14096?lang=en-us", "open": true},
+    {"firm": "ICE", "title": "Operations & Development Intern", "url": "https://careers.ice.com/jobs/14091?lang=en-us", "open": true},
+    {"firm": "ICE", "title": "Cybersecurity Engineering Intern", "url": "https://careers.ice.com/jobs/14092?lang=en-us", "open": true}
+  ]
+}
