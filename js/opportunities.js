@@ -5,6 +5,29 @@
    (scripts/check_opportunities.py). If the file cannot be read, links stay
    hidden and the page shows its roles as written. */
 (function () {
+  /* Apply clicks: one small POST per click to the counter (apps-script/
+     ClickCode.gs; no cookies or personal data), plus a Google Analytics event
+     for visitors who accepted analytics. Neither delays the link. */
+  var main = document.querySelector('[data-click-endpoint]');
+  var endpoint = main && main.getAttribute('data-click-endpoint');
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('.op-role__apply');
+    if (!a) return;
+    var row = a.closest('.op-role');
+    var title = row && row.querySelector('.op-role__title');
+    var info = {
+      firm: a.getAttribute('data-firm') || '',
+      role: title ? title.textContent.trim() : '',
+      job: a.getAttribute('data-job') || ''
+    };
+    if (endpoint && navigator.sendBeacon) {
+      try { navigator.sendBeacon(endpoint, new Blob([JSON.stringify(info)], { type: 'text/plain' })); } catch (err) { /* ignore */ }
+    }
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'partner_apply_click', { firm: info.firm, role: info.role, job_id: info.job });
+    }
+  });
+
   var links = document.querySelectorAll('[data-opps]');
   var rows = document.querySelectorAll('[data-role-url]');
   if (!links.length && !rows.length) return;
