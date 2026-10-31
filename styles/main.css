@@ -3089,15 +3089,21 @@ body:has(> .ticker) { padding-top: var(--ticker-h); }
 .explore.panel .explore__soon { border-color: rgba(10, 26, 63, 0.22); color: rgba(10, 26, 63, 0.58); }
 .explore.panel .explore__feature { box-shadow: 0 30px 60px -30px rgba(10, 26, 63, 0.55); }
 /* On the home page the white panel sits between the hero cards and the dark
-   partners wall, so it is rounded at the bottom too, and it no longer lifts
-   over the section above: that would cover the bottom of the cards. */
-.explore.panel { border-radius: 64px; margin-top: 0; }
+   partners wall, rounded top and bottom. It tucks one radius into each
+   neighbour, so its corners sit over their tinted backgrounds rather than the
+   bare aurora; the hero and the partners wall carry that much extra padding,
+   so nothing of theirs is covered. */
+.explore.panel { --tuck: 64px; border-radius: var(--tuck); margin-block: calc(var(--tuck) * -1); }
+.hero--start { padding-bottom: calc(var(--space-5) + 64px); }
+.partners { padding-top: calc(var(--space-7) + 64px); }
 /* On the Events page it opens the page: it starts under the nav instead of
    lifting over a hero, and hands over to the dark sections below. */
-.explore.panel.explore--page { margin-top: 0; border-radius: 0 0 64px 64px; padding-top: calc(var(--space-7) + 72px); }
+.explore.panel.explore--page { margin-block: 0; border-radius: 0 0 64px 64px; padding-top: calc(var(--space-7) + 72px); }
 @media (max-width: 820px) {
-  .explore.panel { border-radius: 40px; margin-top: 0; }
+  .explore.panel { --tuck: 40px; }
   .explore.panel.explore--page { border-radius: 0 0 40px 40px; }
+  .hero--start { padding-bottom: calc(var(--space-5) + 40px); }
+  .partners { padding-top: calc(var(--space-7) + 40px); }
 }
 @media (max-width: 560px) {
   .explore.panel { padding-block: var(--space-6) var(--space-5); }
