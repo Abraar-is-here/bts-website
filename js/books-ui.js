@@ -451,8 +451,6 @@
       b.tabIndex = i === current ? 0 : -1;
       var top = el('span', 'bk-desk__top');
       top.appendChild(el('span', 'bk-desk__name', d.name));
-      var nBooks = d.books.length;
-      top.appendChild(el('span', 'bk-desk__books', nBooks ? nBooks + (nBooks === 1 ? ' book' : ' books') : 'Setting up'));
       b.appendChild(top);
       if (d.hasData) {
         var ret = el('span', 'bk-desk__ret ' + F.upDown(d.perf.total), F.pct(d.perf.total));
@@ -474,9 +472,8 @@
         });
         b.appendChild(dl);
       } else {
+        // No figures yet: the card is just the desk's name.
         b.classList.add('bk-desk--empty');
-        b.appendChild(el('span', 'bk-desk__wait', d.status || (nBooks ? 'Opens with the first export' : 'Book structure being decided')));
-        if (d.books.length) b.appendChild(el('span', 'bk-desk__heads', d.books.map(function (bk) { return bk.head; }).join(', ')));
       }
       b.addEventListener('click', function () { onPick(i, false); });
       buttons.push(b);
@@ -572,6 +569,9 @@
   }
 
   /* --- The desk panel ---------------------------------------------------------- */
+  // Desks that have a section on the Divisions page (/analyst-programme/).
+  var DIVISIONS = { equities: 'Equities', ficc: 'FICC', macro: 'Macro', quant: 'Quant' };
+
   function deskPanel(host, desk, opts) {
     opts = opts || {};
     host.textContent = '';
@@ -583,13 +583,24 @@
     var head = el('header', 'bk-panel__head');
     var h = el('h2', 'bk-panel__title', opts.title || (desk.name + (single ? '' : ' desk')));
     h.id = 'desk-title';
-    head.appendChild(h);
     var meta = [];
-    if (desk.books.length > 1) meta.push(desk.books.length + ' books, one per division head');
     if (desk.start) meta.push('since ' + F.day(desk.start, true));
     if (desk.asOf) meta.push('marked to ' + F.day(desk.asOf, true));
     meta.push(cur);
-    head.appendChild(el('p', 'bk-panel__meta', meta.join(' · ')));
+    var said = el('div');
+    said.appendChild(h);
+    said.appendChild(el('p', 'bk-panel__meta', meta.join(' · ')));
+    head.appendChild(said);
+    // Each desk is one of the four divisions: link through to what it covers.
+    if (DIVISIONS[desk.id] && !opts.title) {
+      var go = el('a', 'btn btn--secondary bk-panel__div');
+      go.href = '/analyst-programme/#' + desk.id;
+      go.appendChild(document.createTextNode('See the ' + DIVISIONS[desk.id] + ' division'));
+      var arrow = el('span', 'btn__arrow', '→');
+      arrow.setAttribute('aria-hidden', 'true');
+      go.appendChild(arrow);
+      head.appendChild(go);
+    }
     host.appendChild(head);
 
     if (!desk.hasData) {

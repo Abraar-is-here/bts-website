@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="styles/tokens/colors.css?v=15" />
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
-  <link rel="stylesheet" href="styles/main.css?v=134" />
+  <link rel="stylesheet" href="styles/main.css?v=146" />
 
   <style>
     /* -------------------------------------------------------------------------
@@ -118,10 +118,14 @@
       color: var(--text-secondary);
     }
 
-    /* --- Partner wall: reuses the home page's sponsor tiles (main.css) ------ */
-    .px-wall .partners__lead { margin-bottom: var(--space-4); }
+    /* --- Partner wall: the home page's open logo rows (.pwall in main.css) -- */
+    /* Eight partners: two even lines of four rather than seven and an orphan. */
+    .px-wall .pwall__tier--mid .pwall__logos { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-5) var(--space-4); }
+    @media (max-width: 820px) {
+      .px-wall .pwall__tier--mid .pwall__logos { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
+    }
     .px-wall__note {
-      margin: var(--space-4) 0 0;
+      margin: var(--space-6) 0 0;
       max-width: 82ch;
       font-size: 0.8125rem;
       line-height: 1.6;
@@ -619,7 +623,7 @@
     @media print {
       .aurora, .nav, .ticker, .site-footer, .cookie-bar, .skip-link,
       .px-actions, .px-hero__media, .px-close__media, .px-close::after,
-      .partners__glow, .tier__cta, .bespoke .tier__cta, .px-close .btn { display: none !important; }
+      .tier__cta, .bespoke .tier__cta, .px-close .btn { display: none !important; }
       body { background: #fff !important; color: #111; }
       .px { padding: 0; background: none; }
       .px section { margin-top: 28px; }
@@ -627,13 +631,14 @@
       .px-hero h1 { font-size: 40pt; margin-bottom: 12px; }
       .px :is(h1, h2, h3, .funnel__n, .reach dd, .proof__firm, .tier__name, dd) { color: #000 !important; }
       .px :is(p, .funnel__label, .reach dt, .proof__what, .tier__row dt) { color: #333 !important; }
-      .partners__lead li, .partners__grid, .partners__grid li, .px .destinations, .px .destinations li,
+      .px .destinations, .px .destinations li,
       .tier, .tier--gold, .bespoke, .px-close, .funnel, .funnel__row,
       .tier__row {
         background: #fff !important; box-shadow: none !important; border-color: #ccc !important;
         backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
       }
-      .partners__lead img, .partners__grid img, .px .destinations img { filter: brightness(0) !important; opacity: 0.85 !important; }
+      .pwall img, .px .destinations img { filter: brightness(0) !important; opacity: 0.85 !important; }
+      .pwall__label { color: #333 !important; }
       .funnel__track { background: #eee !important; }
       .funnel__bar { background: #333 !important; clip-path: none !important; }
       .funnel__row--key .funnel__bar { background: #0a1a3f !important; }
@@ -744,23 +749,29 @@
         <div class="px-head">
           <h2 id="roster-title">Firms we work with</h2>
         </div>
-        <h3 class="partners__tier">Sponsors</h3>
-        <ul class="partners__lead">
-          <li><img src="assets/img/sponsors/wall/drw.png" alt="DRW" width="607" height="200" loading="lazy" /></li>
-          <li><img src="assets/img/sponsors/wall/jane-street.png" alt="Jane Street" width="761" height="200" loading="lazy" /></li>
-          <li><img src="assets/img/sponsors/wall/outlook-energy.svg" alt="Outlook Energy" width="148" height="56" loading="lazy" /></li>
-        </ul>
-        <h3 class="partners__tier">Partners</h3>
-        <ul class="partners__grid">
-          <li><img src="assets/img/sponsors/wall/ice.png" alt="ICE" width="200" height="200" loading="lazy" /></li>
-          <li><img src="assets/img/sponsors/wall/worldquant.png" alt="WorldQuant" width="200" height="200" loading="lazy" /></li>
-          <li><img src="assets/img/sponsors/wall/berenberg.png" alt="Berenberg" width="245" height="200" loading="lazy" /></li>
-          <li><img src="assets/img/sponsors/wall/etoro.png" alt="eToro" width="647" height="200" loading="lazy" /></li>
-          <li><img src="assets/img/sponsors/wall/cfa.png" alt="CFA Institute" width="501" height="109" loading="lazy" /></li>
-          <li><img src="assets/img/sponsors/wall/commodities-people.png" alt="commoditiespeople" width="2030" height="200" loading="lazy" /></li>
-          <li><img src="assets/img/sponsors/wall/hirehuub.png" alt="HireHuub" width="745" height="198" loading="lazy" /></li>
-          <li><img src="assets/img/sponsors/wall/headstart.png" alt="Headstart" width="205" height="200" loading="lazy" /></li>
-        </ul>
+        <div class="pwall">
+          <div class="pwall__tier pwall__tier--lead">
+            <h3 class="pwall__label">Sponsored by</h3>
+            <ul class="pwall__logos">
+              <li><img src="assets/img/sponsors/wall/drw.png" alt="DRW" width="607" height="200" loading="lazy" /></li>
+              <li><img src="assets/img/sponsors/wall/jane-street.png" alt="Jane Street" width="761" height="200" loading="lazy" /></li>
+              <li><img src="assets/img/sponsors/wall/outlook-energy.svg" alt="Outlook Energy" width="148" height="56" loading="lazy" /></li>
+            </ul>
+          </div>
+          <div class="pwall__tier pwall__tier--mid">
+            <h3 class="pwall__label">In partnership with</h3>
+            <ul class="pwall__logos">
+              <li><img src="assets/img/sponsors/wall/ice.png" alt="ICE" width="200" height="200" loading="lazy" /></li>
+              <li><img src="assets/img/sponsors/wall/worldquant.png" alt="WorldQuant" width="200" height="200" loading="lazy" /></li>
+              <li><img src="assets/img/sponsors/wall/berenberg.png" alt="Berenberg" width="245" height="200" loading="lazy" /></li>
+              <li><img src="assets/img/sponsors/wall/etoro.png" alt="eToro" width="647" height="200" loading="lazy" /></li>
+              <li><img src="assets/img/sponsors/wall/cfa.png" alt="CFA Institute" width="501" height="109" loading="lazy" /></li>
+              <li><img src="assets/img/sponsors/wall/commodities-people.png" alt="commoditiespeople" width="2030" height="200" loading="lazy" /></li>
+              <li><img src="assets/img/sponsors/wall/hirehuub.png" alt="HireHuub" width="745" height="198" loading="lazy" /></li>
+              <li><img src="assets/img/sponsors/wall/headstart.png" alt="Headstart" width="205" height="200" loading="lazy" /></li>
+            </ul>
+          </div>
+        </div>
         <p class="px-wall__note">
           Bristol Trading Society also provides content and learning opportunities for students
           offered by CFA Institute, the global leading association of investment professionals
@@ -821,7 +832,7 @@
         <div class="px-head">
           <h2 id="alumni-title">Where our members end up</h2>
         </div>
-        <p class="partners__tier">A selection of the firms our alumni have joined</p>
+        <p class="closing__firms-note">A selection of the firms our alumni have joined.</p>
         <ul class="destinations">
           <li><img src="assets/img/alumni-firms/goldman-sachs.webp" alt="Goldman Sachs" loading="lazy" /></li>
           <li><img src="assets/img/alumni-firms/jp-morgan.png" alt="J.P. Morgan" loading="lazy" /></li>
@@ -1155,7 +1166,6 @@
   <script src="js/transitions.js?v=3" defer></script>
   <script src="js/nav.js?v=3" defer></script>
   <script src="js/promo.js?v=3" defer></script>
-  <script src="js/spotlight.js?v=2" defer></script>
   <!-- ===== Site footer ===== -->
   <footer class="site-footer">
     <div class="site-footer__inner">

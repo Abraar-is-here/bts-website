@@ -1,10 +1,10 @@
 /* ===========================================================================
    market-clocks.js — the clock strip at the top of /books/.
 
-   Six markets, west to east, each with its local time to the second and
-   whether its main exchange is in session (with Hong Kong's and Tokyo's
-   lunch breaks). Times come from the browser's time-zone database, so summer
-   time moves on its own. Exchange holidays aren't known here: on a holiday a
+   Three markets, west to east, each with its local time to the second and
+   whether its main exchange is in session (with Hong Kong's lunch break).
+   When each next opens or closes is given in UK time. Times come from the
+   browser's time-zone database, so summer time moves on its own. Exchange holidays aren't known here: on a holiday a
    market shows as open during its usual hours.
 
    The time comes from window.BTSClock (js/promo.js) when it is there, which
@@ -20,31 +20,44 @@
   var MARKETS = [
     { city: 'New York', exchange: 'NYSE', tz: 'America/New_York', sessions: [[570, 960]] },
     { city: 'London', exchange: 'LSE', tz: 'Europe/London', sessions: [[480, 990]] },
-    { city: 'Frankfurt', exchange: 'Xetra', tz: 'Europe/Berlin', sessions: [[540, 1050]] },
-    { city: 'Hong Kong', exchange: 'HKEX', tz: 'Asia/Hong_Kong', sessions: [[570, 720], [780, 960]] },
-    { city: 'Tokyo', exchange: 'TSE', tz: 'Asia/Tokyo', sessions: [[540, 690], [750, 930]] },
-    { city: 'Sydney', exchange: 'ASX', tz: 'Australia/Sydney', sessions: [[600, 960]] }
+    { city: 'Hong Kong', exchange: 'HKEX', tz: 'Asia/Hong_Kong', sessions: [[570, 720], [780, 960]] }
   ];
   var DAYS = { Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6, Sun: 0 };
 
   function now() { return window.BTSClock ? window.BTSClock.now() : Date.now(); }
-  function hhmm(m) { return ('0' + Math.floor(m / 60)).slice(-2) + ':' + ('0' + (m % 60)).slice(-2); }
 
-  // Where a market is in its day: open, at lunch or closed, and the next change.
+  // Where a market is in its day: open, at lunch or closed, and when that
+  // next changes, as local minutes plus how many days ahead.
   function status(mk, wd, mins) {
     var weekday = wd >= 1 && wd <= 5;
     var s = mk.sessions;
     if (weekday) {
       for (var i = 0; i < s.length; i++) {
-        if (mins >= s[i][0] && mins < s[i][1]) return { open: true, text: 'Open', next: 'closes ' + hhmm(s[i][1]) };
-        if (i && mins >= s[i - 1][1] && mins < s[i][0]) return { open: false, lunch: true, text: 'Lunch', next: 'reopens ' + hhmm(s[i][0]) };
+        if (mins >= s[i][0] && mins < s[i][1]) return { open: true, text: 'Open', verb: 'closes', at: s[i][1], days: 0 };
+        if (i && mins >= s[i - 1][1] && mins < s[i][0]) return { open: false, lunch: true, text: 'Lunch', verb: 'reopens', at: s[i][0], days: 0 };
       }
-      if (mins < s[0][0]) return { open: false, text: 'Closed', next: 'opens ' + hhmm(s[0][0]) };
+      if (mins < s[0][0]) return { open: false, text: 'Closed', verb: 'opens', at: s[0][0], days: 0 };
     }
-    // After Friday's close and on Saturday the next open is Monday's; any
-    // other evening (or Sunday) it is tomorrow's, so the time alone says it.
-    var day = wd === 5 || wd === 6 ? 'Mon ' : '';
-    return { open: false, text: 'Closed', next: 'opens ' + day + hhmm(s[0][0]) };
+    // Otherwise the next open is the next weekday's: Friday evening and the
+    // weekend roll on to Monday.
+    var days = wd === 5 ? 3 : wd === 6 ? 2 : 1;
+    return { open: false, text: 'Closed', verb: 'opens', at: s[0][0], days: days };
+  }
+
+  // The next change is shown in UK time (GMT, or BST in summer), with the day
+  // when it isn't today in the UK.
+  var UK = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/London', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23', timeZoneName: 'short' });
+  function ukParts(t) {
+    var o = {};
+    UK.formatToParts(t).forEach(function (p) { o[p.type] = p.value; });
+    return o;
+  }
+  function inUK(t, st, mins, secs) {
+    var at = t + ((st.days * 1440 + st.at - mins) * 60 - secs) * 1000;
+    var a = ukParts(at), today = ukParts(t);
+    // Browsers name the zone "GMT", "GMT+0", "BST" or "GMT+1"; say GMT or BST.
+    var zone = /\+1|BST/.test(a.timeZoneName) ? 'BST' : 'GMT';
+    return (a.weekday !== today.weekday ? a.weekday + ' ' : '') + a.hour + ':' + a.minute + ' ' + zone;
   }
 
   var clocks = MARKETS.map(function (mk) {
@@ -82,8 +95,9 @@
       var parts = {};
       c.mk.fmt.formatToParts(t).forEach(function (p) { parts[p.type] = p.value; });
       c.time.textContent = parts.hour + ':' + parts.minute + ':' + parts.second;
-      var st = status(c.mk, DAYS[parts.weekday], +parts.hour * 60 + +parts.minute);
-      var label = st.text + ' · ' + st.next;
+      var mins = +parts.hour * 60 + +parts.minute;
+      var st = status(c.mk, DAYS[parts.weekday], mins);
+      var label = st.text + ' · ' + st.verb + ' ' + inUK(t, st, mins, +parts.second);
       if (label !== c.last) {
         c.last = label;
         c.stText.textContent = label;

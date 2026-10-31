@@ -32,7 +32,7 @@
   <link rel="stylesheet" href="styles/tokens/colors.css?v=15" />
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
-  <link rel="stylesheet" href="styles/main.css?v=134" />
+  <link rel="stylesheet" href="styles/main.css?v=146" />
 
   <!-- Structured data. Gives crawlers and AI answers facts to quote instead of
        inferring them from prose. Every value here is verifiable on the site. -->
@@ -179,35 +179,26 @@
                laid on a shared subgrid (see main.css) so steps, titles, blurbs and
                buttons line up across all three cards. -->
           <div class="start__card start__card--flagship">
-            <!-- Swaps to the closed state on the second the deadline passes (js/promo.js). -->
-            <p class="start__step" data-until="2026-10-03T00:00:00+01:00">Flagship &middot; <span class="closes-inline" data-countdown="2026-10-03T00:00:00+01:00">Closes in <span data-cd-clock>Fri 2 Oct, 11:59 PM</span></span></p>
-            <p class="start__step" data-after="2026-10-03T00:00:00+01:00" hidden>Flagship &middot; 2026/27 intake closed</p>
-            <span class="start__name">The analyst programme</span>
-            <p class="start__text">
-              Fourteen teams across four divisions. Research an instrument, pitch it, and defend
-              it in front of people who do it for a living.
-            </p>
-            <a class="btn btn--primary start__join" href="/apply" data-until="2026-10-03T00:00:00+01:00">
-              Apply now
-              <span class="btn__arrow" aria-hidden="true">&rarr;</span>
-            </a>
-            <a class="btn btn--primary start__join" href="/analyst-programme" data-after="2026-10-03T00:00:00+01:00" hidden>
-              See the divisions
-              <span class="btn__arrow" aria-hidden="true">&rarr;</span>
-            </a>
-            <a class="start__go" href="/analyst-programme" data-until="2026-10-03T00:00:00+01:00">Explore the divisions &rarr;</a>
-            <a class="start__go" href="/team" data-after="2026-10-03T00:00:00+01:00" hidden>Meet the division heads &rarr;</a>
-          </div>
-
-          <div class="start__card">
             <p class="start__step">Anyone</p>
             <span class="start__name">Become a member</span>
             <p class="start__text">
               Open to any Bristol student, whatever you study. Speaker evenings, workshops,
               Bloomberg sessions and socials.
             </p>
-            <a class="btn btn--secondary start__join" href="https://www.bristolsu.org.uk/groups/bristol-trading-society-2436" target="_blank" rel="noopener noreferrer">
+            <a class="btn btn--primary start__join" href="https://www.bristolsu.org.uk/groups/bristol-trading-society-2436" target="_blank" rel="noopener noreferrer">
               Join now<span class="visually-hidden"> (opens in a new tab)</span>
+              <span class="btn__arrow" aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+
+          <div class="start__card">
+            <p class="start__step">Four divisions</p>
+            <span class="start__name">Our divisions</span>
+            <p class="start__text">
+              Equities, FICC, Macro and Quant. See what each one covers and how the year runs.
+            </p>
+            <a class="btn btn--secondary start__join" href="/analyst-programme">
+              See the divisions
               <span class="btn__arrow" aria-hidden="true">&rarr;</span>
             </a>
           </div>
@@ -389,167 +380,6 @@
   </header>
 
   <!-- =====================================================================
-       Sponsors & partners — a static, tiered wall. Headline sponsors get
-       their own tiles; partners sit in a quieter grid beneath. Same tiers
-       as the Welcome Event deck.
-       ===================================================================== -->
-  <section class="partners" aria-labelledby="partners-title">
-    <div class="partners__inner">
-      <div class="partners__head">
-        <h2 class="partners__title" id="partners-title">Sponsors &amp; partners</h2>
-        <p class="visually-hidden">Bristol Trading Society is sponsored by DRW, Jane Street and Outlook Energy, and partners with JPMorgan Chase &amp; Co., WorldQuant, Berenberg, ICE, CFA Institute and eToro. It also works with commoditiespeople, Headstart and HireHuub.</p>
-      </div>
-
-      <h3 class="partners__tier">Sponsors</h3>
-      <ul class="partners__lead">
-        <li><img src="assets/img/sponsors/wall/drw.png" alt="DRW" width="607" height="200" loading="lazy" /></li>
-        <li><img src="assets/img/sponsors/wall/jane-street.png" alt="Jane Street" width="761" height="200" loading="lazy" /></li>
-        <li><img src="assets/img/sponsors/wall/outlook-energy.svg" alt="Outlook Energy" width="148" height="56" loading="lazy" /></li>
-      </ul>
-
-      <h3 class="partners__tier">Partners</h3>
-      <ul class="partners__grid">
-        <li><img src="assets/img/sponsors/wall/jp-morgan-chase.png" alt="JPMorgan Chase &amp; Co." width="1000" height="287" loading="lazy" /></li>
-        <li><img src="assets/img/sponsors/wall/worldquant.png" alt="WorldQuant" width="200" height="200" loading="lazy" /></li>
-        <li><img src="assets/img/sponsors/wall/berenberg.png" alt="Berenberg" width="245" height="200" loading="lazy" /></li>
-        <li><img src="assets/img/sponsors/wall/ice.png" alt="ICE" width="200" height="200" loading="lazy" /></li>
-        <li><img src="assets/img/sponsors/wall/cfa.png" alt="CFA Institute" width="501" height="109" loading="lazy" /></li>
-        <li><img src="assets/img/sponsors/wall/etoro.png" alt="eToro" width="647" height="200" loading="lazy" /></li>
-      </ul>
-
-      <div class="partners__also">
-        <h3 class="partners__also-title">Also working with</h3>
-        <ul class="partners__also-list">
-          <li><img src="assets/img/sponsors/wall/commodities-people.png" alt="commoditiespeople" width="2030" height="200" loading="lazy" /></li>
-          <li><img src="assets/img/sponsors/wall/headstart.png" alt="Headstart" width="205" height="200" loading="lazy" /></li>
-          <li><img src="assets/img/sponsors/wall/hirehuub.png" alt="HireHuub" width="745" height="198" loading="lazy" /></li>
-        </ul>
-      </div>
-    </div>
-    <p class="scroll-cue" data-scroll-cue aria-hidden="true" hidden><span>Scroll</span><i></i></p>
-  </section>
-
-  <!-- =====================================================================
-       The creed: one line, typed out as you scroll, then again in Chinese
-       (by far the largest international group at Bristol), French,
-       Brazilian Portuguese, Russian and Italian. The stage pins while the page
-       scrolls past it; js/creed.js maps scroll to how much of the line is
-       written. Without JS, or with reduced motion, it is a plain statement.
-       Translations want a check by a native speaker before this goes live.
-       ===================================================================== -->
-  <section class="creed" data-creed aria-labelledby="creed-title">
-    <div class="creed__stage">
-      <h2 class="creed__title" id="creed-title">
-        <span class="visually-hidden">Ambition is everywhere. Access is not.</span>
-        <span class="creed__line" data-creed-line aria-hidden="true">Ambition is everywhere. Access is&nbsp;not.</span>
-      </h2>
-      <ul class="creed__langs" data-creed-langs hidden>
-        <li lang="en">Ambition is everywhere. Access is&nbsp;not.</li>
-        <li lang="zh-Hans">抱负无处不在，机会却不然。</li>
-        <li lang="fr">L’ambition est partout. L’accès, non.</li>
-        <li lang="pt-BR">A ambição está em todo lugar. O acesso, não.</li>
-        <li lang="ru">Амбиции есть везде. Возможности&nbsp;— нет.</li>
-        <li lang="it">L’ambizione è ovunque. L’accesso, no.</li>
-        <li lang="en">Ambition is everywhere. Access is&nbsp;not.</li>
-      </ul>
-
-      <div class="creed__foot">
-        <dl class="creed__stats">
-          <div><dt>connected members and followers</dt><dd>4,500+</dd></div>
-          <div><dt>analysts across 14 desks in four divisions</dt><dd>80</dd></div>
-          <div><dt>Bristol alumni in finance, connected with our 2,000+ members and alumni</dt><dd>8,000+</dd></div>
-        </dl>
-        <a class="creed__join" href="https://www.bristolsu.org.uk/groups/bristol-trading-society-2436" target="_blank" rel="noopener noreferrer">
-          Join us<span class="visually-hidden"> on the Bristol SU page (opens in a new tab)</span>
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- What we believe: the creed, said plainly. -->
-  <section class="beliefs" aria-labelledby="beliefs-title">
-    <h2 class="beliefs__title" id="beliefs-title">What we believe <svg viewBox="0 0 120 12" width="120" height="12" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true" focusable="false"><path d="M0 6h118M112 1l6 5-6 5"/></svg></h2>
-    <ul class="beliefs__list">
-      <li>Do the work, then defend it</li>
-      <li>Process over outcome</li>
-      <li>Every market is a classroom</li>
-      <li>Access should be earned, not inherited</li>
-    </ul>
-  </section>
-
-  <!-- =====================================================================
-       Section 2 — Closing panel (solid deep-navy)
-       ===================================================================== -->
-  <!-- Closing panel: the proof, then the pathway. The Welcome Event photo shows
-       the demand; the employer logos show where the programme leads. -->
-  <section id="closing" class="section closing closing--dark" aria-labelledby="closing-title">
-    <div class="container closing__inner">
-
-      <div class="closing__head">
-        <h2 class="h1 closing__title" id="closing-title">The Welcome Event filled Pugsley.</h2>
-        <div class="closing__side">
-          <p class="closing__lead" data-until="2026-10-03T00:00:00+01:00">
-            Next is the analyst programme: 80 places across 14 teams, where members research
-            a real instrument and defend it in front of people who trade for a living.
-            Applications close at 11:59 PM on Friday 2 October.
-          </p>
-          <p class="closing__lead" data-after="2026-10-03T00:00:00+01:00" hidden>
-            Next is the analyst programme: 80 analysts across 14 teams, researching real
-            instruments and defending them in front of people who trade for a living.
-          </p>
-          <div class="closing__actions">
-            <a class="btn btn--primary" href="/apply" data-until="2026-10-03T00:00:00+01:00">
-              Apply to the analyst programme
-              <span class="btn__arrow" aria-hidden="true">&rarr;</span>
-            </a>
-            <a class="btn btn--primary" href="/analyst-programme" data-after="2026-10-03T00:00:00+01:00" hidden>
-              See the divisions
-              <span class="btn__arrow" aria-hidden="true">&rarr;</span>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <figure class="closing__photo">
-        <img src="assets/img/events/welcome-event-2026-crowd-2400.jpg"
-             srcset="assets/img/events/welcome-event-2026-crowd-1200.jpg 1200w,
-                     assets/img/events/welcome-event-2026-crowd-2400.jpg 2400w"
-             sizes="(min-width: 1280px) 1200px, 100vw"
-             width="2400" height="1350" loading="lazy" decoding="async"
-             alt="Pugsley Lecture Theatre filled to the back rows for the Bristol Trading Society Welcome Event, with a committee member presenting at the front." />
-        <figcaption class="closing__caption">
-          <span class="closing__dot" aria-hidden="true"></span>
-          Welcome Event<span class="closing__venue"> &middot; Pugsley Lecture Theatre</span> &middot; 24.09.2026
-        </figcaption>
-      </figure>
-
-      <div class="closing__firms">
-        <h3 class="closing__firms-title">Where our members end up</h3>
-        <p class="closing__firms-note">A selection of the firms our alumni have joined.</p>
-        <ul class="destinations">
-          <li><img src="assets/img/alumni-firms/goldman-sachs.webp" alt="Goldman Sachs" loading="lazy" /></li>
-          <li><img src="assets/img/alumni-firms/jp-morgan.png" alt="J.P. Morgan" loading="lazy" /></li>
-          <li><img src="assets/img/alumni-firms/morgan-stanley.png" alt="Morgan Stanley" loading="lazy" /></li>
-          <li><img src="assets/img/alumni-firms/millennium.png" alt="Millennium Management" loading="lazy" /></li>
-          <li><img src="assets/img/alumni-firms/citi.webp" alt="Citi" loading="lazy" /></li>
-          <li><img src="assets/img/alumni-firms/barclays.png" alt="Barclays" loading="lazy" /></li>
-          <li><img src="assets/img/alumni-firms/ubs.png" alt="UBS" loading="lazy" /></li>
-          <li><img src="assets/img/alumni-firms/hsbc.png" alt="HSBC" loading="lazy" /></li>
-          <li><img src="assets/img/alumni-firms/bnp-paribas.png" alt="BNP Paribas" loading="lazy" /></li>
-          <li><img src="assets/img/alumni-firms/ice.png" alt="ICE" loading="lazy" /></li>
-          <li><img src="assets/img/alumni-firms/glencore.webp" alt="Glencore" loading="lazy" /></li>
-          <li><img src="assets/img/alumni-firms/standard-chartered.webp" alt="Standard Chartered" loading="lazy" /></li>
-          <li><img src="assets/img/alumni-firms/berenberg.png" alt="Berenberg" loading="lazy" /></li>
-          <li><img src="assets/img/alumni-firms/investec.png" alt="Investec" loading="lazy" /></li>
-          <li><img src="assets/img/alumni-firms/dare.png" alt="Dare Trading" loading="lazy" /></li>
-        </ul>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- =====================================================================
        Explore BTS: the latest events, newest first, then what is coming.
        One feature, then a list. On a fine pointer each row's photo sweeps
        across the row on hover. "Coming soon" rows are greyed and not links;
@@ -557,10 +387,7 @@
        ===================================================================== -->
   <section class="explore panel" aria-labelledby="explore-title">
     <div class="explore__inner">
-      <h2 class="explore__title" id="explore-title">
-        Explore BTS
-        <span>What we&rsquo;ve run, and what&rsquo;s next</span>
-      </h2>
+      <h2 class="explore__title" id="explore-title">Explore our events</h2>
 
       <div class="explore__grid">
         <a class="explore__feature" href="/events/">
@@ -617,7 +444,7 @@
             </a>
           </li>
           <li data-until="2026-10-20T19:00:00+01:00">
-            <a class="explore__row" href="/events/#up-next">
+            <a class="explore__row" href="/events/past/#y2026">
               <span class="explore__thumb"><img src="assets/img/events/panel-2026/panel-group.webp" width="1230" height="702" loading="lazy" alt="" style="object-position: 50% 30%" /></span>
               <span class="explore__text">
                 <span class="explore__date">20 October</span>
@@ -627,7 +454,7 @@
             </a>
           </li>
           <li data-until="2026-10-21T18:00:00+01:00">
-            <a class="explore__row" href="/events/#up-next">
+            <a class="explore__row" href="/events/past/#y2026">
               <span class="explore__thumb"><img src="assets/img/events/oliver-wyman/nyse-800.webp" srcset="assets/img/events/oliver-wyman/nyse-800.webp 800w, assets/img/events/oliver-wyman/nyse.webp 1440w" sizes="(min-width: 900px) 460px, 100vw" width="800" height="462" loading="lazy" alt="" style="object-position: 45% 40%" /></span>
               <span class="explore__text">
                 <span class="explore__date">21 October</span>
@@ -637,14 +464,14 @@
             </a>
           </li>
           <li>
-            <div class="explore__row explore__row--soon">
+            <a class="explore__row" href="/events/umushroom/">
               <span class="explore__thumb" style="--fx: 15%"><img src="assets/img/events/umushroom/pitch-800.jpg" srcset="assets/img/events/umushroom/pitch-800.jpg 800w, assets/img/events/umushroom/pitch-1600.jpg 1600w" sizes="(min-width: 900px) 460px, 100vw" width="800" height="564" loading="lazy" alt="" style="object-position: 50% 32%" /></span>
               <span class="explore__text">
                 <span class="explore__date">From 12 October</span>
                 <span class="explore__name">UK Investment Competition</span>
-                <span class="explore__soon">Coming soon</span>
+                <span class="explore__btn">See details</span>
               </span>
-            </div>
+            </a>
           </li>
           <li>
             <div class="explore__row explore__row--soon">
@@ -662,16 +489,111 @@
     </div>
   </section>
 
+  <!-- =====================================================================
+       Sponsors & partners — a static, tiered wall. Headline sponsors get
+       their own tiles; partners sit in a quieter grid beneath. Same tiers
+       as the Welcome Event deck.
+       ===================================================================== -->
+  <section class="partners" aria-labelledby="partners-title">
+    <div class="partners__inner">
+      <div class="partners__head">
+        <h2 class="partners__title" id="partners-title">Sponsors &amp; partners</h2>
+        <p class="partners__intro">The firms that back the society, and the ones we run events and opportunities with. <a href="/prospectus/">Partner with us <span aria-hidden="true">&rarr;</span></a></p>
+        <p class="visually-hidden">Bristol Trading Society is sponsored by DRW, Jane Street and Outlook Energy, and partners with JPMorgan Chase &amp; Co., WorldQuant, Berenberg, ICE, CFA Institute and eToro. It also works with commoditiespeople, Headstart and HireHuub.</p>
+      </div>
+
+      <!-- Three open rows, no boxes: sponsors large, partners a size down,
+           then the rest quieter still. Space alone separates the tiers. -->
+      <div class="pwall">
+        <div class="pwall__tier pwall__tier--lead">
+          <h3 class="pwall__label">Sponsored by</h3>
+          <ul class="pwall__logos">
+            <li><img src="assets/img/sponsors/wall/drw.png" alt="DRW" width="607" height="200" loading="lazy" /></li>
+            <li><img src="assets/img/sponsors/wall/jane-street.png" alt="Jane Street" width="761" height="200" loading="lazy" /></li>
+            <li><img src="assets/img/sponsors/wall/outlook-energy.svg" alt="Outlook Energy" width="148" height="56" loading="lazy" /></li>
+          </ul>
+        </div>
+        <div class="pwall__tier pwall__tier--mid">
+          <h3 class="pwall__label">In partnership with</h3>
+          <ul class="pwall__logos">
+            <li><img src="assets/img/sponsors/wall/jp-morgan-chase.png" alt="JPMorgan Chase &amp; Co." width="1000" height="287" loading="lazy" /></li>
+            <li><img src="assets/img/sponsors/wall/worldquant.png" alt="WorldQuant" width="200" height="200" loading="lazy" /></li>
+            <li><img src="assets/img/sponsors/wall/berenberg.png" alt="Berenberg" width="245" height="200" loading="lazy" /></li>
+            <li><img src="assets/img/sponsors/wall/ice.png" alt="ICE" width="200" height="200" loading="lazy" /></li>
+            <li><img src="assets/img/sponsors/wall/cfa.png" alt="CFA Institute" width="501" height="109" loading="lazy" /></li>
+            <li><img src="assets/img/sponsors/wall/etoro.png" alt="eToro" width="647" height="200" loading="lazy" /></li>
+          </ul>
+        </div>
+        <div class="pwall__tier pwall__tier--minor">
+          <h3 class="pwall__label">Also working with</h3>
+          <ul class="pwall__logos">
+            <li><img src="assets/img/sponsors/wall/commodities-people.png" alt="commoditiespeople" width="2030" height="200" loading="lazy" /></li>
+            <li><img src="assets/img/sponsors/wall/headstart.png" alt="Headstart" width="205" height="200" loading="lazy" /></li>
+            <li><img src="assets/img/sponsors/wall/hirehuub.png" alt="HireHuub" width="745" height="198" loading="lazy" /></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BTS in numbers, then the way in. -->
+  <section class="creed" aria-label="BTS in numbers">
+    <div class="creed__stage">
+      <div class="creed__foot">
+        <dl class="creed__stats">
+          <div><dt>connected members and followers</dt><dd>4,500+</dd></div>
+          <div><dt>analysts across 14 desks in four divisions</dt><dd>80</dd></div>
+          <div><dt>Bristol alumni in finance, connected with our 2,000+ members and alumni</dt><dd>8,000+</dd></div>
+        </dl>
+        <a class="creed__join" href="https://www.bristolsu.org.uk/groups/bristol-trading-society-2436" target="_blank" rel="noopener noreferrer">
+          Join us<span class="visually-hidden"> on the Bristol SU page (opens in a new tab)</span>
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       Section 2 — Closing panel (solid deep-navy)
+       ===================================================================== -->
+  <!-- Closing panel: where the programme leads. -->
+  <section id="closing" class="section closing closing--dark" aria-labelledby="closing-title">
+    <div class="container closing__inner">
+
+      <div class="closing__firms">
+        <h2 class="closing__firms-title" id="closing-title">Where our members end up</h2>
+        <p class="closing__firms-note">A selection of the firms our alumni have joined.</p>
+        <ul class="destinations">
+          <li><img src="assets/img/alumni-firms/goldman-sachs.webp" alt="Goldman Sachs" loading="lazy" /></li>
+          <li><img src="assets/img/alumni-firms/jp-morgan.png" alt="J.P. Morgan" loading="lazy" /></li>
+          <li><img src="assets/img/alumni-firms/morgan-stanley.png" alt="Morgan Stanley" loading="lazy" /></li>
+          <li><img src="assets/img/alumni-firms/millennium.png" alt="Millennium Management" loading="lazy" /></li>
+          <li><img src="assets/img/alumni-firms/citi.webp" alt="Citi" loading="lazy" /></li>
+          <li><img src="assets/img/alumni-firms/barclays.png" alt="Barclays" loading="lazy" /></li>
+          <li><img src="assets/img/alumni-firms/ubs.png" alt="UBS" loading="lazy" /></li>
+          <li><img src="assets/img/alumni-firms/hsbc.png" alt="HSBC" loading="lazy" /></li>
+          <li><img src="assets/img/alumni-firms/bnp-paribas.png" alt="BNP Paribas" loading="lazy" /></li>
+          <li><img src="assets/img/alumni-firms/ice.png" alt="ICE" loading="lazy" /></li>
+          <li><img src="assets/img/alumni-firms/glencore.webp" alt="Glencore" loading="lazy" /></li>
+          <li><img src="assets/img/alumni-firms/standard-chartered.webp" alt="Standard Chartered" loading="lazy" /></li>
+          <li><img src="assets/img/alumni-firms/berenberg.png" alt="Berenberg" loading="lazy" /></li>
+          <li><img src="assets/img/alumni-firms/investec.png" alt="Investec" loading="lazy" /></li>
+          <li><img src="assets/img/alumni-firms/dare.png" alt="Dare Trading" loading="lazy" /></li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+
   <!-- Scripts: deferred so they run after the DOM is parsed. -->
 <script src="js/aurora.js?v=9" defer></script>
   <script src="js/transitions.js?v=3" defer></script>
   <script src="js/nav.js?v=3" defer></script>
   <script src="js/promo.js?v=3" defer></script>
   <script src="js/event-carousel.js?v=1" defer></script>
-  <script src="js/spotlight.js?v=2" defer></script>
-  <script src="js/creed.js?v=10" defer></script>
   <!-- ===== Site footer ===== -->
-  <footer class="site-footer site-footer--light">
+  <footer class="site-footer">
     <div class="site-footer__inner">
 
       <div class="site-footer__top">

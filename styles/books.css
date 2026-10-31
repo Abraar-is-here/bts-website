@@ -110,16 +110,15 @@
 }
 .bk-desk__top { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
 .bk-desk__name { font-family: var(--font-display); font-size: 1.375rem; font-weight: 800; letter-spacing: -0.02em; }
-.bk-desk__books { font-size: 0.8125rem; color: var(--text-secondary); white-space: nowrap; }
 .bk-desk__ret { margin-top: 18px; font-size: clamp(1.75rem, 2.6vw, 2.25rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1; }
 .bk-desk__since { margin-top: 6px; font-size: 0.8125rem; color: var(--text-secondary); }
 .bk-desk__spark { display: block; height: 56px; margin: 14px -4px 12px; }
 .bk-desk__kpis { display: grid; grid-template-columns: repeat(3, auto); justify-content: space-between; gap: 8px; margin-top: auto; padding-top: 12px; border-top: 1px solid var(--hairline); }
 .bk-desk__kpi { display: flex; flex-direction: column; gap: 2px; font-size: 0.75rem; color: var(--text-secondary); }
 .bk-desk__kpi strong { font-size: 0.9375rem; font-weight: 600; color: var(--text-primary); font-variant-numeric: tabular-nums; }
-.bk-desk--empty .bk-desk__wait { margin-top: auto; font-size: 0.9375rem; font-weight: 600; color: var(--text-primary); }
-.bk-desk--empty .bk-desk__heads { margin-top: 6px; font-size: 0.8125rem; line-height: 1.5; color: var(--text-secondary); }
-.bk-desk--empty { background: rgba(6, 17, 43, 0.4); }
+/* Before any figures arrive the cards are a compact switcher: just the name. */
+.bk-desk--empty { min-height: 0; padding: 18px 22px; border-radius: 16px; background: rgba(6, 17, 43, 0.4); }
+.bk-desk--empty .bk-desk__top { align-items: center; }
 
 /* --- Desk panel ------------------------------------------------------------------- */
 .bk-panel {
@@ -130,7 +129,8 @@
   -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
 }
-.bk-panel__head { margin-bottom: var(--space-4); }
+.bk-panel__head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--space-3) var(--space-4); margin-bottom: var(--space-4); }
+.bk-panel__div { flex: none; }
 .bk-panel__title { margin: 0; font-family: var(--font-display); font-size: clamp(1.9rem, 3.8vw, 2.75rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.02; color: var(--text-primary); }
 .bk-panel__meta { margin: 10px 0 0; font-size: 0.9375rem; color: var(--text-secondary); }
 .bk-panel.is-switching { opacity: 0.4; transition: opacity 120ms ease; }
@@ -368,8 +368,8 @@ body:has(> .ticker:not([hidden])) .bk { --bk-stick: calc(92px + var(--ticker-h))
   .bk__stamp { text-align: left; }
   .bk-desks { gap: 10px; }
   .bk-desk { min-height: 0; padding: 16px; border-radius: 16px; }
+  .bk-desk--empty { padding: 14px 16px; }
   .bk-desk__name { font-size: 1.15rem; }
-  .bk-desk__books { display: none; }
   .bk-desk__ret { margin-top: 12px; font-size: 1.6rem; }
   .bk-desk__spark { height: 40px; margin: 10px -4px 8px; }
   .bk-desk__kpis { grid-template-columns: repeat(2, auto); }
@@ -398,12 +398,12 @@ body:has(> .ticker:not([hidden])) .bk { --bk-stick: calc(92px + var(--ticker-h))
 .bk-chip::before, .bk-booklink::before { content: ''; position: absolute; inset: -6px -2px; }
 
 /* --- Market clocks ------------------------------------------------------------
-   A terminal-style strip above the page head: six exchanges west to east,
+   A terminal-style strip above the page head: three exchanges west to east,
    local time to the second, and whether each is in session. Green means open,
    amber a lunch break, grey closed; the words always say it too. */
 .bk-clocks {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   margin: 0 0 var(--space-5);
   border-top: 1px solid var(--hairline);
   border-bottom: 1px solid var(--hairline);
@@ -444,18 +444,10 @@ body:has(> .ticker:not([hidden])) .bk { --bk-stick: calc(92px + var(--ticker-h))
 .bk-desk__live strong { font-weight: 700; }
 .bk-live-note { flex-basis: 100%; }
 
-@media (max-width: 1080px) {
-  .bk-clocks { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .bk-clock:nth-child(4) { padding-left: 0; border-left: 0; }
-  .bk-clock:nth-child(n+4) { border-top: 1px solid var(--hairline); }
-}
 @media (max-width: 480px) {
-  .bk-clocks { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .bk-clock { padding: 12px 12px 12px 0; }
-  .bk-clock + .bk-clock { padding-left: 12px; }
-  .bk-clock:nth-child(odd) { padding-left: 0; border-left: 0; }
-  .bk-clock:nth-child(4) { padding-left: 12px; border-left: 1px solid var(--hairline); }
-  .bk-clock:nth-child(n+3) { border-top: 1px solid var(--hairline); }
+  .bk-clock { padding: 12px 10px 12px 0; }
+  .bk-clock + .bk-clock { padding-left: 10px; }
+  .bk-clock__ex { display: none; }
 }
 
 /* --- The Floor: link to the method page --------------------------------------- */
