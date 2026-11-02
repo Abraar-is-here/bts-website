@@ -1694,7 +1694,8 @@ body.is-leaving {
    glass, so the live aurora moves behind their marks; partners sit in a
    hairline grid. On a fine pointer a soft light follows the cursor
    (js/spotlight.js). Every mark is flattened to white so no brand colour
-   competes. "Where our members end up" uses the same tile and grid. */
+   competes. "Where our members end up" and the prospectus use the same tile
+   and grid. */
 .partners {
   /* Starts at exactly the hero's bottom tint (0.35) so there is no seam, then
      reaches 0.58 before the title: over the aurora's brightest sky zone that
