@@ -20,9 +20,9 @@
   <link rel="stylesheet" href="styles/tokens/colors.css?v=15" />
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
-  <link rel="stylesheet" href="styles/main.css?v=147" />
+  <link rel="stylesheet" href="styles/main.css?v=150" />
   <link rel="stylesheet" href="styles/books.css?v=11" />
-  <link rel="stylesheet" href="styles/books-import.css?v=1" />
+  <link rel="stylesheet" href="styles/books-import.css?v=3" />
 </head>
 <body>
 
@@ -89,8 +89,8 @@
           <h1>Publish your book</h1>
           <p class="bk__lead">
             For division heads. Export your IBKR statement, drop it below, check what it shows, then
-            send the file it gives you to the web team. Your export stays on this computer: nothing is
-            uploaded until you send it.
+            publish it with your book&rsquo;s passcode. Your export stays on this computer: only the
+            finished book file is sent, when you press Publish.
           </p>
         </div>
         <p class="bk__stamp"><a href="/books/">See the books <span aria-hidden="true">&rarr;</span></a></p>
@@ -165,15 +165,27 @@
           <div data-notes></div>
         </section>
 
+        <!-- Publish posts the book file to apps-script/PublishCode.gs ("publish.endpoint"
+             in books/data/index.json), which commits it to GitHub. Without an endpoint
+             the box falls back to downloading the file for the web team. -->
         <div class="bki-send">
           <div>
-            <h3>Send it</h3>
-            <p>Download the file, then email it to the web team, or upload it to the site&rsquo;s <code>books/data</code> folder on GitHub if you have access. Your book updates on the site within a few minutes.</p>
+            <h3 data-send-title>Publish it</h3>
+            <p data-send-note>Enter your book&rsquo;s passcode and press Publish. The Floor shows it within about two minutes.</p>
+            <label class="bki-confirm" data-confirm hidden>
+              <input type="checkbox" data-confirm-box />
+              <span>I&rsquo;ve read the points marked &ldquo;Check this&rdquo; above, and this is right to publish.</span>
+            </label>
           </div>
           <div class="bki-send__actions">
-            <p class="bki-sent" data-sent role="status" aria-live="polite"></p>
-            <button class="bki-btn" type="button" data-download>Download</button>
+            <div class="bki-pass" data-publish-ui hidden>
+              <label for="passcode">Passcode</label>
+              <input id="passcode" class="bki-input" type="password" autocomplete="off" spellcheck="false" placeholder="XXXX-XXXX" data-passcode />
+            </div>
+            <button class="bki-btn" type="button" data-publish hidden>Publish</button>
+            <button class="bki-btn bki-btn--ghost" type="button" data-download>Download a copy</button>
             <a class="bki-btn bki-btn--ghost" data-github href="https://github.com/Abraar-is-here/bts-website/upload/main/books/data" target="_blank" rel="noopener noreferrer">Upload on GitHub<span class="visually-hidden"> (opens in a new tab)</span> <span aria-hidden="true">&nearr;</span></a>
+            <p class="bki-sent" data-sent role="status" aria-live="polite"></p>
           </div>
         </div>
       </section>
@@ -184,7 +196,7 @@
   <script src="js/books-flex.js?v=5" defer></script>
   <script src="js/books-core.js?v=3" defer></script>
   <script src="js/books-ui.js?v=11" defer></script>
-  <script src="js/books-import.js?v=1" defer></script>
+  <script src="js/books-import.js?v=2" defer></script>
 
   <script src="js/aurora.js?v=9" defer></script>
   <script src="js/transitions.js?v=3" defer></script>

@@ -1,10 +1,13 @@
 /* ===========================================================================
    books-import.js — /books/import/: a division head drops their IBKR Flex
    export, sees exactly what will be published, adds trade notes, and
-   downloads books/data/<book>.json to send to the web team.
+   publishes books/data/<book>.json with the book's passcode, through
+   apps-script/PublishCode.gs, which commits it to GitHub. Without a
+   publishing endpoint the file is downloaded for the web team instead.
 
-   Nothing leaves the browser. The published file for the chosen book is
-   fetched first, so each export adds to the history rather than replacing it.
+   The IBKR export never leaves the browser: only the finished book file is
+   sent, on Publish. The published file for the chosen book is fetched first,
+   so each export adds to the history rather than replacing it.
    ========================================================================== */
 (function () {
   'use strict';
@@ -16,6 +19,7 @@
   var statusEl = $('[data-status]'), result = $('[data-result]');
   var summaryEl = $('[data-summary]'), warnEl = $('[data-warnings]'), previewEl = $('[data-preview]'), notesEl = $('[data-notes]');
   var books = {}, current = null; // { meta, book, report }
+  var PUBLISH = ''; // apps-script/PublishCode.gs, from "publish.endpoint" in the manifest
 
   function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
   function status(text, kind) {
@@ -27,6 +31,8 @@
 
   /* --- Book list from the manifest ------------------------------------------- */
   fetch('books/data/index.json', { cache: 'no-cache' }).then(function (r) { return r.json(); }).then(function (m) {
+    PUBLISH = String((m.publish && m.publish.endpoint) || '').trim();
+    sendMode();
     bookSel.textContent = '';
     var ph = el('option', null, 'Choose your book');
     ph.value = '';
@@ -96,11 +102,12 @@
     ]).then(function (got) {
       var key = got[0], existing = got[1];
       var merged = X.merge(statements, existing, { id: meta.id, accountKey: key, currency: statements[0] && statements[0].currency });
-      if (existing && existing.accountKey && key && existing.accountKey !== key) {
+      var moved = !!(existing && existing.accountKey && key && existing.accountKey !== key);
+      if (moved) {
         merged.report.warnings.unshift({ level: 'serious', text: 'This export is from a different IBKR account from the one already published for ' + meta.name + '. If that’s a mistake, export from the right account. If the book has moved account, tell the web team before sending this.' });
       }
       if (sample) merged.report.warnings.unshift({ level: 'warning', text: 'This is the sample file: invented trades so you can see how it works. Don’t send it.' });
-      current = { meta: meta, book: merged.book, report: merged.report, sample: sample };
+      current = { meta: meta, book: merged.book, report: merged.report, sample: sample, moved: moved, existing: !!existing, notesAtLoad: JSON.stringify(merged.book.notes || {}) };
       status('');
       show();
     });
@@ -134,6 +141,9 @@
 
     preview();
     notes();
+    confirmEl.hidden = !needsConfirm();
+    confirmBox.checked = false;
+    sent('');
     result.hidden = false;
     result.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
   }
@@ -204,17 +214,85 @@
   }
   function hash(s) { var h = 0; for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0; return h; }
 
+  /* --- Publish ------------------------------------------------------------------- */
+  var publishBtn = $('[data-publish]'), passIn = $('[data-passcode]');
+  var confirmEl = $('[data-confirm]'), confirmBox = $('[data-confirm-box]');
+  function sent(text, kind) {
+    var s = $('[data-sent]');
+    s.textContent = text;
+    s.classList.toggle('is-error', kind === 'error');
+  }
+  function fileText() { return JSON.stringify(current.book, null, 1) + '\n'; }
+
+  // With a publishing endpoint the box publishes; without one it falls back to
+  // downloading the file for the web team.
+  function sendMode() {
+    var on = !!PUBLISH;
+    $('[data-publish-ui]').hidden = !on;
+    publishBtn.hidden = !on;
+    $('[data-github]').hidden = on;
+    $('[data-send-title]').textContent = on ? 'Publish it' : 'Send it';
+    $('[data-send-note]').textContent = on
+      ? 'Enter your book’s passcode and press Publish. The Floor shows it within about two minutes.'
+      : 'Download the file, then email it to the web team, or upload it to the site’s books/data folder on GitHub if you have access.';
+  }
+
+  // What stops a publish outright, and what only needs a second look.
+  function blocker() {
+    if (current.sample) return 'This is the sample file with invented trades, so it can’t be published.';
+    if (current.moved) return 'This export is from a different IBKR account from the published book. Tell the web team before publishing it.';
+    var r = current.report;
+    if (current.existing && !r.newTrades && !r.newNavDays && JSON.stringify(current.book.notes || {}) === current.notesAtLoad) {
+      return 'Nothing new to publish: this export adds no trades or days that aren’t already on The Floor.';
+    }
+    return '';
+  }
+  function needsConfirm() {
+    return current.report.warnings.some(function (w) { return w.level === 'serious'; }) && !current.moved;
+  }
+
+  publishBtn.addEventListener('click', function () {
+    if (!current || !PUBLISH) return;
+    var stop = blocker();
+    if (stop) { sent(stop, 'error'); return; }
+    if (needsConfirm() && !confirmBox.checked) { sent('Tick the box to confirm you’ve checked the warnings.', 'error'); confirmBox.focus(); return; }
+    var code = passIn.value.trim();
+    if (!code) { sent('Enter your book’s passcode.', 'error'); passIn.focus(); return; }
+    publishBtn.disabled = true;
+    publishBtn.setAttribute('aria-busy', 'true');
+    sent('Publishing…');
+    // A plain-text POST is a "simple" request: no preflight, and the reply can be read.
+    fetch(PUBLISH, { method: 'POST', body: JSON.stringify({ book: current.meta.id, passcode: code, content: fileText() }) })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (d && d.ok) {
+          passIn.value = '';
+          current.existing = true;
+          current.notesAtLoad = JSON.stringify(current.book.notes || {});
+          current.report.newTrades = 0;
+          current.report.newNavDays = 0;
+          sent('Published ' + current.meta.name + '’s book. The Floor shows it within about two minutes.');
+        } else {
+          sent((d && d.message) || 'That didn’t publish. Try again.', 'error');
+          if (d && d.error === 'passcode') passIn.select();
+        }
+      })
+      .catch(function () { sent('Couldn’t reach the publishing service. Check your connection, or download a copy and send it to the web team.', 'error'); })
+      .then(function () { publishBtn.disabled = false; publishBtn.removeAttribute('aria-busy'); });
+  });
+  passIn.addEventListener('keydown', function (e) { if (e.key === 'Enter') publishBtn.click(); });
+
   /* --- Download ------------------------------------------------------------------ */
   $('[data-download]').addEventListener('click', function () {
     if (!current) return;
     if (current.sample && !confirm('This is the sample file with invented trades. Download it anyway?')) return;
-    var blob = new Blob([JSON.stringify(current.book, null, 1) + '\n'], { type: 'application/json' });
+    var blob = new Blob([fileText()], { type: 'application/json' });
     var a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
     a.download = current.meta.id + '.json';
     document.body.appendChild(a);
     a.click();
     setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
-    $('[data-sent]').textContent = 'Downloaded ' + current.meta.id + '.json. Now email it to the web team or upload it on GitHub.';
+    sent('Downloaded ' + current.meta.id + '.json.' + (PUBLISH ? '' : ' Now email it to the web team or upload it on GitHub.'));
   });
 })();

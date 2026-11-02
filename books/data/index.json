@@ -5,6 +5,10 @@
     "endpoint": "https://script.google.com/macros/s/AKfycbzGNl9dMcuvSXZA9CSHBk8cBsYesmNzypF8ZMcwL2SWdg_fUaW1k2brBtjo8JiIDlml2Q/exec",
     "yahoo": {}
   },
+  "publish": {
+    "note": "The Publish button on /books/import/. endpoint: the deployed apps-script/PublishCode.gs /exec URL; empty means heads download the file for the web team instead.",
+    "endpoint": ""
+  },
   "desks": [
     { "id": "equities", "name": "Equities", "books": [
       { "id": "eq-tash", "head": "Tash Munjanganja" },

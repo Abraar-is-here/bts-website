@@ -229,3 +229,38 @@ data (so it does not depend on the analytics consent banner).
    on the `<main>` element, commit and push.
 5. Click an Apply button on the live page; a row appears in the **Clicks** tab.
    Open the /exec URL in a browser for totals per role.
+
+# Publishing the books (`PublishCode.gs`)
+
+Division heads publish their book from `/books/import/` with a **Publish** button: the page sends
+the finished book file and the book's passcode here, and this commits it to
+`books/data/<book>.json` on GitHub. The Floor updates in about two minutes. No one on the web
+team has to do anything each week.
+
+**1. GitHub token (repo owner).** On GitHub: **Settings › Developer settings › Personal access
+tokens › Fine-grained tokens › Generate new token**.
+- Name `BTS books publishing`, expiration up to a year (put a reminder in the calendar).
+- **Repository access › Only select repositories › bts-website**.
+- **Permissions › Repository permissions › Contents › Read and write**. Nothing else.
+- Generate, and copy the token (it starts `github_pat_`). Share it only with whoever does step 2.
+
+**2. The script.** script.google.com › **New project** › name it `BTS books publishing` › paste
+`PublishCode.gs`. Then **Project Settings** (gear) › **Script properties › Add script property**:
+`GITHUB_TOKEN` = the token. Save.
+
+**3. Check it.** Choose **testGitHub** › **Run** (allow the permissions). The log should say
+`Connected to Abraar-is-here/bts-website. Can write: true`.
+
+**4. Passcodes.** Choose **makePasscodes** › **Run**. The log lists every book with a new
+passcode, e.g. `FICC · Anay Mistry (ficc-anay): K7QM-3XPD`. Copy them now (only a hash is
+stored) and send each head theirs privately. Five wrong tries lock a book for 15 minutes. To
+replace a passcode, delete its `PASS_<book>` line under Script properties and run
+makePasscodes again; a new book in `books/data/index.json` gets one the same way.
+
+**5. Deploy.** **Deploy › New deployment › Web app**, Execute as **Me**, Who has access
+**Anyone**. Put the `/exec` URL in `"publish" › "endpoint"` in `books/data/index.json`. Until
+it's there, the import page falls back to downloading the file.
+
+Every publish is a normal commit ("Books: ficc-anay published from the import page"), so a
+bad one can be reverted on GitHub. The page refuses the sample file, an export from a different
+IBKR account, and an export with nothing new in it; other serious warnings need ticking first.
