@@ -63,9 +63,6 @@
     .facts dd { margin: 0; font-size: 1rem; line-height: 1.65; color: var(--text-secondary); text-wrap: pretty; }
     .facts dd a { color: var(--accent-bright); }
     .facts--wide { grid-template-columns: minmax(0, 1fr); }
-    .dv-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5); margin: 0 0 clamp(36px, 4vw, 52px); }
-    .dv-pair h3 { margin: 0 0 8px; font-family: var(--font-display); font-size: clamp(1.25rem, 1.7vw, 1.5rem); font-weight: 800; letter-spacing: -0.03em; color: var(--text-primary); }
-    .dv-pair p { margin: 0; font-size: 1rem; line-height: 1.65; color: var(--text-secondary); }
     .dv-list h3 { margin: 0 0 var(--space-2); font-size: 1.0625rem; font-weight: 600; color: var(--text-primary); }
     .dv-list ul { margin: 0; padding: 0; list-style: none; }
     .dv-list li { position: relative; padding: 10px 0 10px 22px; font-size: 1rem; line-height: 1.6; color: var(--text-secondary); border-top: 1px solid var(--hairline); }
@@ -85,6 +82,11 @@
     .desk-tab__name { display: block; font-family: var(--font-display); font-size: clamp(1.25rem, 2.2vw, 2rem); font-weight: 800; line-height: 1.02; letter-spacing: -0.03em; overflow-wrap: normal; hyphens: none; }
     /* Collapsed to nothing on the narrow tiles, so every name sits on the same baseline. */
     .desk-tab__more { display: block; max-width: 30ch; max-height: 0; overflow: hidden; font-size: .9375rem; line-height: 1.45; color: rgba(244, 247, 251, 0.85); opacity: 0; transform: translateY(8px); transition: opacity .4s ease, transform .6s cubic-bezier(.16,1,.3,1), max-height .6s cubic-bezier(.16,1,.3,1), margin-top .6s cubic-bezier(.16,1,.3,1); }
+    /* Equities and Macro: sized to the tab as well as the screen, so
+       "Emerging Markets" and "Developed Markets" fit a narrow tab. */
+    :is(#equities, #macro) .desk-tab { container-type: inline-size; }
+    :is(#equities, #macro) .desk-tab__name { font-size: clamp(1rem, min(2.2vw, 11.5cqi), 2rem); }
+    .desks--two { height: clamp(300px, 46vh, 460px); }
     .desk-tab[aria-selected="true"] { flex-grow: 2.6; }
     .desk-tab[aria-selected="true"] img { transform: scale(1); filter: brightness(.95); }
     .desk-tab[aria-selected="true"] .desk-tab__more { max-height: 4.5em; margin-top: 8px; opacity: 1; transform: none; transition-delay: .15s, .15s, 0s, 0s; }
@@ -93,7 +95,8 @@
     .desk { scroll-margin-top: 160px; }
     /* Swapping desks must not let the browser re-anchor the scroll and jump the page. */
     #ficc { overflow-anchor: none; }
-    .desk h3 { margin: 0; font-family: var(--font-display); font-size: clamp(1.75rem, 3vw, 2.4rem); font-weight: 800; letter-spacing: -0.03em; color: var(--text-primary); }
+    /* The desk title only: the "What you'll do" lists keep their own size. */
+    .desk > div > h3:first-child { margin: 0; font-family: var(--font-display); font-size: clamp(1.75rem, 3vw, 2.4rem); font-weight: 800; letter-spacing: -0.03em; color: var(--text-primary); }
     .desk .dv-lede { margin-top: var(--space-2); }
     /* With JS, one desk shows at a time and fades up when picked. Without JS they all show. */
     .js-desks .desk[hidden] { display: none; }
@@ -121,7 +124,6 @@
       .dv-hero { border-radius: 20px; min-height: 360px; }
       .dv-hero::after { background: linear-gradient(0deg, rgba(5, 13, 34, 0.9) 0%, rgba(5, 13, 34, 0.35) 65%, rgba(5, 13, 34, 0.15) 100%); }
       .dv-hero--drawn > img { object-position: 70% 30%; object-fit: cover; }
-      .dv-pair { grid-template-columns: minmax(0, 1fr); }
       .desk-tab { min-height: 120px; border-radius: 16px; }
       .roles-cta .btn { width: 100%; justify-content: center; }
     }
@@ -210,46 +212,129 @@
 
       <!-- ============================== Equities ============================== -->
       <section class="dv" id="equities" aria-labelledby="equities-title">
-        <div class="dv-hero">
-          <img src="assets/img/divisions/equities-1600.webp" srcset="assets/img/divisions/equities-800.webp 800w, assets/img/divisions/equities-1600.webp 1600w" sizes="(min-width: 1280px) 1200px, 100vw" width="1600" height="883" alt="" />
+        <div class="ficc-head">
+          <h2 class="dv-hero__title" id="equities-title">Equities</h2>
+          <p class="dv-hero__sum">Research, analyse and pitch stocks as a team, then run them in a portfolio. Four desks: pick one.</p>
+        </div>
+
+        <div class="desks" role="tablist" aria-label="Equities desks">
+          <button class="desk-tab" type="button" role="tab" id="t-eq-europe" aria-controls="eq-europe" aria-selected="true">
+            <img src="assets/img/divisions/eq-europe-800.webp" srcset="assets/img/divisions/eq-europe-800.webp 800w, assets/img/divisions/eq-europe-1600.webp 1600w" sizes="(min-width: 901px) 600px, 50vw" width="800" height="450" alt="" />
+            <span><span class="desk-tab__name">Europe</span><span class="desk-tab__more">European stocks, researched, pitched and run in a portfolio.</span></span>
+          </button>
+          <button class="desk-tab" type="button" role="tab" id="t-eq-em-tolu" aria-controls="eq-em-tolu" aria-selected="false" tabindex="-1">
+            <img src="assets/img/divisions/eq-em-hungary-800.webp" srcset="assets/img/divisions/eq-em-hungary-800.webp 800w, assets/img/divisions/eq-em-hungary-1600.webp 1600w" sizes="(min-width: 901px) 600px, 50vw" width="800" height="500" alt="" />
+            <span><span class="desk-tab__name">Emerging Markets<span class="visually-hidden">, Tolu Ayetan&rsquo;s desk</span></span><span class="desk-tab__more">Emerging-market stocks, researched, pitched and run in a portfolio.</span></span>
+          </button>
+          <button class="desk-tab" type="button" role="tab" id="t-eq-em-tom" aria-controls="eq-em-tom" aria-selected="false" tabindex="-1">
+            <img src="assets/img/divisions/eq-em-turkey-800.webp" srcset="assets/img/divisions/eq-em-turkey-800.webp 800w, assets/img/divisions/eq-em-turkey-1600.webp 1600w" sizes="(min-width: 901px) 600px, 50vw" width="800" height="450" alt="" />
+            <span><span class="desk-tab__name">Emerging Markets<span class="visually-hidden">, Tom Hoad&rsquo;s desk</span></span><span class="desk-tab__more">Emerging-market stocks, researched, pitched and run in a portfolio.</span></span>
+          </button>
+          <button class="desk-tab" type="button" role="tab" id="t-eq-us" aria-controls="eq-us" aria-selected="false" tabindex="-1">
+            <img src="assets/img/divisions/eq-us-800.webp" srcset="assets/img/divisions/eq-us-800.webp 800w, assets/img/divisions/eq-us-1600.webp 1600w" sizes="(min-width: 901px) 600px, 50vw" width="800" height="533" alt="" />
+            <span><span class="desk-tab__name">United States</span><span class="desk-tab__more">US stocks, researched, pitched and run in a portfolio.</span></span>
+          </button>
+        </div>
+
+        <article class="desk dv-body" id="eq-europe" role="tabpanel" aria-labelledby="t-eq-europe">
           <div>
-            <h2 class="dv-hero__title" id="equities-title">Equities</h2>
-            <p class="dv-hero__sum">Research, analyse and pitch stocks as a team, then run them in a portfolio.</p>
+            <h3>Europe</h3>
+            <p class="dv-lede">Led by Tash Munjanganja. <span>Pick the stocks, argue for them, and run them against a benchmark.</span></p>
+          </div>
+        <div class="dv-lists">
+          <div class="dv-list">
+            <h3>What you&rsquo;ll do</h3>
+            <ul>
+              <li>Research, analyse and pitch stocks as a team.</li>
+              <li>Build and run a mock portfolio, with weekly trades posted on <a href="/books/">our website</a> against a benchmark.</li>
+              <li>Present your team&rsquo;s performance at bi-weekly market meetings.</li>
+            </ul>
+          </div>
+          <div class="dv-list">
+            <h3>What we&rsquo;ll teach you</h3>
+            <ul>
+              <li>The fundamentals of valuation.</li>
+              <li>How to follow the markets and the news, and how a development in one place moves a stock in another.</li>
+              <li>A session on the Bloomberg Terminal.</li>
+            </ul>
           </div>
         </div>
-        <div class="dv-body">
-          <p class="dv-lede">Pick the stocks, argue for them, and run them against a benchmark. <span>Covering developed and emerging markets.</span></p>
+        </article>
+
+        <article class="desk dv-body" id="eq-em-tolu" role="tabpanel" aria-labelledby="t-eq-em-tolu">
           <div>
-            <div class="dv-pair">
-              <div>
-                <h3>Developed Markets</h3>
-                <p>Two division heads covering established economies such as the US, UK and Europe.</p>
-              </div>
-              <div>
-                <h3>Emerging Markets</h3>
-                <p>Two division heads covering fast-growing economies such as India, Brazil and Southeast Asia.</p>
-              </div>
-            </div>
-            <div class="dv-lists">
-              <div class="dv-list">
-                <h3>What you&rsquo;ll do</h3>
-                <ul>
-                  <li>Research, analyse and pitch stocks as a team.</li>
-                  <li>Build and run a mock portfolio, with weekly trades posted on <a href="/books/">our website</a> against a benchmark.</li>
-                  <li>Present your team&rsquo;s performance at bi-weekly market meetings.</li>
-                </ul>
-              </div>
-              <div class="dv-list">
-                <h3>What we&rsquo;ll teach you</h3>
-                <ul>
-                  <li>The fundamentals of valuation.</li>
-                  <li>How to follow the markets and the news, and how a development in one place moves a stock in another.</li>
-                  <li>A session on the Bloomberg Terminal.</li>
-                </ul>
-              </div>
-            </div>
+            <h3>Emerging Markets</h3>
+            <p class="dv-lede">Led by Tolu Ayetan. <span>Pick the stocks, argue for them, and run them against a benchmark.</span></p>
+          </div>
+        <div class="dv-lists">
+          <div class="dv-list">
+            <h3>What you&rsquo;ll do</h3>
+            <ul>
+              <li>Research, analyse and pitch stocks as a team.</li>
+              <li>Build and run a mock portfolio, with weekly trades posted on <a href="/books/">our website</a> against a benchmark.</li>
+              <li>Present your team&rsquo;s performance at bi-weekly market meetings.</li>
+            </ul>
+          </div>
+          <div class="dv-list">
+            <h3>What we&rsquo;ll teach you</h3>
+            <ul>
+              <li>The fundamentals of valuation.</li>
+              <li>How to follow the markets and the news, and how a development in one place moves a stock in another.</li>
+              <li>A session on the Bloomberg Terminal.</li>
+            </ul>
           </div>
         </div>
+        </article>
+
+        <article class="desk dv-body" id="eq-em-tom" role="tabpanel" aria-labelledby="t-eq-em-tom">
+          <div>
+            <h3>Emerging Markets</h3>
+            <p class="dv-lede">Led by Tom Hoad. <span>Pick the stocks, argue for them, and run them against a benchmark.</span></p>
+          </div>
+        <div class="dv-lists">
+          <div class="dv-list">
+            <h3>What you&rsquo;ll do</h3>
+            <ul>
+              <li>Research, analyse and pitch stocks as a team.</li>
+              <li>Build and run a mock portfolio, with weekly trades posted on <a href="/books/">our website</a> against a benchmark.</li>
+              <li>Present your team&rsquo;s performance at bi-weekly market meetings.</li>
+            </ul>
+          </div>
+          <div class="dv-list">
+            <h3>What we&rsquo;ll teach you</h3>
+            <ul>
+              <li>The fundamentals of valuation.</li>
+              <li>How to follow the markets and the news, and how a development in one place moves a stock in another.</li>
+              <li>A session on the Bloomberg Terminal.</li>
+            </ul>
+          </div>
+        </div>
+        </article>
+
+        <article class="desk dv-body" id="eq-us" role="tabpanel" aria-labelledby="t-eq-us">
+          <div>
+            <h3>United States</h3>
+            <p class="dv-lede">Led by Ibrahim Ali. <span>Pick the stocks, argue for them, and run them against a benchmark.</span></p>
+          </div>
+        <div class="dv-lists">
+          <div class="dv-list">
+            <h3>What you&rsquo;ll do</h3>
+            <ul>
+              <li>Research, analyse and pitch stocks as a team.</li>
+              <li>Build and run a mock portfolio, with weekly trades posted on <a href="/books/">our website</a> against a benchmark.</li>
+              <li>Present your team&rsquo;s performance at bi-weekly market meetings.</li>
+            </ul>
+          </div>
+          <div class="dv-list">
+            <h3>What we&rsquo;ll teach you</h3>
+            <ul>
+              <li>The fundamentals of valuation.</li>
+              <li>How to follow the markets and the news, and how a development in one place moves a stock in another.</li>
+              <li>A session on the Bloomberg Terminal.</li>
+            </ul>
+          </div>
+        </div>
+        </article>
       </section>
 
       <!-- ================================ FICC ================================ -->
@@ -335,22 +420,47 @@
 
       <!-- ================================ Macro =============================== -->
       <section class="dv" id="macro" aria-labelledby="macro-title">
-        <div class="dv-hero">
-          <img src="assets/img/divisions/macro-london-2000.webp" srcset="assets/img/divisions/macro-london-1000.webp 1000w, assets/img/divisions/macro-london-2000.webp 2000w" sizes="(min-width: 1280px) 1200px, 100vw" width="2000" height="667" alt="" />
-          <div>
-            <h2 class="dv-hero__title" id="macro-title">Macro</h2>
-            <p class="dv-hero__sum">Learn what&rsquo;s driving different markets, and how to trade it.</p>
-          </div>
+        <div class="ficc-head">
+          <h2 class="dv-hero__title" id="macro-title">Macro</h2>
+          <p class="dv-hero__sum">Learn what&rsquo;s driving different markets, and how to trade it. Developed or emerging markets, decided by analyst preference.</p>
         </div>
-        <div class="dv-body">
-          <p class="dv-lede">Form a view on the world, then express it across asset classes. <span>G10 or emerging markets, decided by analyst preference.</span></p>
+
+        <div class="desks desks--two" role="tablist" aria-label="Macro desks">
+          <button class="desk-tab" type="button" role="tab" id="t-macro-dm" aria-controls="macro-dm" aria-selected="true">
+            <img src="assets/img/divisions/macro-dm-800.webp" srcset="assets/img/divisions/macro-dm-800.webp 800w, assets/img/divisions/macro-dm-1536.webp 1536w" sizes="(min-width: 901px) 600px, 50vw" width="800" height="450" alt="" />
+            <span><span class="desk-tab__name">Developed Markets</span><span class="desk-tab__more">Form a view on developed economies and trade it across asset classes.</span></span>
+          </button>
+          <button class="desk-tab" type="button" role="tab" id="t-macro-em" aria-controls="macro-em" aria-selected="false" tabindex="-1">
+            <img src="assets/img/divisions/macro-em-800.webp" srcset="assets/img/divisions/macro-em-800.webp 800w, assets/img/divisions/macro-em-1280.webp 1280w" sizes="(min-width: 901px) 600px, 50vw" width="800" height="428" alt="" />
+            <span><span class="desk-tab__name">Emerging Markets</span><span class="desk-tab__more">Form a view on emerging economies and trade it across asset classes.</span></span>
+          </button>
+        </div>
+
+        <article class="desk dv-body" id="macro-dm" role="tabpanel" aria-labelledby="t-macro-dm">
+          <div>
+            <h3>Developed Markets</h3>
+            <p class="dv-lede">Trading led by Lenny Tucker. <span>Research led by Emily Chiaia-Miller, across both desks.</span></p>
+          </div>
           <dl class="facts">
             <div><dt>Portfolios</dt><dd>Run two mock portfolios on Interactive Brokers (IBKR).</dd></div>
             <div><dt>Views</dt><dd>Generate a view through macro reports and express it across asset classes and products.</dd></div>
             <div><dt>Skills</dt><dd>Learn how to digest the market and structure cross-asset trades.</dd></div>
             <div><dt>Debates</dt><dd>Meet regularly and debate throughout the year.</dd></div>
           </dl>
-        </div>
+        </article>
+
+        <article class="desk dv-body" id="macro-em" role="tabpanel" aria-labelledby="t-macro-em">
+          <div>
+            <h3>Emerging Markets</h3>
+            <p class="dv-lede">Trading led by Manasvi Kommuri. <span>Research led by Emily Chiaia-Miller, across both desks.</span></p>
+          </div>
+          <dl class="facts">
+            <div><dt>Portfolios</dt><dd>Run two mock portfolios on Interactive Brokers (IBKR).</dd></div>
+            <div><dt>Views</dt><dd>Generate a view through macro reports and express it across asset classes and products.</dd></div>
+            <div><dt>Skills</dt><dd>Learn how to digest the market and structure cross-asset trades.</dd></div>
+            <div><dt>Debates</dt><dd>Meet regularly and debate throughout the year.</dd></div>
+          </dl>
+        </article>
       </section>
 
       <!-- ================================ Quant =============================== -->
@@ -414,15 +524,17 @@
       Object.keys(byId).forEach(function (id) { var el = document.getElementById(id); if (el) io.observe(el); });
     })();
 
-    /* FICC desks: the photo strip is a set of tabs. Without this, every desk shows. */
+    /* Desk strips (Equities, FICC, Macro): each photo strip is a set of tabs.
+       Without this script, every desk shows. */
     (function () {
-      var list = document.querySelector('.desks');
-      if (!list) return;
-      var tabs = Array.prototype.slice.call(list.querySelectorAll('[role="tab"]'));
-      var section = document.getElementById('ficc');
-      section.classList.add('js-desks');
-      function show(tab, focus) {
-        tabs.forEach(function (t) {
+      var groups = Array.prototype.slice.call(document.querySelectorAll('.desks')).map(function (list) {
+        var section = list.closest('.dv');
+        section.classList.add('js-desks');
+        return { section: section, tabs: Array.prototype.slice.call(list.querySelectorAll('[role="tab"]')) };
+      });
+      if (!groups.length) return;
+      function show(g, tab, focus) {
+        g.tabs.forEach(function (t) {
           var on = t === tab, panel = document.getElementById(t.getAttribute('aria-controls'));
           t.setAttribute('aria-selected', on ? 'true' : 'false');
           t.tabIndex = on ? 0 : -1;
@@ -431,27 +543,33 @@
         });
         if (focus) tab.focus();
       }
-      tabs.forEach(function (t, i) {
-        t.addEventListener('click', function () { show(t); });
-        t.addEventListener('keydown', function (e) {
-          var j = e.key === 'ArrowRight' ? i + 1 : e.key === 'ArrowLeft' ? i - 1 : e.key === 'Home' ? 0 : e.key === 'End' ? tabs.length - 1 : null;
-          if (j === null) return;
-          e.preventDefault();
-          show(tabs[(j + tabs.length) % tabs.length], true);
+      groups.forEach(function (g) {
+        g.tabs.forEach(function (t, i) {
+          t.addEventListener('click', function () { show(g, t); });
+          t.addEventListener('keydown', function (e) {
+            var j = e.key === 'ArrowRight' ? i + 1 : e.key === 'ArrowLeft' ? i - 1 : e.key === 'Home' ? 0 : e.key === 'End' ? g.tabs.length - 1 : null;
+            if (j === null) return;
+            e.preventDefault();
+            show(g, g.tabs[(j + g.tabs.length) % g.tabs.length], true);
+          });
         });
       });
-      // A link to a desk (/analyst-programme/#metals) opens that desk and
-      // brings FICC into view. The jump is instant: the site's smooth scrolling
-      // gets cut off while the page is still loading.
+      // A link to a desk (/analyst-programme/#metals, #eq-us) opens that desk and
+      // brings its division into view. The jump is instant: the site's smooth
+      // scrolling gets cut off while the page is still loading.
       function fromHash() {
-        var t = tabs.filter(function (x) { return '#' + x.getAttribute('aria-controls') === location.hash; })[0];
-        if (!t) return false;
-        show(t);
-        section.scrollIntoView({ block: 'start', behavior: 'instant' });
-        return true;
+        var hit = null;
+        groups.forEach(function (g) {
+          g.tabs.forEach(function (t) { if ('#' + t.getAttribute('aria-controls') === location.hash) hit = { g: g, t: t }; });
+        });
+        if (!hit) return null;
+        show(hit.g, hit.t);
+        hit.g.section.scrollIntoView({ block: 'start', behavior: 'instant' });
+        return hit;
       }
-      if (!fromHash()) show(tabs[0]);
-      else window.addEventListener('load', function () { section.scrollIntoView({ block: 'start', behavior: 'instant' }); });
+      groups.forEach(function (g) { show(g, g.tabs[0]); });
+      var hit = fromHash();
+      if (hit) window.addEventListener('load', function () { hit.g.section.scrollIntoView({ block: 'start', behavior: 'instant' }); });
       window.addEventListener('hashchange', fromHash);
     })();
   </script>
