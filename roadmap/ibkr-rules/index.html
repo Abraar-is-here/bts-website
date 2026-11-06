@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Link-only: for division heads and analysts. Not indexed, not in the
+       sitemap, not linked from anywhere on the public site. -->
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <base href="/" />
+
+  <title>BTS Trading Rules: IBKR &mdash; Bristol Trading Society</title>
+  <meta name="description" content="How trading works on IBKR for BTS desks." />
+
+  <link rel="icon" type="image/svg+xml" href="assets/img/bull.svg" />
+
+  <link rel="preload" href="assets/fonts/syne-800.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/fonts/dm-sans-400.woff2" as="font" type="font/woff2" crossorigin />
+
+  <link rel="stylesheet" href="styles/tokens/fonts.css?v=7" />
+  <link rel="stylesheet" href="styles/tokens/colors.css?v=15" />
+  <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
+  <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
+  <link rel="stylesheet" href="styles/main.css?v=152" />
+  <style>
+    /* -------------------------------------------------------------------------
+       IBKR trading rules: link-only, reached from the Roadmap.
+       One reading column.
+       ------------------------------------------------------------------------- */
+    .rl { padding: 128px var(--gutter) var(--space-7); background: linear-gradient(180deg, rgba(6, 17, 43, 0.3) 0, rgba(6, 17, 43, 0.62) 640px, rgba(6, 17, 43, 0.74) 100%); }
+    .rl__inner { max-width: 760px; margin: 0 auto; }
+    .rl__back { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; color: var(--accent-bright); text-decoration: none; }
+    .rl h1 { margin: var(--space-2) 0 var(--space-5); font-family: var(--font-display); font-size: clamp(2.3rem, 5.5vw, 3.75rem); font-weight: 800; line-height: 1; letter-spacing: -0.04em; color: var(--text-primary); }
+    .rl section + section { margin-top: var(--space-5); }
+    .rl h2 { margin: 0 0 var(--space-2); font-family: var(--font-display); font-size: clamp(1.25rem, 2.4vw, 1.6rem); font-weight: 800; line-height: 1.2; letter-spacing: -0.02em; color: var(--text-primary); }
+    .rl p, .rl li { font-size: 1.0625rem; line-height: 1.65; color: rgba(244, 247, 251, 0.84); }
+    .rl p { margin: 0 0 var(--space-2); max-width: 68ch; }
+    .rl ul, .rl ol { margin: 0; padding-left: 1.3em; }
+    .rl li + li { margin-top: 8px; }
+    .rl strong { color: var(--text-primary); font-weight: 600; }
+    .rl__table { overflow-x: auto; margin: var(--space-2) 0 var(--space-3); }
+    .rl table { width: 100%; min-width: 520px; border-collapse: collapse; }
+    .rl th, .rl td { padding: 12px 14px 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.14); font-size: 0.9375rem; line-height: 1.5; text-align: left; vertical-align: top; color: rgba(244, 247, 251, 0.84); }
+    .rl th { color: var(--text-primary); font-weight: 600; }
+    .rl td:first-child { color: var(--text-primary); font-weight: 600; }
+  </style>
+</head>
+<body>
+
+  <a class="skip-link" href="/roadmap/ibkr-rules/#rules">Skip to content</a>
+
+  <div class="aurora" aria-hidden="true">
+    <canvas id="aurora-canvas"></canvas>
+    <div class="aurora-fallback">
+      <span class="b1"></span><span class="b2"></span><span class="b3"></span>
+      <span class="b4"></span><span class="b5"></span><span class="b6"></span>
+      <span class="sheen"></span>
+    </div>
+  </div>
+
+  <nav class="nav" aria-label="Primary">
+    <a class="logo" href="/" aria-label="Bristol Trading Society — home">
+      <img class="logo__lockup" src="assets/img/bts-logo-white.png" alt="" width="1127" height="301" />
+    </a>
+    <ul class="nav__links">
+      <li class="nav__mobile">
+        <button class="nav__menu-btn" aria-expanded="false" aria-haspopup="true">
+          Menu
+          <svg class="nav__chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+            <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <ul class="nav__dropdown" role="menu">
+          <li><a class="nav__dropdown-link" href="/" role="menuitem">Home</a></li>
+          <li><a class="nav__dropdown-link" href="/about" role="menuitem">About Us</a></li>
+          <li><a class="nav__dropdown-link" href="/events" role="menuitem">Events</a></li>
+          <li><a class="nav__dropdown-link nav__floor" href="/books/" role="menuitem">The Floor<span class="nav__live" aria-hidden="true"></span></a></li>
+          <li><a class="nav__dropdown-link" href="/team" role="menuitem">Team</a></li>
+          <li data-opps hidden><a class="nav__dropdown-link" href="/opportunities/" role="menuitem">Opportunities</a></li>
+        </ul>
+      </li>
+      <li><a class="nav__link nav__link--cta" href="https://www.bristolsu.org.uk/groups/bristol-trading-society-2436" target="_blank" rel="noopener noreferrer" aria-label="Join us: become a member on the Bristol SU page (opens in a new tab)">Join us</a></li>
+    </ul>
+  </nav>
+
+  <!-- data-endpoint: the deployed apps-script/DeskCode.gs web app (/exec URL).
+       Empty means not deployed yet: the page shows its empty state. -->
+
+  <main id="rules" class="rl page-dark" tabindex="-1">
+    <div class="rl__inner">
+      <a class="rl__back" href="/roadmap/"><span aria-hidden="true">&larr;&nbsp;</span>Roadmap</a>
+      <h1>BTS Trading Rules: IBKR</h1>
+
+      <section>
+        <h2>1. The basics</h2>
+        <ul>
+          <li>Use either the desktop app or IBKR Trader Workstation (TWS) &ndash; The learning curve on TWS is steeper, so choose wisely on what you&rsquo;d want to use throughout the year.</li>
+          <li>Stick with the $1m in start money for the paper account.</li>
+          <li>No resets, top-ups or transfers between accounts once you&rsquo;ve begun trading.</li>
+          <li>Results are published on the BTS website, including positions and every trade. Don&rsquo;t worry about reporting, we&rsquo;d just need the exports each week.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>2. What we trade for</h2>
+        <p>We want directional views and catalyst-driven trades built on research. Think about what the market has priced, what will change it, and when. I&rsquo;m not ruling out day-trading but would sway against it.</p>
+        <p>There is no minimum or maximum holding period, and no minimum number of trades. A position can last hours, days, weeks or months. Short-term trades are allowed, but every trade still needs a thesis. Waiting for a good idea is fine; trading for the sake of it is not.</p>
+      </section>
+
+      <section>
+        <h2>3. Division heads are responsible for portfolio performance &ndash; please do not blame your analysts for bad ideas.</h2>
+      </section>
+
+      <section>
+        <h2>4. What each desk can trade</h2>
+        <ul>
+          <li>Stay in your market. Trade mainly within your desk&rsquo;s mandate. For example, the EU Equities desk would stick to largely the Euro Stoxx 600. You wouldn&rsquo;t focus on trading, say, Bund yields.</li>
+          <li>However &ndash; hedges and related instruments are allowed outside your market if the pitch explains why they are the right way to express or protect the view.</li>
+          <li>Allowed: long and short positions, futures and options.</li>
+          <li>Not allowed: crypto and CFDs. I&rsquo;m not hearing anyone wanting to trade Solana.</li>
+          <li>Options: buy options or trade defined-risk spreads only. No uncovered short options, because their loss cannot be capped.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>5. Risk limits</h2>
+        <p>The dollar figures below are at the starting $1,000,000.</p>
+        <div class="rl__table">
+          <table>
+            <thead><tr><th scope="col">Limit</th><th scope="col">Rule</th><th scope="col">At $1,000,000</th></tr></thead>
+            <tbody>
+              <tr><td>Total exposure</td><td>Gross exposure (longs plus shorts) of no more than 200% of account value</td><td>$2,000,000</td></tr>
+              <tr><td>Single position</td><td>No more than 25% of account value</td><td>$250,000</td></tr>
+              <tr><td>Loss per trade</td><td>Planned maximum loss of no more than 2% of account value</td><td>$20,000</td></tr>
+              <tr><td>Desk drawdown</td><td>Down 15% from the account&rsquo;s peak: no new risk until the desk has reviewed with its division head</td><td>$150,000 from the peak</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <ul>
+          <li>Futures count at full contract value. A full-size contract can breach the 25% limit on its own (an E-mini S&amp;P or COMEX gold contract, for example), so check the contract value first and use micro contracts where needed.</li>
+          <li>Options count at the premium paid. On a bought option or defined-risk spread, the most you can lose counts towards the 2% limit.</li>
+          <li>If a limit is breached, reverse your trades by the end of the trading day.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>6. Conduct</h2>
+        <ul>
+          <li>Only the division head and analysts use the desk&rsquo;s account login. Do not share it.</li>
+          <li>Trade only on public information. This goes without saying &ndash; if you somehow get access to a firm&rsquo;s alpha, do not trade on it.</li>
+          <li>Do not change or leave out trades to improve how the desk looks.</li>
+          <li>The whole purpose is learning for both division heads and analysts &ndash; do not beat yourself up over the numbers.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>7. Reporting</h2>
+        <p>Instructions on what&rsquo;s required for exporting performance metrics will be shared shortly.</p>
+      </section>
+
+      <section>
+        <h2>8. How desks are judged</h2>
+        <p>Desks are reviewed on three things together:</p>
+        <ol>
+          <li><strong>Return:</strong> how much the desk made.</li>
+          <li><strong>Risk:</strong> how it made it, including Sharpe ratio and drawdown.</li>
+          <li><strong>Process:</strong> the quality of pitches, whether trades followed their plan, and how well the desk explains its wins and losses &ndash; this will be largely reflected through the trading competition and bi-weekly meetings.</li>
+        </ol>
+      </section>
+    </div>
+  </main>
+
+  <script src="js/aurora.js?v=9" defer></script>
+  <script src="js/transitions.js?v=3" defer></script>
+  <script src="js/nav.js?v=3" defer></script>
+  <script src="js/promo.js?v=4" defer></script>
+  <!-- ===== Site footer ===== -->
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+
+      <div class="site-footer__top">
+        <div>
+          <a class="site-footer__brand-mark" href="/" aria-label="Bristol Trading Society — home">
+            <svg viewBox="0 0 93 78" fill="currentColor" aria-hidden="true" focusable="false">
+              <path fill-rule="evenodd" d="M65.13 6.00 L66.50 5.88 L66.88 6.25 L66.88 10.50 L71.88 15.25 L71.88 16.50 L72.88 17.25 L72.88 24.50 L70.88 26.25 L70.88 27.50 L66.88 31.25 L66.88 32.50 L67.88 33.25 L67.88 34.50 L69.88 36.25 L69.88 37.50 L70.88 38.25 L70.88 39.50 L71.88 40.25 L71.88 41.50 L72.88 42.25 L72.88 43.50 L73.88 44.25 L73.88 45.50 L75.88 47.25 L75.88 48.50 L76.88 49.25 L76.88 50.50 L77.88 51.25 L77.88 52.50 L78.88 53.25 L78.88 54.50 L80.88 56.25 L80.88 57.50 L81.88 58.25 L81.88 59.50 L82.88 60.25 L82.88 61.50 L83.88 62.25 L83.88 63.50 L84.88 64.25 L84.88 65.50 L86.88 67.25 L86.88 68.50 L87.88 69.25 L87.88 71.50 L87.50 71.88 L81.25 71.88 L80.88 71.50 L80.88 68.25 L79.88 67.50 L79.88 64.25 L78.88 63.50 L78.88 62.25 L78.50 61.88 L77.25 61.88 L76.50 60.88 L72.25 60.88 L71.25 59.88 L70.88 60.25 L70.88 62.50 L69.50 63.88 L68.25 63.88 L65.88 61.50 L65.88 60.25 L63.50 57.88 L62.00 57.88 L61.88 60.50 L62.88 61.25 L62.88 63.50 L63.88 64.25 L63.88 65.50 L64.88 66.25 L64.88 68.50 L65.88 69.25 L65.88 72.50 L65.50 72.88 L58.25 72.88 L56.88 71.25 L57.88 70.50 L57.88 68.25 L58.88 67.50 L58.88 65.25 L57.88 64.50 L57.88 63.25 L56.50 61.88 L55.25 61.88 L53.88 60.50 L53.88 58.25 L52.88 57.50 L52.88 54.25 L51.88 53.50 L51.88 52.25 L50.88 51.50 L50.88 50.25 L48.50 47.88 L47.88 48.25 L47.88 52.50 L48.88 53.25 L48.88 55.50 L49.88 56.25 L49.88 57.50 L50.88 58.25 L50.88 60.50 L51.88 61.25 L51.88 63.50 L51.50 63.88 L50.25 63.88 L49.50 64.88 L44.25 64.88 L43.50 63.88 L42.25 63.88 L36.50 57.88 L34.25 57.88 L32.50 59.88 L31.25 59.88 L29.50 61.88 L28.25 61.88 L27.50 62.88 L26.25 62.88 L24.50 64.88 L23.25 64.88 L22.50 65.88 L20.25 65.88 L19.50 66.88 L16.25 66.88 L15.88 67.25 L15.88 69.50 L14.88 70.25 L14.88 71.50 L13.50 72.88 L10.25 72.88 L8.88 71.50 L10.88 69.50 L10.88 68.25 L12.88 66.50 L12.88 65.25 L14.25 63.88 L15.50 63.88 L16.25 62.88 L18.50 62.88 L20.88 60.50 L20.88 59.25 L21.88 58.25 L21.50 57.88 L20.25 57.88 L19.50 58.88 L17.25 58.88 L16.50 59.88 L10.25 59.88 L9.50 58.88 L8.25 58.88 L5.88 56.50 L5.88 53.25 L7.88 51.50 L7.88 50.25 L14.88 43.50 L14.88 42.25 L15.88 41.50 L15.50 40.88 L13.25 40.88 L12.50 41.88 L8.25 41.88 L7.50 40.88 L6.25 40.88 L5.88 40.50 L5.88 39.25 L7.25 37.88 L8.50 37.88 L9.25 36.88 L10.50 36.88 L11.25 35.88 L14.50 35.88 L15.25 36.88 L16.50 36.88 L16.88 37.25 L16.88 38.50 L17.88 39.25 L17.88 41.50 L16.88 42.25 L16.88 44.50 L13.88 47.25 L13.88 48.50 L9.88 52.25 L9.88 55.50 L11.25 56.88 L13.50 56.88 L14.25 55.88 L16.50 55.88 L18.25 53.88 L19.50 53.88 L19.88 53.50 L19.88 52.25 L22.25 49.88 L23.50 49.88 L25.25 47.88 L26.50 47.88 L27.25 46.88 L30.50 46.88 L31.50 47.88 L31.88 47.50 L31.88 44.25 L32.88 43.50 L32.88 41.25 L33.88 40.50 L33.88 39.25 L38.25 34.88 L39.50 34.88 L40.25 33.88 L41.50 33.88 L42.25 32.88 L44.50 32.88 L44.88 32.50 L44.50 31.88 L43.25 31.88 L42.50 30.88 L41.25 30.88 L36.88 26.50 L36.88 20.25 L40.50 16.88 L40.88 17.50 L39.88 18.00 L39.88 22.50 L42.25 24.88 L43.50 24.88 L44.25 25.88 L48.50 25.88 L50.25 23.88 L54.50 23.88 L55.50 24.88 L56.25 23.88 L57.50 23.88 L58.25 22.88 L60.50 22.88 L61.25 23.88 L63.50 23.88 L65.88 21.50 L65.88 20.25 L66.88 19.50 L66.88 16.25 L65.88 15.50 L65.88 14.25 L63.88 12.50 L63.88 8.25 L64.88 7.50 L65.00 6.13 Z M58.13 31.00 L60.50 30.88 L60.88 31.25 L60.50 31.88 L59.25 31.88 L58.88 32.25 L59.88 33.50 L59.50 33.88 L58.25 33.88 L57.50 35.88 L56.88 35.50 L56.88 33.25 L57.88 32.50 L58.00 31.13 Z M51.13 39.00 L56.50 38.88 L56.88 39.25 L56.88 42.50 L56.50 42.88 L55.88 42.50 L55.88 40.25 L55.50 39.88 L51.00 39.88 L51.00 39.13 Z M50.13 40.00 L50.75 39.88 L50.88 40.50 L51.88 41.25 L51.88 42.50 L51.25 42.88 L49.88 41.50 L50.00 40.13 Z M71.13 53.00 L71.88 53.25 L71.88 56.50 L71.50 56.88 L70.88 56.50 L71.00 53.13 Z M61.13 57.00 L61.50 56.88 L61.88 57.75 L61.25 57.88 L61.00 57.13 Z M34.13 63.00 L36.50 62.88 L39.88 66.25 L39.88 67.50 L39.50 67.88 L38.25 67.88 L37.50 68.88 L34.25 68.88 L33.88 69.25 L33.88 70.50 L31.50 72.88 L29.25 72.88 L27.88 71.50 L27.88 70.25 L30.88 67.50 L30.88 64.25 L31.25 63.88 L33.50 63.88 L34.00 63.13 Z"></path>
+            </svg>
+            <span class="site-footer__wordmark">Bristol Trading Society</span>
+          </a>
+          <p class="site-footer__blurb">
+            <strong>Do the work. Then defend it.</strong>
+            Student-run markets and trading society at the University of Bristol, since 2017.
+          </p>
+        </div>
+
+        <div>
+          <p class="site-footer__col-title">Society</p>
+          <ul class="site-footer__list">
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/events">Events</a></li>
+            <li><a href="/team">Team</a></li>
+              <li data-opps hidden><a href="/opportunities/">Opportunities</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="site-footer__col-title">Get involved</p>
+          <ul class="site-footer__list">
+            <li><a href="/contact">Contact us</a></li>
+            <li><a href="https://www.linkedin.com/company/bristol-trading-society/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+            <li><a href="https://www.instagram.com/bristradingsociety/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+            <li><a href="https://chat.whatsapp.com/JhXGjAMrDjqEm4DTKpukrZ" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="site-footer__col-title">Find us</p>
+          <div class="site-footer__contact">
+            <address>
+              12 Priory Road Complex<br />
+              Clifton, Bristol<br />
+              BS8 1TU
+            </address>
+            <a href="mailto:bristol-trading-society@bristol.ac.uk">bristol-trading-society@bristol.ac.uk</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mailing list. Deliberately in the footer rather than the page body:
+           it should be findable from anywhere and interrupt nothing. -->
+      <div class="signup">
+        <div class="signup__copy">
+          <p class="signup__title">Hear when things happen</p>
+          <p class="signup__note">
+            Join the society on the Bristol SU page and you are on our mailing list: speaker
+            evenings, events with firms and the analyst intake.
+          </p>
+        </div>
+        <a class="signup__btn signup__link" href="https://www.bristolsu.org.uk/groups/bristol-trading-society-2436" target="_blank" rel="noopener noreferrer">
+          Join on the SU page<span class="visually-hidden"> (opens in a new tab)</span>
+          <span aria-hidden="true">&nearr;</span>
+        </a>
+      </div>
+
+      <div class="site-footer__bottom">
+        <p>&copy; 2026 Bristol Trading Society &middot; University of Bristol</p>
+        <p class="site-footer__legal">
+          <a href="/privacy">Privacy Policy</a>
+        </p>
+      </div>
+
+    </div>
+  </footer>
+
+  <script src="js/cookies.js?v=3" defer></script>
+  <script src="js/signup.js?v=1" defer></script>
+  <script src="js/opportunities.js?v=1" defer></script>
+</body>
+</html>
