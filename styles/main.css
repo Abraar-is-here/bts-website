@@ -382,15 +382,14 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
 }
 
 /* --- Wide viewports: the menu flattens onto the glass bar -------------------
-   Past this width all eight destinations fit across the bar itself, so the
+   Past this width all six destinations fit across the bar itself, so the
    dropdown is unwrapped into a row sitting directly on the glass and the Menu
    button retires. Identical markup to the narrow layout - only presentation
    changes, so the same nav works on every page without a second copy.
    Placed after .nav__dropdown--open so it wins on equal specificity.
-   1240px is the floor. The bar stops shrinking once it hits its 1200px cap
-   at a 1232px viewport, which leaves ~33px of slack; any narrower and the
-   eight links plus the CTA overrun the glass, so the dropdown stays. */
-@media (min-width: 1240px) {
+   900px is the floor: the logo, the five links and the CTA need about 640px,
+   so this leaves ~200px of slack on the glass. Add links and revisit it. */
+@media (min-width: 900px) {
   .nav__menu-btn { display: none; }
 
   .nav__dropdown {

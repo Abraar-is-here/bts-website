@@ -214,22 +214,6 @@ If a position is priced wrongly (an unusual ticker or exchange), add an override
 Futures use Yahoo's continuous front month (`ES=F`), options and bonds aren't priced, and
 anything that can't be priced keeps its IBKR close.
 
----
-
-# Opportunities click counter (`ClickCode.gs`, /opportunities/)
-
-Counts every click on an Apply button, per role, with no cookies or personal
-data (so it does not depend on the analytics consent banner).
-
-1. Create a new Google Sheet, e.g. "BTS Opportunities clicks".
-2. **Extensions ▸ Apps Script**. Paste the whole of **`ClickCode.gs`**. Save.
-3. **Deploy ▸ New deployment ▸ Web app**. Execute as: **Me**. Who has access:
-   **Anyone**. Deploy, authorise, and copy the **/exec** URL.
-4. In `opportunities/index.html`, paste the URL into `data-click-endpoint=""`
-   on the `<main>` element, commit and push.
-5. Click an Apply button on the live page; a row appears in the **Clicks** tab.
-   Open the /exec URL in a browser for totals per role.
-
 # Publishing the books (`PublishCode.gs`)
 
 Division heads publish their book from `/books/import/` with a **Publish** button: the page sends
