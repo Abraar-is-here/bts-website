@@ -1817,6 +1817,9 @@ body.is-leaving {
 .partners__grid img[alt="ICE"]             { height: 54px; }
 .partners__grid img[alt="WorldQuant"]      { height: 60px; }
 .partners__grid img[alt="eToro"]           { height: 34px; }
+.partners__grid img[alt="AmplifyME"]       { height: 40px; }
+/* Seven partners: the last takes the whole row, so none is left alone in a column. */
+.partners__grid--odd > li:last-child { grid-column: 1 / -1; }
 
 /* Also working with: a single quiet line under the grid, a size down. */
 .partners__also {
@@ -1889,6 +1892,7 @@ body.is-leaving {
   .partners__grid li { min-height: 88px; }
   .partners__grid img { max-height: 40px; }
   .partners__grid img[alt="eToro"] { height: 26px; }
+  .partners__grid img[alt="AmplifyME"] { height: 30px; }
 }
 /* ---------------------------------------------------------------------------
    12. Alumni page
