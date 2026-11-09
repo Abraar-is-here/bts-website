@@ -382,14 +382,15 @@ html:not(.webgl-active) .aurora-fallback { display: block; }
 }
 
 /* --- Wide viewports: the menu flattens onto the glass bar -------------------
-   Past this width all six destinations fit across the bar itself, so the
+   Past this width all eight destinations fit across the bar itself, so the
    dropdown is unwrapped into a row sitting directly on the glass and the Menu
    button retires. Identical markup to the narrow layout - only presentation
    changes, so the same nav works on every page without a second copy.
    Placed after .nav__dropdown--open so it wins on equal specificity.
-   900px is the floor: the logo, the five links and the CTA need about 640px,
-   so this leaves ~200px of slack on the glass. Add links and revisit it. */
-@media (min-width: 900px) {
+   1240px is the floor. The bar stops shrinking once it hits its 1200px cap
+   at a 1232px viewport, which leaves ~33px of slack; any narrower and the
+   eight links plus the CTA overrun the glass, so the dropdown stays. */
+@media (min-width: 1240px) {
   .nav__menu-btn { display: none; }
 
   .nav__dropdown {
@@ -3182,6 +3183,32 @@ body:has(> .ticker) { padding-top: var(--ticker-h); }
 .explore.panel .explore__row--soon .explore__date { color: rgba(10, 26, 63, 0.5); }
 .explore.panel .explore__soon { border-color: rgba(10, 26, 63, 0.22); color: rgba(10, 26, 63, 0.58); }
 .explore.panel .explore__feature { box-shadow: 0 30px 60px -30px rgba(10, 26, 63, 0.55); }
+/* Opportunities, condensed (home): the same rows as the events above, two
+   across, under their own heading. */
+.opps { margin-top: var(--space-6); }
+.opps[hidden] { display: none; }
+.opps__title { margin-bottom: var(--space-4); }
+.opps__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 900px) { .opps__list { grid-template-columns: minmax(0, 1fr); } }
+/* A cover over a row's thumbnail (the AIC artwork): it fills the thumbnail
+   slot at rest and fades as the row opens onto the photo beneath. */
+.explore__cover {
+  position: absolute; top: 0; left: 0; bottom: 0; z-index: 1;
+  width: var(--thumb);
+  background: #191b74 center / cover no-repeat;
+  transition: opacity 300ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  a.explore__row:hover .explore__cover { opacity: 0; transition-duration: 420ms; }
+}
+@media (prefers-reduced-motion: reduce) { .explore__cover { transition: none; } }
+/* A line under a row's name (the AIC society code). */
+.explore__sub { display: block; margin-top: 4px; font-size: 0.875rem; color: rgba(10, 26, 63, 0.62); transition: color 300ms var(--ease-out); }
+.explore__sub b { font-family: var(--font-mono); font-weight: 700; letter-spacing: 0.06em; color: var(--text-on-light); transition: color 300ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .explore.panel a.explore__row:hover .explore__sub,
+  .explore.panel a.explore__row:hover .explore__sub b { color: #fff; }
+}
 /* On the home page the white panel sits between the hero cards and the dark
    partners wall, rounded top and bottom. It tucks one radius into each
    neighbour, so its corners sit over their tinted backgrounds rather than the

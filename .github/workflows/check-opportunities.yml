@@ -1,0 +1,30 @@
+name: Check opportunities
+
+# Daily: mark partner roles closed once their listing returns 404, so the
+# Opportunities page and its menu link hide themselves when nothing is open.
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python scripts/check_opportunities.py
+      - name: Commit changes
+        run: |
+          if ! git diff --quiet opportunities/roles.json; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898699+github-actions[bot]@users.noreply.github.com"
+            git add opportunities/roles.json
+            git commit -m "Opportunities: mark closed roles"
+            git push
+          fi

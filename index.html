@@ -32,7 +32,7 @@
   <link rel="stylesheet" href="styles/tokens/colors.css?v=15" />
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
-  <link rel="stylesheet" href="styles/main.css?v=154" />
+  <link rel="stylesheet" href="styles/main.css?v=155" />
 
   <!-- Structured data. Gives crawlers and AI answers facts to quote instead of
        inferring them from prose. Every value here is verifiable on the site. -->
@@ -153,6 +153,7 @@
           <li><a class="nav__dropdown-link" href="/events" role="menuitem">Events</a></li>
           <li><a class="nav__dropdown-link nav__floor" href="/books/" role="menuitem">The Floor<span class="nav__live" aria-hidden="true"></span></a></li>
           <li><a class="nav__dropdown-link" href="/team" role="menuitem">Team</a></li>
+          <li data-opps hidden><a class="nav__dropdown-link" href="/opportunities/" role="menuitem">Opportunities</a></li>
         </ul>
       </li>
       <li><a class="nav__link nav__link--cta" href="https://www.bristolsu.org.uk/groups/bristol-trading-society-2436" target="_blank" rel="noopener noreferrer" aria-label="Join us: become a member on the Bristol SU page (opens in a new tab)">Join us</a></li>
@@ -485,6 +486,36 @@
         </ul>
       </div>
       <p class="explore__all"><a href="/events/past/">Everything we&rsquo;ve run <span aria-hidden="true">&rarr;</span></a></p>
+
+      <!-- Opportunities, condensed: one row per firm on /opportunities/. Shown
+           by js/opportunities.js only while a role is open, like the nav link. -->
+      <div class="opps" data-opps hidden>
+        <h2 class="explore__title opps__title" id="opps-title">Opportunities</h2>
+        <ul class="explore__list opps__list" aria-labelledby="opps-title">
+          <li>
+            <a class="explore__row" href="/opportunities/#aic">
+              <span class="explore__thumb"><img src="assets/img/events/lse-aic.jpg" width="856" height="870" loading="lazy" alt="" style="object-position: 50% 28%" /><span class="explore__cover" style="background-image: url('assets/img/opportunities/aic-cover.webp?v=3')"></span></span>
+              <span class="explore__text">
+                <span class="explore__date">8&ndash;9 February 2027 &middot; London</span>
+                <span class="explore__name">LSE Alternative Investments Conference</span>
+                <span class="explore__sub">Apply with code <b>BRTS</b></span>
+                <span class="explore__btn">Learn more</span>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a class="explore__row" href="/opportunities/#ice">
+              <span class="explore__thumb" style="--fx: 50%"><img src="assets/img/opportunities/ice/ice-screens-1000.webp" width="1000" height="667" loading="lazy" alt="" style="object-position: 50% 62%" /></span>
+              <span class="explore__text">
+                <span class="explore__date">Summer 2027 &middot; London</span>
+                <span class="explore__name">ICE Summer Internship Programme</span>
+                <span class="explore__btn">See the roles</span>
+              </span>
+            </a>
+          </li>
+        </ul>
+        <p class="explore__all"><a href="/opportunities/">All opportunities <span aria-hidden="true">&rarr;</span></a></p>
+      </div>
     </div>
   </section>
 
@@ -626,6 +657,7 @@
             <li><a href="/about">About Us</a></li>
             <li><a href="/events">Events</a></li>
             <li><a href="/team">Team</a></li>
+              <li data-opps hidden><a href="/opportunities/">Opportunities</a></li>
           </ul>
         </div>
 
@@ -680,5 +712,6 @@
 
   <script src="js/cookies.js?v=3" defer></script>
   <script src="js/signup.js?v=1" defer></script>
+  <script src="js/opportunities.js?v=1" defer></script>
 </body>
 </html>
