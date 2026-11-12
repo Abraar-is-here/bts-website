@@ -1753,6 +1753,12 @@ body.is-leaving {
   gap: var(--space-3);
   margin-bottom: var(--space-5);
 }
+/* Four sponsors: four across on wide screens, two by two below that. Susquehanna
+   is a very wide mark, so it is sized by the width of its tile, not its height. */
+.partners__lead--four { grid-template-columns: 1fr 1fr 1.9fr 1fr; }
+.partners__lead--four li { padding: var(--space-4) var(--space-3); }
+.partners__lead--four img[alt="Susquehanna"] { width: 100%; max-width: 360px; height: auto; }
+@media (max-width: 1100px) { .partners__lead--four { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .partners__lead li {
   position: relative;
   display: grid;
@@ -1887,7 +1893,7 @@ body.is-leaving {
   .partners__lead li { background: rgba(10, 26, 63, 0.7); }
 }
 @media (max-width: 820px) {
-  .partners__lead { grid-template-columns: 1fr; }
+  .partners__lead, .partners__lead--four { grid-template-columns: 1fr; }
   .partners__lead li { min-height: 104px; }
   .partners__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .partners__grid li { min-height: 88px; }
