@@ -1753,12 +1753,23 @@ body.is-leaving {
   gap: var(--space-3);
   margin-bottom: var(--space-5);
 }
-/* Four sponsors: four across on wide screens, two by two below that. Susquehanna
-   is a very wide mark, so it is sized by the width of its tile, not its height. */
-.partners__lead--four { grid-template-columns: 1fr 1fr 1.9fr 1fr; }
+/* Four equal tiles across on wide screens, two by two below that. Susquehanna
+   is a very wide mark, so it is sized by the width of its tile, not its height,
+   and fills its tile about as far as the other marks do. */
+.partners__lead--four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .partners__lead--four li { padding: var(--space-4) var(--space-3); }
-.partners__lead--four img[alt="Susquehanna"] { width: 100%; max-width: 360px; height: auto; }
-@media (max-width: 1100px) { .partners__lead--four { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.partners__lead--four img[alt="Susquehanna"] { width: 100%; max-width: 215px; height: auto; }
+@media (max-width: 1100px) {
+  .partners__lead--four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* Smaller screens list the biggest sponsor first, in descending order:
+     Jane Street, DRW, Susquehanna, Outlook Energy. (Wide screens keep the
+     source order.) Matched by logo, not position, so the cursor-light element
+     that scripts add at the front can't shift it. */
+  .partners__lead--four li:has(img[alt="Jane Street"]) { order: 1; }
+  .partners__lead--four li:has(img[alt="DRW"]) { order: 2; }
+  .partners__lead--four li:has(img[alt="Susquehanna"]) { order: 3; }
+  .partners__lead--four li:has(img[alt="Outlook Energy"]) { order: 4; }
+}
 .partners__lead li {
   position: relative;
   display: grid;
