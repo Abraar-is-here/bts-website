@@ -36,7 +36,7 @@
   var BY_CURRENCY = { USD: '', GBP: '.L', JPY: '.T', HKD: '.HK', AUD: '.AX', CAD: '.TO', CHF: '.SW' };
   // Futures Yahoo carries as a continuous front month.
   var FUTURES = ['ES', 'NQ', 'YM', 'RTY', 'MES', 'MNQ', 'MYM', 'M2K', 'CL', 'BZ', 'NG', 'RB', 'HO', 'GC', 'SI', 'HG', 'PL', 'PA',
-    'ZN', 'ZB', 'ZF', 'ZT', 'UB', 'ZC', 'ZS', 'ZW', 'ZL', 'ZM', 'LE', 'HE', '6E', '6B', '6J', '6A', '6C', '6S', '6M', 'MGC', 'MCL'];
+    'ZN', 'ZB', 'ZF', 'ZT', 'UB', 'TN', 'SR3', 'SR1', 'ZQ', 'ZC', 'ZS', 'ZW', 'ZL', 'ZM', 'LE', 'HE', '6E', '6B', '6J', '6A', '6C', '6S', '6M', 'MGC', 'MCL'];
 
   var S = { endpoint: '', overrides: {}, rows: [], desks: [], cur: {}, quotes: {}, live: {}, at: 0, timer: 0, failed: false };
 
