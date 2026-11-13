@@ -3206,6 +3206,10 @@ body:has(> .ticker) { padding-top: var(--ticker-h); }
 .opps[hidden] { display: none; }
 .opps__title { margin-bottom: var(--space-4); }
 .opps__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.opps__list > li[hidden] { display: none; }
+.opps__list > .opps__wide { grid-column: 1 / -1; }
+/* The app icon is a square: keep it to the thumbnail, not stretched across the row. */
+.opps__wide .explore__thumb img { width: var(--thumb); }
 @media (max-width: 900px) { .opps__list { grid-template-columns: minmax(0, 1fr); } }
 /* A cover over a row's thumbnail (the AIC artwork): it fills the thumbnail
    slot at rest and fades as the row opens onto the photo beneath. */

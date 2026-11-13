@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="styles/tokens/colors.css?v=15" />
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
-  <link rel="stylesheet" href="styles/main.css?v=159" />
+  <link rel="stylesheet" href="styles/main.css?v=161" />
   <style>
     /* -------------------------------------------------------------------------
        Opportunities: roles from our sponsors and partners. One section per
@@ -151,6 +151,16 @@
     @media (hover: hover) and (pointer: fine) {
       .op-role__apply:hover { border-color: var(--accent-bright); background: rgba(56, 189, 248, 0.08); }
     }
+    /* Member offer: not a role, so it has no apply tracking and is never hidden. */
+    .op-offer { margin: 0 0 var(--space-5); padding: var(--space-5); border: 1px solid var(--glass-border); border-radius: var(--radius-sm); background: rgba(6, 17, 43, 0.86); display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--space-4) var(--space-5); align-items: center; }
+    .op-offer__tag { margin: 0 0 var(--space-2); font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-bright); }
+    .op-offer h2 { margin: 0 0 var(--space-2); font-family: var(--font-display); font-size: clamp(1.6rem, 3vw, 2.25rem); font-weight: 800; line-height: 1.08; letter-spacing: -0.025em; color: var(--text-primary); }
+    .op-offer p { margin: 0; line-height: 1.7; color: var(--text-secondary); max-width: 58ch; }
+    .op-offer ul { list-style: none; margin: 0 0 var(--space-3); padding: 0; }
+    .op-offer li { padding: 7px 0; border-bottom: 1px solid var(--hairline); font-size: 0.9375rem; color: var(--text-primary); }
+    .op-offer li:last-child { border-bottom: 0; }
+    .op-offer__fine { margin-top: var(--space-2); font-size: 0.8125rem; color: var(--text-secondary); }
+    @media (max-width: 820px) { .op-offer { grid-template-columns: minmax(0, 1fr); padding: var(--space-4); } }
     .op__note { margin: var(--space-4) 0 0; font-size: 0.9375rem; line-height: 1.6; color: var(--text-secondary); }
     .op__note a { color: var(--accent-bright); }
 
@@ -265,7 +275,6 @@
           <li><a class="nav__dropdown-link" href="/events" role="menuitem">Events</a></li>
           <li><a class="nav__dropdown-link nav__floor" href="/books/" role="menuitem">The Floor<span class="nav__live" aria-hidden="true"></span></a></li>
           <li><a class="nav__dropdown-link" href="/team" role="menuitem">Team</a></li>
-          <li data-opps hidden><a class="nav__dropdown-link" href="/opportunities/" role="menuitem">Opportunities</a></li>
         </ul>
       </li>
       <li><a class="nav__link nav__link--cta" href="https://www.bristolsu.org.uk/groups/bristol-trading-society-2436" target="_blank" rel="noopener noreferrer" aria-label="Join us: become a member on the Bristol SU page (opens in a new tab)">Join us</a></li>
@@ -293,6 +302,29 @@
           <a href="https://www.bristolsu.org.uk/groups/bristol-trading-society-2436" target="_blank" rel="noopener noreferrer">Bristol SU page<span class="visually-hidden"> (opens in a new tab)</span></a>
           or the <a href="https://chat.whatsapp.com/JhXGjAMrDjqEm4DTKpukrZ" target="_blank" rel="noopener noreferrer">WhatsApp group<span class="visually-hidden"> (opens in a new tab)</span></a> to hear first.</p>
       </div>
+
+      <!-- ===== quant blitz: member offer (not a role: no apply tracking, never hidden) ===== -->
+      <section class="op-offer" id="quant-blitz" aria-labelledby="qb-title">
+        <div>
+          <p class="op-offer__tag">Member offer</p>
+          <h2 id="qb-title">50% off quant blitz Premium</h2>
+          <p>
+            quant blitz is an interview-prep app for quant and trading questions: probability, market
+            making and more, in short daily sessions. Bristol Trading Society members get
+            <strong>50% off Premium on any plan</strong> for 2026/27, for the first 150 members to claim it.
+          </p>
+          <p class="op-offer__fine">First come, first served. Available on iPhone now, Android soon.</p>
+        </div>
+        <div>
+          <ul>
+            <li>Unlimited hearts: a wrong answer never ends a session</li>
+            <li>Blitz mode: timed rounds</li>
+            <li>The full question bank, searchable</li>
+            <li>Jump to any section</li>
+          </ul>
+          <a class="op-role__apply" href="https://quantblitz.app/bts/" target="_blank" rel="noopener noreferrer">Claim the offer<span class="visually-hidden"> (opens in a new tab)</span></a>
+        </div>
+      </section>
 
       <!-- ===== LSE Alternative Investments Conference ===== -->
       <section class="op-firm op-firm--side" id="aic" aria-labelledby="aic-title" data-opps-firm>
@@ -442,7 +474,6 @@
             <li><a href="/about">About Us</a></li>
             <li><a href="/events">Events</a></li>
             <li><a href="/team">Team</a></li>
-              <li data-opps hidden><a href="/opportunities/">Opportunities</a></li>
           </ul>
         </div>
 
