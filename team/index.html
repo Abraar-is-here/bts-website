@@ -285,6 +285,40 @@
     /* Each division name is also the way into what that division does (the
        Divisions page opens it on arrival). Kept quiet: a faint arrow that
        brightens on hover, so the heading still reads as a heading. */
+    /* Analysts: closed until wanted. One quiet "Analysts" control under each
+       division's whole row of heads; open it and every head's analysts settle in
+       beneath their own card, in the order given in team/analysts.json.
+       js/analysts.js wraps each head's card and list in a .head-col. A division
+       with no analysts gets no control. */
+    .head-col { display: flex; flex-direction: column; align-items: center; }
+    .team__tier--division-heads .head-col { flex: 0 0 var(--dh-w); width: var(--dh-w); }
+    .team__tier--division-heads .head-col > .team-card { width: 100%; }
+    .team__tier--division-heads .team__tier-cards { align-items: flex-start; }
+    .analysts__toggle {
+      position: relative; display: flex; align-items: center; justify-content: center; gap: 7px;
+      margin: calc(var(--space-2) * -1) auto 0; padding: 4px 4px;
+      border: 0; background: none; font: inherit;
+      font-size: 0.8125rem; font-weight: 500; letter-spacing: 0.04em;
+      color: rgba(244, 247, 251, 0.45); cursor: pointer;
+      transition: color var(--dur-fast) var(--ease-out);
+    }
+    /* A comfortable tap target without a bigger-looking control. */
+    .analysts__toggle::before { content: ''; position: absolute; inset: -10px -22px; }
+    .analysts__toggle::after {
+      content: ''; width: 5px; height: 5px; margin-top: -3px;
+      border-right: 1.25px solid currentColor; border-bottom: 1.25px solid currentColor;
+      transform: rotate(45deg); transition: transform 200ms var(--ease-out), margin 200ms var(--ease-out);
+    }
+    .analysts__toggle[aria-expanded="true"] { color: rgba(244, 247, 251, 0.7); }
+    .analysts__toggle[aria-expanded="true"]::after { transform: rotate(225deg); margin-top: 3px; }
+    .analysts__toggle:focus-visible { outline: 2px solid var(--accent-bright); outline-offset: 3px; border-radius: 6px; }
+    @media (hover: hover) and (pointer: fine) { .analysts__toggle:hover { color: rgba(244, 247, 251, 0.85); } }
+    .analysts__list { list-style: none; margin: var(--space-2) 0 0; padding: 0; text-align: center; animation: analysts-in 380ms var(--ease-out) both; }
+    .analysts__list[hidden] { display: none; }
+    .analysts__list li { padding: 2px 0; font-size: 0.8125rem; line-height: 1.4; color: rgba(244, 247, 251, 0.72); }
+    @keyframes analysts-in { from { opacity: 0; transform: translateY(-4px); } }
+    @media (prefers-reduced-motion: reduce) { .analysts__toggle, .analysts__toggle::after { transition: none; } .analysts__list { animation: none; } }
+
     .div-group__head {
       display: grid;
       justify-items: center;
@@ -713,6 +747,7 @@
   <script src="js/transitions.js?v=3" defer></script>
   <script src="js/nav.js?v=3" defer></script>
   <script src="js/promo.js?v=3" defer></script>
+  <script src="js/analysts.js?v=5" defer></script>
   <!-- ===== Site footer ===== -->
   <footer class="site-footer">
     <div class="site-footer__inner">

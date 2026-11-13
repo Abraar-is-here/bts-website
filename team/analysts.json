@@ -1,0 +1,95 @@
+{
+  "note": "The analysts shown on /team/, listed under their division head (js/analysts.js). 'head' must match the head's name on the page exactly. Names only: this file is public, so course, year of study and anything else stays out of the repo. Keep each name as written, in the order you want it shown.",
+  "equities": [
+    {
+      "head": "Tash Munjanganja",
+      "names": [
+        "Mateus Carvalho Wing",
+        "Herbie Hunter",
+        "Xuen Nie Ting",
+        "Isabella Delahunty",
+        "Matthew Articona",
+        "Enzo Brown"
+      ]
+    },
+    {
+      "head": "Tolu Ayetan",
+      "names": []
+    },
+    {
+      "head": "Ibrahim Ali",
+      "names": [
+        "Jess Xia",
+        "Maya Darzi",
+        "Georgia Mullarkey",
+        "Joaquin Lee",
+        "Theo Watson",
+        "Sebastian Fioravante"
+      ]
+    },
+    {
+      "head": "Tom Hoad",
+      "names": []
+    }
+  ],
+  "ficc": [
+    {
+      "head": "Anay Mistry",
+      "names": []
+    },
+    {
+      "head": "Val Sinko",
+      "names": []
+    },
+    {
+      "head": "Manolo Kidel",
+      "names": []
+    },
+    {
+      "head": "Aled von Oppell",
+      "names": [
+        "Matthew Hall",
+        "Santiago Socarras Minervini",
+        "Seb Hayward",
+        "Kyrian Salas",
+        "Charlie Fleming",
+        "Ian de la Pisa Wallace"
+      ]
+    }
+  ],
+  "macro": [
+    {
+      "head": "Manasvi Kommuri",
+      "names": [
+        "Jamie Powell",
+        "Tahir Tourani",
+        "Noah Walton",
+        "James Ellison",
+        "Sam Gardner",
+        "Sarvajeet Singh"
+      ]
+    },
+    {
+      "head": "Lenny Tucker",
+      "names": []
+    },
+    {
+      "head": "Emily Chiaia-Miller",
+      "names": []
+    }
+  ],
+  "quant": [
+    {
+      "head": "Kometh Tauch",
+      "names": []
+    },
+    {
+      "head": "Aditya Verma",
+      "names": []
+    },
+    {
+      "head": "Will Barry",
+      "names": []
+    }
+  ]
+}

@@ -7,3 +7,6 @@ install_*.py
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Personal details (course, year of study): never published
+private/
