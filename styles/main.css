@@ -1836,8 +1836,13 @@ body.is-leaving {
 .partners__grid img[alt="WorldQuant"]      { height: 60px; }
 .partners__grid img[alt="eToro"]           { height: 34px; }
 .partners__grid img[alt="AmplifyME"]       { height: 40px; }
+.partners__grid img[alt="quant blitz"]     { height: 26px; }
 /* Seven partners: the last takes the whole row, so none is left alone in a column. */
 .partners__grid--odd > li:last-child { grid-column: 1 / -1; }
+/* Eight partners: three across, and the last two share the bottom row evenly. */
+.partners__grid--pair { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.partners__grid--pair > li { grid-column: span 2; }
+.partners__grid--pair > li:nth-last-child(-n+2) { grid-column: span 3; }
 
 /* Also working with: a single quiet line under the grid, a size down. */
 .partners__also {
@@ -1858,7 +1863,6 @@ body.is-leaving {
 .partners__also-list img { display: block; width: auto; height: 20px; filter: brightness(0) invert(1); opacity: 0.5; }
 .partners__also-list img[alt="commoditiespeople"] { height: 14px; }
 .partners__also-list img[alt="Headstart"] { height: 26px; }
-.partners__also-list img[alt="HireHuub"] { height: 17px; }
 
 /* Cursor light: one glow per sponsor tile and one across the partner grid,
    created and moved by js/spotlight.js (fine pointers only). Fades in a
@@ -1907,10 +1911,12 @@ body.is-leaving {
   .partners__lead, .partners__lead--four { grid-template-columns: 1fr; }
   .partners__lead li { min-height: 104px; }
   .partners__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .partners__grid--pair > li, .partners__grid--pair > li:nth-last-child(-n+2) { grid-column: auto; }
   .partners__grid li { min-height: 88px; }
   .partners__grid img { max-height: 40px; }
   .partners__grid img[alt="eToro"] { height: 26px; }
   .partners__grid img[alt="AmplifyME"] { height: 30px; }
+  .partners__grid img[alt="quant blitz"] { height: 20px; }
 }
 /* ---------------------------------------------------------------------------
    12. Alumni page
