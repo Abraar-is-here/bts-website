@@ -141,6 +141,32 @@
 .bk-sec__head h3 { margin: 0; font-family: var(--font-display); font-size: clamp(1.3rem, 2.2vw, 1.6rem); font-weight: 800; letter-spacing: -0.02em; color: var(--text-primary); }
 .bk-sec__head p { margin: 0; max-width: 62ch; font-size: 0.875rem; line-height: 1.5; color: var(--text-secondary); }
 
+/* Disclosures: statistics that are there when wanted and out of the way when not. A hairline
+   row with a title, a quiet hint and a chevron; it opens to its body. */
+.bk-disc { margin-top: var(--space-3); border-top: 1px solid var(--hairline); }
+.bk-disc:last-child { border-bottom: 1px solid var(--hairline); }
+.bk-disc__sum {
+  position: relative; display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px var(--space-3);
+  padding: 14px 32px 14px 0; cursor: pointer; list-style: none;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.bk-disc__sum::-webkit-details-marker { display: none; }
+.bk-disc__sum::after {
+  content: ''; position: absolute; right: 6px; top: 50%; width: 7px; height: 7px; margin-top: -6px;
+  border-right: 1.5px solid var(--text-secondary); border-bottom: 1.5px solid var(--text-secondary);
+  transform: rotate(45deg); transition: transform 200ms var(--ease-out), margin 200ms var(--ease-out);
+}
+.bk-disc[open] > .bk-disc__sum::after { transform: rotate(225deg); margin-top: -2px; }
+.bk-disc__title { font-size: 1rem; font-weight: 600; color: var(--text-primary); }
+.bk-disc__hint { font-size: 0.875rem; color: var(--text-secondary); }
+.bk-disc__sum:focus-visible { outline: 2px solid var(--accent-bright); outline-offset: 2px; border-radius: 6px; }
+.bk-disc__body { padding: 4px 0 var(--space-4); animation: bk-disc-in 260ms var(--ease-out) both; }
+@keyframes bk-disc-in { from { opacity: 0; transform: translateY(-4px); } }
+@media (hover: hover) and (pointer: fine) { .bk-disc__sum:hover .bk-disc__title { color: #fff; } .bk-disc__sum:hover::after { border-color: var(--text-primary); } }
+@media (prefers-reduced-motion: reduce) { .bk-disc__sum::after { transition: none; } .bk-disc__body { animation: none; } }
+.bk-sec--stats { margin-top: var(--space-6); }
+.bk-sec__sub { margin: 0 0 var(--space-2); font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-secondary); }
+
 /* Book chips: one row, above everything they narrow. */
 .bk-filter {
   position: sticky;

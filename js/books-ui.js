@@ -750,21 +750,16 @@
       top.appendChild(chartBox);
       scopeHost.appendChild(top);
 
-      var s1 = section(scopeHost, 'Key figures', (label ? 'For ' + label + '. ' : '') + 'Each name links to how it is worked out.');
-      s1.appendChild(figures(scope, cur));
-
-      var s2 = section(scopeHost, 'Monthly returns', 'Compounded from daily returns.');
-      s2.appendChild(monthlyTable(scope.perf.monthly));
-
       var exp = id === 'all' ? desk.exposure : scope.exposure;
       var asOf = id === 'all' ? desk.asOf : scope.asOf;
-      var s3 = section(scopeHost, 'Open positions', exp.rows.length ? 'Marked at IBKR’s closing prices on ' + F.day(asOf, true) + '. Exposure is position value as a share of capital.' : 'No open positions on ' + F.day(asOf, true) + '.');
+
+      // Open positions: the table first. The exposure breakdown is one click away.
+      var s3 = section(scopeHost, 'Open positions', exp.rows.length ? 'Prices are IBKR’s close on ' + F.day(asOf, true) + ', moved on live where a live price exists.' : 'No open positions on ' + F.day(asOf, true) + '.');
       if (exp.rows.some(function (r) { return String(r.asset || '').toUpperCase() === 'BOND'; })) {
         s3.querySelector('.bk-sec__head').appendChild(el('p', 'bk-bond-note', 'Bonds are priced as a percentage of face value, and quantity is face value. Live prices aren’t available for individual bonds, so they show IBKR’s last close.'));
       }
       if (exp.rows.length) { var ln = el('p', 'bk-live-note'); ln.setAttribute('data-lv-note', ''); ln.hidden = true; s3.querySelector('.bk-sec__head').appendChild(ln); }
       if (exp.rows.length) {
-        s3.appendChild(exposureBlock(exp));
         var pcols = [
           { label: 'Instrument', cell: instrument },
           { label: 'Side', cell: function (r) { return sideTag(r.side); } }
@@ -774,19 +769,21 @@
           { label: 'Opened', cell: function (r) { return r.opened ? F.day(r.opened) : '–'; } },
           { label: 'Quantity', num: true, cell: function (r) { return F.qty(r.quantity); } },
           { label: 'Entry price', num: true, cell: function (r) { return F.price(r.cost); } },
-          { label: 'IBKR close', num: true, cell: function (r) { return F.price(r.mark); } },
+          { label: 'Close', num: true, cell: function (r) { return F.price(r.mark); } },
           { label: 'Live price', num: true, col: 'bk-col-live', cell: function (r) { return liveCell(r, 'px'); } },
           { label: 'Today', num: true, col: 'bk-col-live', cell: function (r) { return liveCell(r, 'day'); } },
           { label: '% of capital', num: true, cell: function (r) { return F.pct(Math.abs(r.pctNav), 1, false); } },
-          { label: 'Unrealised P&L if closed now', num: true, cell: function (r) { return liveCell(r, 'upl', F.money(r.unrealized, cur, { signed: true })); }, cls: function (r) { return F.upDown(r.unrealized); } }
+          { label: 'Unrealised P&L', num: true, cell: function (r) { return liveCell(r, 'upl', F.money(r.unrealized, cur, { signed: true })); }, cls: function (r) { return F.upDown(r.unrealized); } }
         ]);
         s3.appendChild(table(pcols, exp.rows, { caption: 'Open positions' }));
+        var dExp = disclosure(s3, 'Exposure', 'Gross, net, long and short, as a share of capital');
+        dExp.appendChild(exposureBlock(exp));
       }
 
+      // Closed trades: the table first, then the chart of them.
       var closed = scope.closed.slice();
-      var s4 = section(scopeHost, 'Closed trades', closed.length ? 'Each bar is one trade, from the first fill to flat, in the order it closed.' : 'No closed trades yet.');
+      var s4 = section(scopeHost, 'Closed trades', closed.length ? 'Newest first.' : 'No closed trades yet.');
       if (closed.length) {
-        tape(s4, closed, cur, single ? null : names);
         var newest = closed.slice().reverse();
         var tcols = [
           { label: 'Instrument', cell: instrument },
@@ -817,9 +814,33 @@
           }
         };
         draw();
+        var dTape = disclosure(s4, 'Chart of closed trades', 'Each bar is one trade, from the first fill to flat, in the order it closed');
+        tape(dTape, closed, cur, single ? null : names);
       }
+
+      // The rest: statistics for anyone who wants them, closed until asked for.
+      var more = el('section', 'bk-sec bk-sec--stats');
+      more.appendChild(el('h3', 'bk-sec__sub', 'More statistics'));
+      scopeHost.appendChild(more);
+      var dKey = disclosure(more, 'Key figures', (label ? 'For ' + label + '. ' : '') + 'Each name links to how it is worked out');
+      dKey.appendChild(figures(scope, cur));
+      var dMon = disclosure(more, 'Monthly returns', 'Compounded from daily returns');
+      dMon.appendChild(monthlyTable(scope.perf.monthly));
     }
     pick(opts.book && desk.live.some(function (b) { return b.id === opts.book; }) ? opts.book : 'all', false);
+  }
+
+  // A closed row with a title and a one-line hint; it opens to show its body, which is returned.
+  function disclosure(host, title, hint) {
+    var d = el('details', 'bk-disc');
+    var sm = el('summary', 'bk-disc__sum');
+    sm.appendChild(el('span', 'bk-disc__title', title));
+    if (hint) sm.appendChild(el('span', 'bk-disc__hint', hint));
+    d.appendChild(sm);
+    var body = el('div', 'bk-disc__body');
+    d.appendChild(body);
+    host.appendChild(d);
+    return body;
   }
 
   function section(host, title, note) {
