@@ -88,8 +88,9 @@
           <h1>Publish your book</h1>
           <p class="bk__lead">
             For division heads. Export your IBKR statement, drop it below, check what it shows, then
-            publish it with your book&rsquo;s passcode. Your export stays on this computer: only the
-            finished book file is sent, when you press Publish.
+            send it in. Your IBKR export never leaves this computer: only the finished book file is
+            sent, and it holds your daily account value, trades, open positions and any notes you add.
+            It does not hold your name, address or account number.
           </p>
         </div>
         <p class="bk__stamp"><a href="/books/">See the books <span aria-hidden="true">&rarr;</span></a></p>
@@ -103,22 +104,28 @@
               <span><strong>Set up the export</strong> <span class="bki-muted">Once, about five minutes.</span></span>
             </summary>
             <div class="bki-setup__body">
+              <p class="bki-muted">You need the login for the paper account your book trades in. If you already have a query called <code>BTS book</code>, open it with the pencil (edit) icon and check each point below instead of creating a new one.</p>
               <ol class="bki-howto">
-                <li>Log in to the <strong>IBKR Portal</strong> with your paper account (the one your book trades in).</li>
-                <li>Go to <strong>Performance &amp; Reports &rsaquo; Flex Queries</strong>. Under <strong>Activity Flex Query</strong>, press <strong>+</strong> to create one. Call it <code>BTS books</code>.</li>
+                <li>Log in to the <strong>IBKR Portal</strong> (Client Portal) with your paper-trading login.</li>
+                <li>Go to <strong>Performance &amp; Reports &rsaquo; Flex Queries</strong>.</li>
+                <li>Under <strong>Activity Flex Query</strong>, press <strong>+</strong> to create one. Name it <code>BTS book</code>.</li>
                 <li>
-                  Tick these sections. In each one, choose <strong>Select All</strong> for the fields, then <strong>Save</strong>:
+                  Tick these four sections. In each one, choose its option, press <strong>Select All</strong> so every field is ticked, then <strong>Save</strong>:
                   <ul>
-                    <li><strong>Net Asset Value (NAV) in Base</strong>: the daily value of the account. Returns, Sharpe and drawdown come from this.</li>
-                    <li><strong>Open Positions</strong>: options <strong>Summary</strong>.</li>
-                    <li><strong>Trades</strong>: options <strong>Execution</strong>. This brings each fill with IBKR&rsquo;s realised P&amp;L and its Order Reference.</li>
-                    <li><strong>Cash Transactions</strong>: options <strong>Deposits &amp; Withdrawals</strong>, so a reset or top-up isn&rsquo;t counted as a return.</li>
+                    <li><strong>Net Asset Value (NAV) in Base</strong>: the daily value of the account. Returns, drawdown and Sharpe come from this.</li>
+                    <li><strong>Open Positions</strong>: option <strong>Summary</strong>. Without it the positions table on The Floor stays empty.</li>
+                    <li><strong>Trades</strong>: option <strong>Execution</strong>. This brings each fill, with IBKR&rsquo;s realised P&amp;L and its Order Reference.</li>
+                    <li><strong>Cash Transactions</strong>: option <strong>Deposits &amp; Withdrawals</strong>, so a reset or top-up isn&rsquo;t counted as a return.</li>
                   </ul>
-                  Leave <strong>Account Information</strong> unticked: the books don&rsquo;t need your name or address.
+                  Leave <strong>Account Information</strong> and every other section unticked: the books don&rsquo;t need your name or address.
                 </li>
                 <li>Under <strong>Delivery Configuration</strong>: Format <strong>XML</strong>, Period <strong>Last 30 Calendar Days</strong>.</li>
-                <li>Under <strong>General Configuration</strong>: Date Format <strong>yyyyMMdd</strong>, Time Format <strong>HHmmss</strong>, Date/Time Separator <strong>; (semi-colon)</strong>. Leave the rest as it is, then <strong>Continue</strong> and <strong>Create</strong>.</li>
+                <li>Under <strong>General Configuration</strong>: Date Format <strong>yyyyMMdd</strong>, Time Format <strong>HHmmss</strong>, Date/Time Separator <strong>; (semi-colon)</strong>. Leave the rest as it is.</li>
+                <li>Press <strong>Continue</strong>, then <strong>Create</strong>. The query now shows in your list.</li>
               </ol>
+              <div class="bki-callout">
+                <p><strong>Check before you move on.</strong> Four sections ticked, each with <strong>Select All</strong>. Open Positions on <strong>Summary</strong>, Trades on <strong>Execution</strong>. The most common slip is leaving Open Positions out.</p>
+              </div>
               <div class="bki-callout">
                 <p><strong>Credit your analysts.</strong> When an analyst places an order, they type their initials in the order ticket&rsquo;s <strong>Order Ref</strong> field (in TWS it is on the order ticket&rsquo;s Misc tab). IBKR carries it through to the export, and the trade log shows who made each trade.</p>
               </div>
@@ -128,13 +135,22 @@
 
         <li class="bki-step bki-step--static">
           <span class="bki-step__n" aria-hidden="true">2</span>
-          <p><strong>Every Friday after the close</strong>, run it: Flex Queries &rsaquo; <code>BTS books</code> &rsaquo; the run arrow &rsaquo; XML &rsaquo; Run, and download the file. <span class="bki-muted">IBKR keeps only about 45 days of statements for paper accounts, so never leave more than four weeks between exports.</span></p>
+          <div>
+            <p><strong>Every Friday after the close</strong>, export it:</p>
+            <ol class="bki-howto">
+              <li>In the IBKR Portal go to <strong>Performance &amp; Reports &rsaquo; Flex Queries</strong>.</li>
+              <li>Find <code>BTS book</code> and press the <strong>Run</strong> arrow beside it.</li>
+              <li>Format <strong>XML</strong>, Period <strong>Last 30 Calendar Days</strong>, then <strong>Run</strong>.</li>
+              <li>The file downloads. If it opens as text in your browser instead, press <strong>Ctrl+S</strong> (<strong>Cmd+S</strong> on a Mac) and save it as an <code>.xml</code> file.</li>
+            </ol>
+            <p class="bki-muted">IBKR keeps only about 45 days of statements for paper accounts, so never leave more than four weeks between exports. Anything older than that can&rsquo;t be recovered.</p>
+          </div>
         </li>
 
         <li class="bki-step bki-step--static">
           <span class="bki-step__n" aria-hidden="true">3</span>
           <div class="bki-form">
-            <p><strong>Choose your book and drop the file here.</strong> The published history is loaded and your export is added to it.</p>
+            <p><strong>Choose your book and drop the file here.</strong> The published history is loaded and your export is added to it. Read the list under &ldquo;Check it&rdquo;: anything marked &ldquo;Check this&rdquo; needs a look before you send.</p>
             <label class="bki-label" for="book">Your book</label>
             <select id="book" class="bki-select" data-book></select>
             <label class="bki-drop" data-drop>
@@ -193,9 +209,9 @@
   </main>
 
   <script src="js/books-flex.js?v=8" defer></script>
-  <script src="js/books-core.js?v=3" defer></script>
+  <script src="js/books-core.js?v=4" defer></script>
   <script src="js/books-ui.js?v=11" defer></script>
-  <script src="js/books-import.js?v=3" defer></script>
+  <script src="js/books-import.js?v=4" defer></script>
 
   <script src="js/aurora.js?v=9" defer></script>
   <script src="js/transitions.js?v=3" defer></script>

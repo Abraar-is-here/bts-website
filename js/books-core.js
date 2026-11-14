@@ -17,7 +17,7 @@
   'use strict';
 
   var TRADING_DAYS = 252;
-  var MIN_RISK_DAYS = 20;   // Sharpe, Sortino and volatility need this many days
+  var MIN_RISK_DAYS = 60;   // Sharpe, Sortino and volatility need this many days: fewer than that is noise
   var MIN_ANN_DAYS = 126;   // annualised return needs about six months
 
   var ASSET = { STK: 'Equities', OPT: 'Options', FUT: 'Futures', FOP: 'Futures options', CASH: 'FX', BOND: 'Bonds', CFD: 'CFDs', CRYPTO: 'Crypto', WAR: 'Warrants', FUND: 'Funds', IND: 'Indices', BILL: 'Bills' };

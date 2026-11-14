@@ -250,7 +250,7 @@
     $('[data-send-title]').textContent = on ? 'Publish it' : 'Send it';
     $('[data-send-note]').textContent = on
       ? 'Enter your book’s passcode and press Publish. The Floor shows it within about two minutes.'
-      : 'Download the file, then email it to the web team, or upload it to the site’s books/data folder on GitHub if you have access.';
+      : 'Press Download a copy, then email the file to bristol-trading-society@bristol.ac.uk with your name and book. The web team adds it to the site, and The Floor shows it within a day. (If you have access to the site’s GitHub, you can upload it to the books/data folder instead.)';
   }
 
   // What stops a publish outright, and what only needs a second look.
@@ -309,6 +309,6 @@
     document.body.appendChild(a);
     a.click();
     setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
-    sent('Downloaded ' + current.meta.id + '.json.' + (PUBLISH ? '' : ' Now email it to the web team or upload it on GitHub.'));
+    sent('Downloaded ' + current.meta.id + '.json.' + (PUBLISH ? '' : ' Now email it to bristol-trading-society@bristol.ac.uk with your name and book.'));
   });
 })();
