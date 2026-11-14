@@ -408,8 +408,33 @@
     if (label) w.setAttribute('aria-label', label);
     return w;
   }
+  // A bond as IBKR names it ("MSFT 1.35 09/15/30", symbol "MSFT 1.35 09/15/30 8CS1") says little.
+  // Read the issuer, coupon and maturity out of it: "Microsoft 1.35% 2030", matures 15 Sep 2030.
+  var ISSUERS = { MSFT: 'Microsoft', ORCL: 'Oracle', AAPL: 'Apple', AMZN: 'Amazon', GOOGL: 'Alphabet', GOOG: 'Alphabet', META: 'Meta', NVDA: 'NVIDIA',
+    JPM: 'JPMorgan', BAC: 'Bank of America', C: 'Citigroup', WFC: 'Wells Fargo', GS: 'Goldman Sachs', MS: 'Morgan Stanley', T: 'AT&T', VZ: 'Verizon',
+    XOM: 'Exxon Mobil', CVX: 'Chevron', F: 'Ford', GM: 'General Motors', BA: 'Boeing', KO: 'Coca-Cola', PEP: 'PepsiCo', WMT: 'Walmart', DIS: 'Disney',
+    IBM: 'IBM', INTC: 'Intel', CSCO: 'Cisco', TSLA: 'Tesla', UST: 'US Treasury', UKT: 'UK Gilt' };
+  var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  function bondInfo(r) {
+    if (String(r.asset || '').toUpperCase() !== 'BOND') return null;
+    var m = String(r.description || '').trim().match(/^(.+?)\s+(\d+(?:\.\d+)?)\s+(\d{2})\/(\d{2})\/(\d{2,4})$/);
+    if (!m) return null;
+    var mo = +m[3], day = +m[4], yr = +m[5]; if (yr < 100) yr += 2000;
+    if (mo < 1 || mo > 12) return null;
+    var tick = m[1].toUpperCase();
+    var coupon = String(parseFloat(m[2]));
+    var issuer = ISSUERS[tick] || (tick.length <= 5 ? tick : titleCase(m[1]));
+    return { name: issuer + ' ' + coupon + '% ' + yr, sub: 'Bond · ' + coupon + '% coupon · matures ' + day + ' ' + MONTHS[mo - 1] + ' ' + yr };
+  }
   function instrument(r) {
     var f = document.createDocumentFragment();
+    var b = bondInfo(r);
+    if (b) {
+      f.appendChild(el('span', 'bk-sym', b.name));
+      f.appendChild(el('span', 'bk-desc', b.sub));
+      if (r.thesis) f.appendChild(el('span', 'bk-thesis', r.thesis));
+      return f;
+    }
     f.appendChild(el('span', 'bk-sym', r.symbol));
     if (r.description && r.description !== r.symbol) f.appendChild(el('span', 'bk-desc', titleCase(r.description)));
     if (r.thesis) f.appendChild(el('span', 'bk-thesis', r.thesis));
@@ -734,6 +759,9 @@
       var exp = id === 'all' ? desk.exposure : scope.exposure;
       var asOf = id === 'all' ? desk.asOf : scope.asOf;
       var s3 = section(scopeHost, 'Open positions', exp.rows.length ? 'Marked at IBKR’s closing prices on ' + F.day(asOf, true) + '. Exposure is position value as a share of capital.' : 'No open positions on ' + F.day(asOf, true) + '.');
+      if (exp.rows.some(function (r) { return String(r.asset || '').toUpperCase() === 'BOND'; })) {
+        s3.querySelector('.bk-sec__head').appendChild(el('p', 'bk-bond-note', 'Bonds are priced as a percentage of face value, and quantity is face value. Live prices aren’t available for individual bonds, so they show IBKR’s last close.'));
+      }
       if (exp.rows.length) { var ln = el('p', 'bk-live-note'); ln.setAttribute('data-lv-note', ''); ln.hidden = true; s3.querySelector('.bk-sec__head').appendChild(ln); }
       if (exp.rows.length) {
         s3.appendChild(exposureBlock(exp));
@@ -745,12 +773,12 @@
         pcols = pcols.concat([
           { label: 'Opened', cell: function (r) { return r.opened ? F.day(r.opened) : '–'; } },
           { label: 'Quantity', num: true, cell: function (r) { return F.qty(r.quantity); } },
-          { label: 'Cost', num: true, cell: function (r) { return F.price(r.cost); } },
-          { label: 'Mark', num: true, cell: function (r) { return F.price(r.mark); } },
-          { label: 'Live', num: true, col: 'bk-col-live', cell: function (r) { return liveCell(r, 'px'); } },
+          { label: 'Entry price', num: true, cell: function (r) { return F.price(r.cost); } },
+          { label: 'IBKR close', num: true, cell: function (r) { return F.price(r.mark); } },
+          { label: 'Live price', num: true, col: 'bk-col-live', cell: function (r) { return liveCell(r, 'px'); } },
           { label: 'Today', num: true, col: 'bk-col-live', cell: function (r) { return liveCell(r, 'day'); } },
           { label: '% of capital', num: true, cell: function (r) { return F.pct(Math.abs(r.pctNav), 1, false); } },
-          { label: 'Unrealised P&L', num: true, cell: function (r) { return liveCell(r, 'upl', F.money(r.unrealized, cur, { signed: true })); }, cls: function (r) { return F.upDown(r.unrealized); } }
+          { label: 'Unrealised P&L if closed now', num: true, cell: function (r) { return liveCell(r, 'upl', F.money(r.unrealized, cur, { signed: true })); }, cls: function (r) { return F.upDown(r.unrealized); } }
         ]);
         s3.appendChild(table(pcols, exp.rows, { caption: 'Open positions' }));
       }
