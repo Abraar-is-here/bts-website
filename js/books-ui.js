@@ -424,7 +424,44 @@
     var tick = m[1].toUpperCase();
     var coupon = String(parseFloat(m[2]));
     var issuer = ISSUERS[tick] || (tick.length <= 5 ? tick : titleCase(m[1]));
-    return { name: issuer + ' ' + coupon + '% ' + yr, sub: 'Bond · ' + coupon + '% coupon · matures ' + day + ' ' + MONTHS[mo - 1] + ' ' + yr };
+    return { couponPct: parseFloat(m[2]), maturity: yr + '-' + ('0' + mo).slice(-2) + '-' + ('0' + day).slice(-2), name: issuer + ' ' + coupon + '% ' + yr, sub: 'Bond · ' + coupon + '% coupon · matures ' + day + ' ' + MONTHS[mo - 1] + ' ' + yr };
+  }
+  // Yield to maturity from a clean price (per 100 of face), for a bond paying its coupon twice a year:
+  // the rate at which the remaining cash flows, discounted, equal the price plus accrued interest.
+  // Approximate: actual days within each coupon period, no business-day adjustments.
+  function addMonths(d, n) {
+    var y = d.getUTCFullYear() + Math.floor((d.getUTCMonth() + n) / 12), m = ((d.getUTCMonth() + n) % 12 + 12) % 12;
+    var last = new Date(Date.UTC(y, m + 1, 0)).getUTCDate();
+    return new Date(Date.UTC(y, m, Math.min(d.getUTCDate(), last)));
+  }
+  function bondYield(price, couponPct, maturityISO, settleISO) {
+    if (price == null || !isFinite(price) || price <= 0 || !maturityISO || !settleISO) return null;
+    var mat = new Date(maturityISO + 'T12:00:00Z'), set = new Date(settleISO + 'T12:00:00Z');
+    if (!(mat > set)) return null;
+    var dates = [mat], k = 1, prev;
+    for (;;) {
+      var p = addMonths(mat, -6 * k);
+      if (p <= set) { prev = p; break; }
+      dates.unshift(p); k++;
+    }
+    var day = 86400000, per = (dates[0] - prev) / day, frac = (dates[0] - set) / day / per;
+    var dirty = price + couponPct / 2 * (1 - frac);
+    function pv(y) {
+      var t = 0;
+      dates.forEach(function (d, i) { t += (couponPct / 2 + (i === dates.length - 1 ? 100 : 0)) / Math.pow(1 + y / 2, frac + i); });
+      return t;
+    }
+    var lo = -0.5, hi = 2;
+    for (var i = 0; i < 80; i++) { var mid = (lo + hi) / 2; if (pv(mid) > dirty) lo = mid; else hi = mid; }
+    return (lo + hi) / 2;
+  }
+  function yieldCell(field) {
+    return function (r) {
+      var b = bondInfo(r);
+      if (!b) return '–';
+      var y = bondYield(r[field], b.couponPct, b.maturity, r.date || r.asOf || '');
+      return y == null ? '–' : F.pct(y, 2, false);
+    };
   }
   function instrument(r) {
     var f = document.createDocumentFragment();
@@ -756,7 +793,7 @@
       // Open positions: the table first. The exposure breakdown is one click away.
       var s3 = section(scopeHost, 'Open positions', exp.rows.length ? 'Prices are IBKR’s close on ' + F.day(asOf, true) + ', moved on live where a live price exists.' : 'No open positions on ' + F.day(asOf, true) + '.');
       if (exp.rows.some(function (r) { return String(r.asset || '').toUpperCase() === 'BOND'; })) {
-        s3.querySelector('.bk-sec__head').appendChild(el('p', 'bk-bond-note', 'Bonds are priced as a percentage of face value, and quantity is face value. Live prices aren’t available for individual bonds, so they show IBKR’s last close.'));
+        s3.querySelector('.bk-sec__head').appendChild(el('p', 'bk-bond-note', 'Bonds are priced as a percentage of face value, and quantity is face value. Yield is the yield to maturity at that price, worked out from the coupon and maturity (approximate). Live prices aren’t available for individual bonds, so they show IBKR’s last close.'));
       }
       if (exp.rows.length) { var ln = el('p', 'bk-live-note'); ln.setAttribute('data-lv-note', ''); ln.hidden = true; s3.querySelector('.bk-sec__head').appendChild(ln); }
       if (exp.rows.length) {
@@ -770,11 +807,15 @@
           { label: 'Quantity', num: true, cell: function (r) { return F.qty(r.quantity); } },
           { label: 'Entry price', num: true, cell: function (r) { return F.price(r.cost); } },
           { label: 'Close', num: true, cell: function (r) { return F.price(r.mark); } },
+          { label: 'Entry yield', num: true, col: 'bk-col-bond', cell: yieldCell('cost') },
+          { label: 'Yield', num: true, col: 'bk-col-bond', cell: yieldCell('mark') },
           { label: 'Live price', num: true, col: 'bk-col-live', cell: function (r) { return liveCell(r, 'px'); } },
           { label: 'Today', num: true, col: 'bk-col-live', cell: function (r) { return liveCell(r, 'day'); } },
           { label: '% of capital', num: true, cell: function (r) { return F.pct(Math.abs(r.pctNav), 1, false); } },
           { label: 'Unrealised P&L', num: true, cell: function (r) { return liveCell(r, 'upl', F.money(r.unrealized, cur, { signed: true })); }, cls: function (r) { return F.upDown(r.unrealized); } }
         ]);
+        var hasBond = exp.rows.some(function (r) { return !!bondInfo(r); });
+        if (!hasBond) pcols = pcols.filter(function (c) { return c.col !== 'bk-col-bond'; });
         s3.appendChild(table(pcols, exp.rows, { caption: 'Open positions' }));
         var dExp = disclosure(s3, 'Exposure', 'Gross, net, long and short, as a share of capital');
         dExp.appendChild(exposureBlock(exp));
