@@ -15,6 +15,11 @@ browser from IBKR's own statements.
 3. **They send that file to the web team**, or upload it to `books/data/` on GitHub if they
    have access. Commit it and the site updates.
 
+The importer also reads IBKR's standard **Activity Statement** (CSV, from Performance & Reports >
+Statements). It gives the day's trades, open positions and net asset value, but NAV only for the
+day before the period and its last day, so export one **daily** and import each day, or use a Flex
+Query for the full history. Returns, drawdown and Sharpe are only as good as the NAV days imported.
+
 Do this weekly. **IBKR only keeps about 45 days of statements for paper accounts**, so a
 gap longer than that loses history for good. The importer warns when an export starts after
 the last published day.

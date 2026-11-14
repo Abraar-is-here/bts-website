@@ -42,7 +42,7 @@
       var g = document.createElement('optgroup');
       g.label = d.name;
       d.books.forEach(function (b) {
-        books[b.id] = { id: b.id, head: b.head, name: b.name || b.head, desk: d };
+        books[b.id] = { id: b.id, head: b.head, name: b.name || b.head, desk: d, assets: b.assets };
         var o = el('option', null, b.name || b.head);
         o.value = b.id;
         g.appendChild(o);
@@ -90,6 +90,20 @@
       result.hidden = true;
       return;
     }
+    // A book can count only some asset classes (books/data/index.json "assets", e.g. ["CASH"]
+    // for an FX-only desk). Fills and positions in the others are left out, and the import says so.
+    var left = {};
+    if (meta.assets && meta.assets.length) {
+      statements.forEach(function (st) {
+        ['trades', 'positions'].forEach(function (k) {
+          st[k] = st[k].filter(function (x) {
+            if (meta.assets.indexOf(x.asset) > -1) return true;
+            left[x.asset] = (left[x.asset] || 0) + 1;
+            return false;
+          });
+        });
+      });
+    }
     var accounts = statements.map(function (s) { return s.account; }).filter(function (a, i, arr) { return a && arr.indexOf(a) === i; });
     if (accounts.length > 1) {
       status('This export covers ' + accounts.length + ' accounts. Run the Flex Query for your book’s account only, then drop it again.', 'error');
@@ -106,6 +120,8 @@
       if (moved) {
         merged.report.warnings.unshift({ level: 'serious', text: 'This export is from a different IBKR account from the one already published for ' + meta.name + '. If that’s a mistake, export from the right account. If the book has moved account, tell the web team before sending this.' });
       }
+      var skipped = Object.keys(left).map(function (k) { return left[k] + ' ' + k; });
+      if (skipped.length) merged.report.warnings.push({ level: 'warning', text: 'This book counts only ' + meta.assets.join(', ') + ' (see books/data/index.json). Left out: ' + skipped.join(', ') + '. Net asset value is the whole account.' });
       if (sample) merged.report.warnings.unshift({ level: 'warning', text: 'This is the sample file: invented trades so you can see how it works. Don’t send it.' });
       current = { meta: meta, book: merged.book, report: merged.report, sample: sample, moved: moved, existing: !!existing, notesAtLoad: JSON.stringify(merged.book.notes || {}) };
       status('');

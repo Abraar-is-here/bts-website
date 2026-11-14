@@ -8,7 +8,8 @@
 
    Accepts:
    - XML (recommended): an Activity Flex Query, or a Trade Confirmation one.
-   - CSV: with or without IBKR's "header and trailer records".
+   - CSV: a Flex Query, with or without IBKR's "header and trailer records", or the
+     standard Activity Statement (net asset value for its first and last day only).
 
    Reads these sections (names as IBKR's XML has them):
      Trades > Trade                     executions (levelOfDetail EXECUTION)
@@ -93,7 +94,13 @@
   }
 
   /* --- Record normalisers ---------------------------------------------------- */
-  function normTrade(r) {
+  // IBKR quotes bonds as a percentage of face value, so a trade's value is quantity × price ÷ 100.
+  function bondMult(r) {
+    var m = num(r.multiplier) || 1;
+    return str(r.assetcategory).toUpperCase() === 'BOND' && m === 1 ? 0.01 : m;
+  }
+
+  function normTrade(r, base) {
     var lod = str(r.levelofdetail).toUpperCase();
     if (lod && lod !== 'EXECUTION') return null; // skip ORDER, CLOSED_LOT, SYMBOL_SUMMARY…
     var q = num(r.quantity);
@@ -108,6 +115,11 @@
     if (!time && r.tradedate) time = date(r.tradedate) + 'T00:00:00';
     if (!id) id = [time, instrumentKey(r), q, p].join('~');
     var fx = num(r.fxratetobase);
+    var comm = num(r.ibcommission != null ? r.ibcommission : r.commission) || 0;
+    // IBKR charges some commissions (FX, for one) in the account's base currency rather than
+    // the trade's. The books count commission in the trade currency, so convert it back.
+    var cc = str(r.ibcommissioncurrency);
+    if (cc && base && cc === base && cc !== str(r.currency) && fx) comm = comm / fx;
     return {
       id: id,
       time: time,
@@ -118,8 +130,8 @@
       fx: fx == null ? 1 : fx,
       quantity: q,
       price: p,
-      multiplier: num(r.multiplier) || 1,
-      commission: num(r.ibcommission != null ? r.ibcommission : r.commission) || 0,
+      multiplier: bondMult(r),
+      commission: comm,
       pnl: num(r.fifopnlrealized != null ? r.fifopnlrealized : r.realizedpnl),
       openClose: str(r.opencloseindicator).toUpperCase(),
       ref: str(r.orderreference),
@@ -144,7 +156,7 @@
       currency: str(r.currency),
       fx: fx == null ? 1 : fx,
       quantity: q,
-      multiplier: num(r.multiplier) || 1,
+      multiplier: bondMult(r),
       exchange: str(r.listingexchange),
       mark: num(r.markprice),
       value: num(r.positionvalue),
@@ -198,8 +210,10 @@
       var st = emptyStatement(str(a.accountid));
       st.from = date(a.fromdate);
       st.to = date(a.todate);
-      each(s, 'Trade', function (r) { st.sections.trades = 1; push(st.trades, normTrade(r)); });
-      each(s, 'TradeConfirm', function (r) { st.sections.trades = 1; push(st.trades, normTrade(r)); });
+      var eq = s.getElementsByTagName('EquitySummaryByReportDateInBase')[0];
+      var base = eq ? str(eq.getAttribute('currency')) : '';
+      each(s, 'Trade', function (r) { st.sections.trades = 1; push(st.trades, normTrade(r, base)); });
+      each(s, 'TradeConfirm', function (r) { st.sections.trades = 1; push(st.trades, normTrade(r, base)); });
       each(s, 'OpenPosition', function (r) { st.sections.positions = 1; push(st.positions, normPosition(r)); });
       each(s, 'EquitySummaryByReportDateInBase', function (r) { st.sections.nav = 1; st.currency = st.currency || str(r.currency); push(st.nav, normNav(r)); });
       each(s, 'CashTransaction', function (r) { st.sections.cash = 1; push(st.cash, normCash(r)); });
@@ -264,8 +278,114 @@
     return '';
   }
 
+  /* --- Activity Statement CSV -------------------------------------------------
+     The standard statement IBKR offers under Performance & Reports > Statements
+     (one block per section: "Net Asset Value,Header,..." / "...,Data,..."). It
+     carries what a book needs, but only as start and end figures: the net asset
+     value for the day before the period and for its last day, not a daily
+     series. So export it daily (or use a Flex Query for the full history). The
+     account number is used only to tell accounts apart and is never stored. */
+  var MONTHS = { january: 1, february: 2, march: 3, april: 4, may: 5, june: 6, july: 7, august: 8, september: 9, october: 10, november: 11, december: 12 };
+  var ACTIVITY_ASSET = { stocks: 'STK', forex: 'CASH', futures: 'FUT', options: 'OPT', 'equity and index options': 'OPT', bonds: 'BOND', crypto: 'CRYPTO' };
+
+  function prevWeekday(iso) {
+    var d = addDays(iso, -1);
+    var w = new Date(d + 'T12:00:00Z').getUTCDay();
+    return w === 0 ? addDays(d, -2) : w === 6 ? addDays(d, -1) : d;
+  }
+
+  function parseActivity(rows) {
+    var hdr = {}, data = {};
+    rows.forEach(function (row) {
+      var sec = row[0], kind = row[1];
+      if (kind === 'Header') hdr[sec] = row.slice(2).map(function (h) { return String(h).trim(); });
+      else if (kind === 'Data') {
+        var o = {};
+        (hdr[sec] || []).forEach(function (h, i) { o[h] = row[i + 2]; });
+        (data[sec] = data[sec] || []).push(o);
+      }
+    });
+    function field(sec, name) {
+      var hit = (data[sec] || []).filter(function (o) { return str(o['Field Name']) === name; })[0];
+      return hit ? str(hit['Field Value']) : '';
+    }
+
+    var account = field('Account Information', 'Account').split(/\s/)[0];
+    var base = field('Account Information', 'Base Currency') || 'USD';
+    var dates = (field('Statement', 'Period').match(/[A-Za-z]+ \d{1,2}, \d{4}/g) || []).map(function (s) {
+      var m = s.match(/([A-Za-z]+) (\d{1,2}), (\d{4})/);
+      var mo = MONTHS[m[1].toLowerCase()];
+      return mo ? m[3] + '-' + ('0' + mo).slice(-2) + '-' + ('0' + m[2]).slice(-2) : '';
+    }).filter(Boolean);
+    if (!dates.length) throw new FlexError('no-period', 'Could not read the statement period (for example “November 13, 2026”) from this Activity Statement.');
+    var from = dates[0], to = dates[dates.length - 1];
+
+    var s = emptyStatement(account);
+    s.from = from; s.to = to; s.currency = base;
+
+    var rates = {}; rates[base] = 1;
+    (data['Base Currency Exchange Rate'] || []).forEach(function (o) { var r = num(o.Rate); if (r != null) rates[str(o.Currency)] = r; });
+    var info = {};
+    (data['Financial Instrument Information'] || []).forEach(function (o) { info[str(o.Symbol)] = o; });
+    var desc = {};
+    (data['Net Stock Position Summary'] || []).forEach(function (o) { desc[str(o.Symbol)] = str(o.Description); });
+
+    // Net asset value: the day before the period and its last day.
+    var tot = (data['Net Asset Value'] || []).filter(function (o) { return str(o['Asset Class']) === 'Total'; })[0];
+    if (tot) {
+      var prior = num(tot['Prior Total']), cur = num(tot['Current Total']);
+      if (prior != null) s.nav.push([prevWeekday(from), prior]);
+      if (cur != null) s.nav.push([to, cur]);
+      s.sections.nav = 1;
+    }
+
+    // Open positions: the summary rows, valued at the statement date.
+    if (hdr['Open Positions']) {
+      s.sections.positions = 1;
+      (data['Open Positions'] || []).forEach(function (o) {
+        if (str(o.DataDiscriminator) !== 'Summary') return;
+        var sym = str(o.Symbol), i = info[sym] || {}, cur = str(o.Currency);
+        push(s.positions, normPosition({
+          reportdate: to, symbol: sym, description: desc[sym] || str(i.Description),
+          assetcategory: ACTIVITY_ASSET[str(o['Asset Category']).toLowerCase()] || str(o['Asset Category']).toUpperCase(),
+          currency: cur, fxratetobase: rates[cur], quantity: o.Quantity, multiplier: o.Mult,
+          listingexchange: str(i['Listing Exch']), conid: str(i.Conid), markprice: o['Close Price'],
+          positionvalue: o.Value, costbasisprice: o['Cost Price'], fifopnlunrealized: o['Unrealized P/L']
+        }));
+      });
+    }
+
+    // Trades: one row per order. There is no trade id in this statement, so one
+    // is made from the time, instrument, size and price (the same fill read
+    // again later gets the same id and is not counted twice).
+    if (hdr['Trades']) {
+      s.sections.trades = 1;
+      (data['Trades'] || []).forEach(function (o) {
+        var dd = str(o.DataDiscriminator);
+        if (dd && dd !== 'Order' && dd !== 'Execution') return;
+        var cur = str(o.Currency), sym = str(o.Symbol), i = info[sym] || {};
+        var commKey = Object.keys(o).filter(function (k) { return /^Comm/i.test(k) && num(o[k]) != null; })[0];
+        var fx = rates[cur];
+        var comm = commKey ? num(o[commKey]) : 0;
+        // "Comm in GBP" is already in the base currency; the books want it in the trade's own.
+        if (commKey && /^Comm in /i.test(commKey) && fx) comm = comm / fx;
+        var codes = str(o.Code).split(';');
+        push(s.trades, normTrade({
+          datetime: o['Date/Time'], symbol: sym, description: desc[sym] || str(i.Description),
+          assetcategory: ACTIVITY_ASSET[str(o['Asset Category']).toLowerCase()] || str(o['Asset Category']).toUpperCase(),
+          currency: cur, fxratetobase: fx, quantity: o.Quantity, tradeprice: o['T. Price'],
+          multiplier: o.Mult || i.Multiplier, ibcommission: comm, conid: str(i.Conid),
+          opencloseindicator: codes.indexOf('O') > -1 ? 'O' : codes.indexOf('C') > -1 ? 'C' : ''
+        }));
+      });
+    }
+    return [s];
+  }
+
   function parseCSV(text) {
     var rows = csvRows(text);
+    // IBKR's standard Activity Statement (sections of Header/Data rows), not a Flex Query.
+    if (rows.length && rows[0][0] === 'Statement' && rows[0][1] === 'Header') return parseActivity(rows);
     var byAcct = {};
     var header = null, kind = '', fallbackAcct = '';
     function stmt(a) { a = a || fallbackAcct || 'unknown'; return byAcct[a] || (byAcct[a] = emptyStatement(a)); }
@@ -289,7 +409,7 @@
     });
     var list = Object.keys(byAcct).map(function (k) { return byAcct[k]; });
     if (!list.length || list.every(function (s) { return !Object.keys(s.sections).length; })) {
-      throw new FlexError('not-flex', 'No IBKR sections found in this CSV. Check it is a Flex Query export, not a standard Activity Statement.');
+      throw new FlexError('not-flex', 'No IBKR sections found in this CSV. Check it is an IBKR Flex Query or Activity Statement export.');
     }
     return list.filter(function (s) { return Object.keys(s.sections).length; });
   }

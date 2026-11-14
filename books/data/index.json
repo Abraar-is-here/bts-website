@@ -18,7 +18,7 @@
     ] },
     { "id": "ficc", "name": "FICC", "books": [
       { "id": "ficc-anay", "head": "Anay Mistry" },
-      { "id": "ficc-val", "head": "Val Sinko" },
+      { "id": "ficc-val", "head": "Val Sinko", "assets": ["CASH"] },
       { "id": "ficc-manolo", "head": "Manolo Kidel" },
       { "id": "ficc-aled", "head": "Aled von Oppell" }
     ] },
