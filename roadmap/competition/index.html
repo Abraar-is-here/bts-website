@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Link-only: for division heads and analysts. Not indexed, not in the
+       sitemap, not linked from anywhere on the public site. -->
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <base href="/" />
+
+  <title>Annual Trading Competition: Guide &mdash; Bristol Trading Society</title>
+  <meta name="description" content="How the BTS Annual Trading Competition 2026 works: phases, scoring and pitch rules, for division heads." />
+
+  <link rel="icon" type="image/svg+xml" href="assets/img/bull.svg" />
+
+  <link rel="preload" href="assets/fonts/syne-800.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/fonts/dm-sans-400.woff2" as="font" type="font/woff2" crossorigin />
+
+  <link rel="stylesheet" href="styles/tokens/fonts.css?v=7" />
+  <link rel="stylesheet" href="styles/tokens/colors.css?v=15" />
+  <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
+  <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
+  <link rel="stylesheet" href="styles/main.css?v=164" />
+  <style>
+    @font-face {
+      font-family: 'Libre Franklin';
+      src: url('assets/fonts/libre-franklin-latin.woff2') format('woff2');
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+    }
+    /* -------------------------------------------------------------------------
+       Annual Trading Competition: guide for division heads. Link-only, reached
+       from the Roadmap. Deliberately quieter than the rest of the site: an
+       ivory page with near-black ink, like a printed report. The aurora is
+       re-tinted to warm stone (aurora.js reads these tokens at load), headings
+       are set in a serif, and the page has no blue at all.
+       ------------------------------------------------------------------------- */
+    :root {
+      /* Aurora ramp, lightest to darkest: paper -> stone. */
+      --c-navy: #f4f1ea;
+      --c-royal-deep: #ebe6dc;
+      --c-royal: #ddd6c8;
+      --c-sky: #c9c0ae;
+      --c-slate: #a7a9ae;
+      --accent: #16181c;
+      --accent-bright: #16181c;
+      --focus-ring: #6b5d45;
+      --glass-fill: rgba(22, 24, 28, 0.92);
+      --glass-fill-strong: rgba(22, 24, 28, 0.96);
+      --glass-border: rgba(22, 24, 28, 0.9);
+      --bg-abyss: #16181c;
+      --ink: #16181c;
+      --ink-2: #3d4047;
+      --ink-3: #6e6a62;
+      --rule: rgba(22, 24, 28, 0.14);
+      --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, 'Times New Roman', serif;
+    }
+    body { background: #f4f1ea; color: var(--ink); }
+    main.page-dark, .site-footer { background: rgba(244, 241, 234, 0.35); }
+    .nav { box-shadow: 0 10px 30px rgba(22, 24, 28, 0.18), 0 2px 6px rgba(22, 24, 28, 0.12); }
+    .nav__link--cta, .nav__link--cta:hover { background: #f4f1ea; color: #16181c; box-shadow: none; }
+
+    main.cg { padding: 140px var(--gutter) var(--space-7); background: linear-gradient(180deg, rgba(244, 241, 234, 0.3) 0, rgba(244, 241, 234, 0.84) 480px, rgba(244, 241, 234, 0.9) 100%); }
+    .cg__inner { max-width: 940px; margin: 0 auto; }
+    .cg__back { display: inline-flex; align-items: center; min-height: 44px; font-size: 0.9375rem; font-weight: 600; color: var(--ink-2); text-decoration: none; }
+    .cg__back:hover { color: var(--ink); }
+
+    .cg h1 { margin: var(--space-3) 0 0; font-family: var(--serif); font-size: clamp(2.4rem, 5.6vw, 4rem); font-weight: 400; line-height: 1.05; letter-spacing: -0.01em; color: var(--ink); }
+
+    /* Key facts: a ruled ledger, not cards. */
+    .cg-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: var(--space-5) 0 0; border-top: 1px solid var(--rule); }
+    .cg-facts div { padding: var(--space-3) var(--space-3) var(--space-3) 0; }
+    .cg-facts div + div { padding-left: var(--space-3); border-left: 1px solid var(--rule); }
+    .cg-facts { font-family: 'Libre Franklin', 'Helvetica Neue', Arial, sans-serif; }
+    .cg-facts dt { margin-bottom: 6px; font-size: 0.875rem; font-weight: 400; color: #5a5650; }
+    .cg-facts dd { margin: 0; font-size: 1.0625rem; font-weight: 600; line-height: 1.45; color: var(--ink); }
+    .cg-facts dd span { display: block; margin-top: 2px; font-weight: 400; color: var(--ink-2); }
+
+    /* Numbered sections: the number sits in a margin column. */
+    .cg-sec { display: grid; grid-template-columns: 4.5rem minmax(0, 1fr); gap: 0 var(--space-3); padding-top: var(--space-5); margin-top: var(--space-5); border-top: 1px solid var(--rule); }
+    .cg-sec__num { font-family: var(--serif); font-size: 1.5rem; line-height: 1.25; color: var(--ink-3); font-variant-numeric: lining-nums; }
+    .cg h2 { margin: 0 0 var(--space-3); font-family: var(--serif); font-size: clamp(1.6rem, 3vw, 2.1rem); font-weight: 400; line-height: 1.15; color: var(--ink); }
+    .cg h3 { margin: var(--space-4) 0 var(--space-2); font-family: var(--serif); font-size: 1.1875rem; font-style: italic; font-weight: 400; color: var(--ink); }
+    .cg p, .cg li { font-size: 1.0625rem; line-height: 1.7; color: var(--ink-2); }
+    .cg p { margin: 0 0 var(--space-2); max-width: 66ch; }
+    .cg ul, .cg ol { margin: 0 0 var(--space-2); padding-left: 1.25em; max-width: 66ch; }
+    .cg li + li { margin-top: 6px; }
+    .cg li::marker { color: var(--ink-3); }
+    .cg strong { font-weight: 600; color: var(--ink); }
+    .cg a { color: var(--ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    .cg a:hover { text-decoration-thickness: 2px; }
+    .cg .cg__back { text-decoration: none; }
+
+    /* Tables: hairlines only. */
+    .cg-table { overflow-x: auto; margin: var(--space-2) 0 var(--space-3); }
+    .cg table { width: 100%; min-width: 480px; border-collapse: collapse; }
+    .cg th, .cg td { padding: 12px 16px 12px 0; border-bottom: 1px solid var(--rule); font-size: 1rem; line-height: 1.55; text-align: left; vertical-align: top; color: var(--ink-2); }
+    .cg thead th { font-size: 0.875rem; font-weight: 600; color: var(--ink); border-bottom-color: rgba(22, 24, 28, 0.4); }
+    .cg td:first-child { color: var(--ink); font-weight: 600; }
+    .cg td.cg-num, .cg th.cg-num { text-align: right; padding-right: 0; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .cg tfoot td { border-bottom: 0; color: var(--ink); font-weight: 600; }
+
+    /* The score split, drawn as one bar. */
+    .cg-split { display: flex; gap: 3px; height: 14px; margin: var(--space-3) 0 10px; }
+    .cg-split span { border-radius: 2px; }
+    .cg-split span:nth-child(1) { flex: 30; background: #8c7350; }
+    .cg-split span:nth-child(2) { flex: 60; background: #16181c; }
+    .cg-split span:nth-child(3) { flex: 10; background: #b9b0a0; }
+    .cg-key { display: grid; grid-template-columns: 30fr 60fr 10fr; margin: 0 0 var(--space-3); padding: 0; list-style: none; }
+    .cg .cg-key li { display: flex; align-items: center; gap: 8px; margin: 0; font-size: 0.9375rem; font-weight: 600; line-height: 1.4; color: var(--ink); white-space: nowrap; }
+    .cg .cg-key li:last-child { justify-content: flex-end; }
+    .cg-key i { width: 10px; height: 10px; border-radius: 2px; }
+
+    /* The three parts of a pitch. */
+    .cg-part { margin: var(--space-3) 0 0; padding: var(--space-3) 0 var(--space-2); border-top: 1px solid var(--rule); }
+    .cg .cg-part__head { margin: 0 0 var(--space-2); font-family: var(--serif); font-size: 1.625rem; line-height: 1.2; color: var(--ink); }
+    .cg-part__head span { display: block; margin-bottom: 2px; font-size: 1rem; font-style: italic; color: var(--ink-3); }
+    .cg-part { padding-top: var(--space-4); }
+    .cg-part .cg-table { margin-top: var(--space-3); }
+    .cg .cg-eg { padding-left: var(--space-3); border-left: 2px solid rgba(22, 24, 28, 0.25); font-family: var(--serif); font-style: italic; color: var(--ink); }
+
+    /* A rule set apart: hard limits and the lessons from the bi-weekly. */
+    .cg-note { margin: var(--space-3) 0; padding: var(--space-3) var(--space-3) var(--space-3) var(--space-4); border-left: 2px solid #16181c; background: rgba(255, 255, 255, 0.55); }
+    .cg-note p:last-child, .cg-note ul:last-child { margin-bottom: 0; }
+
+
+    @media (max-width: 760px) {
+      .cg { padding-top: 120px; }
+      .cg-facts { grid-template-columns: minmax(0, 1fr); }
+      .cg-facts div + div { padding-left: 0; border-left: 0; border-top: 1px solid var(--rule); }
+      .cg-sec { grid-template-columns: minmax(0, 1fr); }
+      .cg-key { grid-template-columns: none; display: flex; flex-wrap: wrap; gap: 6px 20px; }
+      .cg .cg-key li:last-child { justify-content: flex-start; }
+      .cg-sec__num { margin-bottom: 4px; font-size: 1.125rem; }
+    }
+    @media print {
+      .aurora, .nav, .site-footer, .cg__back { display: none !important; }
+      .cg { padding: 0; background: none; }
+      .cg *, .cg h1, .cg h2 { color: #111 !important; }
+      .cg-sec, .cg-facts, .cg th, .cg td { border-color: #bbb !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <a class="skip-link" href="/roadmap/competition/#guide">Skip to content</a>
+
+  <div class="aurora" aria-hidden="true">
+    <canvas id="aurora-canvas"></canvas>
+    <div class="aurora-fallback">
+      <span class="b1"></span><span class="b2"></span><span class="b3"></span>
+      <span class="b4"></span><span class="b5"></span><span class="b6"></span>
+      <span class="sheen"></span>
+    </div>
+  </div>
+
+  <nav class="nav" aria-label="Primary">
+    <a class="logo" href="/" aria-label="Bristol Trading Society — home">
+      <img class="logo__lockup" src="assets/img/bts-logo-white.png" alt="" width="1127" height="301" />
+    </a>
+    <ul class="nav__links">
+      <li class="nav__mobile">
+        <button class="nav__menu-btn" aria-expanded="false" aria-haspopup="true">
+          Menu
+          <svg class="nav__chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+            <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <ul class="nav__dropdown" role="menu">
+          <li><a class="nav__dropdown-link" href="/" role="menuitem">Home</a></li>
+          <li><a class="nav__dropdown-link" href="/about" role="menuitem">About Us</a></li>
+          <li><a class="nav__dropdown-link" href="/events" role="menuitem">Events</a></li>
+          <li><a class="nav__dropdown-link nav__floor" href="/books/" role="menuitem">The Floor<span class="nav__live" aria-hidden="true"></span></a></li>
+          <li><a class="nav__dropdown-link" href="/team" role="menuitem">Team</a></li>
+        </ul>
+      </li>
+      <li><a class="nav__link nav__link--cta" href="https://www.bristolsu.org.uk/groups/bristol-trading-society-2436" target="_blank" rel="noopener noreferrer" aria-label="Join us: become a member on the Bristol SU page (opens in a new tab)">Join us</a></li>
+    </ul>
+  </nav>
+  <main id="guide" class="cg page-dark" tabindex="-1">
+    <div class="cg__inner">
+      <a class="cg__back" href="/roadmap/"><span aria-hidden="true">&larr;&nbsp;</span>Roadmap</a>
+
+      <h1>Annual Trading Competition 2026</h1>
+
+      <dl class="cg-facts">
+        <div><dt>Phase 1 &middot; Portfolio</dt><dd>Mon 23 &ndash; Fri 27 Nov<span>Portfolios begin to be tracked</span></dd></div>
+        <div><dt>Deck deadline</dt><dd>Sun 29 Nov, 6&nbsp;pm</dd></div>
+        <div><dt>Phase 2 &middot; Pitch</dt><dd>Mon 30 Nov, 6&nbsp;pm<span>Pugsley Lecture Theatre, Queens Building</span></dd></div>
+      </dl>
+
+      <!-- 1 -->
+      <section class="cg-sec" aria-labelledby="s1">
+        <div class="cg-sec__num" aria-hidden="true">01</div>
+        <div>
+          <h2 id="s1">How the score is made</h2>
+          <div class="cg-split" aria-hidden="true"><span></span><span></span><span></span></div>
+          <ul class="cg-key" aria-hidden="true">
+            <li><i style="background:#8c7350"></i>Portfolio 30%</li>
+            <li><i style="background:#16181c"></i>Pitch 60%</li>
+            <li><i style="background:#b9b0a0"></i>Questions 10%</li>
+          </ul>
+          <div class="cg-table">
+            <table>
+              <thead><tr><th scope="col">Component</th><th scope="col">When</th><th scope="col">What counts</th><th scope="col" class="cg-num">Weight</th></tr></thead>
+              <tbody>
+                <tr><td>Portfolio performance</td><td>Phase 1, 23&ndash;27 Nov</td><td>Return, Sharpe ratio and drawdown over the week</td><td class="cg-num">30%</td></tr>
+                <tr><td>Pitch</td><td>Phase 2, Mon 30 Nov</td><td>A trade idea, presented to the judges and scored on the <a href="/roadmap/competition/#s4">rubric in section 04</a></td><td class="cg-num">60%</td></tr>
+                <tr><td>Questions</td><td>Phase 2, Mon 30 Nov</td><td>Asking good questions of other desks, and answering the judges&rsquo; questions well</td><td class="cg-num">10%</td></tr>
+              </tbody>
+              <tfoot><tr><td colspan="3">Total</td><td class="cg-num">100%</td></tr></tfoot>
+            </table>
+          </div>
+          <p><strong>The phases are independent.</strong> You do not have to trade the asset you pitch, and the pitch does not have to explain your Phase&nbsp;1 trades.</p>
+        </div>
+      </section>
+
+      <!-- 2 -->
+      <section class="cg-sec" aria-labelledby="s2">
+        <div class="cg-sec__num" aria-hidden="true">02</div>
+        <div>
+          <h2 id="s2">Phase 1: portfolio performance</h2>
+          <p>From the open on <strong>Monday 23 November</strong> to the close on <strong>Friday 27 November</strong>, the only thing that matters is how the desk&rsquo;s portfolio performs. Gains or losses before the 23rd do not count.</p>
+          <h3>How it is measured</h3>
+          <div class="cg-table">
+            <table>
+              <thead><tr><th scope="col">Metric</th><th scope="col">What it rewards</th><th scope="col" class="cg-num">Share of Phase 1</th></tr></thead>
+              <tbody>
+                <tr><td>Total return</td><td>Change in account value over the week, in %</td><td class="cg-num">50%</td></tr>
+                <tr><td>Sharpe ratio</td><td>Return earned per unit of volatility, from daily account values</td><td class="cg-num">30%</td></tr>
+                <tr><td>Maximum drawdown</td><td>The smallest peak-to-trough fall during the week</td><td class="cg-num">20%</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>The existing <a href="/roadmap/ibkr-rules/">IBKR trading rules</a> apply as normal.</p>
+        </div>
+      </section>
+
+      <!-- 3 -->
+      <section class="cg-sec" aria-labelledby="s3">
+        <div class="cg-sec__num" aria-hidden="true">03</div>
+        <div>
+          <h2 id="s3">Phase 2: the pitch</h2>
+          <p>Each desk presents <strong>a trade idea</strong> to a panel of external judges.</p>
+
+          <div class="cg-note">
+            <p><strong>4 minutes to pitch. You will be cut off at 4:00</strong>, whether or not you have finished your slides. Then 2&ndash;3 minutes of questions from the judges.</p>
+          </div>
+
+          <h3>The trade</h3>
+          <ul>
+            <li>It must be a <strong>real, tradable instrument</strong>. It does not have to be on IBKR: anything available on a real trading platform is fine.</li>
+            <li>Long, short, futures and options are all allowed.</li>
+          </ul>
+
+          <h3>Time horizon</h3>
+          <div class="cg-table">
+            <table>
+              <thead><tr><th scope="col">Desk</th><th scope="col">Group</th><th scope="col">Horizon</th></tr></thead>
+              <tbody>
+                <tr><td>Equities desks</td><td>Equities</td><td>1 week to 12 months</td></tr>
+                <tr><td>Fixed Income, FX, Oil and Metals</td><td>FICC</td><td>1 week to 3 months</td></tr>
+                <tr><td>Macro and Quant</td><td>The asset you pitch</td><td>The range for that asset&rsquo;s group</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>What every pitch must cover</h3>
+          <p>Every pitch has the same <strong>three parts below</strong>. How you design the slides is up to you, but the order isn&rsquo;t.</p>
+
+          <div class="cg-part">
+            <p class="cg-part__head"><span>Part 1</span>The trade</p>
+            <p>Open with the trade. Say it in <strong>one sentence within the first 20 seconds</strong>: what you are trading, which way, and for how long.</p>
+            <p class="cg-eg">&ldquo;We are long the Nikkei 225 for three months.&rdquo;</p>
+            <p>Then show the trade summary early, ideally on slide 1 or 2. These six are required from every desk:</p>
+            <div class="cg-table">
+              <table>
+                <thead><tr><th scope="col">Field</th><th scope="col">What to give</th></tr></thead>
+                <tbody>
+                  <tr><td>Instrument and direction</td><td>The exact instrument (ticker, contract or bond) and whether you are long or short</td></tr>
+                  <tr><td>Entry</td><td>The price or level you would enter at</td></tr>
+                  <tr><td>Target</td><td>The price or level where you take profit</td></tr>
+                  <tr><td>Stop loss</td><td>The price or level where you accept you are wrong and exit</td></tr>
+                  <tr><td>Risk/reward</td><td>Distance to target divided by distance to stop, e.g. 2.5 : 1</td></tr>
+                  <tr><td>Time horizon</td><td>How long you expect to hold, within your group&rsquo;s range above</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>You can add more, such as position size or conviction, but these six must be there.</p>
+          </div>
+
+          <div class="cg-part">
+            <p class="cg-part__head"><span>Part 2</span>The thesis</p>
+            <p>Why you expect the move, with the evidence for it. Cover both of these:</p>
+            <ul>
+              <li><strong>Consensus vs our view.</strong> What the market is pricing today, and why you think it is wrong. This is the heart of the pitch: if you agree with the market, there is no trade.</li>
+              <li><strong>1 to 3 key drivers.</strong> The reasons the price will move your way. Back each one with evidence: a data point, a chart or a piece of analysis. Fewer, stronger drivers beat a long list.</li>
+            </ul>
+            <p>Test: if you cannot state the thesis in two sentences, it is not ready.</p>
+          </div>
+
+          <div class="cg-part">
+            <p class="cg-part__head"><span>Part 3</span>Catalysts and risks</p>
+            <ul>
+              <li><strong>Dated catalysts.</strong> The specific events within your horizon that should move the price, each with its date and what you expect it to show. &ldquo;Q4 earnings on 28 January&rdquo;, not &ldquo;upcoming earnings&rdquo;.</li>
+              <li><strong>Top risks and invalidation.</strong> The two or three things most likely to go wrong, and the price level or event that would prove you wrong. This is the logic behind your stop loss.</li>
+            </ul>
+          </div>
+
+          <h3>Slides</h3>
+          <ul>
+            <li>There is no slide limit. <strong>Time is the limit</strong>: choose how many slides, and what to cover, so that you finish inside 4 minutes.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 4 -->
+      <section class="cg-sec" aria-labelledby="s4">
+        <div class="cg-sec__num" aria-hidden="true">04</div>
+        <div>
+          <h2 id="s4">How the judges score the pitch</h2>
+          <p>The judges score every desk on the same five criteria.</p>
+          <div class="cg-table">
+            <table>
+              <thead><tr><th scope="col">Criterion</th><th scope="col">What the judges look for</th></tr></thead>
+              <tbody>
+                <tr><td>Clarity of thesis</td><td>The trade and the reason for it are clear within the first minute, and the view differs from consensus</td></tr>
+                <tr><td>Analysis and evidence</td><td>The data and reasoning genuinely support the view</td></tr>
+                <tr><td>Trade construction</td><td>Entry, target and stop are sensible, with a risk/reward that justifies the trade</td></tr>
+                <tr><td>Catalysts and risks</td><td>Catalysts are specific and dated; honest about what could go wrong and where the trade is invalidated</td></tr>
+                <tr><td>Delivery and energy</td><td>Confident, engaging and on time</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5 -->
+      <section class="cg-sec" aria-labelledby="s5">
+        <div class="cg-sec__num" aria-hidden="true">05</div>
+        <div>
+          <h2 id="s5">Questions: the extra 10%</h2>
+          <p>Points on the day go to desks that:</p>
+          <ul>
+            <li><strong>Ask</strong> sharp, relevant questions of other desks after their pitches; and</li>
+            <li><strong>Answer</strong> the judges&rsquo; questions on their own pitch clearly and directly.</li>
+          </ul>
+          <p>A good question tests the thesis or the risk, not the formatting. Prepare your analysts to listen to other pitches and ask.</p>
+        </div>
+      </section>
+
+      <!-- 6 -->
+      <section class="cg-sec" aria-labelledby="s6">
+        <div class="cg-sec__num" aria-hidden="true">06</div>
+        <div>
+          <h2 id="s6">What to fix from the bi-weekly meeting</h2>
+          <div class="cg-note">
+            <ul>
+              <li><strong>Time.</strong> Several desks ran over their 5 minutes. This time the cut-off at 4:00 is absolute.</li>
+              <li><strong>Energy.</strong> Pitch it like you believe it. Stand up straight, look at the judges, open strongly and do not read from the slides. You are selling a trade, not a funeral.</li>
+              <li><strong>Clarity.</strong> After 30 seconds, the judges should be able to say what you are trading and why. If they cannot, start again with the one-sentence trade.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7 -->
+      <section class="cg-sec" aria-labelledby="s7">
+        <div class="cg-sec__num" aria-hidden="true">07</div>
+        <div>
+          <h2 id="s7">Logistics</h2>
+          <div class="cg-table">
+            <table>
+              <tbody>
+                <tr><td>Pitch deck</td><td>Send it as a <strong>PDF</strong> to <a href="mailto:bristol-trading-society@bristol.ac.uk">bristol-trading-society@bristol.ac.uk</a> by <strong>6&nbsp;pm on Sunday 29 November</strong></td></tr>
+                <tr><td>Date and time</td><td>Monday 30 November, 6&nbsp;pm</td></tr>
+                <tr><td>Venue</td><td>Pugsley Lecture Theatre, Queens Building</td></tr>
+                <tr><td>Dress code</td><td>Business formal</td></tr>
+                <tr><td>Judges</td><td>An external panel</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="js/aurora.js?v=9" defer></script>
+  <script src="js/transitions.js?v=3" defer></script>
+  <script src="js/nav.js?v=3" defer></script>
+  <script src="js/promo.js?v=4" defer></script>
+  <!-- ===== Site footer ===== -->
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+
+      <div class="site-footer__top">
+        <div>
+          <a class="site-footer__brand-mark" href="/" aria-label="Bristol Trading Society — home">
+            <svg viewBox="0 0 93 78" fill="currentColor" aria-hidden="true" focusable="false">
+              <path fill-rule="evenodd" d="M65.13 6.00 L66.50 5.88 L66.88 6.25 L66.88 10.50 L71.88 15.25 L71.88 16.50 L72.88 17.25 L72.88 24.50 L70.88 26.25 L70.88 27.50 L66.88 31.25 L66.88 32.50 L67.88 33.25 L67.88 34.50 L69.88 36.25 L69.88 37.50 L70.88 38.25 L70.88 39.50 L71.88 40.25 L71.88 41.50 L72.88 42.25 L72.88 43.50 L73.88 44.25 L73.88 45.50 L75.88 47.25 L75.88 48.50 L76.88 49.25 L76.88 50.50 L77.88 51.25 L77.88 52.50 L78.88 53.25 L78.88 54.50 L80.88 56.25 L80.88 57.50 L81.88 58.25 L81.88 59.50 L82.88 60.25 L82.88 61.50 L83.88 62.25 L83.88 63.50 L84.88 64.25 L84.88 65.50 L86.88 67.25 L86.88 68.50 L87.88 69.25 L87.88 71.50 L87.50 71.88 L81.25 71.88 L80.88 71.50 L80.88 68.25 L79.88 67.50 L79.88 64.25 L78.88 63.50 L78.88 62.25 L78.50 61.88 L77.25 61.88 L76.50 60.88 L72.25 60.88 L71.25 59.88 L70.88 60.25 L70.88 62.50 L69.50 63.88 L68.25 63.88 L65.88 61.50 L65.88 60.25 L63.50 57.88 L62.00 57.88 L61.88 60.50 L62.88 61.25 L62.88 63.50 L63.88 64.25 L63.88 65.50 L64.88 66.25 L64.88 68.50 L65.88 69.25 L65.88 72.50 L65.50 72.88 L58.25 72.88 L56.88 71.25 L57.88 70.50 L57.88 68.25 L58.88 67.50 L58.88 65.25 L57.88 64.50 L57.88 63.25 L56.50 61.88 L55.25 61.88 L53.88 60.50 L53.88 58.25 L52.88 57.50 L52.88 54.25 L51.88 53.50 L51.88 52.25 L50.88 51.50 L50.88 50.25 L48.50 47.88 L47.88 48.25 L47.88 52.50 L48.88 53.25 L48.88 55.50 L49.88 56.25 L49.88 57.50 L50.88 58.25 L50.88 60.50 L51.88 61.25 L51.88 63.50 L51.50 63.88 L50.25 63.88 L49.50 64.88 L44.25 64.88 L43.50 63.88 L42.25 63.88 L36.50 57.88 L34.25 57.88 L32.50 59.88 L31.25 59.88 L29.50 61.88 L28.25 61.88 L27.50 62.88 L26.25 62.88 L24.50 64.88 L23.25 64.88 L22.50 65.88 L20.25 65.88 L19.50 66.88 L16.25 66.88 L15.88 67.25 L15.88 69.50 L14.88 70.25 L14.88 71.50 L13.50 72.88 L10.25 72.88 L8.88 71.50 L10.88 69.50 L10.88 68.25 L12.88 66.50 L12.88 65.25 L14.25 63.88 L15.50 63.88 L16.25 62.88 L18.50 62.88 L20.88 60.50 L20.88 59.25 L21.88 58.25 L21.50 57.88 L20.25 57.88 L19.50 58.88 L17.25 58.88 L16.50 59.88 L10.25 59.88 L9.50 58.88 L8.25 58.88 L5.88 56.50 L5.88 53.25 L7.88 51.50 L7.88 50.25 L14.88 43.50 L14.88 42.25 L15.88 41.50 L15.50 40.88 L13.25 40.88 L12.50 41.88 L8.25 41.88 L7.50 40.88 L6.25 40.88 L5.88 40.50 L5.88 39.25 L7.25 37.88 L8.50 37.88 L9.25 36.88 L10.50 36.88 L11.25 35.88 L14.50 35.88 L15.25 36.88 L16.50 36.88 L16.88 37.25 L16.88 38.50 L17.88 39.25 L17.88 41.50 L16.88 42.25 L16.88 44.50 L13.88 47.25 L13.88 48.50 L9.88 52.25 L9.88 55.50 L11.25 56.88 L13.50 56.88 L14.25 55.88 L16.50 55.88 L18.25 53.88 L19.50 53.88 L19.88 53.50 L19.88 52.25 L22.25 49.88 L23.50 49.88 L25.25 47.88 L26.50 47.88 L27.25 46.88 L30.50 46.88 L31.50 47.88 L31.88 47.50 L31.88 44.25 L32.88 43.50 L32.88 41.25 L33.88 40.50 L33.88 39.25 L38.25 34.88 L39.50 34.88 L40.25 33.88 L41.50 33.88 L42.25 32.88 L44.50 32.88 L44.88 32.50 L44.50 31.88 L43.25 31.88 L42.50 30.88 L41.25 30.88 L36.88 26.50 L36.88 20.25 L40.50 16.88 L40.88 17.50 L39.88 18.00 L39.88 22.50 L42.25 24.88 L43.50 24.88 L44.25 25.88 L48.50 25.88 L50.25 23.88 L54.50 23.88 L55.50 24.88 L56.25 23.88 L57.50 23.88 L58.25 22.88 L60.50 22.88 L61.25 23.88 L63.50 23.88 L65.88 21.50 L65.88 20.25 L66.88 19.50 L66.88 16.25 L65.88 15.50 L65.88 14.25 L63.88 12.50 L63.88 8.25 L64.88 7.50 L65.00 6.13 Z M58.13 31.00 L60.50 30.88 L60.88 31.25 L60.50 31.88 L59.25 31.88 L58.88 32.25 L59.88 33.50 L59.50 33.88 L58.25 33.88 L57.50 35.88 L56.88 35.50 L56.88 33.25 L57.88 32.50 L58.00 31.13 Z M51.13 39.00 L56.50 38.88 L56.88 39.25 L56.88 42.50 L56.50 42.88 L55.88 42.50 L55.88 40.25 L55.50 39.88 L51.00 39.88 L51.00 39.13 Z M50.13 40.00 L50.75 39.88 L50.88 40.50 L51.88 41.25 L51.88 42.50 L51.25 42.88 L49.88 41.50 L50.00 40.13 Z M71.13 53.00 L71.88 53.25 L71.88 56.50 L71.50 56.88 L70.88 56.50 L71.00 53.13 Z M61.13 57.00 L61.50 56.88 L61.88 57.75 L61.25 57.88 L61.00 57.13 Z M34.13 63.00 L36.50 62.88 L39.88 66.25 L39.88 67.50 L39.50 67.88 L38.25 67.88 L37.50 68.88 L34.25 68.88 L33.88 69.25 L33.88 70.50 L31.50 72.88 L29.25 72.88 L27.88 71.50 L27.88 70.25 L30.88 67.50 L30.88 64.25 L31.25 63.88 L33.50 63.88 L34.00 63.13 Z"></path>
+            </svg>
+            <span class="site-footer__wordmark">Bristol Trading Society</span>
+          </a>
+          <p class="site-footer__blurb">
+            <strong>Do the work. Then defend it.</strong>
+            Student-run markets and trading society at the University of Bristol, since 2017.
+          </p>
+        </div>
+
+        <div>
+          <p class="site-footer__col-title">Society</p>
+          <ul class="site-footer__list">
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/events">Events</a></li>
+            <li><a href="/team">Team</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="site-footer__col-title">Get involved</p>
+          <ul class="site-footer__list">
+            <li><a href="/contact">Contact us</a></li>
+            <li><a href="https://www.linkedin.com/company/bristol-trading-society/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+            <li><a href="https://www.instagram.com/bristradingsociety/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+            <li><a href="https://chat.whatsapp.com/JhXGjAMrDjqEm4DTKpukrZ" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="site-footer__col-title">Find us</p>
+          <div class="site-footer__contact">
+            <address>
+              12 Priory Road Complex<br />
+              Clifton, Bristol<br />
+              BS8 1TU
+            </address>
+            <a href="mailto:bristol-trading-society@bristol.ac.uk">bristol-trading-society@bristol.ac.uk</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mailing list. Deliberately in the footer rather than the page body:
+           it should be findable from anywhere and interrupt nothing. -->
+      <div class="signup">
+        <div class="signup__copy">
+          <p class="signup__title">Hear when things happen</p>
+          <p class="signup__note">
+            Join the society on the Bristol SU page and you are on our mailing list: speaker
+            evenings, events with firms and the analyst intake.
+          </p>
+        </div>
+        <a class="signup__btn signup__link" href="https://www.bristolsu.org.uk/groups/bristol-trading-society-2436" target="_blank" rel="noopener noreferrer">
+          Join on the SU page<span class="visually-hidden"> (opens in a new tab)</span>
+          <span aria-hidden="true">&nearr;</span>
+        </a>
+      </div>
+
+      <div class="site-footer__bottom">
+        <p>&copy; 2026 Bristol Trading Society &middot; University of Bristol</p>
+        <p class="site-footer__legal">
+          <a href="/privacy">Privacy Policy</a>
+        </p>
+      </div>
+
+    </div>
+  </footer>
+
+  <script src="js/cookies.js?v=3" defer></script>
+  <script src="js/signup.js?v=1" defer></script>
+  <script src="js/opportunities.js?v=1" defer></script>
+</body>
+</html>
