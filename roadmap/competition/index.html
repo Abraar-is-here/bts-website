@@ -58,8 +58,26 @@
     }
     body { background: #f4f1ea; color: var(--ink); }
     main.page-dark, .site-footer { background: rgba(244, 241, 234, 0.35); }
-    .nav { box-shadow: 0 10px 30px rgba(22, 24, 28, 0.18), 0 2px 6px rgba(22, 24, 28, 0.12); }
-    .nav__link--cta, .nav__link--cta:hover { background: #f4f1ea; color: #16181c; box-shadow: none; }
+
+    /* ---- Nav: logo left; on the right a quiet competition clock -------- */
+    .nav { min-height: 62px; box-shadow: 0 10px 30px rgba(22, 24, 28, 0.18), 0 2px 6px rgba(22, 24, 28, 0.12); }
+    .atc-mini { display: flex; align-items: center; gap: 14px; padding-right: 10px; font-family: 'Libre Franklin', Arial, sans-serif; font-size: 0.8125rem; white-space: nowrap; }
+    .atc-mini[hidden] { display: none; }
+    .atc-mini__label { color: rgba(244, 241, 234, 0.55); }
+    .atc-mini__clock { min-width: 11.5ch; font-weight: 600; font-variant-numeric: tabular-nums; letter-spacing: 0.01em; color: #f4f1ea; }
+    .atc-mini__clock:empty { display: none; }
+    /* Four dots on a hairline; the line between two dots fills once the
+       earlier date has passed, and the next date breathes. */
+    .atc-mini__rail { display: flex; align-items: center; margin: 0 0 0 4px; padding: 0 0 0 16px; list-style: none; border-left: 1px solid rgba(244, 241, 234, 0.14); }
+    .atc-mini__rail li { position: relative; width: 7px; height: 7px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(244, 241, 234, 0.45); }
+    .atc-mini__rail li + li { margin-left: 22px; }
+    .atc-mini__rail li + li::before { content: ''; position: absolute; top: 3px; right: 11px; width: 18px; height: 1px; background: rgba(244, 241, 234, 0.18); }
+    .atc-mini__rail li.is-done { background: #f4f1ea; box-shadow: none; }
+    .atc-mini__rail li.is-done + li::before { background: rgba(244, 241, 234, 0.75); }
+    .atc-mini__rail li.is-next { box-shadow: inset 0 0 0 1.5px #f4f1ea; animation: atc-breathe 2.4s ease-in-out infinite; }
+    @keyframes atc-breathe { 0%, 100% { box-shadow: inset 0 0 0 1.5px #f4f1ea, 0 0 0 0 rgba(244, 241, 234, 0.35); } 50% { box-shadow: inset 0 0 0 1.5px #f4f1ea, 0 0 0 5px rgba(244, 241, 234, 0); } }
+    @media (max-width: 640px) { .atc-mini__label { display: none; } .atc-mini { gap: 10px; padding-right: 4px; } .atc-mini__rail li + li { margin-left: 14px; } .atc-mini__rail li + li::before { width: 10px; right: 9px; } }
+    @media (prefers-reduced-motion: reduce) { .atc-mini__rail li.is-next { animation: none; } }
 
     main.cg { padding: 140px var(--gutter) var(--space-7); background: linear-gradient(180deg, rgba(244, 241, 234, 0.3) 0, rgba(244, 241, 234, 0.84) 480px, rgba(244, 241, 234, 0.9) 100%); }
     .cg__inner { max-width: 940px; margin: 0 auto; }
@@ -155,28 +173,22 @@
     </div>
   </div>
 
+  <!-- The site's pill nav, with the logo on the left and, in place of the
+       links, a quiet competition clock: stage, countdown and four dots. -->
   <nav class="nav" aria-label="Primary">
-    <a class="logo" href="/" aria-label="Bristol Trading Society — home">
+    <a class="logo" href="/" aria-label="Bristol Trading Society &mdash; home">
       <img class="logo__lockup" src="assets/img/bts-logo-white.png" alt="" width="1127" height="301" />
     </a>
-    <ul class="nav__links">
-      <li class="nav__mobile">
-        <button class="nav__menu-btn" aria-expanded="false" aria-haspopup="true">
-          Menu
-          <svg class="nav__chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
-            <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-        <ul class="nav__dropdown" role="menu">
-          <li><a class="nav__dropdown-link" href="/" role="menuitem">Home</a></li>
-          <li><a class="nav__dropdown-link" href="/about" role="menuitem">About Us</a></li>
-          <li><a class="nav__dropdown-link" href="/events" role="menuitem">Events</a></li>
-          <li><a class="nav__dropdown-link nav__floor" href="/books/" role="menuitem">The Floor<span class="nav__live" aria-hidden="true"></span></a></li>
-          <li><a class="nav__dropdown-link" href="/team" role="menuitem">Team</a></li>
-        </ul>
-      </li>
-      <li><a class="nav__link nav__link--cta" href="https://www.bristolsu.org.uk/groups/bristol-trading-society-2436" target="_blank" rel="noopener noreferrer" aria-label="Join us: become a member on the Bristol SU page (opens in a new tab)">Join us</a></li>
-    </ul>
+    <div class="atc-mini" hidden>
+      <span class="atc-mini__label"></span>
+      <span class="atc-mini__clock"></span>
+      <ol class="atc-mini__rail" aria-label="Key dates">
+        <li data-at="2026-11-23T00:00:00Z" title="23 Nov &middot; Phase 1 opens"><span class="visually-hidden">23 November, Phase 1 opens</span></li>
+        <li data-at="2026-11-27T21:00:00Z" title="27 Nov &middot; Phase 1 closes"><span class="visually-hidden">27 November, Phase 1 closes</span></li>
+        <li data-at="2026-11-29T18:00:00Z" title="29 Nov &middot; Decks due"><span class="visually-hidden">29 November, decks due</span></li>
+        <li data-at="2026-11-30T18:00:00Z" title="30 Nov &middot; Pitches"><span class="visually-hidden">30 November, pitches</span></li>
+      </ol>
+    </div>
   </nav>
   <main id="guide" class="cg page-dark" tabindex="-1">
     <div class="cg__inner">
@@ -386,6 +398,47 @@
     </div>
   </main>
 
+  <script>
+    /* Nav clock: stage, countdown and the four dates. Times are UTC;
+       November is GMT, so they are UK times. */
+    (function () {
+      var box = document.querySelector('.atc-mini');
+      if (!box) return;
+      var label = box.querySelector('.atc-mini__label'), clock = box.querySelector('.atc-mini__clock'),
+          dots = box.querySelectorAll('.atc-mini__rail li');
+      var T = function (x) { return Date.parse(x); };
+      var stages = [
+        { to: T('2026-11-23T00:00:00Z'), label: 'Phase 1 starts in' },
+        { to: T('2026-11-27T21:00:00Z'), label: 'Phase 1 ends in' },
+        { to: T('2026-11-29T18:00:00Z'), label: 'Decks due in' },
+        { to: T('2026-11-30T18:00:00Z'), label: 'Pitches begin in' },
+        { to: T('2026-11-30T22:00:00Z'), label: 'Pitches under way', noClock: true },
+        { to: Infinity, label: 'Competition complete', noClock: true }
+      ];
+      var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+      function now() { return window.BTSClock ? window.BTSClock.now() : Date.now(); }
+      function tick() {
+        var t = now(), st = stages[stages.length - 1];
+        for (var i = 0; i < stages.length; i++) { if (t < stages[i].to) { st = stages[i]; break; } }
+        label.textContent = st.label;
+        if (st.noClock) clock.textContent = '';
+        else {
+          var left = Math.max(0, Math.floor((st.to - t) / 1000)), d = Math.floor(left / 86400);
+          clock.textContent = (d ? d + 'd ' : '') + pad(Math.floor(left / 3600) % 24) + 'h ' + pad(Math.floor(left / 60) % 60) + 'm ' + pad(left % 60) + 's';
+        }
+        var nextSet = false;
+        dots.forEach(function (li) {
+          var done = t >= T(li.getAttribute('data-at'));
+          li.classList.toggle('is-done', done);
+          li.classList.toggle('is-next', !done && !nextSet);
+          if (!done) nextSet = true;
+        });
+        box.hidden = false;
+      }
+      tick();
+      setInterval(tick, 1000);
+    })();
+  </script>
   <script src="js/aurora.js?v=9" defer></script>
   <script src="js/transitions.js?v=3" defer></script>
   <script src="js/nav.js?v=3" defer></script>
