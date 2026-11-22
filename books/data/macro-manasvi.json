@@ -1,0 +1,538 @@
+{
+ "schema": 1,
+ "id": "macro-manasvi",
+ "accountKey": "af161dc321ab",
+ "currency": "GBP",
+ "updated": "2026-11-22T23:02:42.671Z",
+ "asOf": "2026-11-20",
+ "nav": [
+  [
+   "2026-10-21",
+   0
+  ],
+  [
+   "2026-10-22",
+   0
+  ],
+  [
+   "2026-10-23",
+   0
+  ],
+  [
+   "2026-10-26",
+   0
+  ],
+  [
+   "2026-10-27",
+   0
+  ],
+  [
+   "2026-10-28",
+   0
+  ],
+  [
+   "2026-10-29",
+   0
+  ],
+  [
+   "2026-10-30",
+   0
+  ],
+  [
+   "2026-11-02",
+   0
+  ],
+  [
+   "2026-11-03",
+   0
+  ],
+  [
+   "2026-11-04",
+   0
+  ],
+  [
+   "2026-11-05",
+   0
+  ],
+  [
+   "2026-11-06",
+   0
+  ],
+  [
+   "2026-11-09",
+   1000000
+  ],
+  [
+   "2026-11-10",
+   1000069.276281154
+  ],
+  [
+   "2026-11-11",
+   1000267.239017767
+  ],
+  [
+   "2026-11-12",
+   1000232.663802252
+  ],
+  [
+   "2026-11-13",
+   1000297.957557166
+  ],
+  [
+   "2026-11-16",
+   1000482.284177125
+  ],
+  [
+   "2026-11-17",
+   1000494.0771736
+  ],
+  [
+   "2026-11-18",
+   1000484.760754078
+  ],
+  [
+   "2026-11-19",
+   1000537.884432275
+  ],
+  [
+   "2026-11-20",
+   1000340.405475495
+  ]
+ ],
+ "flows": [
+  {
+   "id": "11120658384",
+   "date": "2026-11-09",
+   "amount": 1000000
+  }
+ ],
+ "positions": [
+  {
+   "date": "2026-11-20",
+   "symbol": "B3SA3",
+   "description": "B3 SA-BRASIL BOLSA BALCAO",
+   "asset": "STK",
+   "currency": "BRL",
+   "fx": 0.12845,
+   "quantity": 100,
+   "multiplier": 1,
+   "exchange": "B3",
+   "mark": 14.28,
+   "value": 1428,
+   "cost": 14.89488,
+   "unrealized": -61.488,
+   "pctNav": 2.3,
+   "key": "c312180324"
+  },
+  {
+   "date": "2026-11-20",
+   "symbol": "CEA1",
+   "description": "ISHARES MSCI EM ASIA ACC",
+   "asset": "STK",
+   "currency": "GBP",
+   "fx": 1,
+   "quantity": 10,
+   "multiplier": 1,
+   "exchange": "LSEETF",
+   "mark": 184.56,
+   "value": 1845.6,
+   "cost": 201.05,
+   "unrealized": -164.9,
+   "pctNav": 23.14,
+   "key": "c78999157"
+  },
+  {
+   "date": "2026-11-20",
+   "symbol": "EMIM",
+   "description": "ISHARES CORE EM IMI ACC",
+   "asset": "STK",
+   "currency": "GBP",
+   "fx": 1,
+   "quantity": 25,
+   "multiplier": 1,
+   "exchange": "LSEETF",
+   "mark": 34.32,
+   "value": 858,
+   "cost": 37.3,
+   "unrealized": -74.5,
+   "pctNav": 10.76,
+   "key": "c153454125"
+  },
+  {
+   "date": "2026-11-20",
+   "symbol": "FRIN",
+   "description": "FRK FTSE INDIA UCITS ETF",
+   "asset": "STK",
+   "currency": "GBP",
+   "fx": 1,
+   "quantity": 30,
+   "multiplier": 1,
+   "exchange": "LSEETF",
+   "mark": 33.515,
+   "value": 1005.45,
+   "cost": 32.43,
+   "unrealized": 32.55,
+   "pctNav": 12.61,
+   "key": "c373117664"
+  },
+  {
+   "date": "2026-11-20",
+   "symbol": "IBZL",
+   "description": "ISHARES MSCI BRAZIL",
+   "asset": "STK",
+   "currency": "GBP",
+   "fx": 1,
+   "quantity": 25,
+   "multiplier": 1,
+   "exchange": "LSEETF",
+   "mark": 17.755,
+   "value": 443.88,
+   "cost": 19.58,
+   "unrealized": -45.62,
+   "pctNav": 5.57,
+   "key": "c36773796"
+  },
+  {
+   "date": "2026-11-20",
+   "symbol": "SGLN",
+   "description": "ISHARES PHYSICAL GOLD ETC",
+   "asset": "STK",
+   "currency": "GBP",
+   "fx": 1,
+   "quantity": 50,
+   "multiplier": 1,
+   "exchange": "LSEETF",
+   "mark": 52.47,
+   "value": 2623.5,
+   "cost": 58.89,
+   "unrealized": -321,
+   "pctNav": 32.9,
+   "key": "c86656185"
+  },
+  {
+   "date": "2026-11-20",
+   "symbol": "SPOL",
+   "description": "ISHARES MSCI POLAND",
+   "asset": "STK",
+   "currency": "GBP",
+   "fx": 1,
+   "quantity": 15,
+   "multiplier": 1,
+   "exchange": "LSEETF",
+   "mark": 28.93,
+   "value": 433.95,
+   "cost": 31.04,
+   "unrealized": -31.65,
+   "pctNav": 5.44,
+   "key": "c83007903"
+  },
+  {
+   "date": "2026-11-20",
+   "symbol": "S68",
+   "description": "SINGAPORE EXCHANGE LTD",
+   "asset": "STK",
+   "currency": "SGD",
+   "fx": 0.5923,
+   "quantity": 20,
+   "multiplier": 1,
+   "exchange": "SGX",
+   "mark": 19.42,
+   "value": 388.4,
+   "cost": 20.755,
+   "unrealized": -26.7,
+   "pctNav": 2.88,
+   "key": "c39861749"
+  },
+  {
+   "date": "2026-11-20",
+   "symbol": "ESLT",
+   "description": "ELBIT SYSTEMS LTD",
+   "asset": "STK",
+   "currency": "USD",
+   "fx": 0.76417,
+   "quantity": 0.7,
+   "multiplier": 1,
+   "exchange": "NASDAQ",
+   "mark": 655.89,
+   "value": 459.12,
+   "cost": 735.148574286,
+   "unrealized": -55.484002,
+   "pctNav": 4.4,
+   "key": "c6478305"
+  }
+ ],
+ "positionsDate": "2026-11-20",
+ "trades": [
+  {
+   "id": "1922615352",
+   "time": "2026-11-10T06:29:44",
+   "symbol": "SGLN",
+   "description": "ISHARES PHYSICAL GOLD ETC",
+   "asset": "STK",
+   "currency": "GBP",
+   "fx": 1,
+   "quantity": 50,
+   "price": 58.83,
+   "multiplier": 1,
+   "commission": -3,
+   "pnl": 0,
+   "openClose": "O",
+   "ref": "58681116",
+   "underlying": "SGLN",
+   "key": "c86656185"
+  },
+  {
+   "id": "1922618268",
+   "time": "2026-11-10T06:43:02",
+   "symbol": "CEA1",
+   "description": "ISHARES MSCI EM ASIA ACC",
+   "asset": "STK",
+   "currency": "GBP",
+   "fx": 1,
+   "quantity": 5,
+   "price": 200.75,
+   "multiplier": 1,
+   "commission": -3,
+   "pnl": 0,
+   "openClose": "O",
+   "ref": "44323889",
+   "underlying": "CEA1",
+   "key": "c78999157"
+  },
+  {
+   "id": "1922619535",
+   "time": "2026-11-10T06:48:01",
+   "symbol": "EUR.ZAR",
+   "description": "EUR.ZAR",
+   "asset": "CASH",
+   "currency": "ZAR",
+   "fx": 0.045331,
+   "quantity": 350,
+   "price": 18.4,
+   "multiplier": 1,
+   "commission": -32.82301294919591,
+   "pnl": 0,
+   "openClose": "",
+   "ref": "41040876",
+   "underlying": "",
+   "key": "c208558343"
+  },
+  {
+   "id": "1922633234",
+   "time": "2026-11-10T07:30:27",
+   "symbol": "EMIM",
+   "description": "ISHARES CORE EM IMI ACC",
+   "asset": "STK",
+   "currency": "GBP",
+   "fx": 1,
+   "quantity": 25,
+   "price": 37.18,
+   "multiplier": 1,
+   "commission": -3,
+   "pnl": 0,
+   "openClose": "O",
+   "ref": "71526101",
+   "underlying": "EMIM",
+   "key": "c153454125"
+  },
+  {
+   "id": "1922649845",
+   "time": "2026-11-10T08:04:45",
+   "symbol": "GBP.ZAR",
+   "description": "GBP.ZAR",
+   "asset": "CASH",
+   "currency": "ZAR",
+   "fx": 0.045331,
+   "quantity": -292,
+   "price": 22.0163,
+   "multiplier": 1,
+   "commission": -32.82301294919591,
+   "pnl": 0,
+   "openClose": "",
+   "ref": "",
+   "underlying": "",
+   "key": "c208558332"
+  },
+  {
+   "id": "1922656593",
+   "time": "2026-11-10T08:16:26",
+   "symbol": "CEA1",
+   "description": "ISHARES MSCI EM ASIA ACC",
+   "asset": "STK",
+   "currency": "GBP",
+   "fx": 1,
+   "quantity": 5,
+   "price": 200.75,
+   "multiplier": 1,
+   "commission": 0,
+   "pnl": 0,
+   "openClose": "O",
+   "ref": "44323889",
+   "underlying": "CEA1",
+   "key": "c78999157"
+  },
+  {
+   "id": "1922663724",
+   "time": "2026-11-10T08:30:07",
+   "symbol": "EUR.ZAR",
+   "description": "EUR.ZAR",
+   "asset": "CASH",
+   "currency": "ZAR",
+   "fx": 0.045331,
+   "quantity": -350,
+   "price": 18.39,
+   "multiplier": 1,
+   "commission": -32.82301294919591,
+   "pnl": 0,
+   "openClose": "",
+   "ref": "18634824",
+   "underlying": "",
+   "key": "c208558343"
+  },
+  {
+   "id": "1922663756",
+   "time": "2026-11-10T08:30:33",
+   "symbol": "SPOL",
+   "description": "ISHARES MSCI POLAND",
+   "asset": "STK",
+   "currency": "GBP",
+   "fx": 1,
+   "quantity": 15,
+   "price": 30.84,
+   "multiplier": 1,
+   "commission": -3,
+   "pnl": 0,
+   "openClose": "O",
+   "ref": "63113146",
+   "underlying": "SPOL",
+   "key": "c83007903"
+  },
+  {
+   "id": "1922671143",
+   "time": "2026-11-10T08:40:42",
+   "symbol": "IBZL",
+   "description": "ISHARES MSCI BRAZIL",
+   "asset": "STK",
+   "currency": "GBP",
+   "fx": 1,
+   "quantity": 25,
+   "price": 19.46,
+   "multiplier": 1,
+   "commission": -3,
+   "pnl": 0,
+   "openClose": "O",
+   "ref": "31540582",
+   "underlying": "IBZL",
+   "key": "c36773796"
+  },
+  {
+   "id": "1922671483",
+   "time": "2026-11-10T08:40:45",
+   "symbol": "B3SA3",
+   "description": "B3 SA-BRASIL BOLSA BALCAO",
+   "asset": "STK",
+   "currency": "BRL",
+   "fx": 0.13421,
+   "quantity": 100,
+   "price": 14.88,
+   "multiplier": 1,
+   "commission": -1.488,
+   "pnl": 0,
+   "openClose": "O",
+   "ref": "74012892",
+   "underlying": "B3SA3",
+   "key": "c312180324"
+  },
+  {
+   "id": "1922731387",
+   "time": "2026-11-10T09:30:39",
+   "symbol": "ESLT",
+   "description": "ELBIT SYSTEMS LTD",
+   "asset": "STK",
+   "currency": "USD",
+   "fx": 0.74933,
+   "quantity": 0.7,
+   "price": 733.72,
+   "multiplier": 1,
+   "commission": -1.0000021,
+   "pnl": 0,
+   "openClose": "O",
+   "ref": "46471062",
+   "underlying": "ESLT",
+   "key": "c6478305"
+  },
+  {
+   "id": "1923524936",
+   "time": "2026-11-10T20:00:01",
+   "symbol": "S68",
+   "description": "SINGAPORE EXCHANGE LTD",
+   "asset": "STK",
+   "currency": "SGD",
+   "fx": 0.58652,
+   "quantity": 20,
+   "price": 20.63,
+   "multiplier": 1,
+   "commission": -2.5,
+   "pnl": 0,
+   "openClose": "O",
+   "ref": "35316967",
+   "underlying": "S68",
+   "key": "c39861749"
+  },
+  {
+   "id": "1925585744",
+   "time": "2026-11-13T03:00:05",
+   "symbol": "FRIN",
+   "description": "FRK FTSE INDIA UCITS ETF",
+   "asset": "STK",
+   "currency": "GBP",
+   "fx": 1,
+   "quantity": 30,
+   "price": 32.33,
+   "multiplier": 1,
+   "commission": -3,
+   "pnl": 0,
+   "openClose": "O",
+   "ref": "24886058",
+   "underlying": "FRIN",
+   "key": "c373117664"
+  },
+  {
+   "id": "1927786483",
+   "time": "2026-11-16T15:36:19",
+   "symbol": "EUR.ZAR",
+   "description": "EUR.ZAR",
+   "asset": "CASH",
+   "currency": "ZAR",
+   "fx": 0.044665,
+   "quantity": -350,
+   "price": 18.68137,
+   "multiplier": 1,
+   "commission": -33.88693607970446,
+   "pnl": 0,
+   "openClose": "",
+   "ref": "50457503",
+   "underlying": "",
+   "key": "c208558343"
+  },
+  {
+   "id": "1927870452",
+   "time": "2026-11-16T16:20:38",
+   "symbol": "GBP.ZAR",
+   "description": "GBP.ZAR",
+   "asset": "CASH",
+   "currency": "ZAR",
+   "fx": 0.044665,
+   "quantity": 292,
+   "price": 22.39258,
+   "multiplier": 1,
+   "commission": -33.88693607970446,
+   "pnl": 0,
+   "openClose": "",
+   "ref": "27015289",
+   "underlying": "",
+   "key": "c208558332"
+  }
+ ],
+ "notes": {}
+}

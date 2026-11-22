@@ -1,0 +1,283 @@
+{
+ "schema": 1,
+ "id": "ficc-anay",
+ "accountKey": "549b2f3beefb",
+ "currency": "GBP",
+ "updated": "2026-11-22T20:42:03.160Z",
+ "asOf": "2026-11-20",
+ "nav": [
+  [
+   "2026-10-21",
+   0
+  ],
+  [
+   "2026-10-22",
+   0
+  ],
+  [
+   "2026-10-23",
+   0
+  ],
+  [
+   "2026-10-26",
+   0
+  ],
+  [
+   "2026-10-27",
+   0
+  ],
+  [
+   "2026-10-28",
+   0
+  ],
+  [
+   "2026-10-29",
+   0
+  ],
+  [
+   "2026-10-30",
+   0
+  ],
+  [
+   "2026-11-02",
+   0
+  ],
+  [
+   "2026-11-03",
+   0
+  ],
+  [
+   "2026-11-04",
+   0
+  ],
+  [
+   "2026-11-05",
+   0
+  ],
+  [
+   "2026-11-06",
+   1000000
+  ],
+  [
+   "2026-11-09",
+   999616.855188972
+  ],
+  [
+   "2026-11-10",
+   1000474.882455293
+  ],
+  [
+   "2026-11-11",
+   1000540.638511718
+  ],
+  [
+   "2026-11-12",
+   1001000.380037078
+  ],
+  [
+   "2026-11-13",
+   1001100.677790285
+  ],
+  [
+   "2026-11-16",
+   1001381.550473344
+  ],
+  [
+   "2026-11-17",
+   1001942.063041331
+  ],
+  [
+   "2026-11-18",
+   1005164.621671153
+  ],
+  [
+   "2026-11-19",
+   1006628.75266922
+  ],
+  [
+   "2026-11-20",
+   1007211.985091467
+  ]
+ ],
+ "flows": [
+  {
+   "id": "11115625863",
+   "date": "2026-11-06",
+   "amount": 1000000
+  }
+ ],
+ "positions": [],
+ "positionsDate": "2026-11-20",
+ "trades": [
+  {
+   "id": "1920942795",
+   "time": "2026-11-08T18:08:33",
+   "symbol": "XAGUSD",
+   "description": "London Silver",
+   "asset": "CMDTY",
+   "currency": "USD",
+   "fx": 0.74395,
+   "quantity": -600,
+   "price": 51.9435,
+   "multiplier": 1,
+   "commission": -9.34983,
+   "pnl": 0,
+   "openClose": "O",
+   "ref": "53927408",
+   "underlying": "",
+   "key": "c77124483"
+  },
+  {
+   "id": "1922682551",
+   "time": "2026-11-10T09:00:58",
+   "symbol": "XAGUSD",
+   "description": "London Silver",
+   "asset": "CMDTY",
+   "currency": "USD",
+   "fx": 0.74933,
+   "quantity": 300,
+   "price": 51.889,
+   "multiplier": 1,
+   "commission": -4.67001,
+   "pnl": 7.005075,
+   "openClose": "C",
+   "ref": "1991575",
+   "underlying": "",
+   "key": "c77124483"
+  },
+  {
+   "id": "1925636882",
+   "time": "2026-11-13T07:30:36",
+   "symbol": "XAGUSD",
+   "description": "London Silver",
+   "asset": "CMDTY",
+   "currency": "USD",
+   "fx": 0.75678,
+   "quantity": 100,
+   "price": 50.015,
+   "multiplier": 1,
+   "commission": -2,
+   "pnl": 189.291695,
+   "openClose": "C",
+   "ref": "64178880",
+   "underlying": "",
+   "key": "c77124483"
+  },
+  {
+   "id": "1925637270",
+   "time": "2026-11-13T07:31:19",
+   "symbol": "XAGUSD",
+   "description": "London Silver",
+   "asset": "CMDTY",
+   "currency": "USD",
+   "fx": 0.75678,
+   "quantity": 100,
+   "price": 50.012,
+   "multiplier": 1,
+   "commission": -2,
+   "pnl": 189.591695,
+   "openClose": "C",
+   "ref": "92418542",
+   "underlying": "",
+   "key": "c77124483"
+  },
+  {
+   "id": "1925637339",
+   "time": "2026-11-13T07:31:43",
+   "symbol": "XAGUSD",
+   "description": "London Silver",
+   "asset": "CMDTY",
+   "currency": "USD",
+   "fx": 0.75678,
+   "quantity": 100,
+   "price": 50.005,
+   "multiplier": 1,
+   "commission": -2,
+   "pnl": 190.291695,
+   "openClose": "C",
+   "ref": "35283098",
+   "underlying": "",
+   "key": "c77124483"
+  },
+  {
+   "id": "1928050893",
+   "time": "2026-11-17T06:50:40",
+   "symbol": "XAGUSD",
+   "description": "London Silver",
+   "asset": "CMDTY",
+   "currency": "USD",
+   "fx": 0.75712,
+   "quantity": -2000,
+   "price": 47.714,
+   "multiplier": 1,
+   "commission": -28.6284,
+   "pnl": 0,
+   "openClose": "O",
+   "ref": "19902297",
+   "underlying": "",
+   "key": "c77124483"
+  },
+  {
+   "id": "1929094256",
+   "time": "2026-11-18T06:29:38",
+   "symbol": "XAGUSD",
+   "description": "London Silver",
+   "asset": "CMDTY",
+   "currency": "USD",
+   "fx": 0.76043,
+   "quantity": 700,
+   "price": 45.814,
+   "multiplier": 1,
+   "commission": -9.62094,
+   "pnl": 1310.35912,
+   "openClose": "C",
+   "ref": "84023488",
+   "underlying": "",
+   "key": "c77124483"
+  },
+  {
+   "id": "1930643202",
+   "time": "2026-11-19T11:02:52",
+   "symbol": "XAGUSD",
+   "description": "London Silver",
+   "asset": "CMDTY",
+   "currency": "USD",
+   "fx": 0.76406,
+   "quantity": 650,
+   "price": 44.517,
+   "multiplier": 1,
+   "commission": -8.680815,
+   "pnl": 2060.064955,
+   "openClose": "C",
+   "ref": "34143",
+   "underlying": "",
+   "key": "c77124483"
+  },
+  {
+   "id": "1931425687",
+   "time": "2026-11-20T08:46:55",
+   "symbol": "XAGUSD",
+   "description": "London Silver",
+   "asset": "CMDTY",
+   "currency": "USD",
+   "fx": 0.76417,
+   "quantity": 650,
+   "price": 41.89,
+   "multiplier": 1,
+   "commission": -8.16855,
+   "pnl": 3768.12722,
+   "openClose": "C",
+   "ref": "11261681",
+   "underlying": "",
+   "key": "c77124483"
+  }
+ ],
+ "notes": {
+  "c77124483@2026-11-17T06:50:40": {
+   "analyst": "Tom Lavender"
+  },
+  "c77124483@2026-11-08T18:08:33": {
+   "analyst": "Tom Lavender"
+  }
+ }
+}
