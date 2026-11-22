@@ -116,6 +116,7 @@
             </div>
             <dl class="bk-gloss">
               <div id="g-return"><dt>Return since inception</dt><dd>Each day&rsquo;s change in net asset value (NAV), less any deposit that day, divided by the day before&rsquo;s NAV, then chained: <code>(1&nbsp;+&nbsp;r&#8321;)(1&nbsp;+&nbsp;r&#8322;)&hellip;&nbsp;&minus;&nbsp;1</code>. A time-weighted return, so topping up an account never counts as performance.</dd></div>
+              <div id="g-benchmark"><dt>Benchmark and vs benchmark</dt><dd>Some books are measured against a benchmark for their market: gold and silver 50/50 for Metals, UK gilts for Fixed Income, MSCI Emerging Markets for Macro EM. Every benchmark is total return, with income and interest included as a book earns them: coupons reinvested for gilts, cash interest on the collateral for the metals futures. It is measured from the day the book&rsquo;s capital arrived. <em>Vs benchmark</em> is the book&rsquo;s return minus the benchmark&rsquo;s. Return itself includes the interest IBKR pays on idle cash, as fund returns do.</dd></div>
               <div id="g-pnl"><dt>Profit and loss</dt><dd>The change in NAV over the period, less deposits, in the book&rsquo;s base currency. It is after IBKR&rsquo;s commissions.</dd></div>
               <div id="g-annualised"><dt>Annualised return</dt><dd>The return scaled to a year of 252 trading days. Shown once a book has six months of history; before that it exaggerates.</dd></div>
               <div id="g-days"><dt>Best day, worst day, days up</dt><dd>The largest one-day gain and loss, and the share of trading days that ended higher than they started.</dd></div>
@@ -128,8 +129,8 @@
               <p>How bumpy the ride has been. All from daily returns.</p>
             </div>
             <dl class="bk-gloss">
-              <div id="g-sharpe"><dt>Sharpe ratio</dt><dd>Average daily return divided by the standard deviation of daily returns, times &radic;252. The risk-free rate is taken as zero. Shown after 20 trading days: fewer than that and it is mostly noise.</dd></div>
-              <div id="g-sortino"><dt>Sortino ratio</dt><dd>Like Sharpe, but only falls count as risk: average daily return over the downside deviation, times &radic;252.</dd></div>
+              <div id="g-sharpe"><dt>Sharpe ratio</dt><dd>Average daily return above cash, divided by the standard deviation of those daily returns, times &radic;252. Cash is SONIA, the Bank of England&rsquo;s overnight rate, so a book earns no Sharpe for the interest IBKR pays on money it leaves idle. Shown after 20 trading days: fewer than that and it is mostly noise.</dd></div>
+              <div id="g-sortino"><dt>Sortino ratio</dt><dd>Like Sharpe, but only falls count as risk: average daily return above cash over the downside deviation, times &radic;252.</dd></div>
               <div id="g-vol"><dt>Volatility</dt><dd>The standard deviation of daily returns, annualised by &radic;252.</dd></div>
               <div id="g-drawdown"><dt>Drawdown</dt><dd>How far the book is below the highest value it has reached. Max drawdown is the deepest fall from a high; the longest drawdown counts trading days spent below a previous high.</dd></div>
             </dl>

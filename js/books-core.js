@@ -37,11 +37,12 @@
   function returnsFromNav(nav, flows) {
     var flowBy = {};
     (flows || []).forEach(function (f) { flowBy[f.date] = (flowBy[f.date] || 0) + f.amount; });
-    var out = { dates: [], r: [], pnl: [], prev: [] };
+    var out = { dates: [], r: [], pnl: [], prev: [], from: [] };
     for (var i = 1; i < nav.length; i++) {
       var p = nav[i - 1][1], v = nav[i][1];
       if (!(p > 0)) continue;
       var pnl = v - p - (flowBy[nav[i][0]] || 0);
+      out.from.push(nav[i - 1][0]);
       out.dates.push(nav[i][0]);
       out.r.push(pnl / p);
       out.pnl.push(pnl);
@@ -50,8 +51,32 @@
     return out;
   }
 
+  /* --- The cash rate ----------------------------------------------------------
+     Sharpe and Sortino are measured on returns above cash (SONIA, from the
+     "cash" series in books/data/benchmarks.json), so a book is never rewarded
+     for interest it earns by doing nothing. Set by books-page.js before the
+     books are computed; without it the ratios fall back to raw returns. */
+  var CASH = null;
+  function setCash(series) {
+    CASH = series && series.length ? series : null;
+  }
+  function cashLevel(d) {
+    var v = null;
+    for (var k = 0; k < CASH.length && CASH[k][0] <= d; k++) v = CASH[k][1];
+    return v;
+  }
+  function excessReturns(series) {
+    if (!CASH) return series.r.slice();
+    return series.r.map(function (x, i) {
+      var a = cashLevel(series.from && series.from[i] ? series.from[i] : (i ? series.dates[i - 1] : series.dates[i]));
+      var b = cashLevel(series.dates[i]);
+      return a > 0 && b > 0 ? x - (b / a - 1) : x;
+    });
+  }
+
   function performance(start, series) {
     var r = series.r, n = r.length;
+    var ex = excessReturns(series);
     var cum = [[start, 0]], dd = [[start, 0]];
     var idx = 1, peak = 1, maxDD = 0, ddStart = 0, longest = 0, run = 0;
     for (var i = 0; i < n; i++) {
@@ -64,8 +89,9 @@
     }
     var total = idx - 1;
     var vol = n >= MIN_RISK_DAYS ? sd(r) * Math.sqrt(TRADING_DAYS) : null;
-    var m = mean(r);
-    var down = r.filter(function (x) { return x < 0; });
+    var m = mean(ex);
+    var exVol = n >= MIN_RISK_DAYS ? sd(ex) * Math.sqrt(TRADING_DAYS) : null;
+    var down = ex.filter(function (x) { return x < 0; });
     var downDev = n >= MIN_RISK_DAYS ? Math.sqrt(sum(down.map(function (x) { return x * x; })) / n) * Math.sqrt(TRADING_DAYS) : null;
     var ann = n >= MIN_ANN_DAYS ? Math.pow(1 + total, TRADING_DAYS / n) - 1 : null;
     return {
@@ -74,7 +100,7 @@
       pnl: n ? sum(series.pnl) : null,
       annualised: ann,
       volatility: vol,
-      sharpe: vol ? m * TRADING_DAYS / vol : null,
+      sharpe: exVol ? m * TRADING_DAYS / exVol : null,
       sortino: downDev ? m * TRADING_DAYS / downDev : null,
       maxDrawdown: n ? maxDD : null,
       drawdownNow: n ? dd[dd.length - 1][1] : null,
@@ -436,6 +462,7 @@
   }
 
   root.BooksCore = {
+    setCash: setCash,
     benchmark: benchmark,
     computeBook: computeBook,
     computeDesk: computeDesk,

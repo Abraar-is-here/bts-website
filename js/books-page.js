@@ -51,6 +51,7 @@
     var benches = DEMO ? Promise.resolve({}) : getJSON('books/data/benchmarks.json').then(function (b) { return (b && b.benchmarks) || {}; }).catch(function () { return {}; });
     return ready.then(function () { return Promise.all([getJSON('books/data/index.json'), benches]); }).then(function (got) {
       var m = got[0], bms = got[1];
+      C.setCash(bms.cash && bms.cash.series);
       manifest = m;
       if (!manifest || !manifest.desks) throw new Error('No manifest');
       var n = 0;
