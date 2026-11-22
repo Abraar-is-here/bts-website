@@ -48,7 +48,9 @@
 
   function load() {
     var ready = DEMO ? loadScript('js/books-flex.js?v=5') : Promise.resolve();
-    return ready.then(function () { return getJSON('books/data/index.json'); }).then(function (m) {
+    var benches = DEMO ? Promise.resolve({}) : getJSON('books/data/benchmarks.json').then(function (b) { return (b && b.benchmarks) || {}; }).catch(function () { return {}; });
+    return ready.then(function () { return Promise.all([getJSON('books/data/index.json'), benches]); }).then(function (got) {
+      var m = got[0], bms = got[1];
       manifest = m;
       if (!manifest || !manifest.desks) throw new Error('No manifest');
       var n = 0;
@@ -58,7 +60,11 @@
           var got = DEMO ? Promise.resolve(demoBook(d, b, i)) : getJSON('books/data/' + b.id + '.json').catch(function () { return null; });
           // The demo never puts invented numbers next to a real person's name.
           var label = DEMO ? d.name + ' book ' + (d.books.indexOf(b) + 1) : (b.name || b.head);
-          return got.then(function (data) { return C.computeBook(data || {}, { id: b.id, head: DEMO ? label : b.head, name: label }); });
+          return got.then(function (data) {
+            var book = C.computeBook(data || {}, { id: b.id, head: DEMO ? label : b.head, name: label });
+            book.bench = b.benchmark ? C.benchmark(book, bms[b.benchmark]) : null;
+            return book;
+          });
         })).then(function (books) { return C.computeDesk(d, books); });
       }));
     });

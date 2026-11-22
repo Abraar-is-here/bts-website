@@ -303,6 +303,9 @@
       asOf: book.asOf || (nav.length ? nav[nav.length - 1][0] : ''),
       updated: book.updated || '',
       start: nav.length ? nav[0][0] : '',
+      // First day the account actually held money (a book can be exported
+      // before its capital arrives; those days are flat at zero).
+      funded: (nav.filter(function (n) { return n[1] > 0; })[0] || [''])[0],
       capital: lastNav,
       series: series,
       perf: performance(nav.length ? nav[0][0] : '', series),
@@ -414,7 +417,26 @@
   }
   function upDown(x) { return x > 0 ? 'is-up' : x < 0 ? 'is-down' : ''; }
 
+  /* --- Benchmark -------------------------------------------------------------
+     A book against its benchmark (books/data/benchmarks.json) over the days
+     the book held money: the benchmark is rebased to the close on the day the
+     capital arrived (flat at zero before it, like the book), and on each book
+     date it takes its last close on or before that date. Excess return is the
+     book's return minus the benchmark's. */
+  function benchmark(book, bm) {
+    if (!book || !book.hasData || !bm || !bm.series || !bm.series.length) return null;
+    var s = bm.series;
+    function level(d) { var v = null; for (var k = 0; k < s.length && s[k][0] <= d; k++) v = s[k][1]; return v; }
+    var from = book.funded || book.perf.cum[0][0];
+    var base = level(from);
+    if (!(base > 0)) return null;
+    var cum = book.perf.cum.map(function (p) { return [p[0], p[0] < from ? 0 : level(p[0]) / base - 1]; });
+    var total = cum[cum.length - 1][1];
+    return { name: bm.name, cum: cum, total: total, excess: book.perf.total == null ? null : book.perf.total - total };
+  }
+
   root.BooksCore = {
+    benchmark: benchmark,
     computeBook: computeBook,
     computeDesk: computeDesk,
     tripKey: tripKey,

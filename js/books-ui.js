@@ -171,9 +171,9 @@
           var a = d + 'L' + X(sr.points[sr.points.length - 1][0]).toFixed(1) + ',' + Y(0) + 'L' + X(sr.points[0][0]).toFixed(1) + ',' + Y(0) + 'Z';
           s.appendChild(svg('path', { d: a, class: 'bk-area', fill: sr.color }));
         }
-        var p = svg('path', { d: d, class: 'bk-line' + (sr.emphasis ? ' bk-line--main' : '') + (sr.reference ? ' bk-line--ref' : ''), stroke: sr.color });
+        var p = svg('path', { d: d, class: 'bk-line' + (sr.emphasis ? ' bk-line--main' : '') + (sr.reference ? ' bk-line--ref' : '') + (sr.dashed ? ' bk-line--bench' : ''), stroke: sr.color });
         s.appendChild(p);
-        paths.push(p);
+        if (!sr.dashed) paths.push(p); // the draw-in animation would wipe the dashes
         var last = sr.points[sr.points.length - 1];
         if (sr.emphasis) s.appendChild(svg('circle', { cx: X(last[0]), cy: Y(last[1]), r: 4.5, class: 'bk-end', fill: sr.color }));
       });
@@ -700,6 +700,13 @@
           return sp;
         } },
         { label: 'Return', num: true, cell: function (b) { return b.hasData ? F.pct(b.perf.total) : '–'; }, cls: function (b) { return b.hasData ? F.upDown(b.perf.total) : 'is-muted'; } },
+        { label: 'Benchmark', num: true, cell: function (b) {
+          if (!b.bench) return '–';
+          var sp = el('span', 'bk-bench', F.pct(b.bench.total));
+          sp.title = b.bench.name;
+          return sp;
+        }, cls: function (b) { return b.bench ? '' : 'is-muted'; } },
+        { label: 'vs benchmark', num: true, cell: function (b) { return b.bench && b.bench.excess != null ? F.pct(b.bench.excess) : '–'; }, cls: function (b) { return b.bench && b.bench.excess != null ? F.upDown(b.bench.excess) : 'is-muted'; } },
         { label: 'P&L', cell: function (b) {
           if (!b.hasData) return '';
           var w = el('span', 'bk-contrib');
@@ -753,8 +760,8 @@
       var isBook = scope !== desk;
       var label = !isBook ? (single ? '' : 'the whole desk') : scope.name;
 
-      // Headline figures and the chart. A chosen book is drawn against the
-      // whole desk, so it can be read in context.
+      // Headline figures and the chart. A chosen book is drawn against its
+      // benchmark (if it has one), not the desk.
       var top = el('div', 'bk-top');
       var hero = el('div', 'bk-hero');
       hero.appendChild(el('p', 'bk-hero__label', (isBook ? scope.name + ', return' : 'Return') + ' since ' + F.day(scope.start)));
@@ -763,19 +770,22 @@
       [['P&L', F.money(scope.perf.pnl, cur, { signed: true }), F.upDown(scope.perf.pnl)], ['Capital', F.money(scope.capital, cur, { compact: true })], ['Sharpe', scope.perf.days < C.MIN_RISK_DAYS ? '–' : F.ratio(scope.perf.sharpe)], ['Max drawdown', F.pct(scope.perf.maxDrawdown, 2, false)]].forEach(function (f) {
         var d = el('div'); d.appendChild(el('dt', null, f[0])); d.appendChild(el('dd', f[2] || '', f[1])); heroFigs.appendChild(d);
       });
+      if (isBook && scope.bench) {
+        var bd = el('div'); bd.appendChild(el('dt', null, 'vs ' + scope.bench.name)); bd.appendChild(el('dd', F.upDown(scope.bench.excess), F.pct(scope.bench.excess))); heroFigs.appendChild(bd);
+      }
       hero.appendChild(heroFigs);
       top.appendChild(hero);
 
       var chartBox = el('div', 'bk-perf');
       var deskLabel = single ? desk.books[0].name : desk.name + ' desk';
       var series = isBook
-        ? [{ id: scope.id, label: scope.name, color: colors[scope.id], emphasis: true, points: scope.perf.cum },
-           { id: 'desk', label: deskLabel, color: 'var(--text-primary)', points: desk.perf.cum, reference: true }]
+        ? [{ id: scope.id, label: scope.name, color: colors[scope.id], emphasis: true, points: scope.perf.cum }]
         : [{ id: 'desk', label: deskLabel, color: 'var(--text-primary)', emphasis: true, points: desk.perf.cum }];
+      if (isBook && scope.bench) series.push({ id: 'bench', label: scope.bench.name, color: 'var(--text-secondary)', points: scope.bench.cum, dashed: true });
       var legend = el('ul', 'bk-legend');
       series.forEach(function (s) {
         var li = el('li');
-        var k = el('span', 'bk-legend__key' + (s.emphasis ? ' is-main' : '')); k.style.background = s.color;
+        var k = el('span', 'bk-legend__key' + (s.emphasis ? ' is-main' : '') + (s.dashed ? ' is-bench' : '')); if (!s.dashed) k.style.background = s.color;
         li.appendChild(k);
         li.appendChild(el('span', null, s.label));
         var last = s.points[s.points.length - 1];

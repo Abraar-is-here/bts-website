@@ -240,6 +240,10 @@ body:has(> .ticker:not([hidden])) .bk { --bk-stick: calc(92px + var(--ticker-h))
 .bk-line { fill: none; stroke-width: 1.75; stroke-linejoin: round; stroke-linecap: round; }
 .bk-line--main { stroke-width: 2.25; }
 .bk-line--ref { stroke-width: 1.5; opacity: 0.45; }
+/* A book's benchmark: dashed, quieter than the book. */
+.bk-line--bench { stroke-width: 1.5; stroke-dasharray: 5 4; opacity: 0.8; }
+.bk-legend__key.is-bench { background: none; border-top: 2px dashed var(--text-secondary); height: 0; }
+.bk-bench { cursor: help; text-decoration: underline dotted; text-underline-offset: 3px; }
 .bk-area { fill-opacity: 0.08; }
 .bk-end { stroke: #0b1d48; stroke-width: 2; }
 .bk-dd { fill: var(--bk-down); fill-opacity: 0.14; }

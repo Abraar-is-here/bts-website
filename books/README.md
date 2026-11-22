@@ -69,6 +69,18 @@ IBKR's documentation suggests some Flex Web Service features aren't available on
 accounts, so test it first: log into a paper account, go to Settings and look for
 **Flex Web Service**. If it's there, generate a token and try it.
 
+## Benchmarks
+
+A book can be measured against a benchmark: give it `"benchmark": "<key>"` in
+`books/data/index.json`, where the key is one of the series in `books/data/benchmarks.json`
+(today `metals`, `gilts` and `em`). The page rebases the benchmark to the day the book's capital
+arrived and shows its return, the book's return minus it ("vs benchmark"), and a dashed line on the
+book's chart.
+
+`scripts/update_benchmarks.py` downloads the daily closes from Yahoo Finance and writes
+`benchmarks.json`; `.github/workflows/update-benchmarks.yml` runs it every weeknight. To add a
+benchmark, add it to `BENCHMARKS` in the script, run it once, and point the book at its key.
+
 ## Live marks
 
 While markets are open, `js/books-live.js` moves each open position on from its IBKR close

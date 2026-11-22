@@ -17,13 +17,13 @@
       { "id": "eq-tom", "head": "Tom Hoad" }
     ] },
     { "id": "ficc", "name": "FICC", "books": [
-      { "id": "ficc-anay", "head": "Anay Mistry" },
+      { "id": "ficc-anay", "head": "Anay Mistry", "benchmark": "metals" },
       { "id": "ficc-val", "head": "Val Sinko", "assets": ["CASH"] },
       { "id": "ficc-manolo", "head": "Manolo Kidel" },
-      { "id": "ficc-aled", "head": "Aled von Oppell" }
+      { "id": "ficc-aled", "head": "Aled von Oppell", "benchmark": "gilts" }
     ] },
     { "id": "macro", "name": "Macro", "books": [
-      { "id": "macro-manasvi", "head": "Manasvi Kommuri" },
+      { "id": "macro-manasvi", "head": "Manasvi Kommuri", "benchmark": "em" },
       { "id": "macro-lenny", "head": "Lenny Tucker" },
       { "id": "macro-emily", "head": "Emily Chiaia-Miller" }
     ] },
