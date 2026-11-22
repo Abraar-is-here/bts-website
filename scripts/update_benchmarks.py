@@ -9,9 +9,10 @@ benchmark are always compared over the same days.
 
   cash    SONIA (Bank of England), compounded daily: the cash rate the Floor
           subtracts before working out Sharpe and Sortino ratios
-  metals  Gold and silver futures, 50/50 rebalanced daily, in GBP, plus cash
-          interest on the collateral (futures are bought on margin, so a
-          fully funded position also earns the cash rate)
+  metals  Gold, silver, copper and aluminium futures, 25% each rebalanced
+          daily, in GBP, plus cash interest on the collateral (futures are
+          bought on margin, so a fully funded position also earns the cash
+          rate). Precious and industrial, as the Metals desk covers both.
   gilts   iShares Core UK Gilts (IGLT), with coupons reinvested
   em      iShares Core MSCI EM IMI (EMIM), accumulating, in GBP
 
@@ -90,10 +91,15 @@ def series(levels):
     return [[d, round(levels[d], 6)] for d in sorted(levels)]
 
 
+METALS = ['GC=F', 'SI=F', 'HG=F', 'ALI=F']  # gold, silver, copper, aluminium
+
+
 def metals():
-    gold, silver, fx = closes('GC=F'), closes('SI=F'), closes('GBPUSD=X')
-    days = sorted(set(gold) & set(silver))
+    px = [closes(t) for t in METALS]
+    fx = closes('GBPUSD=X')
+    days = sorted(set.intersection(*[set(p) for p in px]))
     fx_days = sorted(fx)
+
     def fx_on(d):
         best = None
         for f in fx_days:
@@ -102,23 +108,24 @@ def metals():
             else:
                 break
         return best
-    level, out, prev = 100.0, {}, None
+    w = 1.0 / len(METALS)
+    level, out, prev, prev_day = 100.0, {}, None, None
     for d in days:
         rate = fx_on(d)
         if rate is None:
             continue
-        g, s = gold[d] / rate, silver[d] / rate
-        if prev and d in CASH and prev[2] in CASH:
-            cash = CASH[d] / CASH[prev[2]] - 1
-            level *= 1 + 0.5 * (g / prev[0] - 1) + 0.5 * (s / prev[1] - 1) + cash
+        now = [p[d] / rate for p in px]
+        if prev and d in CASH and prev_day in CASH:
+            cash = CASH[d] / CASH[prev_day] - 1
+            level *= 1 + sum(w * (n / o - 1) for n, o in zip(now, prev)) + cash
         out[d] = level
-        prev = (g, s, d)
+        prev, prev_day = now, d
     return out
 
 
 BENCHMARKS = {
     'cash': ('Cash (SONIA)', lambda: CASH),
-    'metals': ('Gold & silver, 50/50 (GBP)', metals),
+    'metals': ('Metals: gold, silver, copper, aluminium (GBP)', metals),
     'gilts': ('UK gilts (iShares IGLT)', lambda: closes('IGLT.L', adjusted=True)),
     'em': ('MSCI Emerging Markets (iShares EMIM)', lambda: closes('EMIM.L')),
 }
