@@ -161,6 +161,8 @@
         }
         if (pos === 0) open(t, q);
         trip.fills++;
+        trip.last = t.time;
+        trip.fx = fx;
         trip.commission += commBase;
         if (pos === 0 || Math.sign(q) === Math.sign(pos)) {
           lots.push({ qty: q, price: t.price });
@@ -321,6 +323,20 @@
     var lastNav = nav.length ? nav[nav.length - 1][1] : null;
     var avgNav = nav.length ? mean(nav.map(function (n) { return n[1]; })) : null;
     var positions = (book.positions || []).map(function (p) { return Object.assign({ book: id }, p); });
+    // IBKR lists no open position for a currency pair: an FX position is only
+    // a balance in each currency. Rebuild it from the open trade instead,
+    // marked at the average entry (live prices move it on from there).
+    var listed = {};
+    positions.forEach(function (p) { listed[p.key] = 1; });
+    trips.forEach(function (t) {
+      if (!t.open || t.asset !== 'CASH' || listed[t.key] || !t.entry) return;
+      positions.push({
+        book: id, symbol: t.symbol, description: t.description, asset: 'CASH', currency: t.currency,
+        exchange: 'IDEALPRO', fx: t.fx || 1, multiplier: 1, quantity: t.position,
+        mark: t.entry, cost: t.entry, unrealized: 0, date: (t.last || '').slice(0, 10),
+        key: t.key, fromTrades: true
+      });
+    });
     return {
       id: id,
       head: meta.head || '',
