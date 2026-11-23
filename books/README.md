@@ -73,7 +73,7 @@ accounts, so test it first: log into a paper account, go to Settings and look fo
 
 A book can be measured against a benchmark: give it `"benchmark": "<key>"` in
 `books/data/index.json`, where the key is one of the series in `books/data/benchmarks.json`
-(today `metals`, `gilts` and `em`). The page rebases the benchmark to the day the book's capital
+(today `metals`, `gilts`, `usd` and `em`; `cash` is SONIA, used for Sharpe and Sortino). The page rebases the benchmark to the day the book's capital
 arrived and shows its return, the book's return minus it ("vs benchmark"), and a dashed line on the
 book's chart.
 

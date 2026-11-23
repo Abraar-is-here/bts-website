@@ -15,6 +15,8 @@ benchmark are always compared over the same days.
           rate). Precious and industrial, as the Metals desk covers both.
   gilts   iShares Core UK Gilts (IGLT), with coupons reinvested
   em      iShares Core MSCI EM IMI (EMIM), accumulating, in GBP
+  usd     US Dollar Index (DXY): the dollar against six major currencies,
+          the yardstick for a G10-against-the-dollar FX desk
 
 Prices are Yahoo Finance daily closes (dividend-adjusted where it matters).
 
@@ -128,6 +130,7 @@ BENCHMARKS = {
     'metals': ('Metals: gold, silver, copper, aluminium (GBP)', metals),
     'gilts': ('UK gilts (iShares IGLT)', lambda: closes('IGLT.L', adjusted=True)),
     'em': ('MSCI Emerging Markets (iShares EMIM)', lambda: closes('EMIM.L')),
+    'usd': ('US Dollar Index (DXY)', lambda: closes('DX-Y.NYB')),
 }
 
 
