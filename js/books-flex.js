@@ -119,7 +119,8 @@
     // IBKR charges some commissions (FX, for one) in the account's base currency rather than
     // the trade's. The books count commission in the trade currency, so convert it back.
     var cc = str(r.ibcommissioncurrency);
-    if (cc && base && cc === base && cc !== str(r.currency) && fx) comm = comm / fx;
+    // (With no base currency in the export, a commission in a different currency from the trade's is taken to be it.)
+    if (cc && cc !== str(r.currency) && fx && (!base || cc === base)) comm = comm / fx;
     return {
       id: id,
       time: time,
@@ -134,7 +135,9 @@
       commission: comm,
       pnl: num(r.fifopnlrealized != null ? r.fifopnlrealized : r.realizedpnl),
       openClose: str(r.opencloseindicator).toUpperCase(),
-      ref: str(r.orderreference),
+      // An order reference is the analyst's initials. IBKR and some platforms fill in a number
+      // by themselves, which is not a name, so only a reference with a letter in it counts.
+      ref: /[A-Za-z]/.test(str(r.orderreference)) ? str(r.orderreference) : '',
       underlying: str(r.underlyingsymbol),
       key: instrumentKey(r)
     };
