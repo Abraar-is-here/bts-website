@@ -13,7 +13,7 @@
     { "id": "equities", "name": "Equities", "books": [
       { "id": "eq-tash", "head": "Tash Munjanganja" },
       { "id": "eq-tolu", "head": "Tolu Ayetan" },
-      { "id": "eq-ibrahim", "head": "Ibrahim Ali" },
+      { "id": "eq-ibrahim", "head": "Ibrahim Ali", "benchmark": "spx" },
       { "id": "eq-tom", "head": "Tom Hoad" }
     ] },
     { "id": "ficc", "name": "FICC", "books": [

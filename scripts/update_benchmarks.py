@@ -15,6 +15,9 @@ benchmark are always compared over the same days.
           rate). Precious and industrial, as the Metals desk covers both.
   gilts   iShares Core UK Gilts (IGLT), with coupons reinvested
   em      iShares Core MSCI EM IMI (EMIM), accumulating, in GBP
+  spx     S&P 500 total return (dividends reinvested), in USD: for books
+          whose IBKR account is in dollars. usd_in_gbp() restates a dollar
+          series in pounds for a sterling book, should one need it.
   usd     US Dollar Index (DXY): the dollar against six major currencies,
           the yardstick for a G10-against-the-dollar FX desk
 
@@ -125,12 +128,27 @@ def metals():
     return out
 
 
+def usd_in_gbp(symbol):
+    """A dollar series restated in pounds at each day's GBPUSD close (the
+    latest earlier rate where one is missing)."""
+    px, fx = closes(symbol), closes('GBPUSD=X')
+    fx_days, out, k, rate = sorted(fx), {}, 0, None
+    for d in sorted(px):
+        while k < len(fx_days) and fx_days[k] <= d:
+            rate = fx[fx_days[k]]
+            k += 1
+        if rate:
+            out[d] = px[d] / rate
+    return out
+
+
 BENCHMARKS = {
     'cash': ('Cash (SONIA)', lambda: CASH),
     'metals': ('Metals: gold, silver, copper, aluminium (GBP)', metals),
     'gilts': ('UK gilts (iShares IGLT)', lambda: closes('IGLT.L', adjusted=True)),
     'em': ('MSCI Emerging Markets (iShares EMIM)', lambda: closes('EMIM.L')),
     'usd': ('US Dollar Index (DXY)', lambda: closes('DX-Y.NYB')),
+    'spx': ('S&P 500 (total return, USD)', lambda: closes('^SP500TR')),
 }
 
 
