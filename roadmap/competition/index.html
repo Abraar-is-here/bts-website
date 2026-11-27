@@ -122,10 +122,9 @@
     /* The score split, drawn as one bar. */
     .cg-split { display: flex; gap: 3px; height: 14px; margin: var(--space-3) 0 10px; }
     .cg-split span { border-radius: 2px; }
-    .cg-split span:nth-child(1) { flex: 30; background: #8c7350; }
-    .cg-split span:nth-child(2) { flex: 60; background: #16181c; }
-    .cg-split span:nth-child(3) { flex: 10; background: #b9b0a0; }
-    .cg-key { display: grid; grid-template-columns: 30fr 60fr 10fr; margin: 0 0 var(--space-3); padding: 0; list-style: none; }
+    .cg-split span:nth-child(1) { flex: 35; background: #8c7350; }
+    .cg-split span:nth-child(2) { flex: 65; background: #16181c; }
+    .cg-key { display: grid; grid-template-columns: 35fr 65fr; margin: 0 0 var(--space-3); padding: 0; list-style: none; }
     .cg .cg-key li { display: flex; align-items: center; gap: 8px; margin: 0; font-size: 0.9375rem; font-weight: 600; line-height: 1.4; color: var(--ink); white-space: nowrap; }
     .cg .cg-key li:last-child { justify-content: flex-end; }
     .cg-key i { width: 10px; height: 10px; border-radius: 2px; }
@@ -207,19 +206,17 @@
         <div class="cg-sec__num" aria-hidden="true">01</div>
         <div>
           <h2 id="s1">How the score is made</h2>
-          <div class="cg-split" aria-hidden="true"><span></span><span></span><span></span></div>
+          <div class="cg-split" aria-hidden="true"><span></span><span></span></div>
           <ul class="cg-key" aria-hidden="true">
-            <li><i style="background:#8c7350"></i>Portfolio 30%</li>
-            <li><i style="background:#16181c"></i>Pitch 60%</li>
-            <li><i style="background:#b9b0a0"></i>Questions 10%</li>
+            <li><i style="background:#8c7350"></i>Portfolio 35%</li>
+            <li><i style="background:#16181c"></i>Pitch 65%</li>
           </ul>
           <div class="cg-table">
             <table>
               <thead><tr><th scope="col">Component</th><th scope="col">When</th><th scope="col">What counts</th><th scope="col" class="cg-num">Weight</th></tr></thead>
               <tbody>
-                <tr><td>Portfolio performance</td><td>Phase 1, 23&ndash;27 Nov</td><td>Return above cash, Sharpe ratio and drawdown over the week</td><td class="cg-num">30%</td></tr>
-                <tr><td>Pitch</td><td>Phase 2, Mon 30 Nov</td><td>A trade idea, presented to the judges and scored on the <a href="/roadmap/competition/#s4">rubric in section 04</a></td><td class="cg-num">60%</td></tr>
-                <tr><td>Questions</td><td>Phase 2, Mon 30 Nov</td><td>Asking good questions of other desks, and answering the judges&rsquo; questions well</td><td class="cg-num">10%</td></tr>
+                <tr><td>Portfolio performance</td><td>Phase 1, 23&ndash;27 Nov</td><td>Return above cash, Sharpe ratio and drawdown over the week</td><td class="cg-num">35%</td></tr>
+                <tr><td>Pitch</td><td>Phase 2, Mon 30 Nov</td><td>A trade idea, presented to the judges and scored on the <a href="/roadmap/competition/#s4">rubric in section 04</a>, including how the desk handles questions</td><td class="cg-num">65%</td></tr>
               </tbody>
               <tfoot><tr><td colspan="3">Total</td><td class="cg-num">100%</td></tr></tfoot>
             </table>
@@ -353,8 +350,8 @@
       <section class="cg-sec" aria-labelledby="s5">
         <div class="cg-sec__num" aria-hidden="true">05</div>
         <div>
-          <h2 id="s5">Questions: the extra 10%</h2>
-          <p>Points on the day go to desks that:</p>
+          <h2 id="s5">Questions</h2>
+          <p>The judges mark this as the sixth criterion on <a href="/roadmap/competition/scorecard/">the scorecard</a>. It goes to desks that:</p>
           <ul>
             <li><strong>Ask</strong> sharp, relevant questions of other desks after their pitches; and</li>
             <li><strong>Answer</strong> the judges&rsquo; questions on their own pitch clearly and directly.</li>

@@ -27,8 +27,8 @@
    The pitch is marked out of 60 per judge on the scorecard
    (/roadmap/competition/scorecard/). The judges' totals go in "pitchMarks" in
    competition.json; desks are placed by them and earn points from
-   "pitchPoints" (double the week's table, as the pitch is 60% and the week
-   30% in the guide), added to the week's points for the total. A number in "pitch" sets a
+   "pitchPoints" (the week's table times 65/35, rounded: the week counts for
+   35% and the pitch for 65%), added to the week's points for the total. A number in "pitch" sets a
    desk's pitch points directly instead.
    ========================================================================== */
 (function (root) {
@@ -121,8 +121,8 @@
       t.weekPts = pointsFor(P, t.place);
     });
     // Pitch: the judges' marks from the scorecard, added up across the judges.
-    // Desks are placed by the total and earn points from cfg.pitchPoints (double
-    // the week's table: the guide weights the pitch 60% and the week 30%); a tie
+    // Desks are placed by the total and earn points from cfg.pitchPoints (the
+    // week's table times 65/35: the week is 35% and the pitch 65%); a tie
     // is split by the thesis marks, then the analysis marks.
     var M = cfg.pitchMarks || {};
     var mk = function (t) { return M[t.id] || {}; };
