@@ -315,7 +315,8 @@
         var hitR = svg('rect', { x: m.l + i * slotW, y: m.t, width: slotW, height: H, fill: 'transparent' });
         hitR.addEventListener('pointerenter', function () {
           tip.show(x + bw / 2, Math.min(Y(t.pnl), Y(0)), function (tt) {
-            tt.appendChild(el('div', 'bk-tip__head', t.symbol + ' · ' + t.side));
+            var nm = bondInfo(t) || futureInfo(t);
+            tt.appendChild(el('div', 'bk-tip__head', (nm ? nm.name : t.symbol) + ' · ' + t.side));
             tipRow(tt, null, F.money(t.pnl, cur, { signed: true }), 'P&L', F.upDown(t.pnl));
             tipRow(tt, null, F.pct(t.ret), 'Return on the position');
             tipRow(tt, null, F.day(t.closed, true), (t.days != null ? 'Closed, held ' + t.days + (t.days === 1 ? ' day' : ' days') : 'Closed'));
@@ -463,9 +464,49 @@
       return y == null ? '–' : F.pct(y, 2, false);
     };
   }
+  // A future as IBKR names it ("CLF7", described "CL JAN27") is a code: root, month letter,
+  // year digit. Spell it out: "WTI crude oil, Jan 2027", with the exchange contract under it.
+  var FUTURES = {
+    CL: ['WTI crude oil', 'NYMEX', '1,000 barrels'], MCL: ['WTI crude oil (micro)', 'NYMEX', '100 barrels'],
+    BZ: ['Brent crude oil', 'NYMEX', '1,000 barrels'], NG: ['Natural gas', 'NYMEX', '10,000 MMBtu'],
+    RB: ['RBOB gasoline', 'NYMEX', '42,000 gallons'], HO: ['Heating oil', 'NYMEX', '42,000 gallons'],
+    GC: ['Gold', 'COMEX', '100 troy oz'], MGC: ['Gold (micro)', 'COMEX', '10 troy oz'], SI: ['Silver', 'COMEX', '5,000 troy oz'],
+    HG: ['Copper', 'COMEX', '25,000 lb'], PL: ['Platinum', 'NYMEX', '50 troy oz'], PA: ['Palladium', 'NYMEX', '100 troy oz'],
+    ES: ['E-mini S&P 500', 'CME', '$50 x index'], MES: ['Micro E-mini S&P 500', 'CME', '$5 x index'],
+    NQ: ['E-mini Nasdaq-100', 'CME', '$20 x index'], MNQ: ['Micro E-mini Nasdaq-100', 'CME', '$2 x index'],
+    YM: ['E-mini Dow', 'CBOT', '$5 x index'], RTY: ['E-mini Russell 2000', 'CME', '$50 x index'],
+    ZT: ['US 2-year Treasury note', 'CBOT', '$200,000 face'], ZF: ['US 5-year Treasury note', 'CBOT', '$100,000 face'],
+    ZN: ['US 10-year Treasury note', 'CBOT', '$100,000 face'], TN: ['US Ultra 10-year Treasury note', 'CBOT', '$100,000 face'],
+    ZB: ['US Treasury bond', 'CBOT', '$100,000 face'], UB: ['US Ultra Treasury bond', 'CBOT', '$100,000 face'],
+    SR3: ['3-month SOFR', 'CME', '$2,500 x rate'], ZQ: ['30-day Fed Funds', 'CBOT', '$4,167 x rate'],
+    '6E': ['Euro FX', 'CME', '€125,000'], '6B': ['British pound', 'CME', '£62,500'], '6J': ['Japanese yen', 'CME', '¥12,500,000'],
+    '6A': ['Australian dollar', 'CME', 'A$100,000'], '6C': ['Canadian dollar', 'CME', 'C$100,000'], '6S': ['Swiss franc', 'CME', 'CHF 125,000'],
+    ZC: ['Corn', 'CBOT', '5,000 bushels'], ZS: ['Soybeans', 'CBOT', '5,000 bushels'], ZW: ['Wheat', 'CBOT', '5,000 bushels'],
+    FGBL: ['Euro-Bund (German 10-year)', 'Eurex', '€100,000 face'], FGBM: ['Euro-Bobl (German 5-year)', 'Eurex', '€100,000 face'],
+    FGBS: ['Euro-Schatz (German 2-year)', 'Eurex', '€100,000 face'], R: ['Long Gilt (UK 10-year)', 'ICE', '£100,000 face']
+  };
+  var MONTH_CODE = { F: 0, G: 1, H: 2, J: 3, K: 4, M: 5, N: 6, Q: 7, U: 8, V: 9, X: 10, Z: 11 };
+  var MON = { JAN: 0, FEB: 1, MAR: 2, APR: 3, MAY: 4, JUN: 5, JUL: 6, AUG: 7, SEP: 8, OCT: 9, NOV: 10, DEC: 11 };
+  function futureInfo(r) {
+    if (String(r.asset || '').toUpperCase() !== 'FUT') return null;
+    var root = '', mo = null, yr = null;
+    var d = String(r.description || '').trim().toUpperCase().match(/^([A-Z0-9]+)\s+([A-Z]{3})(\d{2})$/);
+    if (d && d[2] in MON) { root = d[1]; mo = MON[d[2]]; yr = 2000 + +d[3]; }
+    else {
+      var s = String(r.symbol || '').trim().toUpperCase().match(/^(.+?)([FGHJKMNQUVXZ])(\d{1,2})$/);
+      if (!s) return null;
+      root = s[1]; mo = MONTH_CODE[s[2]]; yr = s[3].length === 2 ? 2000 + +s[3] : 2020 + +s[3];
+    }
+    root = r.underlying || root;
+    var k = FUTURES[root];
+    var name = (k ? k[0] : root) + ', ' + MONTHS[mo] + ' ' + yr;
+    // e.g. "CLF7 · NYMEX · 1,000 barrels": the ticker, where it trades, and one contract's size.
+    var sub = r.symbol + (k ? ' · ' + k[1] + ' · ' + k[2] : ' · future');
+    return { name: name, sub: sub };
+  }
   function instrument(r) {
     var f = document.createDocumentFragment();
-    var b = bondInfo(r);
+    var b = bondInfo(r) || futureInfo(r);
     if (b) {
       f.appendChild(el('span', 'bk-sym', b.name));
       f.appendChild(el('span', 'bk-desc', b.sub));

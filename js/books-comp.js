@@ -160,6 +160,13 @@
   }
 
   /* --- Drawing ------------------------------------------------------------------- */
+  // Results stay hidden until the reveal, so no desk walks into the pitch knowing it is
+  // behind. ?preview=1 shows them anyway, for the committee. (Each book's figures are
+  // still on The Floor, so this keeps the places quiet rather than secret.)
+  var PREVIEW = new URLSearchParams(location.search).get('preview') === '1';
+  function shown(cfg) { return !!cfg.reveal || PREVIEW; }
+  function revealText(cfg) { return 'Results are revealed after the stock pitch, ' + (cfg.revealLabel || cfg.pitchDay.label) + '.'; }
+
   function el(tag, cls, text) {
     var n = document.createElement(tag);
     if (cls) n.className = cls;
@@ -254,6 +261,15 @@
     var hostWeek = main.querySelector('[data-cp-week]');
     load().then(function (got) {
       [hostStatus, hostBoard, hostChart, hostWeek].forEach(function (h) { h.textContent = ''; });
+      if (!shown(got.cfg)) {
+        var held = el('div', 'cp-held');
+        held.appendChild(el('p', 'cp-held__title', 'Results are sealed until the pitch'));
+        held.appendChild(el('p', 'cp-held__text', revealText(got.cfg) + ' Every desk pitches on equal terms; the trading-week points and the pitch points are added together then.'));
+        hostBoard.appendChild(held);
+        hostWeek.appendChild(el('p', 'cp-empty', 'Each team’s week is shown here with the results.'));
+        return;
+      }
+      if (PREVIEW && !got.cfg.reveal) hostStatus.appendChild(el('p', 'cp-preview', 'Preview: these results are hidden from everyone else until they are revealed.'));
       status(hostStatus, got.cfg, got.s);
       leaderboard(hostBoard, got.cfg, got.s);
       weekChart(hostChart, got.cfg, got.s);
@@ -271,6 +287,14 @@
     load().then(function (got) {
       var top = got.s.overall.filter(function (t) { return t.overall; }).slice(0, 3);
       list.textContent = '';
+      if (!shown(got.cfg)) {
+        list.appendChild(el('li', 'cpb-wait', 'Results and every book\u2019s performance are revealed after the stock pitch, ' + (got.cfg.revealLabel || got.cfg.pitchDay.label) + '.'));
+        var sh = box.querySelector('[data-cpb-state]');
+        if (sh) sh.textContent = 'Results sealed';
+        var cta = box.querySelector('.cpb__cta');
+        if (cta && cta.firstChild) cta.firstChild.textContent = 'About the competition ';
+        return;
+      }
       if (!top.length) { list.appendChild(el('li', 'cpb-wait', 'Standings fill in as the exports arrive')); return; }
       top.forEach(function (t) {
         var li = el('li');

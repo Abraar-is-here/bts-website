@@ -149,8 +149,52 @@
     desksEl.appendChild(p);
   }
 
+  /* --- Sealed for the competition -----------------------------------------------
+     During the Bristol Trading Competition every book's figures are held back until
+     after the stock pitch, so no desk pitches knowing where it stands. The Floor opens
+     by itself at "floorRevealAt" in books/data/competition.json (or when "reveal" is
+     set); ?preview=1 shows it anyway, for the committee. */
+  var PREVIEW = new URLSearchParams(location.search).get('preview') === '1';
+  function sealedBy(cfg) {
+    if (DEMO || PREVIEW || !cfg || cfg.reveal) return false;
+    var at = Date.parse(cfg.floorRevealAt || '');
+    return !(at && Date.now() >= at) ? at || true : false;
+  }
+  function sealed(cfg, at) {
+    desksEl.textContent = '';
+    panel.hidden = true;
+    stampEl.textContent = '';
+    var box = document.createElement('div');
+    box.className = 'bk-sealed';
+    var h = document.createElement('p'); h.className = 'bk-sealed__title';
+    h.textContent = 'Performance is under wraps until the pitch';
+    var t = document.createElement('p'); t.className = 'bk-sealed__text';
+    t.textContent = 'The Floor is paused for the Bristol Trading Competition, so every desk pitches on equal terms. Each book\u2019s performance is revealed after the stock pitch, ' + (cfg.revealLabel || 'after the pitch') + '.';
+    var a = document.createElement('a'); a.className = 'bk-sealed__link'; a.href = '/books/competition/';
+    a.innerHTML = 'About the competition <span aria-hidden="true">&rarr;</span>';
+    box.appendChild(h); box.appendChild(t); box.appendChild(a);
+    desksEl.appendChild(box);
+    // Open by itself at the reveal if the page is left open.
+    if (typeof at === 'number') {
+      var wait = at - Date.now();
+      if (wait > 0 && wait < 864e5) setTimeout(function () { location.reload(); }, wait + 2000);
+    }
+  }
+
   function start() {
     if (DEMO) main.querySelector('[data-demo]').hidden = false;
+    getJSON('books/data/competition.json').catch(function () { return null; }).then(function (cfg) {
+      var at = sealedBy(cfg);
+      if (at) { sealed(cfg, at); return; }
+      if (PREVIEW && cfg && !cfg.reveal) {
+        var note = document.createElement('p'); note.className = 'cp-preview';
+        note.textContent = 'Preview: The Floor is hidden from everyone else until the reveal.';
+        desksEl.parentNode.insertBefore(note, desksEl);
+      }
+      go();
+    });
+  }
+  function go() {
     load().then(function (d) {
       desks = d; current = -1; render();
       // Live marks on the open positions while markets trade (js/books-live.js).

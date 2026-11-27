@@ -677,3 +677,15 @@ body:has(> .ticker:not([hidden])) .bk { --bk-stick: calc(92px + var(--ticker-h))
   /* On a phone the standings show the total; the split is in the trading-week table below. */
   .cp-table--board .cp-col-split { display: none; }
 }
+/* Sealed until the pitch. */
+.cp-held { padding: clamp(22px, 3vw, 32px); border: 1px dashed rgba(255, 255, 255, 0.18); border-radius: 16px; text-align: center; }
+.cp-held__title { margin: 0 0 6px; font-family: var(--font-display); font-size: clamp(1.2rem, 2.2vw, 1.5rem); font-weight: 800; letter-spacing: -0.01em; }
+.cp-held__text { margin: 0 auto; max-width: 56ch; font-size: 0.9375rem; line-height: 1.6; color: var(--text-secondary); }
+.cp-preview { margin: 0 0 var(--space-3); padding: 10px 14px; border-radius: 10px; background: rgba(243, 201, 105, 0.1); font-size: 0.875rem; color: #f3c969; }
+/* The Floor while the competition results are sealed. */
+.bk-desks > .bk-sealed { grid-column: 1 / -1; }
+.bk-sealed { display: grid; justify-items: center; gap: 8px; margin-bottom: var(--space-5); padding: clamp(32px, 5vw, 56px) clamp(20px, 4vw, 48px); border: 1px dashed rgba(255, 255, 255, 0.18); border-radius: 20px; text-align: center; background: rgba(8, 21, 52, 0.4); }
+.bk-sealed__title { margin: 0; font-family: var(--font-display); font-size: clamp(1.35rem, 2.6vw, 1.85rem); font-weight: 800; letter-spacing: -0.015em; color: var(--text-primary); }
+.bk-sealed__text { margin: 0; max-width: 58ch; font-size: 1rem; line-height: 1.6; color: var(--text-secondary); }
+.bk-sealed__link { margin-top: 8px; color: var(--accent-bright); font-weight: 600; text-decoration: none; }
+.bk-sealed__link:hover { text-decoration: underline; }
