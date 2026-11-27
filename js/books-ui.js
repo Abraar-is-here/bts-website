@@ -904,5 +904,5 @@
     return s;
   }
 
-  root.BooksUI = { deskCards: deskCards, deskPanel: deskPanel, perfChart: perfChart, el: el, slot: slot };
+  root.BooksUI = { deskCards: deskCards, deskPanel: deskPanel, perfChart: perfChart, table: table, el: el, slot: slot };
 })(window);

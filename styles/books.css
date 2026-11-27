@@ -557,3 +557,123 @@ body:has(> .ticker:not([hidden])) .bk { --bk-stick: calc(92px + var(--ticker-h))
 @media (prefers-reduced-motion: reduce) {
   .bk__method a span, .bkm__toc a { transition: none; }
 }
+
+/* ===========================================================================
+   Bristol Trading Competition: the banner on The Floor (.cpb) and the page
+   (/books/competition/, .cp-*). js/books-comp.js fills both in.
+   ========================================================================== */
+
+/* Places: a numeral in a ring, tinted for the podium. */
+.cp-place {
+  display: inline-grid; place-items: center; flex: none;
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 1px solid var(--hairline);
+  font: 700 0.8125rem/1 var(--font-body); font-variant-numeric: tabular-nums;
+  color: var(--text-secondary);
+}
+.cp-place--1 { color: #f3c969; border-color: rgba(243, 201, 105, 0.55); background: rgba(243, 201, 105, 0.08); }
+.cp-place--2 { color: #d4dbe6; border-color: rgba(212, 219, 230, 0.5); background: rgba(212, 219, 230, 0.06); }
+.cp-place--3 { color: #d9a07a; border-color: rgba(217, 160, 122, 0.5); background: rgba(217, 160, 122, 0.06); }
+
+.cp-pts { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.cp-pts strong { font-weight: 600; color: var(--text-primary); }
+.cp-pts span { font-size: 0.8125rem; color: var(--text-secondary); }
+.cp-pts--total strong { font-family: var(--font-display); font-size: 1.125rem; font-weight: 800; letter-spacing: -0.01em; }
+.cp-muted { font-size: 0.8125rem; color: var(--text-secondary); }
+
+/* ---- The banner on The Floor ---------------------------------------------- */
+.cpb {
+  position: relative; isolation: isolate; overflow: hidden;
+  display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr) auto; align-items: center;
+  gap: var(--space-3) var(--space-5);
+  margin: var(--space-4) 0 var(--space-5);
+  padding: clamp(20px, 2.6vw, 30px) clamp(20px, 3vw, 36px);
+  border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 22px;
+  background:
+    linear-gradient(115deg, rgba(56, 189, 248, 0.14) 0%, rgba(37, 99, 235, 0.10) 38%, rgba(8, 21, 52, 0.72) 72%),
+    rgba(8, 21, 52, 0.6);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 18px 50px -24px rgba(0, 0, 0, 0.6);
+  color: var(--text-primary); text-decoration: none;
+  transition: border-color var(--dur-fast) var(--ease-out), transform 200ms var(--ease-out);
+}
+/* One sweep of light across the card as the page opens, then still: The Floor is a page
+   people come back to, so nothing on it keeps moving. None for reduced motion. */
+.cpb__glow {
+  position: absolute; inset: -40% auto -40% -30%; z-index: -1; width: 45%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.07), transparent);
+  transform: skewX(-18deg) translateX(-120%);
+  animation: cpb-sweep 1.6s cubic-bezier(0.77, 0, 0.175, 1) 0.6s both;
+}
+@keyframes cpb-sweep { from { transform: skewX(-18deg) translateX(-120%); } to { transform: skewX(-18deg) translateX(420%); } }
+.cpb__main { display: grid; gap: 6px; min-width: 0; }
+.cpb__eyebrow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-bright); }
+.cpb__live { width: 7px; height: 7px; border-radius: 50%; background: #f3c969; box-shadow: 0 0 0 3px rgba(243, 201, 105, 0.16); }
+.cpb.is-final .cpb__live { background: #34d399; box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.16); }
+.cpb__state { padding: 2px 8px; border: 1px solid rgba(255, 255, 255, 0.16); border-radius: var(--radius-pill); font-size: 0.6875rem; letter-spacing: 0.06em; color: var(--text-secondary); }
+.cpb__title { font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.025em; }
+.cpb__meta { font-size: 0.9375rem; color: var(--text-secondary); }
+.cpb__top { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.cpb__top li { animation: cpb-in 260ms var(--ease-out) both; }
+.cpb__top li:nth-child(2) { animation-delay: 50ms; }
+.cpb__top li:nth-child(3) { animation-delay: 100ms; }
+@keyframes cpb-in { from { opacity: 0; transform: translateY(4px); } }
+.cpb__top li { display: flex; align-items: center; gap: 10px; min-width: 0; padding: 8px 12px; border-radius: 12px; background: rgba(255, 255, 255, 0.04); }
+.cpb__top li .cp-place { width: 24px; height: 24px; font-size: 0.75rem; }
+.cpb-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
+.cpb__top .cpb-wait { background: none; padding: 0; font-size: 0.875rem; color: var(--text-secondary); }
+.cpb__cta {
+  display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; white-space: nowrap;
+  border-radius: var(--radius-pill); background: #fff; color: #06112b; font-size: 0.9375rem; font-weight: 600;
+}
+.cpb__cta span { transition: transform 200ms var(--ease-out); }
+.cpb:active { transform: scale(0.995); }
+.cpb:focus-visible { outline: 2px solid var(--accent-bright); outline-offset: 4px; }
+@media (hover: hover) and (pointer: fine) {
+  .cpb:hover { border-color: rgba(255, 255, 255, 0.28); }
+  .cpb:hover .cpb__cta span { transform: translateX(3px); }
+}
+@media (max-width: 960px) {
+  .cpb { grid-template-columns: minmax(0, 1fr); }
+  .cpb__cta { justify-self: start; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cpb__glow { animation: none; opacity: 0; }
+  .cpb, .cpb__cta span { transition: none; }
+  .cpb__top li { animation: none; }
+}
+
+/* ---- The page ----------------------------------------------------------------- */
+.cp-hero { padding: clamp(28px, 5vw, 64px) 0 var(--space-4); }
+.cp-eyebrow { margin: 0 0 var(--space-2); font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-bright); }
+.cp-hero h1 { margin: 0 0 var(--space-3); font-family: var(--font-display); font-size: clamp(2.4rem, 6.4vw, 4.6rem); font-weight: 800; line-height: 0.98; letter-spacing: -0.035em; }
+.cp-phases { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); max-width: 720px; margin: var(--space-4) 0 0; padding: 0; list-style: none; }
+.cp-phases li { display: grid; gap: 4px; padding: 16px 18px; border: 1px solid var(--glass-border); border-radius: 16px; background: rgba(8, 21, 52, 0.5); }
+.cp-phases__k { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-secondary); }
+.cp-phases strong { font-size: 1.125rem; font-weight: 600; }
+.cp-phases__d { font-size: 0.875rem; color: var(--text-secondary); }
+.cp-links { display: flex; flex-wrap: wrap; gap: 6px 24px; margin: var(--space-4) 0 0; font-size: 0.9375rem; }
+.cp-links a { color: var(--accent-bright); text-decoration: none; }
+.cp-links a:hover { text-decoration: underline; }
+.cp-status { display: flex; align-items: center; gap: 10px; margin: 0 0 var(--space-4); font-size: 0.9375rem; color: var(--text-secondary); }
+.cp-status__dot { flex: none; width: 8px; height: 8px; border-radius: 50%; background: #f3c969; }
+.cp-status.is-final .cp-status__dot { background: #34d399; }
+.cp-sec { margin-bottom: var(--space-5); }
+.cp-sec .bk-sec__head { margin-bottom: var(--space-4); }
+.cp-h2 { margin: 0; font-family: var(--font-display); font-size: clamp(1.5rem, 2.6vw, 2rem); font-weight: 800; letter-spacing: -0.02em; }
+.cp-team { display: inline-flex; align-items: center; gap: 10px; }
+.cp-team > span:last-child { display: grid; }
+.cp-team__name { font-weight: 600; color: var(--text-primary); }
+.cp-team__desk { font-size: 0.8125rem; color: var(--text-secondary); }
+.cp-table--board td, .cp-table--board th { padding-top: 14px; padding-bottom: 14px; }
+.cp-table--board tbody tr:first-child .cp-pts--total strong { color: #f3c969; }
+.bk-table td.cp-behind { color: #f3c969; }
+.cp-waiting, .cp-empty, .cp-note { margin: var(--space-3) 0 0; max-width: 70ch; font-size: 0.875rem; line-height: 1.6; color: var(--text-secondary); }
+.cp-method { margin-top: var(--space-4); }
+.cp-steps { margin: 0 0 var(--space-3); padding-left: 1.25em; display: grid; gap: 10px; max-width: 76ch; line-height: 1.6; color: rgba(244, 247, 251, 0.86); }
+.cp-steps ul { margin: 6px 0 0; padding-left: 1.1em; display: grid; gap: 4px; }
+.cp-pointsrow th, .cp-pointsrow td { padding-right: 12px; }
+@media (max-width: 640px) {
+  .cp-phases { grid-template-columns: minmax(0, 1fr); }
+  /* On a phone the standings show the total; the split is in the trading-week table below. */
+  .cp-table--board .cp-col-split { display: none; }
+}

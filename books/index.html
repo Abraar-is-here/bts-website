@@ -21,7 +21,7 @@
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
   <link rel="stylesheet" href="styles/main.css?v=164" />
-  <link rel="stylesheet" href="styles/books.css?v=14" />
+  <link rel="stylesheet" href="styles/books.css?v=17" />
 </head>
 <body>
 
@@ -99,6 +99,18 @@
         <p class="bk__stamp" data-stamp></p>
       </header>
 
+      <!-- The competition banner. js/books-comp.js fills in the top three. -->
+      <a class="cpb" href="/books/competition/" data-comp-banner>
+        <span class="cpb__glow" aria-hidden="true"></span>
+        <span class="cpb__main">
+          <span class="cpb__eyebrow"><span class="cpb__live" aria-hidden="true"></span>Annual Trading Competition 2026 <span class="cpb__state" data-cpb-state>Provisional standings</span></span>
+          <span class="cpb__title">Bristol Trading Competition</span>
+          <span class="cpb__meta">Trading week Mon 23 &ndash; Fri 27 Nov &middot; Pitch Mon 30 Nov, 6&nbsp;pm</span>
+        </span>
+        <ol class="cpb__top" data-cpb-top><li class="cpb-wait">Loading the standings</li></ol>
+        <span class="cpb__cta">See the standings <span aria-hidden="true">&rarr;</span></span>
+      </a>
+
       <div class="bk-desks" data-desks>
         <div class="bk-loading" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
         <span class="visually-hidden">Loading the books</span>
@@ -110,9 +122,10 @@
   </main>
 
   <script src="js/books-core.js?v=7" defer></script>
-  <script src="js/books-ui.js?v=15" defer></script>
+  <script src="js/books-ui.js?v=16" defer></script>
   <script src="js/books-live.js?v=3" defer></script>
   <script src="js/books-page.js?v=8" defer></script>
+  <script src="js/books-comp.js?v=4" defer></script>
   <script src="js/market-clocks.js?v=3" defer></script>
 
   <script src="js/aurora.js?v=9" defer></script>
