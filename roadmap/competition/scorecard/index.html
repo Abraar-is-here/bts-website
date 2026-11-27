@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Link-only: for the judges and the committee on pitch night. Not indexed,
+       not in the sitemap. Linked from the competition guide and from the
+       competition page. Prints on A4: the rubric on page 1, the marking sheet
+       on page 2. -->
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <base href="/" />
+
+  <title>Pitch scorecard &mdash; Bristol Trading Competition</title>
+  <meta name="description" content="How the judges mark each desk's pitch at the Bristol Trading Competition 2026." />
+
+  <link rel="icon" type="image/svg+xml" href="assets/img/bull.svg" />
+  <link rel="stylesheet" href="styles/tokens/fonts.css?v=7" />
+  <style>
+    @font-face {
+      font-family: 'Libre Franklin';
+      src: url('assets/fonts/libre-franklin-latin.woff2') format('woff2');
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+    }
+    /* The same printed-report look as the competition guide: ivory paper,
+       near-black ink, a serif for headings and hairline tables. */
+    :root {
+      --paper: #f4f1ea;
+      --ink: #16181c;
+      --ink-2: #3d4047;
+      --ink-3: #6e6a62;
+      --rule: rgba(22, 24, 28, 0.14);
+      --rule-strong: rgba(22, 24, 28, 0.4);
+      --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, 'Times New Roman', serif;
+      --sans: 'Libre Franklin', 'Helvetica Neue', Arial, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); }
+    .sc { max-width: 1000px; margin: 0 auto; padding: 48px 16px 72px; }
+    @media (min-width: 720px) { .sc { padding: 64px 32px 96px; } }
+
+    .sc__top { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .sc__back { display: inline-flex; align-items: center; min-height: 44px; font-size: 0.9375rem; font-weight: 600; color: var(--ink-2); text-decoration: none; }
+    .sc__back:hover { color: var(--ink); }
+    .sc__print { min-height: 40px; padding: 0 18px; border: 1px solid var(--ink); border-radius: 999px; background: var(--ink); color: var(--paper); font: 600 0.9375rem var(--sans); cursor: pointer; transition: transform 160ms ease-out, background-color 160ms ease; }
+    .sc__print:hover { background: #2a2d33; }
+    .sc__print:active { transform: scale(0.97); }
+    .sc__print:focus-visible, .sc__back:focus-visible { outline: 2px solid #6b5d45; outline-offset: 3px; }
+
+    .sc__eyebrow { margin: 32px 0 0; font-size: 0.875rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-3); }
+    h1 { margin: 8px 0 0; font-family: var(--serif); font-size: clamp(2.4rem, 6vw, 3.6rem); font-weight: 400; line-height: 1.05; letter-spacing: -0.01em; }
+    .sc__lead { margin: 16px 0 0; max-width: 64ch; font-size: 1.0625rem; line-height: 1.65; color: var(--ink-2); }
+
+    .sc-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 32px 0 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+    .sc-facts div { padding: 14px 16px 14px 0; }
+    .sc-facts div + div { padding-left: 16px; border-left: 1px solid var(--rule); }
+    .sc-facts dt { margin-bottom: 4px; font-size: 0.8125rem; color: #5a5650; }
+    .sc-facts dd { margin: 0; font-size: 1rem; font-weight: 600; line-height: 1.4; }
+
+    h2 { margin: 48px 0 12px; font-family: var(--serif); font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 400; line-height: 1.15; }
+    p, li { font-size: 1rem; line-height: 1.65; color: var(--ink-2); }
+    p { margin: 0 0 12px; max-width: 70ch; }
+    ol, ul { margin: 0 0 12px; padding-left: 1.25em; max-width: 70ch; }
+    li + li { margin-top: 4px; }
+    li::marker { color: var(--ink-3); }
+    strong { font-weight: 600; color: var(--ink); }
+
+    .sc-table { overflow-x: auto; margin: 8px 0 0; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 12px 14px 12px 0; border-bottom: 1px solid var(--rule); text-align: left; vertical-align: top; font-size: 0.9375rem; line-height: 1.5; color: var(--ink-2); }
+    thead th { font-size: 0.8125rem; font-weight: 600; color: var(--ink); border-bottom-color: var(--rule-strong); }
+    td:last-child, th:last-child { padding-right: 0; }
+
+    /* The rubric */
+    .rubric { min-width: 720px; }
+    .rubric th[scope="row"] { width: 22%; font-weight: 400; }
+    .rubric__name { display: block; font-family: var(--serif); font-size: 1.1875rem; line-height: 1.25; color: var(--ink); }
+    .rubric__out { display: block; margin-top: 2px; font-size: 0.8125rem; color: var(--ink-3); }
+    .rubric__ask { display: block; margin-top: 6px; font-size: 0.875rem; color: var(--ink-2); }
+    .rubric td { width: 26%; }
+    .band { display: block; margin-bottom: 2px; font-size: 0.8125rem; font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
+
+    /* The marking sheet: one row per desk, boxes to write in. */
+    .sheet__who { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin: 4px 0 16px; }
+    .sheet__who div { display: flex; align-items: flex-end; gap: 10px; font-size: 0.9375rem; font-weight: 600; color: var(--ink); }
+    .sheet__who span { flex: 1; height: 1.6em; border-bottom: 1px solid var(--rule-strong); }
+    .sheet { min-width: 760px; table-layout: fixed; }
+    .sheet th, .sheet td { padding: 8px 6px; border: 1px solid var(--rule-strong); vertical-align: middle; }
+    .sheet thead th { text-align: center; line-height: 1.25; }
+    .sheet thead th:first-child { text-align: left; }
+    .sheet thead small { display: block; font-weight: 400; color: var(--ink-3); }
+    .sheet tbody th { font-weight: 600; color: var(--ink); }
+    .sheet tbody th small { display: block; font-weight: 400; font-size: 0.8125rem; color: var(--ink-3); }
+    .sheet td { height: 50px; }
+    .sheet .col-desk { width: 21%; }
+    .sheet .col-mark { width: 8.5%; }
+    .sheet .col-total { width: 9%; background: rgba(22, 24, 28, 0.04); }
+    .sheet .col-notes { width: 19%; }
+
+    /* After the pitch: the committee's step */
+    .sc-note { margin: 24px 0 0; padding: 16px 16px 16px 20px; border-left: 2px solid var(--ink); background: rgba(255, 255, 255, 0.55); }
+    .sc-note p:last-child, .sc-note ol:last-child { margin-bottom: 0; }
+    .pts { min-width: 560px; }
+    .pts th, .pts td { text-align: center; font-variant-numeric: tabular-nums; }
+    .pts th:first-child { text-align: left; }
+
+    @media (max-width: 640px) {
+      .sc-facts { grid-template-columns: minmax(0, 1fr); }
+      .sc-facts div + div { padding-left: 0; border-left: 0; border-top: 1px solid var(--rule); }
+      .sheet__who { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+    }
+
+    @media print {
+      @page { size: A4; margin: 12mm; }
+      body { background: #fff; }
+      .sc { max-width: none; padding: 0; }
+      .sc__top { display: none; }
+      .sc__eyebrow { margin-top: 0; }
+      h2 { margin-top: 20px; }
+      p, li, th, td { font-size: 9.5pt; color: #111; }
+      .sc__lead { font-size: 10.5pt; }
+      .rubric, .sheet, .pts { min-width: 0; }
+      .rubric__name { font-size: 11.5pt; }
+      th, td { padding-top: 6px; padding-bottom: 6px; }
+      .sheet-page { break-before: page; }
+      .sheet td { height: 15mm; }
+      .sc-table { overflow: visible; }
+      tr { break-inside: avoid; }
+      .no-print { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="sc" id="scorecard">
+
+    <div class="sc__top">
+      <a class="sc__back" href="/roadmap/competition/#s4">&larr; The competition guide</a>
+      <button class="sc__print" type="button" onclick="window.print()">Print the scorecard</button>
+    </div>
+
+    <p class="sc__eyebrow">Bristol Trading Competition 2026</p>
+    <h1>Pitch scorecard</h1>
+    <p class="sc__lead">
+      Each desk pitches one trade idea in four minutes, then takes two to three minutes of questions.
+      Mark every desk on the same six criteria, from 1 to 10 each, for a total out of 60.
+    </p>
+
+    <dl class="sc-facts">
+      <div><dt>When</dt><dd>Mon 30 Nov, 6&nbsp;pm</dd></div>
+      <div><dt>Where</dt><dd>Pugsley Lecture Theatre, Queens Building</dd></div>
+      <div><dt>Each pitch</dt><dd>4 minutes, cut off at 4:00, then questions</dd></div>
+    </dl>
+
+    <h2>How to mark</h2>
+    <ol>
+      <li>Mark each desk straight after its questions, before the next desk starts. Write a word or two of notes; they help when two desks end up close.</li>
+      <li>Use whole numbers from 1 to 10. A 5 is a sound pitch with nothing wrong and nothing special. Keep 9 and 10 for a trade you would put your own money behind.</li>
+      <li>Mark on your own and don&rsquo;t compare marks with the other judges until every desk has pitched.</li>
+      <li>Judge the idea and how it is argued, not whether you agree with it. A well-argued short of something you like can still score 10.</li>
+      <li>You won&rsquo;t be told how any desk did in the trading week, and it shouldn&rsquo;t affect your marks.</li>
+    </ol>
+
+    <h2>The criteria</h2>
+    <p>Every pitch has to cover three parts in order: the trade, the thesis, then catalysts and risks. The first five criteria are the ones the desks were briefed on; the sixth covers the questions.</p>
+    <div class="sc-table" tabindex="0" role="region" aria-label="The six criteria and what each band of marks looks like">
+      <table class="rubric">
+        <caption class="visually-hidden" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">The six criteria, and what a pitch at each band of marks looks like</caption>
+        <thead>
+          <tr><th scope="col">Criterion</th><th scope="col">1&ndash;3</th><th scope="col">4&ndash;7</th><th scope="col">8&ndash;10</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row"><span class="rubric__name">Clarity of thesis</span><span class="rubric__out">out of 10</span><span class="rubric__ask">Could you say what they are trading, and why, after the first minute?</span></th>
+            <td>It is unclear what they are trading or why. Or the view is the same as the market&rsquo;s, so there is no trade.</td>
+            <td>The trade is clear by the end of the first minute. What the market is pricing, and why the desk disagrees, is vague or only implied.</td>
+            <td>The trade is said in one sentence in the first 20 seconds. The desk says plainly what the market prices and why it is wrong.</td>
+          </tr>
+          <tr>
+            <th scope="row"><span class="rubric__name">Analysis and evidence</span><span class="rubric__out">out of 10</span><span class="rubric__ask">Do the data and reasoning support the view?</span></th>
+            <td>Claims without evidence, or numbers that don&rsquo;t support the view.</td>
+            <td>Sensible drivers, but the support is thin or generic, or rests on assumptions they don&rsquo;t test.</td>
+            <td>One to three drivers, each backed by data or analysis that bears on the price. Few, strong reasons rather than a long list.</td>
+          </tr>
+          <tr>
+            <th scope="row"><span class="rubric__name">Trade construction</span><span class="rubric__out">out of 10</span><span class="rubric__ask">Are entry, target and stop sensible, and is the risk worth taking?</span></th>
+            <td>Required fields are missing, there is no stop, or the levels don&rsquo;t add up.</td>
+            <td>All six fields are there, but the levels look arbitrary or the risk/reward is marginal.</td>
+            <td>Instrument, direction, entry, target, stop, risk/reward and horizon are all given early. The levels follow from the thesis and the horizon fits the desk&rsquo;s range.</td>
+          </tr>
+          <tr>
+            <th scope="row"><span class="rubric__name">Catalysts and risks</span><span class="rubric__out">out of 10</span><span class="rubric__ask">Do they know what moves it, when, and what would prove them wrong?</span></th>
+            <td>No catalysts. Risks skipped or mentioned in passing.</td>
+            <td>Catalysts are named but not dated, or generic (&ldquo;upcoming earnings&rdquo;). Risks are listed without saying what would end the trade.</td>
+            <td>Dated catalysts inside the horizon, each with what it should show. The main risks are faced honestly, and the level that proves them wrong matches the stop.</td>
+          </tr>
+          <tr>
+            <th scope="row"><span class="rubric__name">Delivery and energy</span><span class="rubric__out">out of 10</span><span class="rubric__ask">Would you listen to them pitch it again?</span></th>
+            <td>Hard to follow, read off the slides, or cut off at 4:00 before the main points.</td>
+            <td>Clear but flat or rushed. Leans on the slides in places.</td>
+            <td>Confident and engaging. Talks to the panel, not the screen, and finishes inside four minutes.</td>
+          </tr>
+          <tr>
+            <th scope="row"><span class="rubric__name">Questions</span><span class="rubric__out">out of 10</span><span class="rubric__ask">How do they handle your questions, and how good are theirs?</span></th>
+            <td>Dodges questions or can&rsquo;t answer them. Asks nothing of other desks.</td>
+            <td>Relevant but general answers. Few questions of other desks, or soft ones.</td>
+            <td>Answers directly, with numbers, and knows where the trade is weak. Asks other desks sharp questions about the thesis or the risk.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <section class="sheet-page" aria-labelledby="sheet-title">
+      <h2 id="sheet-title">Marking sheet</h2>
+      <div class="sheet__who" aria-hidden="true">
+        <div>Judge<span></span></div>
+        <div>Signature<span></span></div>
+      </div>
+      <div class="sc-table" tabindex="0" role="region" aria-label="Marking sheet, one row per desk">
+        <table class="sheet">
+          <thead>
+            <tr>
+              <th scope="col" class="col-desk">Desk</th>
+              <th scope="col" class="col-mark">Thesis<small>/10</small></th>
+              <th scope="col" class="col-mark">Analysis<small>/10</small></th>
+              <th scope="col" class="col-mark">Trade<small>/10</small></th>
+              <th scope="col" class="col-mark">Catalysts, risks<small>/10</small></th>
+              <th scope="col" class="col-mark">Delivery<small>/10</small></th>
+              <th scope="col" class="col-mark">Questions<small>/10</small></th>
+              <th scope="col" class="col-total">Total<small>/60</small></th>
+              <th scope="col" class="col-notes">Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Tash Munjanganja<small>Equities</small></th><td></td><td></td><td></td><td></td><td></td><td></td><td class="col-total"></td><td></td></tr>
+            <tr><th scope="row">Tolu Ayetan<small>Equities</small></th><td></td><td></td><td></td><td></td><td></td><td></td><td class="col-total"></td><td></td></tr>
+            <tr><th scope="row">Ibrahim Ali<small>Equities</small></th><td></td><td></td><td></td><td></td><td></td><td></td><td class="col-total"></td><td></td></tr>
+            <tr><th scope="row">Tom Hoad<small>Equities</small></th><td></td><td></td><td></td><td></td><td></td><td></td><td class="col-total"></td><td></td></tr>
+            <tr><th scope="row">Anay Mistry<small>FICC</small></th><td></td><td></td><td></td><td></td><td></td><td></td><td class="col-total"></td><td></td></tr>
+            <tr><th scope="row">Val Sinko<small>FICC</small></th><td></td><td></td><td></td><td></td><td></td><td></td><td class="col-total"></td><td></td></tr>
+            <tr><th scope="row">Manolo Kidel<small>FICC</small></th><td></td><td></td><td></td><td></td><td></td><td></td><td class="col-total"></td><td></td></tr>
+            <tr><th scope="row">Aled von Oppell<small>FICC</small></th><td></td><td></td><td></td><td></td><td></td><td></td><td class="col-total"></td><td></td></tr>
+            <tr><th scope="row">Manasvi Kommuri<small>Macro</small></th><td></td><td></td><td></td><td></td><td></td><td></td><td class="col-total"></td><td></td></tr>
+            <tr><th scope="row">Lenny Tucker<small>Macro</small></th><td></td><td></td><td></td><td></td><td></td><td></td><td class="col-total"></td><td></td></tr>
+            <tr><th scope="row">Emily Chiaia-Miller<small>Macro</small></th><td></td><td></td><td></td><td></td><td></td><td></td><td class="col-total"></td><td></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="sc-note">
+        <p><strong>After the last pitch</strong> (for the committee)</p>
+        <ol>
+          <li>Collect every judge&rsquo;s sheet and add up each desk&rsquo;s totals across the judges. Keep the Thesis and Analysis columns added up too.</li>
+          <li>Place the desks by that combined total. A tie goes to the higher Thesis marks, then the higher Analysis marks.</li>
+          <li>Each place earns pitch points from the table below. They are added to the desk&rsquo;s trading-week points for the final standings.</li>
+        </ol>
+        <div class="sc-table">
+          <table class="pts">
+            <thead><tr><th scope="col">Place</th><th scope="col">1st</th><th scope="col">2nd</th><th scope="col">3rd</th><th scope="col">4th</th><th scope="col">5th</th><th scope="col">6th</th><th scope="col">7th</th><th scope="col">8th</th><th scope="col">9th</th><th scope="col">10th</th><th scope="col">11th</th></tr></thead>
+            <tbody><tr><th scope="row">Points</th><td>25</td><td>18</td><td>15</td><td>12</td><td>10</td><td>8</td><td>6</td><td>4</td><td>2</td><td>1</td><td>0</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</body>
+</html>

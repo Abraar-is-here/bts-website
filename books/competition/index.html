@@ -21,7 +21,7 @@
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
   <link rel="stylesheet" href="styles/main.css?v=164" />
-  <link rel="stylesheet" href="styles/books.css?v=20" />
+  <link rel="stylesheet" href="styles/books.css?v=21" />
 </head>
 <body>
 
@@ -123,7 +123,7 @@
         <div data-cp-week></div>
 
         <details class="bk-disc cp-method">
-          <summary class="bk-disc__sum"><span class="bk-disc__title">How the trading week is scored</span><span class="bk-disc__hint">Three measures, Formula One points</span></summary>
+          <summary class="bk-disc__sum"><span class="bk-disc__title">How the trading week is scored</span><span class="bk-disc__hint">Three measures, points by place</span></summary>
           <div class="bk-disc__body">
             <ol class="cp-steps">
               <li><strong>Measure the week.</strong> From each book&rsquo;s account value at the close before the week to its value at the end of it, with any deposits taken out:
@@ -149,12 +149,34 @@
         </details>
       </section>
 
+      <section class="bk-panel cp-sec" aria-labelledby="cp-pitch-title">
+        <div class="bk-sec__head">
+          <h2 id="cp-pitch-title" class="cp-h2">The pitch</h2>
+          <p>Four minutes for one trade idea, then two to three minutes of questions from the judges. Each judge marks every desk out of 60 on six criteria.</p>
+        </div>
+        <div class="bk-scroll" tabindex="0" role="region" aria-label="Pitch criteria">
+          <table class="bk-table cp-crit">
+            <caption class="visually-hidden">What the judges mark, each out of 10</caption>
+            <thead><tr><th scope="col">Criterion</th><th scope="col">What the judges look for</th><th class="num" scope="col">Marks</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Clarity of thesis</th><td>The trade in one sentence early on, and a view that differs from the market&rsquo;s</td><td class="num">10</td></tr>
+              <tr><th scope="row">Analysis and evidence</th><td>One to three drivers, each backed by data</td><td class="num">10</td></tr>
+              <tr><th scope="row">Trade construction</th><td>Entry, target and stop that follow from the thesis, with a risk/reward worth taking</td><td class="num">10</td></tr>
+              <tr><th scope="row">Catalysts and risks</th><td>Dated catalysts, honest risks, and the level that proves the desk wrong</td><td class="num">10</td></tr>
+              <tr><th scope="row">Delivery and energy</th><td>Confident, talks to the panel, finishes inside four minutes</td><td class="num">10</td></tr>
+              <tr><th scope="row">Questions</th><td>Direct answers to the judges, and sharp questions for other desks</td><td class="num">10</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="cp-note">The judges&rsquo; marks are added up for each desk. Desks are placed by that total and earn pitch points from the same table as the trading week. <a href="/roadmap/competition/scorecard/">The judges&rsquo; scorecard <span aria-hidden="true">&rarr;</span></a></p>
+      </section>
+
     </div>
   </main>
 
   <script src="js/books-core.js?v=7" defer></script>
   <script src="js/books-ui.js?v=18" defer></script>
-  <script src="js/books-comp.js?v=7" defer></script>
+  <script src="js/books-comp.js?v=8" defer></script>
 
   <script src="js/aurora.js?v=9" defer></script>
   <script src="js/transitions.js?v=3" defer></script>

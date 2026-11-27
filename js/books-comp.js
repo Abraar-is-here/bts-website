@@ -16,7 +16,7 @@
                and at least one trade in the week; otherwise no Sharpe.
      drawdown  the largest fall from a high during the week
 
-   How points are given, like a Formula One race:
+   How points are given:
      1. Teams are ranked on each of the three measures. Each ranking earns
         points from the table (25, 18, 15, 12, 10, 8, 6, 4, 2, 1).
      2. Those are blended by the published weights (return above cash 50%,
@@ -24,7 +24,11 @@
      3. The teams are placed by that score, and their place earns the week's
         points from the same table. Ties are split by return above cash, then
         by the smaller drawdown.
-   Pitch points are entered by hand and added on top for the total.
+   The pitch is marked out of 60 per judge on the scorecard
+   (/roadmap/competition/scorecard/). The judges' totals go in "pitchMarks" in
+   competition.json; desks are placed by them and earn points from the same
+   table, added to the week's points for the total. A number in "pitch" sets a
+   desk's pitch points directly instead.
    ========================================================================== */
 (function (root) {
   'use strict';
@@ -115,9 +119,22 @@
       t.place = prev && prev.score === t.score && prev.week.above === t.week.above && prev.week.maxDD === t.week.maxDD ? prev.place : i + 1;
       t.weekPts = pointsFor(P, t.place);
     });
+    // Pitch: the judges' marks from the scorecard, added up across the judges.
+    // Desks are placed by the total and earn points from the same table; a tie
+    // is split by the thesis marks, then the analysis marks.
+    var M = cfg.pitchMarks || {};
+    var mk = function (t) { return M[t.id] || {}; };
+    var marked = teams.filter(function (t) { return typeof mk(t).total === 'number'; }).sort(function (a, b) {
+      return mk(b).total - mk(a).total || (mk(b).thesis || 0) - (mk(a).thesis || 0) || (mk(b).analysis || 0) - (mk(a).analysis || 0);
+    });
+    marked.forEach(function (t, i) {
+      var p = marked[i - 1], a = mk(t), b = p && mk(p);
+      t.pitchPlace = b && b.total === a.total && (b.thesis || 0) === (a.thesis || 0) && (b.analysis || 0) === (a.analysis || 0) ? p.pitchPlace : i + 1;
+    });
     teams.forEach(function (t) {
       if (!t.week) { t.place = null; t.weekPts = 0; }
       var pp = cfg.pitch && cfg.pitch[t.id];
+      if (typeof pp !== 'number' && t.pitchPlace) pp = pointsFor(P, t.pitchPlace);
       t.pitchPts = typeof pp === 'number' ? pp : null;
       t.total = t.weekPts + (t.pitchPts || 0);
     });
@@ -264,7 +281,7 @@
       if (!shown(got.cfg)) {
         var held = el('div', 'cp-held');
         held.appendChild(el('p', 'cp-held__title', 'Results are sealed until the pitch'));
-        held.appendChild(el('p', 'cp-held__text', revealText(got.cfg) + ' Every desk pitches on equal terms; the trading-week points and the pitch points are added together then.'));
+        held.appendChild(el('p', 'cp-held__text', revealText(got.cfg) + ' No desk pitches knowing where it stands. The trading-week points and the pitch points are added together then.'));
         hostBoard.appendChild(held);
         hostWeek.appendChild(el('p', 'cp-empty', 'Each team’s week is shown here with the results.'));
         return;

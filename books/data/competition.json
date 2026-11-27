@@ -1,5 +1,5 @@
 {
-  "note": "The Bristol Trading Competition on /books/competition/ (js/books-comp.js). The trading week is scored from each book's daily account values in books/data/<book>.json. Pitch points are entered by hand after the pitch: \"pitch\": { \"ficc-aled\": 25, ... }, keyed by book id. Set \"final\": true once every team's export to the last day is in. Results (places and points) stay hidden until \"reveal\": true; add ?preview=1 to the page address to check them before then. The Floor hides every book's figures until floorRevealAt (UTC; 20:00 is 8 pm in the UK in November) or reveal, whichever comes first.",
+  "note": "The Bristol Trading Competition on /books/competition/ (js/books-comp.js). The trading week is scored from each book's daily account values in books/data/<book>.json. Pitch: add up each desk's marks from all the judges' scorecards (/roadmap/competition/scorecard/) and enter them in \"pitchMarks\", keyed by book id: { \"ficc-aled\": { \"total\": 214, \"thesis\": 36, \"analysis\": 33 } }. Desks are placed by total (ties split by thesis, then analysis) and earn points from the table. A number in \"pitch\" sets a desk's pitch points directly instead. Set \"final\": true once every team's export to the last day is in. Results (places and points) stay hidden until \"reveal\": true; add ?preview=1 to the page address to check them before then. The Floor hides every book's figures until floorRevealAt (UTC; 20:00 is 8 pm in the UK in November) or reveal, whichever comes first.",
   "name": "Bristol Trading Competition 2026",
   "guide": "/roadmap/competition/",
   "week": { "from": "2026-11-23", "to": "2026-11-27", "label": "Mon 23 – Fri 27 Nov" },
@@ -10,5 +10,6 @@
   "reveal": false,
   "floorRevealAt": "2026-11-30T20:00:00Z",
   "revealLabel": "around 8 pm on Monday 30 November",
+  "pitchMarks": {},
   "pitch": {}
 }

@@ -689,3 +689,8 @@ body:has(> .ticker:not([hidden])) .bk { --bk-stick: calc(92px + var(--ticker-h))
 .bk-sealed__text { margin: 0; max-width: 58ch; font-size: 1rem; line-height: 1.6; color: var(--text-secondary); }
 .bk-sealed__link { margin-top: 8px; color: var(--accent-bright); font-weight: 600; text-decoration: none; }
 .bk-sealed__link:hover { text-decoration: underline; }
+/* The pitch criteria on the competition page. */
+.cp-crit tbody th { font-weight: 600; color: var(--text-primary); white-space: nowrap; }
+.cp-crit td { color: var(--text-secondary); }
+.cp-sec .cp-note a { color: var(--accent-bright); font-weight: 600; text-decoration: none; white-space: nowrap; }
+.cp-sec .cp-note a:hover { text-decoration: underline; }
