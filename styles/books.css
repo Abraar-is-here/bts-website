@@ -17,6 +17,10 @@
   --bk-s2: #d95926;
   --bk-s3: #9085e9;
   --bk-s4: #c98500;
+  --bk-s5: #1fa59a;
+  --bk-s6: #d0508c;
+  --bk-s7: #8f9c34;
+  --bk-s8: #aab4c6;
   --bk-grid: rgba(141, 162, 196, 0.13);
   --bk-axis: rgba(141, 162, 196, 0.34);
   --bk-panel: rgba(6, 17, 43, 0.66);
@@ -645,7 +649,7 @@ body:has(> .ticker:not([hidden])) .bk { --bk-stick: calc(92px + var(--ticker-h))
 /* ---- The page ----------------------------------------------------------------- */
 .cp-hero { padding: clamp(28px, 5vw, 64px) 0 var(--space-4); }
 .cp-eyebrow { margin: 0 0 var(--space-2); font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-bright); }
-.cp-hero h1 { margin: 0 0 var(--space-3); font-family: var(--font-display); font-size: clamp(2.4rem, 6.4vw, 4.6rem); font-weight: 800; line-height: 0.98; letter-spacing: -0.035em; }
+.cp-hero h1 { margin: 0 0 var(--space-3); font-family: var(--font-display); font-size: clamp(2rem, 8.6vw, 4.6rem); font-weight: 800; line-height: 0.98; letter-spacing: -0.035em; }
 .cp-phases { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); max-width: 720px; margin: var(--space-4) 0 0; padding: 0; list-style: none; }
 .cp-phases li { display: grid; gap: 4px; padding: 16px 18px; border: 1px solid var(--glass-border); border-radius: 16px; background: rgba(8, 21, 52, 0.5); }
 .cp-phases__k { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-secondary); }
@@ -694,3 +698,37 @@ body:has(> .ticker:not([hidden])) .bk { --bk-stick: calc(92px + var(--ticker-h))
 .cp-crit td { color: var(--text-secondary); }
 .cp-sec .cp-note a { color: var(--accent-bright); font-weight: 600; text-decoration: none; white-space: nowrap; }
 .cp-sec .cp-note a:hover { text-decoration: underline; }
+/* Trading-week table: each book's return with its benchmark underneath. */
+.cp-ret { display: inline-grid; justify-items: end; gap: 2px; line-height: 1.2; }
+.cp-ret__book { font-weight: 600; }
+.cp-ret__book.is-up { color: var(--bk-up); }
+.cp-ret__book.is-down { color: var(--bk-down); }
+.cp-ret__bench { font-size: 0.75rem; color: var(--text-secondary); }
+.cp-ret__bench-val { font-variant-numeric: tabular-nums; }
+/* Pitch criteria: the descriptions wrap rather than push Marks off the edge. */
+.cp-crit td { white-space: normal; min-width: 22ch; }
+.cp-crit td.num { min-width: 0; white-space: nowrap; }
+/* Competition chart: the legend doubles as show/hide toggles. */
+.cp-chart-tools { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 8px 16px; }
+.cp-legend { flex: 1 1 auto; margin-bottom: 4px; gap: 4px 6px; }
+.cp-legend__btn {
+  position: relative; display: inline-flex; align-items: center; gap: 8px; margin: 0; padding: 6px 10px; border: 1px solid transparent; border-radius: 999px;
+  background: none; font: inherit; color: inherit; cursor: pointer;
+  transition: opacity 160ms var(--ease-out), border-color 160ms var(--ease-out), background-color 160ms var(--ease-out);
+}
+/* A taller hit area than the visible pill, without changing how it looks. */
+.cp-legend__btn::before { content: ''; position: absolute; inset: -4px 0; }
+.cp-legend__name { color: var(--text-primary); }
+.cp-legend__btn[aria-pressed="false"] { opacity: 0.45; }
+.cp-legend__btn[aria-pressed="false"] .cp-legend__name { text-decoration: line-through; text-decoration-thickness: 1px; }
+.cp-legend__btn[aria-pressed="false"] .bk-legend__key { background: transparent !important; box-shadow: inset 0 0 0 1px var(--text-secondary); height: 4px; }
+.cp-legend__btn:active { transform: scale(0.97); }
+.cp-legend__btn:focus-visible, .cp-legend__all:focus-visible { outline: 2px solid var(--accent-bright); outline-offset: 2px; }
+@media (hover: hover) and (pointer: fine) {
+  .cp-legend__btn:hover { border-color: var(--hairline); background: rgba(255, 255, 255, 0.04); }
+  .cp-legend__all:hover { text-decoration: underline; }
+}
+.cp-legend__all[hidden] { display: none; }
+.cp-legend__all { margin: 0 0 0 6px; padding: 2px; border: 0; background: none; font: inherit; font-size: 0.875rem; font-weight: 600; color: var(--accent-bright); cursor: pointer; }
+.cp-chart-hint { margin: 2px 0 10px; font-size: 0.8125rem; color: var(--text-secondary); }
+@media (prefers-reduced-motion: reduce) { .cp-legend__btn { transition: none; } .cp-legend__btn:active { transform: none; } }

@@ -3,8 +3,8 @@
  "id": "ficc-val",
  "accountKey": "362395af8ae0",
  "currency": "GBP",
- "updated": "2026-11-23T13:33:02.117Z",
- "asOf": "2026-11-20",
+ "updated": "2026-11-28T14:35:44.675Z",
+ "asOf": "2026-11-27",
  "nav": [
   [
    "2026-10-30",
@@ -69,6 +69,26 @@
   [
    "2026-11-20",
    1004144.78376849
+  ],
+  [
+   "2026-11-23",
+   1010772.655183713
+  ],
+  [
+   "2026-11-24",
+   1010763.620351415
+  ],
+  [
+   "2026-11-25",
+   1015634.154856435
+  ],
+  [
+   "2026-11-26",
+   1015362.343707928
+  ],
+  [
+   "2026-11-27",
+   1015022.386100486
   ]
  ],
  "flows": [
@@ -79,7 +99,7 @@
   }
  ],
  "positions": [],
- "positionsDate": "2026-11-20",
+ "positionsDate": "2026-11-27",
  "trades": [
   {
    "id": "1926249107",
@@ -95,7 +115,7 @@
    "commission": -318.8394175986495,
    "pnl": 0,
    "openClose": "",
-   "ref": "16172634",
+   "ref": "",
    "underlying": "",
    "key": "c15016059"
   },
@@ -113,7 +133,7 @@
    "commission": -317.8324381935592,
    "pnl": 0,
    "openClose": "",
-   "ref": "79724536",
+   "ref": "",
    "underlying": "",
    "key": "c15016059"
   },
@@ -131,7 +151,7 @@
    "commission": -21.975236274650925,
    "pnl": 0,
    "openClose": "",
-   "ref": "16980488",
+   "ref": "",
    "underlying": "",
    "key": "c12087792"
   },
@@ -149,7 +169,7 @@
    "commission": -21.975236274650925,
    "pnl": 0,
    "openClose": "",
-   "ref": "16980488",
+   "ref": "",
    "underlying": "",
    "key": "c12087792"
   },
@@ -167,7 +187,7 @@
    "commission": -3.921524863577476,
    "pnl": 0,
    "openClose": "",
-   "ref": "16980488",
+   "ref": "",
    "underlying": "",
    "key": "c12087792"
   },
@@ -185,7 +205,7 @@
    "commission": -18.05387569650732,
    "pnl": 0,
    "openClose": "",
-   "ref": "16980488",
+   "ref": "",
    "underlying": "",
    "key": "c12087792"
   },
@@ -203,7 +223,7 @@
    "commission": -43.95047254930185,
    "pnl": 0,
    "openClose": "",
-   "ref": "16980488",
+   "ref": "",
    "underlying": "",
    "key": "c12087792"
   },
@@ -221,7 +241,7 @@
    "commission": -21.97043696559666,
    "pnl": 0,
    "openClose": "",
-   "ref": "53624222",
+   "ref": "",
    "underlying": "",
    "key": "c12087792"
   },
@@ -239,7 +259,7 @@
    "commission": -21.97043696559666,
    "pnl": 0,
    "openClose": "",
-   "ref": "53624222",
+   "ref": "",
    "underlying": "",
    "key": "c12087792"
   },
@@ -257,7 +277,7 @@
    "commission": -21.970636936807256,
    "pnl": 0,
    "openClose": "",
-   "ref": "53624222",
+   "ref": "",
    "underlying": "",
    "key": "c12087792"
   },
@@ -275,7 +295,151 @@
    "commission": -15.379445856288521,
    "pnl": 0,
    "openClose": "",
-   "ref": "53624222",
+   "ref": "",
+   "underlying": "",
+   "key": "c12087792"
+  },
+  {
+   "id": "1933907129",
+   "time": "2026-11-23T16:18:13",
+   "symbol": "EUR.USD",
+   "description": "EUR.USD",
+   "asset": "CASH",
+   "currency": "USD",
+   "fx": 0.76737,
+   "quantity": 1000000,
+   "price": 1.09034,
+   "multiplier": 1,
+   "commission": -21.71586373718024,
+   "pnl": 0,
+   "openClose": "",
+   "ref": "",
+   "underlying": "",
+   "key": "c12087792"
+  },
+  {
+   "id": "1933907132",
+   "time": "2026-11-23T16:18:13",
+   "symbol": "EUR.USD",
+   "description": "EUR.USD",
+   "asset": "CASH",
+   "currency": "USD",
+   "fx": 0.76737,
+   "quantity": 300000,
+   "price": 1.09035,
+   "multiplier": 1,
+   "commission": -6.514818870948825,
+   "pnl": 0,
+   "openClose": "",
+   "ref": "",
+   "underlying": "",
+   "key": "c12087792"
+  },
+  {
+   "id": "1934986726",
+   "time": "2026-11-24T19:30:17",
+   "symbol": "AUD.USD",
+   "description": "AUD.USD",
+   "asset": "CASH",
+   "currency": "USD",
+   "fx": 0.76244,
+   "quantity": -1000000,
+   "price": 0.66602,
+   "multiplier": 1,
+   "commission": -13.321098830071875,
+   "pnl": 0,
+   "openClose": "",
+   "ref": "",
+   "underlying": "",
+   "key": "c14433401"
+  },
+  {
+   "id": "1935085262",
+   "time": "2026-11-25T06:12:49",
+   "symbol": "GBP.JPY",
+   "description": "GBP.JPY",
+   "asset": "CASH",
+   "currency": "JPY",
+   "fx": 0.0047899,
+   "quantity": 26835,
+   "price": 208.301,
+   "multiplier": 1,
+   "commission": -318.3699033382743,
+   "pnl": 0,
+   "openClose": "",
+   "ref": "",
+   "underlying": "",
+   "key": "c14321015"
+  },
+  {
+   "id": "1935090768",
+   "time": "2026-11-25T06:29:28",
+   "symbol": "AUD.USD",
+   "description": "AUD.USD",
+   "asset": "CASH",
+   "currency": "USD",
+   "fx": 0.76244,
+   "quantity": 500000,
+   "price": 0.65674,
+   "multiplier": 1,
+   "commission": -6.567744546456114,
+   "pnl": 0,
+   "openClose": "",
+   "ref": "",
+   "underlying": "",
+   "key": "c14433401"
+  },
+  {
+   "id": "1935092301",
+   "time": "2026-11-25T06:30:43",
+   "symbol": "AUD.USD",
+   "description": "AUD.USD",
+   "asset": "CASH",
+   "currency": "USD",
+   "fx": 0.76244,
+   "quantity": 500,
+   "price": 0.65675,
+   "multiplier": 1,
+   "commission": -2.000104926289282,
+   "pnl": 0,
+   "openClose": "",
+   "ref": "",
+   "underlying": "",
+   "key": "c14433401"
+  },
+  {
+   "id": "1935633434",
+   "time": "2026-11-25T11:41:26",
+   "symbol": "EUR.USD",
+   "description": "EUR.USD",
+   "asset": "CASH",
+   "currency": "USD",
+   "fx": 0.76244,
+   "quantity": -20000,
+   "price": 1.09604,
+   "multiplier": 1,
+   "commission": -2.000104926289282,
+   "pnl": 0,
+   "openClose": "",
+   "ref": "",
+   "underlying": "",
+   "key": "c12087792"
+  },
+  {
+   "id": "1935666011",
+   "time": "2026-11-25T12:00:04",
+   "symbol": "EUR.USD",
+   "description": "EUR.USD",
+   "asset": "CASH",
+   "currency": "USD",
+   "fx": 0.76244,
+   "quantity": 20000,
+   "price": 1.09807,
+   "multiplier": 1,
+   "commission": -2.000104926289282,
+   "pnl": 0,
+   "openClose": "",
+   "ref": "",
    "underlying": "",
    "key": "c12087792"
   }

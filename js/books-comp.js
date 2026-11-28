@@ -7,23 +7,33 @@
    shown on its own here.
 
    How a team's week is measured (books/data/competition.json sets the dates):
-     start     the account value at the close before the week (or, for an
+     start     the account value as the week opens on Monday, i.e. the last
+               value before it (or, for an
                account opened during the week, its first value)
      return    compounded from each day's change, deposits taken out
-     above cash  return minus what cash (SONIA) earned over the same days
-     Sharpe    average daily return above cash divided by its standard
-               deviation, times the square root of 252. Needs two days or more
-               and at least one trade in the week; otherwise no Sharpe.
-     drawdown  the largest fall from a high during the week
+     benchmark each book is measured against its own market ("benchmark" in
+               index.json: the S&P 500 for US equities, oil for the oil desk,
+               and so on), over the same days. A book without one is measured
+               against cash (SONIA).
+     vs benchmark  return minus the benchmark's return
+     info ratio    average daily return above the benchmark divided by how
+               much that daily gap varied (the Sharpe ratio, measured against
+               the desk's own market instead of cash). Not annualised: one
+               week is too short to scale up.
+     rel. volatility  the book's daily volatility divided by its benchmark's:
+               how much risk it ran for its market. Lower is better. Unlike a
+               maximum drawdown, it uses every day's move, up or down, so a
+               book can't score well just by missing a down day.
+     The two ratios need two days or more and at least one trade in the week.
 
    How points are given:
      1. Teams are ranked on each of the three measures. Each ranking earns
         points from the table (25, 18, 15, 12, 10, 8, 6, 4, 2, 1).
-     2. Those are blended by the published weights (return above cash 50%,
-        Sharpe 30%, drawdown 20%) into a score for the week.
+     2. Those are blended by the weights (return vs benchmark 50%,
+        information ratio 30%, relative volatility 20%) into a score.
      3. The teams are placed by that score, and their place earns the week's
-        points from the same table. Ties are split by return above cash, then
-        by the smaller drawdown.
+        points from the same table. Ties are split by return vs benchmark,
+        then by the lower relative volatility.
    The pitch is marked out of 60 per judge on the scorecard
    (/roadmap/competition/scorecard/). The judges' totals go in "pitchMarks" in
    competition.json; desks are placed by them and earn points from
@@ -35,7 +45,6 @@
   'use strict';
 
   var C = root.BooksCore, F = C.fmt;
-  var TRADING_DAYS = 252;
 
   function getJSON(url) {
     return fetch(url, { cache: 'no-cache' }).then(function (r) {
@@ -56,7 +65,7 @@
   }
 
   /* --- One team's week -------------------------------------------------------- */
-  function week(data, cash, from, to) {
+  function week(data, cash, bench, from, to) {
     if (!data || !data.nav) return null;
     var nav = data.nav.filter(function (p) { return p[1] > 0; }).slice().sort(function (a, b) { return a[0] < b[0] ? -1 : 1; });
     var before = nav.filter(function (p) { return p[0] < from; });
@@ -66,26 +75,35 @@
     var flow = {};
     (data.flows || []).forEach(function (f) { flow[f.date] = (flow[f.date] || 0) + (f.amount || 0); });
     var pts = [base].concat(inside);
-    var ex = [], pnl = 0, idx = 1, peak = 1, maxDD = 0, cum = [[base[0], 0]];
+    // The benchmark: the book's own market, or cash where it has none.
+    var ref = bench && bench.series ? bench.series : cash;
+    var change = function (series, a, b) {
+      var x = series ? levelOn(series, a) : null, y = series ? levelOn(series, b) : null;
+      return x > 0 && y > 0 ? y / x - 1 : 0;
+    };
+    var rs = [], bs = [], act = [], pnl = 0, idx = 1, peak = 1, maxDD = 0, cum = [[base[0], 0]];
     for (var i = 1; i < pts.length; i++) {
       var p = pts[i - 1][1], v = pts[i][1], d = v - p - (flow[pts[i][0]] || 0), r = d / p;
+      var rb = change(ref, pts[i - 1][0], pts[i][0]);
       pnl += d;
       idx *= 1 + r;
       if (idx > peak) peak = idx;
       if (idx / peak - 1 < maxDD) maxDD = idx / peak - 1;
       cum.push([pts[i][0], idx - 1]);
-      var ca = cash ? levelOn(cash, pts[i - 1][0]) : null, cb = cash ? levelOn(cash, pts[i][0]) : null;
-      ex.push(ca > 0 && cb > 0 ? r - (cb / ca - 1) : r);
+      rs.push(r); bs.push(rb); act.push(r - rb);
     }
     var end = pts[pts.length - 1][0];
-    var c0 = cash ? levelOn(cash, base[0]) : null, c1 = cash ? levelOn(cash, end) : null;
-    var cashRet = c0 > 0 && c1 > 0 ? c1 / c0 - 1 : 0;
+    var cashRet = change(cash, base[0], end), benchRet = change(ref, base[0], end);
     var fills = (data.trades || []).filter(function (t) { var d = String(t.time || '').slice(0, 10); return d >= from && d <= to; }).length;
-    var s = ex.length >= 2 ? sd(ex) : 0;
+    var enough = fills > 0 && act.length >= 2;
+    var te = enough ? sd(act) : 0, vol = enough ? sd(rs) : 0, bvol = enough && bench ? sd(bs) : 0;
     return {
-      start: base[0], end: end, complete: end >= to, days: ex.length,
+      start: base[0], end: end, complete: end >= to, days: act.length,
       ret: idx - 1, cash: cashRet, above: idx - 1 - cashRet,
-      sharpe: fills > 0 && s > 0 ? mean(ex) / s * Math.sqrt(TRADING_DAYS) : null,
+      bench: bench ? bench.key : 'cash', benchName: bench ? bench.name : 'Cash (SONIA)', benchRet: benchRet,
+      excess: idx - 1 - benchRet,
+      ir: enough && te > 0 ? mean(act) / te : null,
+      relVol: enough && bvol > 0 ? vol / bvol : null,
       maxDD: maxDD, pnl: pnl, fills: fills, cum: cum, currency: data.currency || 'GBP'
     };
   }
@@ -107,17 +125,18 @@
     var P = cfg.points, W = cfg.weights;
     var racing = teams.filter(function (t) { return t.week; });
     racing.forEach(function (t) { t.rank = {}; });
-    rank(racing, function (t) { return t.week.above; }, 'ret');
-    rank(racing, function (t) { return t.week.sharpe; }, 'sharpe');
-    rank(racing, function (t) { return t.week.maxDD; }, 'dd'); // closer to zero ranks higher
+    var rv = function (t) { return t.week.relVol == null ? Infinity : t.week.relVol; };
+    rank(racing, function (t) { return t.week.excess; }, 'ret');
+    rank(racing, function (t) { return t.week.ir; }, 'ir');
+    rank(racing, function (t) { return t.week.relVol == null ? null : -t.week.relVol; }, 'risk'); // lower ranks higher
     racing.forEach(function (t) {
-      t.measurePts = { ret: pointsFor(P, t.rank.ret), sharpe: pointsFor(P, t.rank.sharpe), dd: pointsFor(P, t.rank.dd) };
-      t.score = W.return * t.measurePts.ret + W.sharpe * t.measurePts.sharpe + W.drawdown * t.measurePts.dd;
+      t.measurePts = { ret: pointsFor(P, t.rank.ret), ir: pointsFor(P, t.rank.ir), risk: pointsFor(P, t.rank.risk) };
+      t.score = W.return * t.measurePts.ret + W.ir * t.measurePts.ir + W.risk * t.measurePts.risk;
     });
-    racing.sort(function (a, b) { return b.score - a.score || b.week.above - a.week.above || b.week.maxDD - a.week.maxDD; });
+    racing.sort(function (a, b) { return b.score - a.score || b.week.excess - a.week.excess || rv(a) - rv(b); });
     racing.forEach(function (t, i) {
       var prev = racing[i - 1];
-      t.place = prev && prev.score === t.score && prev.week.above === t.week.above && prev.week.maxDD === t.week.maxDD ? prev.place : i + 1;
+      t.place = prev && prev.score === t.score && prev.week.excess === t.week.excess && rv(prev) === rv(t) ? prev.place : i + 1;
       t.weekPts = pointsFor(P, t.place);
     });
     // Pitch: the judges' marks from the scorecard, added up across the judges.
@@ -151,6 +170,8 @@
   }
 
   /* --- Loading ------------------------------------------------------------------- */
+  // Short names for the benchmarks in the table (benchmarks.json has the full ones).
+  var SHORT = { spx: 'S&P 500', emusd: 'MSCI EM (USD)', em: 'MSCI EM', metals: 'Metals basket', gilts: 'UK gilts', bonds: 'Global bonds', europe: 'European equities', world: 'MSCI World', usd: 'US dollar index', oil: 'WTI crude oil', cash: 'Cash' };
   function load() {
     return Promise.all([
       getJSON('books/data/index.json'),
@@ -161,10 +182,12 @@
       if (!m || !cfg) throw new Error('No competition data');
       var cash = bm && bm.benchmarks && bm.benchmarks.cash ? bm.benchmarks.cash.series : null;
       var list = [];
-      m.desks.forEach(function (d) { d.books.forEach(function (b) { list.push({ id: b.id, name: b.name || b.head, desk: d.name }); }); });
+      m.desks.forEach(function (d) { d.books.forEach(function (b) { list.push({ id: b.id, name: b.name || b.head, desk: d.name, benchmark: b.benchmark }); }); });
       return Promise.all(list.map(function (t, i) {
         return getJSON('books/data/' + t.id + '.json').catch(function () { return null; }).then(function (data) {
-          t.week = week(data, cash, cfg.week.from, cfg.week.to);
+          var b = t.benchmark && bm && bm.benchmarks && bm.benchmarks[t.benchmark];
+          var bench = b && b.series ? { key: t.benchmark, name: SHORT[t.benchmark] || b.name, series: b.series } : null;
+          t.week = week(data, cash, bench, cfg.week.from, cfg.week.to);
           return t;
         });
       })).then(function (teams) {
@@ -238,10 +261,19 @@
     var cols = [
       { label: 'Place', cell: function (t) { return place(t.place); } },
       { label: 'Team', cell: team },
-      { label: 'Return', num: true, cell: function (t) { return pct(t.week.ret); }, cls: function (t) { return F.upDown(t.week.ret); } },
-      { label: 'Above cash', num: true, cell: function (t) { return pct(t.week.above); }, cls: function (t) { return F.upDown(t.week.above); } },
-      { label: 'Sharpe', num: true, cell: function (t) { return t.week.sharpe == null ? '–' : F.ratio(t.week.sharpe); } },
-      { label: 'Max drawdown', num: true, cell: function (t) { return F.pct(t.week.maxDD, 2, false); } },
+      { label: 'Return', num: true, cell: function (t) {
+        var c = el('span', 'cp-ret');
+        c.appendChild(el('span', 'cp-ret__book ' + F.upDown(t.week.ret), pct(t.week.ret)));
+        var b = el('span', 'cp-ret__bench');
+        b.appendChild(el('span', 'visually-hidden', ', benchmark '));
+        b.appendChild(document.createTextNode(t.week.benchName + ' '));
+        b.appendChild(el('span', 'cp-ret__bench-val', pct(t.week.benchRet)));
+        c.appendChild(b);
+        return c;
+      } },
+      { label: 'vs benchmark', full: 'Return vs benchmark', num: true, cell: function (t) { return pct(t.week.excess); }, cls: function (t) { return F.upDown(t.week.excess); } },
+      { label: 'Info ratio', full: 'Information ratio', num: true, cell: function (t) { return t.week.ir == null ? '–' : F.ratio(t.week.ir); } },
+      { label: 'Rel. volatility', full: 'Relative volatility (lower is better)', num: true, cell: function (t) { return t.week.relVol == null ? '–' : t.week.relVol.toFixed(2) + '×'; } },
       { label: 'Score', num: true, cell: function (t) { return t.score.toFixed(1); } },
       { label: 'Points', num: true, cell: function (t) { return pts(t.weekPts); } },
       { label: 'Marked to', num: true, cell: function (t) {
@@ -256,21 +288,73 @@
     if (waiting.length) host.appendChild(el('p', 'cp-waiting', 'No account values inside the week yet: ' + waiting.map(function (t) { return t.name; }).join(', ') + '.'));
   }
 
+  // The week's days on the chart: the first point is where the week starts (the value
+  // as trading opens on Monday), then each day's close, Monday to Friday.
+  var WEEKDAY = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  var WEEKDAY_LONG = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  function weekDay(d, long) {
+    var t = new Date(d + 'T12:00:00Z');
+    return (long ? WEEKDAY_LONG : WEEKDAY)[t.getUTCDay()] + ' ' + t.getUTCDate();
+  }
+
+  // Each team in the legend is a toggle: hide a line (Manolo's week, say, squeezes
+  // the rest together) and the scale fits the lines still shown.
   function weekChart(host, cfg, s) {
     if (!s.racing.length) return;
-    var legend = el('ul', 'bk-legend');
+    var hidden = {};
+    var tools = el('div', 'cp-chart-tools');
+    var legend = el('ul', 'bk-legend cp-legend');
+    legend.setAttribute('aria-label', 'Teams on the chart');
+    var showAll = el('button', 'cp-legend__all', 'Show all');
+    showAll.type = 'button';
+    showAll.hidden = true;
+    var box = el('div', 'cp-chart');
+    var buttons = [];
+
+    function draw() {
+      box.textContent = '';
+      var shownTeams = s.racing.filter(function (t) { return !hidden[t.id]; });
+      root.BooksUI.perfChart(box, {
+        series: shownTeams.map(function (t) { return { id: t.id, label: t.name, color: t.color, emphasis: t.place === 1, points: t.week.cum }; }),
+        label: 'Return over the trading week, ' + cfg.week.label + ', for ' + (shownTeams.length === s.racing.length ? 'each team with account values in the week' : shownTeams.map(function (t) { return t.name; }).join(', ')) + '.',
+        dayLabel: function (d, long) {
+          if (d < cfg.week.from) return long ? 'Start of trading, ' + weekDay(cfg.week.from, true) + ' ' + F.day(cfg.week.from, true).replace(/^\d+\s*/, '') : 'Open';
+          return long ? 'Close, ' + weekDay(d, true) + ' ' + F.day(d, true).replace(/^\d+\s*/, '') : weekDay(d);
+        }
+      });
+      buttons.forEach(function (b) { b.setAttribute('aria-pressed', hidden[b.dataset.id] ? 'false' : 'true'); });
+      showAll.hidden = !Object.keys(hidden).some(function (k) { return hidden[k]; });
+    }
+
     s.racing.forEach(function (t) {
       var li = el('li');
+      var b = el('button', 'cp-legend__btn');
+      b.type = 'button';
+      b.dataset.id = t.id;
+      b.title = 'Show or hide ' + t.name;
       var k = el('span', 'bk-legend__key' + (t.place === 1 ? ' is-main' : '')); k.style.background = t.color;
-      li.appendChild(k); li.appendChild(el('span', null, t.name));
-      li.appendChild(el('strong', F.upDown(t.week.ret), F.pct(t.week.ret)));
+      b.appendChild(k);
+      b.appendChild(el('span', 'cp-legend__name', t.name));
+      b.appendChild(el('strong', F.upDown(t.week.ret), F.pct(t.week.ret)));
+      b.addEventListener('click', function () {
+        var visible = s.racing.filter(function (x) { return !hidden[x.id]; }).length;
+        if (!hidden[t.id] && visible === 1) return; // keep at least one line on the chart
+        hidden[t.id] = !hidden[t.id];
+        draw();
+      });
+      buttons.push(b);
+      li.appendChild(b);
       legend.appendChild(li);
     });
-    host.appendChild(legend);
-    root.BooksUI.perfChart(host, {
-      series: s.racing.map(function (t) { return { id: t.id, label: t.name, color: t.color, emphasis: t.place === 1, points: t.week.cum }; }),
-      label: 'Return over the trading week, ' + cfg.week.label + ', for each team with account values in the week.'
-    });
+    showAll.addEventListener('click', function () { hidden = {}; draw(); });
+
+    tools.appendChild(legend);
+    host.appendChild(tools);
+    var hint = el('p', 'cp-chart-hint', 'Select a team to hide or show its line. ');
+    hint.appendChild(showAll);
+    host.appendChild(hint);
+    host.appendChild(box);
+    draw();
   }
 
   function page(main) {

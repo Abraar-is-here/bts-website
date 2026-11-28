@@ -6,7 +6,7 @@
   "pitchDay": { "date": "2026-11-30", "label": "Mon 30 Nov, 6 pm", "venue": "Pugsley Lecture Theatre, Queens Building" },
   "points": [25, 18, 15, 12, 10, 8, 6, 4, 2, 1],
   "pitchPoints": [46, 33, 28, 22, 19, 15, 11, 7, 4, 2],
-  "weights": { "return": 0.5, "sharpe": 0.3, "drawdown": 0.2 },
+  "weights": { "return": 0.5, "ir": 0.3, "risk": 0.2 },
   "final": false,
   "reveal": false,
   "floorRevealAt": "2026-11-30T20:00:00Z",

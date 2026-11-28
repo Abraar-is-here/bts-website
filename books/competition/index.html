@@ -21,7 +21,7 @@
   <link rel="stylesheet" href="styles/tokens/spacing.css?v=7" />
   <link rel="stylesheet" href="styles/tokens/typography.css?v=8" />
   <link rel="stylesheet" href="styles/main.css?v=164" />
-  <link rel="stylesheet" href="styles/books.css?v=21" />
+  <link rel="stylesheet" href="styles/books.css?v=25" />
 </head>
 <body>
 
@@ -117,25 +117,26 @@
       <section class="bk-panel cp-sec" aria-labelledby="cp-week-title">
         <div class="bk-sec__head">
           <h2 id="cp-week-title" class="cp-h2">The trading week</h2>
-          <p>Each team&rsquo;s return from the close on Friday 20 November, and how it was placed. The same days are part of each book on The Floor.</p>
+          <p>Each team&rsquo;s return from the start of trading on Monday 23 November to the close on Friday 27 November, and how it was placed. The same days are part of each book on The Floor.</p>
         </div>
         <div data-cp-chart></div>
         <div data-cp-week></div>
 
         <details class="bk-disc cp-method">
-          <summary class="bk-disc__sum"><span class="bk-disc__title">How the trading week is scored</span><span class="bk-disc__hint">Three measures, points by place</span></summary>
+          <summary class="bk-disc__sum"><span class="bk-disc__title">How the trading week is scored</span><span class="bk-disc__hint">Against each desk&rsquo;s own market</span></summary>
           <div class="bk-disc__body">
             <ol class="cp-steps">
-              <li><strong>Measure the week.</strong> From each book&rsquo;s account value at the close before the week to its value at the end of it, with any deposits taken out:
+              <li><strong>Measure the week against the desk&rsquo;s own market.</strong> Each book is compared with a benchmark for what it trades: the S&amp;P&nbsp;500 for US equities, crude oil for the oil desk, global bonds for fixed income, and so on (the Benchmark column above). Both are measured from the start of trading on Monday 23 November to the close on Friday 27 November, from daily values, with any deposits taken out. Monday&rsquo;s move counts and nothing before it does.
                 <ul>
-                  <li><strong>Return above cash</strong>: the week&rsquo;s return minus what cash (SONIA) earned over the same days.</li>
-                  <li><strong>Sharpe ratio</strong>: the average daily return above cash divided by how much it varied, annualised. It needs at least two days and at least one trade in the week.</li>
-                  <li><strong>Maximum drawdown</strong>: the largest fall from a high during the week. Smaller is better.</li>
+                  <li><strong>Return vs benchmark</strong>: the book&rsquo;s return minus its benchmark&rsquo;s. Beating a falling market counts; trailing a rising one doesn&rsquo;t.</li>
+                  <li><strong>Information ratio</strong>: the average daily return above the benchmark, divided by how much that daily gap varied. It is the Sharpe ratio measured against the desk&rsquo;s own market instead of cash, and rewards beating the market steadily rather than on one lucky day. It isn&rsquo;t annualised, as a week is too short to scale up.</li>
+                  <li><strong>Relative volatility</strong>: how much the book moved day to day, divided by how much its benchmark moved. 1.00&times; means as risky as the market itself; lower is better. It uses every day&rsquo;s move, up or down, so unlike a maximum drawdown it can&rsquo;t be dodged by missing a down day.</li>
                 </ul>
+                Both ratios need at least two days and at least one trade in the week.
               </li>
-              <li><strong>Rank each measure.</strong> Teams are ranked on each of the three, and each ranking earns points from the table below. Equal results share a place. A team without a Sharpe ratio gets no points for it.</li>
-              <li><strong>Blend them.</strong> The three are weighted as in the guide (return above cash 50%, Sharpe 30%, drawdown 20%) into the week&rsquo;s score.</li>
-              <li><strong>Award the week.</strong> Teams are placed by that score and earn the week&rsquo;s points from the same table. A tie on score is split by return above cash, then by the smaller drawdown.</li>
+              <li><strong>Rank each measure.</strong> Teams are ranked on each of the three, and each ranking earns points from the table below. Equal results share a place. A team without a ratio gets no points for it.</li>
+              <li><strong>Blend them.</strong> Return vs benchmark counts 50%, information ratio 30% and relative volatility 20%.</li>
+              <li><strong>Award the week.</strong> Teams are placed by that score and earn the week&rsquo;s points from the same table. A tie is split by return vs benchmark, then by the lower relative volatility.</li>
             </ol>
             <div class="bk-scroll" tabindex="0" role="region" aria-label="Points for each place">
               <table class="bk-table cp-pointsrow">
@@ -144,7 +145,7 @@
                 <tbody><tr><th scope="row">Points</th><td class="num">25</td><td class="num">18</td><td class="num">15</td><td class="num">12</td><td class="num">10</td><td class="num">8</td><td class="num">6</td><td class="num">4</td><td class="num">2</td><td class="num">1</td></tr></tbody>
               </table>
             </div>
-            <p class="cp-note">Returns are in percent, so books kept in dollars and in pounds compare fairly. An account opened during the week starts from its first value. The pitch is scored separately by the judges. The week counts for 35% and the pitch for 65%, so pitch points are larger; the two are added together.</p>
+            <p class="cp-note">Each benchmark is in the same currency as the book it measures, so a dollar account isn&rsquo;t compared with a pound index. Returns are in percent, so books kept in dollars and in pounds still compare fairly. A desk without a benchmark is measured against cash (SONIA), and an account opened during the week starts from its first value. The pitch is scored separately by the judges. The week counts for 35% and the pitch for 65%, so pitch points are larger; the two are added together.</p>
           </div>
         </details>
       </section>
@@ -175,8 +176,8 @@
   </main>
 
   <script src="js/books-core.js?v=7" defer></script>
-  <script src="js/books-ui.js?v=18" defer></script>
-  <script src="js/books-comp.js?v=9" defer></script>
+  <script src="js/books-ui.js?v=21" defer></script>
+  <script src="js/books-comp.js?v=15" defer></script>
 
   <script src="js/aurora.js?v=9" defer></script>
   <script src="js/transitions.js?v=3" defer></script>

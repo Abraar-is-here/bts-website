@@ -14,10 +14,23 @@ benchmark are always compared over the same days.
           bought on margin, so a fully funded position also earns the cash
           rate). Precious and industrial, as the Metals desk covers both.
   gilts   iShares Core UK Gilts (IGLT), with coupons reinvested
+  bonds   iShares Core Global Aggregate Bond, GBP hedged (AGBP), coupons
+          reinvested: government and corporate bonds worldwide (gilts,
+          Treasuries, credit), for the fixed income desk
+  europe  Vanguard FTSE Developed Europe (VEUR), dividends reinvested, in GBP:
+          for the European equities desk
+  world   iShares Core MSCI World (SWDA), accumulating, in GBP: developed
+          markets, for the developed-markets macro desk
   em      iShares Core MSCI EM IMI (EMIM), accumulating, in GBP
+  emusd   iShares Core MSCI EM IMI (IEMG), dividends reinvested, in USD: the
+          same index as em, for emerging-market books whose IBKR account is in
+          dollars, so currency moves don't blur the comparison
   spx     S&P 500 total return (dividends reinvested), in USD: for books
           whose IBKR account is in dollars. usd_in_gbp() restates a dollar
           series in pounds for a sterling book, should one need it.
+  oil     WTI crude oil through the United States Oil Fund (USO), which holds
+          front-month WTI futures and rolls them, restated in GBP: for the
+          oil desk
   usd     US Dollar Index (DXY): the dollar against six major currencies,
           the yardstick for a G10-against-the-dollar FX desk
 
@@ -147,6 +160,11 @@ BENCHMARKS = {
     'metals': ('Metals: gold, silver, copper, aluminium (GBP)', metals),
     'gilts': ('UK gilts (iShares IGLT)', lambda: closes('IGLT.L', adjusted=True)),
     'em': ('MSCI Emerging Markets (iShares EMIM)', lambda: closes('EMIM.L')),
+    'bonds': ('Global bonds, GBP hedged (iShares AGBP)', lambda: closes('AGBP.L', adjusted=True)),
+    'europe': ('FTSE Developed Europe (Vanguard VEUR, total return, GBP)', lambda: closes('VEUR.L', adjusted=True)),
+    'world': ('MSCI World (iShares SWDA, GBP)', lambda: closes('SWDA.L')),
+    'emusd': ('MSCI Emerging Markets (iShares IEMG, total return, USD)', lambda: closes('IEMG', adjusted=True)),
+    'oil': ('WTI crude oil (USO, in GBP)', lambda: usd_in_gbp('USO')),
     'usd': ('US Dollar Index (DXY)', lambda: closes('DX-Y.NYB')),
     'spx': ('S&P 500 (total return, USD)', lambda: closes('^SP500TR')),
 }

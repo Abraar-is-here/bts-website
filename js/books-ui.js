@@ -33,7 +33,7 @@
     return n;
   }
   function ms(d) { return Date.parse(d.slice(0, 10) + 'T12:00:00Z'); }
-  function slot(i) { return 'var(--bk-s' + ((i % 4) + 1) + ')'; }
+  function slot(i) { return 'var(--bk-s' + ((i % 8) + 1) + ')'; }
 
   function niceTicks(min, max, count) {
     if (min === max) { min -= 0.01; max += 0.01; }
@@ -85,6 +85,7 @@
 
   /* --- Performance chart: cumulative return, with drawdown underneath ------- */
   function perfChart(host, cfg) {
+    var dayName = function (d, long) { return (cfg.dayLabel && cfg.dayLabel(d, long)) || F.day(d, long); };
     var frame = el('div', 'bk-chart');
     var plot = el('div', 'bk-chart__plot');
     frame.appendChild(plot);
@@ -133,7 +134,7 @@
       // X ticks
       xTicks(dates, W).forEach(function (d) {
         var t = svg('text', { x: X(d), y: m.t + H + GAP + DH + 18, class: 'bk-tick', 'text-anchor': 'middle' });
-        t.textContent = F.day(d);
+        t.textContent = dayName(d);
         s.appendChild(t);
         s.appendChild(svg('line', { x1: X(d), x2: X(d), y1: m.t + H, y2: m.t + H + 4, class: 'bk-axis' }));
       });
@@ -217,9 +218,9 @@
         });
         if (ddDot && ddMap[d] != null) { ddDot.setAttribute('cx', x); ddDot.setAttribute('cy', state.DY(ddMap[d])); }
         var anchorY = cfg.series[0].map[d] != null ? Y(cfg.series[0].map[d]) : m.t + 20;
-        if (fromKey) live.textContent = F.day(d, true) + ': ' + cfg.series.filter(function (sr) { return sr.map[d] != null; }).map(function (sr) { return sr.label + ' ' + F.pct(sr.map[d]); }).join(', ') + (cfg.dd && ddMap[d] != null ? ', drawdown ' + F.pct(ddMap[d], 2, false) : '');
+        if (fromKey) live.textContent = dayName(d, true) + ': ' + cfg.series.filter(function (sr) { return sr.map[d] != null; }).map(function (sr) { return sr.label + ' ' + F.pct(sr.map[d]); }).join(', ') + (cfg.dd && ddMap[d] != null ? ', drawdown ' + F.pct(ddMap[d], 2, false) : '');
         tip.show(x, anchorY, function (t) {
-          t.appendChild(el('div', 'bk-tip__head', F.day(d, true)));
+          t.appendChild(el('div', 'bk-tip__head', dayName(d, true)));
           cfg.series.forEach(function (sr) { if (sr.map[d] != null) tipRow(t, sr.color, F.pct(sr.map[d]), sr.label, F.upDown(sr.map[d])); });
           if (cfg.dd && ddMap[d] != null) tipRow(t, null, F.pct(ddMap[d], 2, false), 'Drawdown');
         });
@@ -382,7 +383,11 @@
     var t = el('table', 'bk-table' + (opts.cls ? ' ' + opts.cls : ''));
     if (opts.caption) t.appendChild(el('caption', 'visually-hidden', opts.caption));
     var thead = el('thead'), hr = el('tr');
-    cols.forEach(function (c) { var th = el('th', (c.num ? 'num' : '') + (c.col ? ' ' + c.col : ''), c.label); th.scope = 'col'; hr.appendChild(th); });
+    cols.forEach(function (c) {
+      var th = el('th', (c.num ? 'num' : '') + (c.col ? ' ' + c.col : ''), c.label); th.scope = 'col';
+      if (c.full) { th.setAttribute('aria-label', c.full); th.title = c.full; }
+      hr.appendChild(th);
+    });
     thead.appendChild(hr); t.appendChild(thead);
     var tb = el('tbody');
     rows.forEach(function (r) {

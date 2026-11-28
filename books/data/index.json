@@ -11,21 +11,20 @@
   },
   "desks": [
     { "id": "equities", "name": "Equities", "books": [
-      { "id": "eq-tash", "head": "Tash Munjanganja" },
-      { "id": "eq-tolu", "head": "Tolu Ayetan" },
+      { "id": "eq-tash", "head": "Tash Munjanganja", "benchmark": "europe" },
+      { "id": "eq-tolu", "head": "Tolu Ayetan", "benchmark": "emusd" },
       { "id": "eq-ibrahim", "head": "Ibrahim Ali", "benchmark": "spx" },
-      { "id": "eq-tom", "head": "Tom Hoad" }
+      { "id": "eq-tom", "head": "Tom Hoad", "benchmark": "em" }
     ] },
     { "id": "ficc", "name": "FICC", "books": [
       { "id": "ficc-anay", "head": "Anay Mistry", "benchmark": "metals" },
       { "id": "ficc-val", "head": "Val Sinko", "assets": ["CASH"], "benchmark": "usd" },
-      { "id": "ficc-manolo", "head": "Manolo Kidel" },
-      { "id": "ficc-aled", "head": "Aled von Oppell", "benchmark": "gilts" }
+      { "id": "ficc-manolo", "head": "Manolo Kidel", "benchmark": "oil" },
+      { "id": "ficc-aled", "head": "Aled von Oppell", "benchmark": "bonds" }
     ] },
     { "id": "macro", "name": "Macro", "books": [
       { "id": "macro-manasvi", "head": "Manasvi Kommuri", "benchmark": "em" },
-      { "id": "macro-lenny", "head": "Lenny Tucker" },
-      { "id": "macro-emily", "head": "Emily Chiaia-Miller" }
+      { "id": "macro-lenny", "head": "Lenny Tucker", "benchmark": "world" }
     ] }
   ],
   "paused": {

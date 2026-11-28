@@ -3,8 +3,8 @@
  "id": "ficc-anay",
  "accountKey": "549b2f3beefb",
  "currency": "GBP",
- "updated": "2026-11-22T20:42:03.160Z",
- "asOf": "2026-11-20",
+ "updated": "2026-11-28T14:09:34.235Z",
+ "asOf": "2026-11-27",
  "nav": [
   [
    "2026-10-21",
@@ -97,6 +97,26 @@
   [
    "2026-11-20",
    1007211.985091467
+  ],
+  [
+   "2026-11-23",
+   1007516.692870123
+  ],
+  [
+   "2026-11-24",
+   1006778.147039008
+  ],
+  [
+   "2026-11-25",
+   1006566.80489815
+  ],
+  [
+   "2026-11-26",
+   1006569.744053234
+  ],
+  [
+   "2026-11-27",
+   1008484.744821891
   ]
  ],
  "flows": [
@@ -106,8 +126,26 @@
    "amount": 1000000
   }
  ],
- "positions": [],
- "positionsDate": "2026-11-20",
+ "positions": [
+  {
+   "date": "2026-11-27",
+   "symbol": "MHGF7",
+   "description": "MHG JAN27",
+   "asset": "FUT",
+   "currency": "USD",
+   "fx": 0.76343,
+   "quantity": 5,
+   "multiplier": 2500,
+   "exchange": "COMEX",
+   "mark": 5.5485,
+   "value": 69356.25,
+   "cost": 5.483384,
+   "unrealized": 813.95,
+   "pctNav": null,
+   "key": "c758419025"
+  }
+ ],
+ "positionsDate": "2026-11-27",
  "trades": [
   {
    "id": "1920942795",
@@ -123,7 +161,7 @@
    "commission": -9.34983,
    "pnl": 0,
    "openClose": "O",
-   "ref": "53927408",
+   "ref": "",
    "underlying": "",
    "key": "c77124483"
   },
@@ -141,7 +179,7 @@
    "commission": -4.67001,
    "pnl": 7.005075,
    "openClose": "C",
-   "ref": "1991575",
+   "ref": "",
    "underlying": "",
    "key": "c77124483"
   },
@@ -159,7 +197,7 @@
    "commission": -2,
    "pnl": 189.291695,
    "openClose": "C",
-   "ref": "64178880",
+   "ref": "",
    "underlying": "",
    "key": "c77124483"
   },
@@ -177,7 +215,7 @@
    "commission": -2,
    "pnl": 189.591695,
    "openClose": "C",
-   "ref": "92418542",
+   "ref": "",
    "underlying": "",
    "key": "c77124483"
   },
@@ -195,7 +233,7 @@
    "commission": -2,
    "pnl": 190.291695,
    "openClose": "C",
-   "ref": "35283098",
+   "ref": "",
    "underlying": "",
    "key": "c77124483"
   },
@@ -213,7 +251,7 @@
    "commission": -28.6284,
    "pnl": 0,
    "openClose": "O",
-   "ref": "19902297",
+   "ref": "",
    "underlying": "",
    "key": "c77124483"
   },
@@ -231,7 +269,7 @@
    "commission": -9.62094,
    "pnl": 1310.35912,
    "openClose": "C",
-   "ref": "84023488",
+   "ref": "",
    "underlying": "",
    "key": "c77124483"
   },
@@ -249,7 +287,7 @@
    "commission": -8.680815,
    "pnl": 2060.064955,
    "openClose": "C",
-   "ref": "34143",
+   "ref": "",
    "underlying": "",
    "key": "c77124483"
   },
@@ -267,9 +305,45 @@
    "commission": -8.16855,
    "pnl": 3768.12722,
    "openClose": "C",
-   "ref": "11261681",
+   "ref": "",
    "underlying": "",
    "key": "c77124483"
+  },
+  {
+   "id": "332338298",
+   "time": "2026-11-24T10:08:45",
+   "symbol": "MHGF7",
+   "description": "MHG JAN27",
+   "asset": "FUT",
+   "currency": "USD",
+   "fx": 0.76248,
+   "quantity": 4,
+   "price": 5.482,
+   "multiplier": 2500,
+   "commission": -3.84,
+   "pnl": 0,
+   "openClose": "O",
+   "ref": "",
+   "underlying": "MHG",
+   "key": "c758419025"
+  },
+  {
+   "id": "332338236",
+   "time": "2026-11-24T10:08:48",
+   "symbol": "MHGF7",
+   "description": "MHG JAN27",
+   "asset": "FUT",
+   "currency": "USD",
+   "fx": 0.76248,
+   "quantity": 1,
+   "price": 5.487,
+   "multiplier": 2500,
+   "commission": -0.96,
+   "pnl": 0,
+   "openClose": "O",
+   "ref": "",
+   "underlying": "MHG",
+   "key": "c758419025"
   }
  ],
  "notes": {
